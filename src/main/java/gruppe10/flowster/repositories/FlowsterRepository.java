@@ -1,0 +1,161 @@
+package gruppe10.flowster.repositories;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class FlowsterRepository
+{
+    
+    GeneralRepository generalRepository = new GeneralRepository();
+    
+    Connection flowsterConnection;
+    
+    
+    
+    /**
+     * Tjekker om email allerede er gemt på anden user i db
+     *
+     * @param email Email som tjekkes for om den er optaget
+     *
+     * @return Boolean true hvis den er ledig, false - hvis ikke ledig
+     */
+    public boolean isEmailAvailable(String email)
+    {
+        flowsterConnection = generalRepository.establishConnection("flowster");
+    
+        boolean emailIsAvailable = true; // sættes til at være available by default
+    
+        try
+        {
+            String sqlCommand = "SELECT * FROM emails WHERE email = ?";
+    
+            // det er vores SQL sætning som vi beder om at få prepared til at blive sendt til databasen:
+            PreparedStatement preparedStatement = flowsterConnection.prepareStatement(sqlCommand);
+    
+            preparedStatement.setString(1, email);
+    
+            ResultSet resultSet = preparedStatement.executeQuery();
+    
+            // hvis der ligger en email i resultSet'et, er email'en ikke tilgængelig, og emailIsAvailable sættes til
+            // false
+            if(resultSet.next())
+            {
+                emailIsAvailable = false;
+            }
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Error in isEmailAvailable: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                flowsterConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.out.println("Error in isEmailAvailableFinally: " + e.getMessage());
+            }
+        }
+        
+        return emailIsAvailable;
+    }
+    
+    /**
+     * Tjekker om et organisation findes i organisations-tabellen i flowster-db ud fra organisationId
+     *
+     * @param organisationId id som tjekkes
+     * @return boolean true, hvis id findes i db - false, hvis id ikke findes i db
+     * */
+    public boolean doesOrganisationdExist(int organisationId)
+    {
+        flowsterConnection = generalRepository.establishConnection("flowster");
+        
+        boolean organisationIdExists = false;
+        
+        try
+        {
+            String sqlCommand = "SELECT * FROM organisations WHERE id_organisation = ?";
+        
+            // det er vores SQL sætning som vi beder om at få prepared til at blive sendt til databasen:
+            PreparedStatement preparedStatement = flowsterConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setInt(1, organisationId);
+        
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next())
+            {
+                organisationIdExists = true;
+            }
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Error in doesOrganisationdExist: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                flowsterConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.out.println("Error in doesOrganisationdExistFinally: " + e.getMessage());
+            }
+        }
+    
+        return organisationIdExists;
+    }
+    
+    /**
+     * Tjekker om et jobType findes i job_types-tabellen i flowster-db ud fra jobTypeId
+     *
+     * @param jobTypeId id som tjekkes
+     * @return boolean true, hvis id findes i db - false, hvis id ikke findes i db
+     * */
+    public boolean doesJobTypeExist(int jobTypeId)
+    {
+        flowsterConnection = generalRepository.establishConnection("flowster");
+        
+        boolean jobTypeIdExists = false;
+        
+        try
+        {
+            String sqlCommand = "SELECT * FROM job_types WHERE id_job_type = ?";
+            
+            // det er vores SQL sætning som vi beder om at få prepared til at blive sendt til databasen:
+            PreparedStatement preparedStatement = flowsterConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setInt(1, jobTypeId);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next())
+            {
+                jobTypeIdExists = true;
+            }
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Error in doesJobTypeExist: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                flowsterConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.out.println("Error in doesJobTypeExistFinally: " + e.getMessage());
+            }
+        }
+        
+        return jobTypeIdExists;
+    }
+    
+}
