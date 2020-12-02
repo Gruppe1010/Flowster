@@ -32,10 +32,10 @@ public class OrganisationRepository
         // opretter ny String med underscore i stedet for mellemrum i organisationName
         String dbName = "flowster_" + organisationName.replaceAll(" ", "_");
         
-        organisationConnection = generalRepository.establishConnection(dbName);
-    
+        // FØRST indsættes email i emails-tabel i flowster-db
         flowsterRepository.insertEmailIntoDb(newUser.getEmail());
         
+        // DERNÆST indsættes resten af userData i users-tabel i organisationName-db
         insertUserDataIntoOrganisationDb(dbName, newUser);
     }
     

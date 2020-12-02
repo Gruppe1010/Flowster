@@ -9,7 +9,7 @@ import gruppe10.flowster.UserData;
  *
  * */
 
-public class CreateUserModel implements UserData
+public class CreateUserViewModel implements UserData
 {
     private String organisationAndJobType;
     private double manhours;
@@ -21,11 +21,11 @@ public class CreateUserModel implements UserData
     
     
     // constructors
-    public CreateUserModel(){}
+    public CreateUserViewModel(){}
     
-    public CreateUserModel(String organisationAndJobType, double manhours, String firstname, String surname,
-                           String email,
-                           String password, String confirmPassword)
+    public CreateUserViewModel(String organisationAndJobType, double manhours, String firstname, String surname,
+                               String email,
+                               String password, String confirmPassword)
     {
         this.organisationAndJobType = organisationAndJobType;
         this.manhours = manhours;

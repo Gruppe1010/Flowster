@@ -2,7 +2,7 @@ package gruppe10.flowster.models.users;
 
 import gruppe10.flowster.models.project.Project;
 import gruppe10.flowster.models.teams.Team;
-import gruppe10.flowster.viewModels.CreateUserModel;
+import gruppe10.flowster.viewModels.CreateUserViewModel;
 
 import java.util.ArrayList;
 
@@ -43,15 +43,15 @@ public class TeamMember extends User
     
     // ANDRE METODER
     
-    public TeamMember createTeamMemberFromCreateUserModel(CreateUserModel createUserModel)
+    public TeamMember createTeamMemberFromCreateUserModel(CreateUserViewModel createUserViewModel)
     {
         return new TeamMember(
-                Integer.parseInt(createUserModel.getOrganisationAndJobType()),
-                createUserModel.getFirstname(),
-                createUserModel.getSurname(),
-                createUserModel.getEmail(),
-                createUserModel.getPassword(),
-                createUserModel.getManhours());
+                Integer.parseInt(createUserViewModel.getOrganisationAndJobType()),
+                createUserViewModel.getFirstname(),
+                createUserViewModel.getSurname(),
+                createUserViewModel.getEmail(),
+                createUserViewModel.getPassword(),
+                createUserViewModel.getManhours());
     }
     
 }

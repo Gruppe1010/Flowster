@@ -14,7 +14,7 @@ public class ProjectManagerController
     public String frontPage()
     {
         
-        return "ProjectManager/frontPage"; // html
+        return "ProjectManager/front-page"; // html
     }
     
   

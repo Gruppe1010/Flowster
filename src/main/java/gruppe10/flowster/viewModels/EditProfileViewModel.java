@@ -1,28 +1,29 @@
 package gruppe10.flowster.viewModels;
 
-public class ViewProfileModel
+public class EditProfileViewModel
 {
     private String name;
-    private String jobType;
     private double manhours;
     private String email;
     private byte[] profilePictureBytes;
     private String profilePictureInitials;
-    
+    private String password;
+    private String confirmPassword;
     
     // constructors
     
-    public ViewProfileModel(){}
+    public EditProfileViewModel(){}
     
-    public ViewProfileModel(String name, String jobType, double manhours, byte[] profilePictureBytes, String profilePictureInitials)
+    public EditProfileViewModel(String name, double manhours, String email, byte[] profilePictureBytes, String profilePictureInitials, String password, String confirmPassword)
     {
         this.name = name;
-        this.jobType = jobType;
         this.manhours = manhours;
+        this.email = email;
         this.profilePictureBytes = profilePictureBytes;
         this.profilePictureInitials = profilePictureInitials;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
     }
-    
     
     // getters + setters
     
@@ -34,14 +35,6 @@ public class ViewProfileModel
     {
         this.name = name;
     }
-    public String getJobType()
-    {
-        return jobType;
-    }
-    public void setJobType(String jobType)
-    {
-        this.jobType = jobType;
-    }
     public double getManhours()
     {
         return manhours;
@@ -49,6 +42,14 @@ public class ViewProfileModel
     public void setManhours(double manhours)
     {
         this.manhours = manhours;
+    }
+    public String getEmail()
+    {
+        return email;
+    }
+    public void setEmail(String email)
+    {
+        this.email = email;
     }
     public byte[] getProfilePictureBytes()
     {
@@ -66,5 +67,20 @@ public class ViewProfileModel
     {
         this.profilePictureInitials = profilePictureInitials;
     }
+    public String getPassword()
+    {
+        return password;
+    }
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+    public String getConfirmPassword()
+    {
+        return confirmPassword;
+    }
+    public void setConfirmPassword(String confirmPassword)
+    {
+        this.confirmPassword = confirmPassword;
+    }
 }
-
