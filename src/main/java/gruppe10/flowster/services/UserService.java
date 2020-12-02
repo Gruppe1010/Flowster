@@ -216,10 +216,10 @@ public class UserService
     
     public String retrieveFrontPageUrl()
     {
-        // TODO: tjek at getClass().getSimpleName() returnerer ENTEN ProjectManager ELLER TeamMember IKKKEE User
         String className = loggedInUser.getClass().getSimpleName();
         
-        // TODO: lav første forbogstav til småt bogstav
+        // laver første forbogstav om til småt  - da ord i url'en står i camelCase
+        className = Character.toLowerCase(className.charAt(0)) + className.substring(1);
         
         return "redirect:/" + className + "/frontPage"; // url
     }
