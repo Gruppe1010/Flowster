@@ -1,8 +1,8 @@
 package gruppe10.flowster.models.users;
 
-import java.awt.*;
+import gruppe10.flowster.UserData;
 
-public class User
+public class User implements UserData
 {
     // 00000 = første 3 nuller = organisationskode, 2 nuller = stillingskode
     // 01 == projectManager
@@ -87,4 +87,34 @@ public class User
     {
         this.profilePictureBytes = profilePictureBytes;
     }
+    
+    // METODER FRA UserData-interface
+    /**
+     * Finder organisationsId ved at adskille de første 3 cifre fra organisationAndJobType-attributten
+     *
+     *
+     * @return int fundne organisationId
+     * */
+    public int findOrganisationIdFromOrganisationAndJopType()
+    {
+        String organisationAndJobTypeString = Integer.toString(organisationAndJobType);
+        
+        return Integer.parseInt(organisationAndJobTypeString.substring(0,3));
+    }
+    
+    /**
+     * Finder jobTypeId ved at adskille de sidste 2 cifre fra organisationAndJobType-attributten
+     *
+     *
+     * @return int fundne jobTypeId
+     * */
+    public int findJobTypeIdFromOrganisationAndJopType()
+    {
+        String organisationAndJobTypeString = Integer.toString(organisationAndJobType);
+    
+        return Integer.parseInt(organisationAndJobTypeString.substring(3,5));
+    }
+    
+    // ANDRE METODER
+    
 }

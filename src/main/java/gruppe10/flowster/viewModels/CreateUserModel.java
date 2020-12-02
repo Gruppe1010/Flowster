@@ -1,6 +1,7 @@
 package gruppe10.flowster.viewModels;
 
 
+import gruppe10.flowster.UserData;
 
 /**
  *
@@ -8,7 +9,7 @@ package gruppe10.flowster.viewModels;
  *
  * */
 
-public class CreateUserModel
+public class CreateUserModel implements UserData
 {
     private String organisationAndJobType;
     private double manhours;
@@ -93,4 +94,33 @@ public class CreateUserModel
     {
         this.confirmPassword = confirmPassword;
     }
+    
+    // METODER FRA UserData-interface
+    /**
+     * Finder organisationsId ved at adskille de første 3 cifre fra organisationAndJobType-attributten
+     *
+     *
+     * @return int fundne organisationId
+     * */
+    public int findOrganisationIdFromOrganisationAndJopType()
+    {
+        return Integer.parseInt(organisationAndJobType.substring(0,3));
+    }
+    
+    /**
+     * Finder jobTypeId ved at adskille de sidste 2 cifre fra organisationAndJobType-attributten
+     *
+     *
+     * @return int fundne jobTypeId
+     * */
+    public int findJobTypeIdFromOrganisationAndJopType()
+    {
+        return Integer.parseInt(organisationAndJobType.substring(3,5));
+    }
+    
+    // ANDRE METODER
+    
+    
+    
+    
 }

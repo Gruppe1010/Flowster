@@ -6,15 +6,15 @@ import gruppe10.flowster.viewModels.CreateUserModel;
 
 import java.util.ArrayList;
 
-public class Employee extends User
+public class TeamMember extends User
 {
     private ArrayList<Project> joinedProjectsList;
     private ArrayList<Team> joinedTeamsList;
     
     // constructors
-    public Employee(){}
+    public TeamMember(){}
     
-    public Employee(int organisationAndJobType, String firstname, String surname, String email, String password, double manhours)
+    public TeamMember(int organisationAndJobType, String firstname, String surname, String email, String password, double manhours)
     {
         super(organisationAndJobType, firstname, surname, email, password, manhours);
         this.joinedProjectsList = null;
@@ -43,9 +43,9 @@ public class Employee extends User
     
     // ANDRE METODER
     
-    public Employee createEmployeeFromCreateUserModel(CreateUserModel createUserModel)
+    public TeamMember createTeamMemberFromCreateUserModel(CreateUserModel createUserModel)
     {
-        return new Employee(
+        return new TeamMember(
                 Integer.parseInt(createUserModel.getOrganisationAndJobType()),
                 createUserModel.getFirstname(),
                 createUserModel.getSurname(),

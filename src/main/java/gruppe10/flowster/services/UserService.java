@@ -1,23 +1,26 @@
 package gruppe10.flowster.services;
 
-import gruppe10.flowster.models.users.Employee;
+import gruppe10.flowster.models.project.Project;
+import gruppe10.flowster.models.users.TeamMember;
 import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.models.users.User;
 import gruppe10.flowster.repositories.FlowsterRepository;
+import gruppe10.flowster.repositories.OrganisationRepository;
 import gruppe10.flowster.viewModels.CreateUserModel;
 import org.springframework.web.context.request.WebRequest;
 
 public class UserService
 {
     
-    ProjectManager loggedInProjectManager = null;
-    Employee loggedInEmployee = null;
+    public ProjectManager loggedInProjectManager = null;
+    public TeamMember loggedInTeamMember = null;
     
     String error;
     ProjectManager projectManager = new ProjectManager();
-    Employee employee = new Employee();
+    TeamMember teamMember = new TeamMember();
     
     FlowsterRepository flowsterRepository = new FlowsterRepository();
+    OrganisationRepository organisationRepository = new OrganisationRepository();
     
     
     /*
@@ -52,7 +55,7 @@ public class UserService
     
     /**
      * Tjekker om info på createUserModel er valid
-     * Opretter nyt projectManager-obj ELLER employee-obj
+     * Opretter nyt projectManager-obj ELLER teamMember-obj
      * Tilføjer nyt user-obj til db
      *
      * @param createUserModel Oplysninger som er tastet ind i createUserForm - som vi skal tjekke og oprette en ny
@@ -62,7 +65,7 @@ public class UserService
      * */
     public String checkCreateAndInsertUserIntoDb(CreateUserModel createUserModel)
     {
-        /* index-html
+        /* createUserForm i index-html skal indeholde:
         *
         * organisationAndJobType = required, number, min+max 5 char
         *
@@ -82,7 +85,7 @@ public class UserService
         // hvis email!=brugt tjekke om orgkode findes
         if(emailIsAvailable)
         {
-            int organisationId = Integer.parseInt(createUserModel.getOrganisationAndJobType().substring(0,3));
+            int organisationId = createUserModel.findOrganisationIdFromOrganisationAndJopType();
             
             // tjek om orgkode er findes
             boolean organisationsIdExists = flowsterRepository.doesOrganisationdExist(organisationId);
@@ -90,7 +93,7 @@ public class UserService
             // if orgkode == findes - tjek om jobType findes
             if(organisationsIdExists)
             {
-                int jobTypeId = Integer.parseInt(createUserModel.getOrganisationAndJobType().substring(3,5));
+                int jobTypeId = createUserModel.findJobTypeIdFromOrganisationAndJopType();
     
                 boolean jobTypeIdExists = flowsterRepository.doesJobTypeExist(jobTypeId);
     
@@ -101,20 +104,35 @@ public class UserService
                     {
                         // CREATE
     
-                        // lav et user objekt og gem i enten loggedInProjectManager ELLER loggedInEmployee
-                        User newUser = createUser(createUserModel, jobTypeId);
-                        // TODO
-                     
+                        // lav et user objekt og gem i enten loggedInProjectManager ELLER loggedInTeamMember
+                        User newUser = createUserFromCreateUserModel(createUserModel);
+                        
+                        /* TODO:  TJEK OM USER BLIVER REGISTRERET SOM ENTEN
+                        // boolean newUserIsTeamMember = newUser instanceof TeamMember;
+                        // boolean newUserIsProjectManager = newUser instanceof ProjectManager;
+                        // System.out.println("TEST in userService: teammember: " + newUserIsTeamMember + "
+                        // projectmanager: " + newUserIsProjectManager);
+                        
+                         */
+    
                         // INSERT
-                        // gemme user-obj i db
+                        // tilføjer user-obj til db
+                        organisationRepository.insertUserIntoDb(newUser);
                         
-                        // redirekt til frontpage
-                        
+                        // redirecter til frontPage - enten til projectManager eller teamMember
+                        if(newUser instanceof ProjectManager)
+                        {
+                            return "redirect:/projectManager/frontPage";
+                        }
+                        else if(newUser instanceof TeamMember)
+                        {
+                            return "redirect:/frontPage";
+                        }
                     }
                 }
             }
         }
-        // hvis brugeren ikke oprettes successfyldt
+        // hvis brugeren ikke oprettes successfyldt - redirectes til index-html igen
         return "redirect:/";
     }
     
@@ -168,7 +186,7 @@ public class UserService
             error = "Emailen er allerede i brug";
         }
         
-        // if passwords match == opret bruger - sæt til loggedInProjectManager ELLER loggedInEmployee og gem i db
+        // if passwords match == opret bruger - sæt til loggedInProjectManager ELLER loggedInTeamMember og gem i db
         
         
         return "redirect:/";
@@ -182,24 +200,39 @@ public class UserService
     }
     
     
-    public User createUser(CreateUserModel createUserModel, int jobTypeId)
+    /**
+     * Opretter nyt ProjectManager-obj ELLER TeamMember-obj ud fra createUserModel og jobTypeId
+     * Dette obj. sættes ENTEN til loggedInProjectManager ELLER loggedInTeamMember
+     * Derefter sættes User-obj som returneres til det oprettede obj.
+     *
+     *
+     * @param createUserModel createUserModel-obj som nyt User-obj. oprettes ud fra
+     * @return User User-obj som er sat til nyoprettet ProjectManager-obj ELLER TeamMember-obj
+     * */
+    public User createUserFromCreateUserModel(CreateUserModel createUserModel)
     {
         User newUser = null;
         
-        if(jobTypeId == 01)
+        String jobType =
+                flowsterRepository.retrieveJobTypeFromJobTypeId(createUserModel.findJobTypeIdFromOrganisationAndJopType());
+        
+        if(jobType.equalsIgnoreCase("Projectmanager"))
         {
             loggedInProjectManager = projectManager.createProjectManagaerFromCreateUserModel(createUserModel);
             newUser = loggedInProjectManager;
         }
         
-        else if(jobTypeId == 02)
+        else if(jobType.equalsIgnoreCase("Teammember"))
         {
-            loggedInEmployee = employee.createEmployeeFromCreateUserModel(createUserModel);
-            newUser = loggedInEmployee;
+            loggedInTeamMember = teamMember.createTeamMemberFromCreateUserModel(createUserModel);
+            newUser = loggedInTeamMember;
         }
         
         return newUser;
     }
+    
+    
+    
     
     
     

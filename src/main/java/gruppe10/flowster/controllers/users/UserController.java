@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
 @Controller
@@ -21,16 +20,29 @@ public class UserController
     {
         createUserModel.addAttribute("createUserModel", createUserModel);
         
-        return "index";
+        return "General/index"; // html
     }
     
-    
+    /**
+     * Sender bruger videre til korrekt url, når hun/han trykker "opret" på index-html
+     *
+     * @param dataFromCreateUserForm Data fra 'createUserForm'
+     * @return String url, som redirectes til
+     * */
     @PostMapping("/postCreateUser")
     public String postCreateUser(WebRequest dataFromCreateUserForm)
     {
+        // createUserModel bliver oprettet og gemt med oplysninger som bruger har tastet ind
         createUserModel = userService.createCreateUserModelFromForm(dataFromCreateUserForm);
         
-        String returnUrl = userService.createUser(createUserModel);
+        /* passende url som skal returneres findes ud fra createUserModel-obj
+        // if: createUserModel == projectManager: "redirect:/projectManager/frontPage"
+        // if: createUserModel == teamMember: "redirect:/frontPage"
+        // if createUserModel == ukorrekte oplydninger: "redirect:/" - herfra vises de oplysninger som brugeren
+        // tastede ind i formen
+        
+         */
+        String returnUrl = userService.checkCreateAndInsertUserIntoDb(createUserModel);
         
         return returnUrl;
     }
