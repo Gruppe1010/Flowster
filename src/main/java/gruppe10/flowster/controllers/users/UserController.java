@@ -24,7 +24,7 @@ public class UserController
     @GetMapping("/")
     public String index(Model createUserModel)
     {
-        createUserModel.addAttribute("createUserModel", createUserModel);
+        createUserModel.addAttribute("createUserViewModel", createUserViewModel);
         
         return "General/index"; // html
     }
