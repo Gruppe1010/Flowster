@@ -1,6 +1,5 @@
 package gruppe10.flowster.controllers.users;
 
-import gruppe10.flowster.models.users.User;
 import gruppe10.flowster.repositories.OrganisationRepository;
 import gruppe10.flowster.services.UserService;
 import gruppe10.flowster.viewModels.CreateUserViewModel;
@@ -40,7 +39,7 @@ public class UserController
     public String postCreateUser(WebRequest dataFromCreateUserForm)
     {
         // createUserModel bliver oprettet og gemt med oplysninger som bruger har tastet ind
-        createUserViewModel = userService.createCreateUserModelFromForm(dataFromCreateUserForm);
+        createUserViewModel = userService.createCreateUserViewModelFromForm(dataFromCreateUserForm);
         
         /* passende url som skal returneres findes ud fra createUserModel-obj
         // if: createUserModel == projectManager: "redirect:/projectManager/frontPage"
@@ -97,7 +96,7 @@ public class UserController
     @PostMapping("/postLogIn")
     public String postLogIn(WebRequest dataFromLogInForm)
     {
-        logInViewModel = userService.createLogInViewModel(dataFromLogInForm);
+        logInViewModel = userService.createLogInViewModelFromForm(dataFromLogInForm);
 
         String returnUrl = "redirect:/logIn";
 

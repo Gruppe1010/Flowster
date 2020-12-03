@@ -1,11 +1,13 @@
 package gruppe10.flowster.services;
 
+import com.mysql.cj.log.Log;
 import gruppe10.flowster.models.users.TeamMember;
 import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.models.users.User;
 import gruppe10.flowster.repositories.FlowsterRepository;
 import gruppe10.flowster.repositories.OrganisationRepository;
 import gruppe10.flowster.viewModels.CreateUserViewModel;
+import gruppe10.flowster.viewModels.LogInViewModel;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.HashMap;
@@ -42,7 +44,7 @@ public class UserService
      *
      * @return CreateUserModel Det oprettede createUserModel-objekt som laves ud fra formen
      * */
-    public CreateUserViewModel createCreateUserModelFromForm(WebRequest dataFromCreateUserForm)
+    public CreateUserViewModel createCreateUserViewModelFromForm(WebRequest dataFromCreateUserForm)
     {
         // fordi vi har sat feltet "organisationAndJobType" som required i html, bliver nullpointeren handlet der -
         // derfor gør vi ikke yderligere her
@@ -214,6 +216,8 @@ public class UserService
         return loggedInUser;
     }
     
+    // TODO: Lav måske denne om, så den bare returnerer className og vi så skriver resten af url'en inde i
+    //  Controlleren - for at tydeliggøre i Controlleren hvilken url det er vi kommer videre til
     public String retrieveFrontPageUrl()
     {
         String className = loggedInUser.getClass().getSimpleName();
@@ -222,6 +226,16 @@ public class UserService
         className = Character.toLowerCase(className.charAt(0)) + className.substring(1);
         
         return "redirect:/" + className + "/frontPage"; // url
+    }
+    
+    // TODO
+    public LogInViewModel createLogInViewModelFromForm(WebRequest dataFromLogInForm)
+    {
+        LogInViewModel logInViewModel = new LogInViewModel();
+        
+        
+    
+        return logInViewModel;
     }
     
     
