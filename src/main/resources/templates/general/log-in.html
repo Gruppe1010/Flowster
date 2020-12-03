@@ -12,67 +12,72 @@
     <link rel="stylesheet" href="/bootstrap-theme.css" type="text/css">
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/flowster.css" type="text/css">
-
-    <!-- Fragments -->
-    <div th:insert="general/fragments :: footer"></div>
-
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Padauk&family=Raleway:wght@200&display=swap" rel="stylesheet">
 
 </head>
 <body>
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-4" style="background-color:lightgray;">
+        <div class="col-sm-4">
+            <div class="container col-sm-12 container-width">
 
+                <h2 class="text-center">Log ind</h2>
+                <!-- Action bestemmer hvilken PostMapping vi går til -->
+                <form action="/postLogIn" method="post">
+
+                    <div class="form-group">
+
+                        <!--max-length="320" == Fordi i db har sat en limit på VARCHAR(320)-->
+                        <label class="label-padding" for="email">Email:</label>
+                        <input type="email"
+                               class="form-control"
+                               id="email"
+                               placeholder="Indtast email"
+                               th:value = "${logInViewModel.getEmail()}"
+                               name="email"
+                               required
+                               maxlength="320">
+
+
+                        <label class="label-padding" for="password">Adgangskode:</label>
+                        <input type="password"
+                               class="form-control"
+                               id="password"
+                               placeholder="Indtast adgangskode"
+                               name="password"
+                               required
+                               maxlength="320"
+                               pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
+
+                    </div>
+
+                    <div class="text-center">
+
+                        <button type="submit" class="btn flowster-btn">Log ind</button>
+
+                        <hr>
+
+                        <a href="/" class="btn flowster-btn ">Opret bruger</a>
+
+                    </div>
+                </form>
+
+            </div>
         </div>
-        <div class="col-sm-8" style="background-color:lightgray;">
+        <div class="col-sm-8">
 
-            <h2>Log ind</h2>
-            <!-- Action bestemmer hvilken PostMapping vi går til -->
-            <form action="/postLogIn" method="post">
+            <div class="col-sm-8 text-center">
 
-                <div class="form-group">
+                <img class="index-img-container" src="https://images.theconversation.com/files/350865/original/file-20200803-24-50u91u.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=675.0&fit=crop">
 
-                    <!--max-length="320" == Fordi i db har sat en limit på VARCHAR(320)-->
-                    <label for="email">Email:</label>
-                    <input type="email"
-                           class="form-control"
-                           id="email"
-                           placeholder="Indtast email"
-                           th:value = "${logInViewModel.getEmail()}"
-                           name="email"
-                           required
-                           maxlength="320">
-
-
-                    <label for="password">Adgangskode:</label>
-                    <input type="password"
-                           class="form-control"
-                           id="password"
-                           placeholder="Indtast adgangskode"
-                           name="password"
-                           required
-                           maxlength="320"
-                           pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
-                    <br>
-
-                </div>
-                <button type="submit" class="btn flowster-btn">Log ind</button>
-
-                <br><br>
-
-                <a href="/" class="btn flowster-btn ">Opret bruger</a>
-            </form>
-
-            <br>
-
-
-
-
+            </div>
 
         </div>
     </div>
 </div>
-
+<!-- Fragments -->
+<div th:insert="general/fragments :: footer"></div>
 </body>
 </html>
