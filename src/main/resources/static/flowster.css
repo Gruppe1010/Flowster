@@ -68,6 +68,7 @@ form.create-user hr
     padding-top: 8px;
 }
 
+/*Colours/Farver*/
 .darkblue
 {
     color: #235D89;
@@ -78,13 +79,20 @@ form.create-user hr
     color: #3E8AC4;
 }
 
-.container-width {
+.white
+{
+    color: white;
+}
+
+.container-width
+{
     padding-left: 120px;
     padding-top: 50px;
     width: 90%;
 }
 
-.footer {
+.footer
+{
     display: flex;
     background-color: #3E8AC4;
     color: white;
@@ -103,6 +111,7 @@ form.create-user hr
 {
     background-color: deeppink;
 }
+
 /*css-selector*/
 /* css-selector - ALLE p-tags som er i form, der har create-user-klassen*/
 /**/
@@ -111,13 +120,7 @@ form.create-user p
     color: deeppink;
 }
 
-
 .footer-logo
 {
     width: 160px;
-}
-
-.white
-{
-    color: white;
 }
