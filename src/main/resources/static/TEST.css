@@ -13,9 +13,15 @@ input[type=number]
 footer
 {
     position: absolute;
-    background-color: #555;
+    background-color: dodgerblue;
     color: white;
-    padding: 90px;
+    padding: 70px;
     bottom: 0;
     width: 100%;
+}
+
+.index-img-container
+{
+    width: 700px;
+    margin: 70px;
 }
