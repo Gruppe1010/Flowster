@@ -22,11 +22,11 @@ public class UserController
     OrganisationRepository organisationRepository = new OrganisationRepository();
     
     @GetMapping("/")
-    public String index(Model createUserModel)
+    public String index(Model createUserViewModel)
     {
-        createUserModel.addAttribute("createUserViewModel", createUserViewModel);
+        createUserViewModel.addAttribute("createUserViewModel", this.createUserViewModel);
         
-        return "General/index"; // html
+        return "general/index"; // html
     }
     
     /**
@@ -87,16 +87,19 @@ public class UserController
     @GetMapping("/logIn")
     public String logIn(Model logInViewModel)
     {
-        logInViewModel.addAttribute( "logInViewModel", logInViewModel);
+        logInViewModel.addAttribute( "logInViewModel", this.logInViewModel);
 
-        return "General/login"; // html
+        return "general/log-in"; // html
 
     }
 
     @PostMapping("/postLogIn")
     public String postLogIn(WebRequest dataFromLogInForm)
     {
+        
         logInViewModel = userService.createLogInViewModelFromForm(dataFromLogInForm);
+        
+        
 
         String returnUrl = "redirect:/logIn";
 

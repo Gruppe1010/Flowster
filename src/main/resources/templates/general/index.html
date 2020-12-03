@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="/bootstrap-theme.css" type="text/css">
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="/TEST.css" type="text/css">
+    <link rel="stylesheet" href="/flowster.css" type="text/css">
 
     <!-- Fragments -->
     <div th:insert="general/fragments :: footer"></div>
@@ -129,10 +129,13 @@
                                pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
 
                     </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-default flowster-btn">Opret</button>
                 </form>
             </div>
 
+            <br>
+
+            <a href="/logIn" class="btn btn-default flowster-btn">Log ind</a>
         </div>
         <div class="col-sm-8 text-center">
 

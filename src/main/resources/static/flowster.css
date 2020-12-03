@@ -13,11 +13,16 @@ input[type=number]
 footer
 {
     position: absolute;
-    background-color: dodgerblue;
+    background-color: #3E8AC4;
     color: white;
     padding: 70px;
     bottom: 0;
     width: 100%;
+}
+
+.flowster-btn
+{
+    background-color: #BCE1FD;
 }
 
 .index-img-container

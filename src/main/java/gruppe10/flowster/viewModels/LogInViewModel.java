@@ -2,28 +2,28 @@ package gruppe10.flowster.viewModels;
 
 public class LogInViewModel
 {
-    private String username;
+    private String email;
     private String password;
     
     
     // constructors
     public LogInViewModel(){}
     
-    public LogInViewModel(String username, String password)
+    public LogInViewModel(String email, String password)
     {
-        this.username = username;
+        this.email = email;
         this.password = password;
     }
     
     
     // getters + setters
-    public String getUsername()
+    public String getEmail()
     {
-        return username;
+        return email;
     }
-    public void setUsername(String username)
+    public void setEmail(String username)
     {
-        this.username = username;
+        this.email = username;
     }
     public String getPassword()
     {
