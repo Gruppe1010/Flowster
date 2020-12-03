@@ -67,7 +67,7 @@
                                placeholder="Indtast fornavn"
                                name="firstname"
                                required
-                               max-length="100"
+                               maxlength="100"
                                pattern="[A-Za-zæøåÆØÅ]">
 
                         <!--max-length="100" == Fordi i db har sat en limit på VARCHAR(100)-->
@@ -78,7 +78,7 @@
                                placeholder="Indtast fornavn"
                                name="surname"
                                required
-                               max-length="100"
+                               maxlength="100"
                                pattern="[A-Za-z]">
 
                         <!--max-length="320" == Fordi i db har sat en limit på VARCHAR(320)-->
@@ -89,7 +89,7 @@
                                placeholder="Indtast email"
                                name="email"
                                required
-                               max-length="320">
+                               maxlength="320">
 
 
                         <label for="password">Adgangskode:</label>
@@ -99,7 +99,7 @@
                                placeholder="Indtast adgangskode"
                                name="password"
                                required
-                               max-length="320"
+                               maxlength="320"
                                pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
 
                         <br>
@@ -110,7 +110,7 @@
                                placeholder="Bekræft adgangskode"
                                name="confirm-password"
                                required
-                               max-length="320"
+                               maxlength="320"
                                pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
 
                     </div>
