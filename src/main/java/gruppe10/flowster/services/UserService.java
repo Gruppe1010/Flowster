@@ -225,7 +225,7 @@ public class UserService
         // laver første forbogstav om til småt  - da ord i url'en står i camelCase
         className = Character.toLowerCase(className.charAt(0)) + className.substring(1);
         
-        return "redirect:/" + className + "/frontPage"; // url
+        return "redirect:/" + className; // url
     }
     
     // TODO

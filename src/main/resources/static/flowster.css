@@ -22,7 +22,10 @@ footer
 
 .flowster-btn
 {
-    background-color: #BCE1FD;
+    border-radius: 100px;
+    width: 200px;
+    color: white;
+    background-color: #3E8AC4;
 }
 
 .index-img-container
