@@ -2,7 +2,6 @@
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <title>Flowster</title>
     <!-- Hvilke karakterer der kan benyttes på siden -->
     <meta charset="utf-8">
@@ -13,6 +12,10 @@
     <link rel="stylesheet" href="/bootstrap-theme.css" type="text/css">
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/TEST.css" type="text/css">
+
+    <!-- Fragments -->
+    <div th:insert="general/fragments :: footer"></div>
+
 </head>
 <body>
 
@@ -56,7 +59,7 @@
 
                         <!-- Dette er den eneste værdi på createUserViewModel, som IKKE er null, fordi den er en double, hvis default er 0,0 -->
                         <!-- Derfor skal vi lave: -->
-                        <!-- if ? then ==  den viser KUN getManHours() hvis der er -->
+                        <!-- if ? then ==  den viser KUN getManHours() hvis den ikke er null -->
                         <label for="manhours">Arbejdertimer/uge:</label>
                         <input type="number"
                                class="form-control"
@@ -139,24 +142,8 @@
     </div>
 </div>
 
-<footer class="container-fluid text-center" >
 
-    <div class="col-sm-2">
-        <p>Kontakt</p>
-    </div>
 
-    <div class="col-sm-2">
-        <p>Om os</p>
-    </div>
-
-    <div class="col-sm-6">
-    </div>
-
-    <div class="col-sm-2">
-        <p>Logo</p>
-    </div>
-
-</footer>
 
 </body>
 </html>
