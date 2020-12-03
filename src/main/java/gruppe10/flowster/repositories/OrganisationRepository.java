@@ -57,7 +57,8 @@ public class OrganisationRepository
         // lægge ALT data på newUser ned
         try
         {
-            String sqlCommand = "INSERT INTO users (f_id_job_type, f_id_email, firstname, surname, password, manhours)";
+            String sqlCommand = "INSERT INTO users (f_id_job_type, f_id_email, firstname, surname, password, " +
+                                        "manhours) values(?, ?, ?, ?, ?, ?)";
     
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
             

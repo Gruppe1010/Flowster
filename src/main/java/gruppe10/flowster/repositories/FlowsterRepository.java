@@ -221,7 +221,7 @@ public class FlowsterRepository
         
         try
         {
-            String sqlCommand = "SELECT (organisaion_name) FROM organisations WHERE id_organisation = ?";
+            String sqlCommand = "SELECT (organisation_name) FROM organisations WHERE id_organisation = ?";
             
             PreparedStatement preparedStatement = flowsterConnection.prepareStatement(sqlCommand);
             
