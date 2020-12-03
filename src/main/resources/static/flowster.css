@@ -101,6 +101,12 @@ hr
     bottom: 0;
     width: 100%;
     /*all == alle ændringer man laver undervejs tager nu 2 sek*/
+    transition: background-color 2s;
+}
+
+.footer:hover
+{
+    background-color: deeppink;
 }
 /*css-selector*/
 /* css-selector - ALLE p-tags som er i form, der har create-user-klassen*/
