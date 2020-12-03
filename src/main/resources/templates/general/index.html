@@ -22,7 +22,7 @@
             <div class="container col-sm-12">
                 <h2>Opret bruger</h2>
                 <!-- Action bestemmer hvilken PostMapping vi går til -->
-                <form action="/postLogIn">
+                <form action="/postCreateUser" method="post">
 
                     <div class="form-group">
 
@@ -54,7 +54,7 @@
                         <input type="number"
                                class="form-control"
                                id="manhours"
-                               placeholder="Indtast organisationskode"
+                               placeholder="Indtast arbejdstimer"
                                name="manhours"
                                required
                                min="0" max="99">
