@@ -47,15 +47,6 @@ input[type=number]
     margin: 70px;
 }
 
-/*horisontal ruler - styler på et tag - men man vil typisk lave en mere præcis selector når man styler på tags*/
-/*form.create-user hr*/
-form.create-user hr
-{
-    border-width: 2px;
-    border-color: #CDD3D8;
-    width: 90%;
-}
-
 .font-italic
 {
     color: #3E8AC4;
@@ -118,6 +109,15 @@ form.create-user hr
 form.create-user p
 {
     color: deeppink;
+}
+
+/*horisontal ruler - styler på et tag - men man vil typisk lave en mere præcis selector når man styler på tags*/
+/*form.create-user hr*/
+form.create-user hr
+{
+    border-width: 2px;
+    border-color: #CDD3D8;
+    width: 90%;
 }
 
 .footer-logo
