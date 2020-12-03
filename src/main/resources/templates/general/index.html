@@ -1,12 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Flowster</title>
+    <!-- Hvilke karakterer der kan benyttes på siden -->
+    <meta charset="utf-8">
+    <!-- Får siden til at følge skærmens størrelse -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Stylesheets til Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/TEST.css" type="text/css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- Kan måske slettes -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 
+<div class="container-fluid">
+    <div class="row">
+        <!-- col==kolonne, sm==small, så den også kan benyttes på telefoner og tablets 4=del af siden den benytter ud af 12 -->
+        <div class="col-sm-4" style="background-color:lightgray;">
 
+            <div class="container col-sm-12">
+                <h2>Opret bruger</h2>
+                <!-- Action bestemmer hvilken PostMapping vi går til -->
+                <form action="/postLogIn">
+
+                    <div class="form-group">
+
+                        <!-- LABEL-TAG -->
+                        <!-- for="" == siger hvilket inputfelt labelen skal tilhøre -->
+                        <!-- inde i selve tagget == Tekst som står før inputfelt-->
+
+                        <!-- INPUT-TAG -->
+                        <!--type="" == specificerer hvilken type input feltet kan modtage-->
+                        <!--class="" == refererer til stylling som skal bruges på form-->
+                        <!-- id="" == inputfelt SKAL have et id - KAN referere til styling -->
+                        <!--placeholder == tekst som står inde i inputfelt -->
+                        <!-- name="" == navn vi refererer til i koden, når vi skal have inputtet fra formen -->
+                        <!-- required == betyder at inputfeltet SKAL udfyldes -->
+                        <!-- min + max == spændet som inputtet skal være mellem -->
+
+                        <label for="organisation-and-job-type">Organisationskode:</label>
+                        <input type="number"
+                               class="form-control"
+                               id="organisation-and-job-type"
+                               placeholder="Indtast organisationskode"
+                               name="organisation-and-job-type"
+                               required
+                               min="10000" max="99999"> <!-- gør at der SKAL indtastes et tal på 5 cifre -->
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pwd">Password:</label>
+                        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+                    </div>
+
+                    <div class="checkbox">
+                        <label><input type="checkbox" name="remember"> Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+
+        </div>
+        <div class="col-sm-8" style="background-color:lightgray;">
+            <p>Hvordan går det</p>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
