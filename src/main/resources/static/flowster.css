@@ -18,11 +18,7 @@ input::-webkit-inner-spin-button
     /*150 fordi det er højden på den samlede footer*/
     min-height: calc(100vh - 150px);
     padding-bottom: 20px;
-
 }
-
-
-
 
 .main-content:hover
 {
@@ -34,7 +30,6 @@ input[type=number]
     -moz-appearance: textfield;
 }
 
-
 .flowster-btn
 {
     border-radius: 100px;
@@ -43,7 +38,7 @@ input[type=number]
     background-color: #3E8AC4;
     /*farven: 0,0,0 == sort. 0.2 == 80% gennemsigtighed*/
     /*3px 3px 3px højre, nedad, hvor stor - hvis sidste værdi er større end forrige, kan man se det på top og venstre*/
-    box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
 }
 
 .index-img-container
@@ -54,7 +49,7 @@ input[type=number]
 
 /*horisontal ruler - styler på et tag - men man vil typisk lave en mere præcis selector når man styler på tags*/
 /*form.create-user hr*/
-hr
+form.create-user hr
 {
     border-width: 2px;
     border-color: #CDD3D8;
