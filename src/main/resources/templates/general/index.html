@@ -41,6 +41,7 @@
                         <!-- required == betyder at inputfeltet SKAL udfyldes -->
                         <!-- min + max == spændet som inputtet skal være mellem -->
 
+                        <!--min="10000" og max="99999" == gør at der SKAL indtastes et tal på 5 cifre-->
                         <label for="organisation-and-job-type">Organisationskode:</label>
                         <input type="number"
                                class="form-control"
@@ -48,16 +49,19 @@
                                placeholder="Indtast organisationskode"
                                name="organisation-and-job-type"
                                required
-                               min="10000" max="99999"> <!-- gør at der SKAL indtastes et tal på 5 cifre -->
+                               min="10000" max="99999">
 
+                        <!--min="0" og max="99" == gør at der SKAL indtastes et tal på 2 cifre-->
                         <label for="manhours">Arbejdertimer/uge:</label>
                         <input type="number"
                                class="form-control"
                                id="manhours"
                                placeholder="Indtast organisationskode"
                                name="manhours"
-                               required>
+                               required
+                               min="0" max="99">
 
+                        <!--max-length="100" == Fordi i db har sat en limit på VARCHAR(100)-->
                         <label for="firstname">Fornavn:</label>
                         <input type="text"
                                class="form-control"
@@ -66,8 +70,9 @@
                                name="firstname"
                                required
                                max-length="100"
-                               pattern="[A-Za-z]"> <!--Fordi vi i vores db har sat en limit på VARCHAR(100)-->
+                               pattern="[A-Za-zæøåÆØÅ]">
 
+                        <!--max-length="100" == Fordi i db har sat en limit på VARCHAR(100)-->
                         <label for="surname">Efternavn:</label>
                         <input type="text"
                                class="form-control"
@@ -76,8 +81,9 @@
                                name="surname"
                                required
                                max-length="100"
-                               pattern="[A-Za-z]"> <!--Fordi vi i vores db har sat en limit på VARCHAR(100)-->
+                               pattern="[A-Za-z]">
 
+                        <!--max-length="320" == Fordi i db har sat en limit på VARCHAR(320)-->
                         <label for="email">Email:</label>
                         <input type="email"
                                class="form-control"
@@ -85,18 +91,30 @@
                                placeholder="Indtast email"
                                name="email"
                                required
-                               max-length="320"> <!--Fordi vi i vores db har sat en limit på VARCHAR(100)-->
+                               max-length="320">
 
 
-                    </div>
+                        <label for="password">Adgangskode:</label>
+                        <input type="password"
+                               class="form-control"
+                               id="password"
+                               placeholder="Indtast adgangskode"
+                               name="password"
+                               required
+                               max-length="320"
+                               pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
 
-                    <div class="form-group">
-                        <label for="pwd">Password:</label>
-                        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
-                    </div>
+                        <br>
 
-                    <div class="checkbox">
-                        <label><input type="checkbox" name="remember"> Remember me</label>
+                        <input type="confirm-password"
+                               class="form-control"
+                               id="confirm-password"
+                               placeholder="Bekræft adgangskode"
+                               name="confirm-password"
+                               required
+                               max-length="320"
+                               pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
+
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
