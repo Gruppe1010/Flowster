@@ -21,29 +21,22 @@
 
 <!-- SIDEBAR -->
 
-
+<!-- GOOGLE: reset css - for at fjerne styling fra individuelle browsere == RR01 -->
 
 <!-- FOOTER -->
 
-<div th:fragment="footer" class="margin">
-    <footer class="container-fluid text-center" >
-
-        <div class="col-sm-2">
-            <p>Kontakt</p>
-        </div>
-
-        <div class="col-sm-2">
-            <a<p>Om os</p>
-        </div>
-
-        <div class="col-sm-6">
-        </div>
-
-        <div class="col-sm-2">
-            <p>Logo</p>
-        </div>
-
-    </footer>
+<div th:fragment="footer" class="text-center footer">
+    <div class="col-sm-2">
+        <a href="/contact" class="white 20">Kontakt</a>
+    </div>
+    <div class="col-sm-2">
+        <a href="/aboutUs" class="white">Om os</a>
+    </div>
+    <div class="col-sm-6">
+    </div>
+    <div class="col-sm-2">
+        <p>Logo</p>
+    </div>
 </div>
 
 </body>

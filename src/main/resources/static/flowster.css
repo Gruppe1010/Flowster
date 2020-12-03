@@ -10,6 +10,17 @@ input::-webkit-inner-spin-button
     margin: 0;
 }
 
+.main-content
+{
+    /*vh == viewheight ELLER viewportheight*/
+    /*IKKE 100 % fordi det betyder 100 % af højden på det element som main-content ligger inde i*/
+    /*calc er dog ikke understøttet af explorer en eller anden version*/
+    /*150 fordi det er højden på den samlede footer*/
+    min-height: calc(100vh - 150px);
+    padding-bottom: 20px;
+
+}
+
 input[type=number]
 {
     -moz-appearance: textfield;
@@ -22,6 +33,9 @@ input[type=number]
     width: 200px;
     color: white;
     background-color: #3E8AC4;
+    /*farven: 0,0,0 == sort. 0.2 == 80% gennemsigtighed*/
+    /*3px 3px 3px højre, nedad, hvor stor - hvis sidste værdi er større end forrige, kan man se det på top og venstre*/
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
 }
 
 .index-img-container
@@ -54,26 +68,27 @@ hr
     color: #235D89;
 }
 
-.container-width
-{
+.container-width {
     padding-left: 120px;
     padding-top: 50px;
     width: 90%;
 }
 
-footer
+.footer
 {
-    position: relative;
+    display: flex;
     background-color: #3E8AC4;
     color: white;
+    height: 150px;
     padding: 60px;
+    /*border-box = indholdet + padding - sættes til height (indholdet får højden på height minus padding)*/
+    /*content-box = KUN indholdet sættes til height-højden (denne er default)*/
+    box-sizing: border-box;
     bottom: 0;
     width: 100%;
-
 }
 
-.margin
+.white
 {
-    margin-top: 50px;
-
+    color: white;
 }
