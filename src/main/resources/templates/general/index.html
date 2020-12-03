@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="/bootstrap-theme.css" type="text/css">
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/flowster.css" type="text/css">
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Padauk&family=Raleway:wght@200&display=swap" rel="stylesheet">
 
     <!-- Fragments -->
     <div th:insert="general/fragments :: footer"></div>
@@ -24,7 +26,7 @@
         <!-- col==kolonne, sm==small, så den også kan benyttes på telefoner og tablets 4=del af siden den benytter ud af 12 -->
         <div class="col-sm-4">
 
-            <div class="container col-sm-12">
+            <div class="container col-sm-12 container-width">
                 <h2 class="text-center">Opret bruger</h2>
                 <!-- Action bestemmer hvilken PostMapping vi går til -->
                 <form action="/postCreateUser" method="post">

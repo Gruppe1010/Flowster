@@ -1,3 +1,8 @@
+html *
+{
+    font-family: 'Raleway', sans-serif;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button
 {
@@ -10,15 +15,6 @@ input[type=number]
     -moz-appearance: textfield;
 }
 
-footer
-{
-    position: absolute;
-    background-color: #3E8AC4;
-    color: white;
-    padding: 70px;
-    bottom: 0;
-    width: 100%;
-}
 
 .flowster-btn
 {
@@ -51,4 +47,25 @@ hr
 .label-padding
 {
     padding-top: 3px;
+}
+
+.darkblue
+{
+    color: #235D89;
+}
+
+.container-width
+{
+    padding-left: 120px;
+    width: 90%;
+}
+
+footer
+{
+    position: absolute;
+    background-color: #3E8AC4;
+    color: white;
+    padding: 60px;
+    bottom: 0;
+    width: 100%;
 }
