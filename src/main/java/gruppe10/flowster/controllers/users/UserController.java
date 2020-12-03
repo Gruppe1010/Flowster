@@ -4,6 +4,7 @@ import gruppe10.flowster.models.users.User;
 import gruppe10.flowster.repositories.OrganisationRepository;
 import gruppe10.flowster.services.UserService;
 import gruppe10.flowster.viewModels.CreateUserViewModel;
+import gruppe10.flowster.viewModels.LogInViewModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ public class UserController
     // disse attributter bliver packageprivate fordi vi ikke har givet dem nogle andre accessmodifiers
     UserService userService = new UserService();
     CreateUserViewModel createUserViewModel = new CreateUserViewModel();
+    LogInViewModel logInViewModel = new LogInViewModel();
     
     // TODO: nu kalder vi denne direkte herinde
     OrganisationRepository organisationRepository = new OrganisationRepository();
@@ -86,11 +88,21 @@ public class UserController
     @GetMapping("/logIn")
     public String logIn(Model logInViewModel)
     {
-
-
-
+        logInViewModel.addAttribute( "logInViewModel", logInViewModel);
 
         return "General/login"; // html
+
+    }
+
+    @PostMapping("/postLogIn")
+    public String postLogIn(WebRequest dataFromLogInForm)
+    {
+        logInViewModel = userService.createLogInViewModel(dataFromLogInForm);
+
+        String returnUrl = "redirect:/logIn";
+
+
+        return returnUrl;
 
     }
 
