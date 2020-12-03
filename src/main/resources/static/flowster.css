@@ -33,3 +33,22 @@ footer
     width: 700px;
     margin: 70px;
 }
+
+hr
+{
+    border-width: 2px;
+    border-color: #CDD3D8;
+    width: 90%;
+}
+
+.font-italic
+{
+    color: #CDD3D8;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.label-padding
+{
+    padding-top: 3px;
+}

@@ -60,7 +60,7 @@
                         <!-- Dette er den eneste værdi på createUserViewModel, som IKKE er null, fordi den er en double, hvis default er 0,0 -->
                         <!-- Derfor skal vi lave: -->
                         <!-- if ? then ==  den viser KUN getManHours() hvis den ikke er null -->
-                        <label for="manhours">Arbejdertimer/uge:</label>
+                        <label class="label-padding" for="manhours">Arbejdertimer/uge:</label>
                         <input type="number"
                                class="form-control"
                                id="manhours"
@@ -71,7 +71,7 @@
                                min="0" max="99">
 
                         <!--max-length="100" == Fordi i db har sat en limit på VARCHAR(100)-->
-                        <label for="firstname">Fornavn:</label>
+                        <label class="label-padding" for="firstname">Fornavn:</label>
                         <input type="text"
                                class="form-control"
                                id="firstname"
@@ -83,7 +83,7 @@
                                pattern="^[a-zA-ZæøåÆØÅ\s\-]*$">
 
                         <!--max-length="100" == Fordi i db har sat en limit på VARCHAR(100)-->
-                        <label for="surname">Efternavn:</label>
+                        <label class="label-padding" for="surname">Efternavn:</label>
                         <input type="text"
                                class="form-control"
                                id="surname"
@@ -95,7 +95,7 @@
                                pattern="^[a-zA-ZæøåÆØÅ\s\-]*$">
 
                         <!--max-length="320" == Fordi i db har sat en limit på VARCHAR(320)-->
-                        <label for="email">Email:</label>
+                        <label class="label-padding" for="email">Email:</label>
                         <input type="email"
                                class="form-control"
                                id="email"
@@ -106,13 +106,14 @@
                                maxlength="320">
 
 
-                        <label for="password">Adgangskode:</label>
+                        <label class="label-padding" for="password">Adgangskode:</label>
                         <input type="password"
                                class="form-control"
                                id="password"
                                placeholder="Indtast adgangskode"
                                th:value = "${createUserViewModel.getPassword()}"
                                name="password"
+                               value="Valeas"
                                required
                                maxlength="320"
                                pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
@@ -129,9 +130,17 @@
                                pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
 
                     </div>
-                    <button type="submit" class="btn flowster-btn">Opret</button>
-                    <br><br>
-                    <a href="/logIn" class="btn flowster-btn">Log ind</a>
+                    <div class="text-center">
+
+                        <button type="submit" class="btn flowster-btn">Opret</button>
+
+                        <hr>
+
+                        <p class="font-italic">Har du allerede en bruger?</p>
+
+                        <a href="/logIn" class="btn flowster-btn">Log ind</a>
+
+                    </div>
                 </form>
             </div>
 
