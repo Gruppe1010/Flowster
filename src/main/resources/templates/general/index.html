@@ -68,7 +68,7 @@
                                name="firstname"
                                required
                                maxlength="100"
-                               pattern="[A-Za-zæøåÆØÅ]">
+                               pattern="^[a-zA-ZæøåÆØÅ\s\-]*$">
 
                         <!--max-length="100" == Fordi i db har sat en limit på VARCHAR(100)-->
                         <label for="surname">Efternavn:</label>
@@ -79,7 +79,7 @@
                                name="surname"
                                required
                                maxlength="100"
-                               pattern="[A-Za-z]">
+                               pattern="^[a-zA-ZæøåÆØÅ\s\-]*$">
 
                         <!--max-length="320" == Fordi i db har sat en limit på VARCHAR(320)-->
                         <label for="email">Email:</label>
