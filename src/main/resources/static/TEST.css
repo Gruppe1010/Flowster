@@ -1,11 +1,21 @@
-/* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+input::-webkit-inner-spin-button
+{
     -webkit-appearance: none;
     margin: 0;
 }
 
-/* Firefox */
-input[type=number] {
+input[type=number]
+{
     -moz-appearance: textfield;
+}
+
+footer
+{
+    position: absolute;
+    background-color: #555;
+    color: white;
+    padding: 90px;
+    bottom: 0;
+    width: 100%;
 }
