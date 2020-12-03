@@ -88,6 +88,11 @@ hr
     width: 100%;
 }
 
+.footer-logo
+{
+    width: 160px;
+}
+
 .white
 {
     color: white;
