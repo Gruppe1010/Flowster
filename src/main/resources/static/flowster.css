@@ -103,6 +103,11 @@ input[type=number]
     background-color: deeppink;
 }
 
+.footer-logo
+{
+    width: 160px;
+}
+
 /*css-selector*/
 /* css-selector - ALLE p-tags som er i form, der har create-user-klassen*/
 /**/
@@ -118,9 +123,4 @@ form.create-user hr
     border-width: 2px;
     border-color: #CDD3D8;
     width: 90%;
-}
-
-.footer-logo
-{
-    width: 160px;
 }
