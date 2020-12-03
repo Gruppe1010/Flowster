@@ -49,6 +49,45 @@
                                name="organisation-and-job-type"
                                required
                                min="10000" max="99999"> <!-- gør at der SKAL indtastes et tal på 5 cifre -->
+
+                        <label for="manhours">Arbejdertimer/uge:</label>
+                        <input type="number"
+                               class="form-control"
+                               id="manhours"
+                               placeholder="Indtast organisationskode"
+                               name="manhours"
+                               required>
+
+                        <label for="firstname">Fornavn:</label>
+                        <input type="text"
+                               class="form-control"
+                               id="firstname"
+                               placeholder="Indtast fornavn"
+                               name="firstname"
+                               required
+                               max-length="100"
+                               pattern="[A-Za-z]"> <!--Fordi vi i vores db har sat en limit på VARCHAR(100)-->
+
+                        <label for="surname">Efternavn:</label>
+                        <input type="text"
+                               class="form-control"
+                               id="surname"
+                               placeholder="Indtast fornavn"
+                               name="surname"
+                               required
+                               max-length="100"
+                               pattern="[A-Za-z]"> <!--Fordi vi i vores db har sat en limit på VARCHAR(100)-->
+
+                        <label for="email">Email:</label>
+                        <input type="email"
+                               class="form-control"
+                               id="email"
+                               placeholder="Indtast email"
+                               name="email"
+                               required
+                               max-length="320"> <!--Fordi vi i vores db har sat en limit på VARCHAR(100)-->
+
+
                     </div>
 
                     <div class="form-group">

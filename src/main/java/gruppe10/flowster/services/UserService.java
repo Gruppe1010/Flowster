@@ -67,7 +67,7 @@ public class UserService
          *
          * firstname + surname = required, only letters, max-length: 100
          *
-         * email = required, valid email-input,
+         * email = required, valid email-input
          *
          * password + confirmpassword = required, uppercase, lowercase, number/specialchar, 8-length
          *
