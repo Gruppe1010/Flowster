@@ -121,6 +121,11 @@ form.create-user p
 }
 
 
+.footer-logo
+{
+    width: 160px;
+}
+
 .white
 {
     color: white;
