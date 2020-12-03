@@ -63,10 +63,17 @@ hr
 
 footer
 {
-    position: absolute;
+    position: relative;
     background-color: #3E8AC4;
     color: white;
     padding: 60px;
     bottom: 0;
     width: 100%;
+
+}
+
+.margin
+{
+    margin-top: 50px;
+
 }

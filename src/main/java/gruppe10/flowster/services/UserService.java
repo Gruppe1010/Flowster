@@ -218,24 +218,56 @@ public class UserService
     
     // TODO: Lav måske denne om, så den bare returnerer className og vi så skriver resten af url'en inde i
     //  Controlleren - for at tydeliggøre i Controlleren hvilken url det er vi kommer videre til
-    public String retrieveFrontPageUrl()
+    public String retrieveClassNameUrl()
     {
         String className = loggedInUser.getClass().getSimpleName();
         
         // laver første forbogstav om til småt  - da ord i url'en står i camelCase
-        className = Character.toLowerCase(className.charAt(0)) + className.substring(1);
-        
-        return "redirect:/" + className; // url
+        return Character.toLowerCase(className.charAt(0)) + className.substring(1);
+    }
+    
+    public LogInViewModel createLogInViewModelFromForm(WebRequest dataFromLogInForm)
+    {
+        LogInViewModel logInViewModel = new LogInViewModel(
+                dataFromLogInForm.getParameter("email"),
+                dataFromLogInForm.getParameter("password"));
+    
+        return logInViewModel;
     }
     
     // TODO
-    public LogInViewModel createLogInViewModelFromForm(WebRequest dataFromLogInForm)
+    public String convertOrganisationNameToDbName(String organisationName)
     {
-        LogInViewModel logInViewModel = new LogInViewModel();
-        
-        
+        return "hej";
+    }
+    // TODO HER
+    public boolean checkIfLogInInfoIsValid(LogInViewModel logInViewModel)
+    {
+        //tjek om email eksisterer i emails-table
+        boolean emailExistsInDb = !(flowsterRepository.isEmailAvailable(logInViewModel.getEmail()));
     
-        return logInViewModel;
+        //  = if(emailExists): finde org_name ud fra email
+        if(emailExistsInDb)
+        {
+            // TODO
+            String organisationName = "hej";
+        }
+        
+        
+        // String dbName = convertOrganisationNameToDbName(organisationName);
+        
+        // organisationRepository.retrieveUserFromDb(logInViewModel)
+        // String sqlCommand = "SELECT * FROM users WHERE email = ? and password = ?";
+        //finder user i users-tabel i org-name-db where
+        // email = ? and
+        // password = ?
+        
+        
+        
+        // find bruger ud fra email
+        
+        return false;
+        
     }
     
     

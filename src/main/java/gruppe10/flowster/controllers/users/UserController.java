@@ -21,6 +21,8 @@ public class UserController
     // TODO: nu kalder vi denne direkte herinde
     OrganisationRepository organisationRepository = new OrganisationRepository();
     
+    String redirect = "redirect:/";
+    
     @GetMapping("/")
     public String index(Model createUserViewModel)
     {
@@ -46,9 +48,7 @@ public class UserController
         // if: createUserModel == teamMember: "redirect:/frontPage"
         // if createUserModel == ukorrekte oplydninger: "redirect:/" - herfra vises de oplysninger som brugeren
         // tastede ind i formen
-        
          */
-        String returnUrl = "redirect:/"; // tror automatisk der er sket en fejl
         
         // tjekker om indtastet data er valid
         /*
@@ -64,24 +64,13 @@ public class UserController
             userService.insertNewUserIntoDb(createUserViewModel);
             
             // afhængigt af hvilken type user der lige er blevet oprette, guide til en url
-            returnUrl = userService.retrieveFrontPageUrl();
-            
-            
-            /*
-            // opretter nyt User-obj ud fra createUserViewModel
-            User newUser = userService.createUserFromCreateUserModel(createUserViewModel);
-            
-            // tilføjer nyt User-obj til db
-            organisationRepository.insertUserIntoDb(newUser);
-            
-             */
+            String className = userService.retrieveClassNameUrl();
     
-    
-            return returnUrl;
+            return redirect + className + "/frontPage";
         }
         
         
-        return returnUrl;
+        return redirect;
     }
     
     @GetMapping("/logIn")
@@ -99,13 +88,11 @@ public class UserController
         
         logInViewModel = userService.createLogInViewModelFromForm(dataFromLogInForm);
         
+        // TODO HER
+        boolean logInInfoIsValid = userService.checkIfLogInInfoIsValid(logInViewModel);
         
-
-        String returnUrl = "redirect:/logIn";
-
-
-        return returnUrl;
-
+        
+        return redirect + "logIn";
     }
 
 
