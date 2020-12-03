@@ -21,6 +21,14 @@ input::-webkit-inner-spin-button
 
 }
 
+
+
+
+.main-content:hover
+{
+
+}
+
 input[type=number]
 {
     -moz-appearance: textfield;
@@ -44,6 +52,8 @@ input[type=number]
     margin: 70px;
 }
 
+/*horisontal ruler - styler på et tag - men man vil typisk lave en mere præcis selector når man styler på tags*/
+/*form.create-user hr*/
 hr
 {
     border-width: 2px;
@@ -68,6 +78,11 @@ hr
     color: #235D89;
 }
 
+.medium-blue
+{
+    color: #3E8AC4;
+}
+
 .container-width {
     padding-left: 120px;
     padding-top: 50px;
@@ -86,7 +101,25 @@ hr
     box-sizing: border-box;
     bottom: 0;
     width: 100%;
+    /*all == alle ændringer man laver undervejs tager nu 2 sek*/
+    transition: background-color 2s;
 }
+
+.footer:hover
+{
+    background-color: deeppink;
+
+
+
+}
+/*css-selector*/
+/* css-selector - ALLE p-tags som er i form, der har create-user-klassen*/
+/**/
+form.create-user p
+{
+    color: deeppink;
+}
+
 
 .white
 {
