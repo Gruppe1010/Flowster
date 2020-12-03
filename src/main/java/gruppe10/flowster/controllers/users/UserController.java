@@ -86,10 +86,12 @@ public class UserController
     @GetMapping("/logIn")
     public String logIn(Model logInViewModel)
     {
-    
-    
-    
-    
+
+
+
+
+        return "General/login"; // html
+
     }
 
 
