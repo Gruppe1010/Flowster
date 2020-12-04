@@ -10,7 +10,8 @@ public class ProjectManager extends User
 {
     
     private ArrayList<Project> managedProjectsList;
-    private ArrayList<Team> createdTeamsList;
+    private ArrayList<Team> joinedTeamsList; // TODO: ændret til joinedTeamsList fordi vi godt vil have at
+    // ProjectManageren er med på teamsne
     
     //constructors
     public ProjectManager(){}
@@ -39,13 +40,13 @@ public class ProjectManager extends User
     {
         this.managedProjectsList = managedProjectsList;
     }
-    public ArrayList<Team> getCreatedTeamsList()
+    public ArrayList<Team> getJoinedTeamsList()
     {
-        return createdTeamsList;
+        return joinedTeamsList;
     }
-    public void setCreatedTeamsList(ArrayList<Team> createdTeamsList)
+    public void setJoinedTeamsList(ArrayList<Team> createdTeamsList)
     {
-        this.createdTeamsList = createdTeamsList;
+        this.joinedTeamsList = createdTeamsList;
     }
     
     

@@ -1,3 +1,4 @@
+<!-- GOOGLE: reset css - for at fjerne styling fra individuelle browsere == RR01 -->
 <!DOCTYPE html>
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
@@ -18,8 +19,9 @@
 </head>
 <body>
 
+<!------------------------------------------ MENUBAR ------------------------------------------>
 
-<!-- MENUBAR -->
+<!-- TODO: hvad skal denne nav-tag? -->
 <nav>
     <a href="/html/">HTML</a> |
     <a href="/css/">CSS</a> |
@@ -27,6 +29,9 @@
     <a href="/python/">Python</a>
 </nav>
 
+<!-- TODO: når man kalder dette fragment skal man skrive:
+<nav th:insert="general/fragments :: menubar(${loggedInUser})"></nav>
+-->
 
 <nav th:fragment="menubar(loggedInUser)" class="navbar navbar-custom">
     <div class="container-fluid">
@@ -47,9 +52,9 @@
 
             <!-- Links -->
             <ul class="navbar-text">
-                <a href="#">Startside</a>
                 <a th:href="${loggedInUser.getClassName() + '/teams'}">Teams</a>
-                <a href="#">Projekter</a>
+                <br>
+                <a th:href="${loggedInUser.getClassName() + '/projects'}">Projekter</a>
             </ul>
 
         </div>
@@ -57,12 +62,26 @@
     </div>
 </nav>
 
+<!------------------------------------------ SIDEBAR ------------------------------------------> <!--TODO-->
 
-<!-- SIDEBAR -->
+<!-- TODO: når man kalder dette fragment skal man skrive:
+<nav th:insert="general/fragments :: menubar(${loggedInUser.getJoinedTeamsList()})"></nav>
+-->
+<nav th:fragment="sidebar(joinedTeamsList)" class="navbar navbar-custom">
+    <!--
 
-<!-- GOOGLE: reset css - for at fjerne styling fra individuelle browsere == RR01 -->
+    MENUPUNKT øverst i sidebar:
+    ${loggedInUser.isProjectManager() ? 'Nyt projekt'}"
 
-<!-- FOOTER -->
+    Liste under menu-punkt:
+    <tr th:each="team: ${joinedTeamsList}">
+        <td th:text="${team.getName()}" />
+    </tr>
+    -->
+
+</nav>
+
+<!------------------------------------------ FOOTER ------------------------------------------>
 
 <div th:fragment="footer" class="text-center footer">
     <div class="col-sm-2">
@@ -77,6 +96,34 @@
         <img class="footer-logo" src="/images/Flowster_logo.png">
     </div>
 </div>
+
+<!--TODO: Måske lav et andet htmldok til main-content?? -->
+<!------------------------------------------ MAIN-CONTENT ------------------------------------------>
+
+<!-- TODO: når man kalder dette fragment skal man skrive:
+<nav th:insert="general/fragments :: menubar(${loggedInUser.getJoinedTeamsList()})"></nav>
+-->
+<!-- MAIN-CONTENT: TEAMS -->
+
+
+<!-- TODO: når man kalder dette fragment skal man skrive:
+<nav th:insert="general/fragments :: menubar(${loggedInUser.getJoinedTeamsList()})"></nav>
+-->
+<!-- MAIN-CONTENT: CREATETEAM-html -->
+
+
+<!-- TODO: når man kalder dette fragment skal man skrive:
+<nav th:insert="general/fragments :: menubar(${loggedInUser.getJoinedProjectsList()})"></nav>
+-->
+<!-- MAIN-CONTENT: PROJECTS -->
+
+<!-- TODO: når man kalder dette fragment skal man skrive:
+<nav th:insert="general/fragments :: menubar(${loggedInUser.getJoinedProjectsList()})"></nav>
+-->
+<!-- MAIN-CONTENT: CREATEPROJECT-html -->
+
+
+
 
 </body>
 
