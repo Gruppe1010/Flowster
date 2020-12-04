@@ -156,7 +156,7 @@ public class OrganisationRepository
     
     
                 // find organisationAndJobType
-                int jobType = resultSet.getInt("f_id_job_type")
+                int jobType = resultSet.getInt("f_id_job_type");
                 
                 String organisationAndJobTypeString = Integer.toString(
                         flowsterRepository.retrieveOrganisationIdFromEmailId(emailId) + jobType);
