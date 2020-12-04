@@ -9,17 +9,17 @@ import java.util.HashSet;
 public class Team
 {
     private String name;
-    private HashSet<TeamMember> employeesSet;
+    private ArrayList<TeamMember> employeesList;
     private ArrayList<Project> projectsList;
     
     
     // constructors
     public Team(){}
     
-    public Team(String name, HashSet<TeamMember> employeesSet, ArrayList<Project> projectsList)
+    public Team(String name, ArrayList<TeamMember> employeesList, ArrayList<Project> projectsList)
     {
         this.name = name;
-        this.employeesSet = employeesSet;
+        this.employeesList = employeesList;
         this.projectsList = projectsList;
     }
     
@@ -33,13 +33,13 @@ public class Team
     {
         this.name = name;
     }
-    public HashSet<TeamMember> getEmployeesSet()
+    public ArrayList<TeamMember> getEmployeesList()
     {
-        return employeesSet;
+        return employeesList;
     }
-    public void setEmployeesSet(HashSet<TeamMember> employeesSet)
+    public void setEmployeesList(ArrayList<TeamMember> employeesList)
     {
-        this.employeesSet = employeesSet;
+        this.employeesList = employeesList;
     }
     public ArrayList<Project> getProjectsList()
     {

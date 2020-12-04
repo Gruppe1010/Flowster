@@ -2,7 +2,7 @@ package gruppe10.flowster.models.users;
 
 import gruppe10.flowster.UserData;
 
-public class User implements UserData
+public class User implements UserData, Comparable<User>
 {
     // 00000 = første 3 nuller = organisationskode, 2 nuller = stillingskode
     // 01 == projectManager
@@ -100,7 +100,9 @@ public class User implements UserData
         this.profilePictureBytes = profilePictureBytes;
     }
     
-    // METODER FRA UserData-interface
+    // UserData-interface
+    
+    @Override
     /**
      * Finder organisationsId ved at adskille de første 3 cifre fra organisationAndJobType-attributten
      *
@@ -114,6 +116,7 @@ public class User implements UserData
         return Integer.parseInt(organisationAndJobTypeString.substring(0,3));
     }
     
+    @Override
     /**
      * Finder jobTypeId ved at adskille de sidste 2 cifre fra organisationAndJobType-attributten
      *
@@ -127,6 +130,44 @@ public class User implements UserData
         return Integer.parseInt(organisationAndJobTypeString.substring(3,5));
     }
     
+    // Comparable-interface
+    @Override
+    public int compareTo(User user)
+    {
+        //if(user.isTennisBall() && !isTennisBall())
+        if(isProjectManager() && user.isTeamMember())
+        {
+            return 1; //hvis this.obj > param.obj
+        }
+        else if(isTeamMember() && user.isProjectManager())
+        {
+            return -1; // hvis this.obj < param.obj
+        }
+        else if(isProjectManager() && user.isProjectManager())
+        {
+            return 0; // this.obj == param.obj
+        }
+        
+   
+        // else hvis de begge er TeamMember's
+        return 0; // this.obj == param.obj
+    }
+    
+    
     // ANDRE METODER
+    public boolean isProjectManager()
+    {
+        return false;
+    }
+    public boolean isTeamMember()
+    {
+        return false;
+    }
+    
+    public String getClassName()
+    {
+        return getClass().getSimpleName();
+    }
+    
     
 }

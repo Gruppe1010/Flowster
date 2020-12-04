@@ -20,7 +20,7 @@ public class TeamMemberController
         // TODO måske er castet (TeamMember) overflødig
         loggedInTeamMemberModel.addAttribute("loggedInTeamMember", (TeamMember) userService.loggedInUser);
         
-        return "TeamMember/frontPage"; // html
+        return "teamMember/frontPage"; // html
     }
     
     
