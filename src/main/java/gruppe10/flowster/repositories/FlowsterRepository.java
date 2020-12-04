@@ -45,7 +45,7 @@ public class FlowsterRepository
         }
         catch(SQLException e)
         {
-            System.out.println("ERROR in insertRowIntoEmailsAndOrganisations: " + e.getMessage());
+            System.err.println("ERROR in insertRowIntoEmailsAndOrganisations: " + e.getMessage());
         }
         finally
         {
@@ -55,7 +55,7 @@ public class FlowsterRepository
             }
             catch(SQLException e)
             {
-                System.out.println("ERROR in insertRowIntoEmailsAndOrganisationsFinally: " + e.getMessage());
+                System.err.println("ERROR in insertRowIntoEmailsAndOrganisationsFinally: " + e.getMessage());
             }
         }
         
@@ -98,7 +98,7 @@ public class FlowsterRepository
         }
         catch(SQLException e)
         {
-            System.out.println("Error in doesJobTypeExist: " + e.getMessage());
+            System.err.println("Error in doesJobTypeExist: " + e.getMessage());
         }
         finally
         {
@@ -108,7 +108,7 @@ public class FlowsterRepository
             }
             catch(SQLException e)
             {
-                System.out.println("Error in doesJobTypeExistFinally: " + e.getMessage());
+                System.err.println("Error in doesJobTypeExistFinally: " + e.getMessage());
             }
         }
         
@@ -145,7 +145,7 @@ public class FlowsterRepository
         }
         catch(SQLException e)
         {
-            System.out.println("Error in retrieveJobTypeFromJobTypeId: " + e.getMessage());
+            System.err.println("Error in retrieveJobTypeFromJobTypeId: " + e.getMessage());
         }
         finally
         {
@@ -155,7 +155,7 @@ public class FlowsterRepository
             }
             catch(SQLException e)
             {
-                System.out.println("Error in retrieveJobTypeFromJobTypeIdFinally: " + e.getMessage());
+                System.err.println("Error in retrieveJobTypeFromJobTypeIdFinally: " + e.getMessage());
             }
         }
     
@@ -194,7 +194,7 @@ public class FlowsterRepository
         }
         catch(SQLException e)
         {
-            System.out.println("Error in doesOrganisationdExist: " + e.getMessage());
+            System.err.println("Error in doesOrganisationdExist: " + e.getMessage());
         }
         finally
         {
@@ -204,7 +204,7 @@ public class FlowsterRepository
             }
             catch(SQLException e)
             {
-                System.out.println("Error in doesOrganisationdExistFinally: " + e.getMessage());
+                System.err.println("Error in doesOrganisationdExistFinally: " + e.getMessage());
             }
         }
         
@@ -240,7 +240,7 @@ public class FlowsterRepository
         }
         catch(SQLException e)
         {
-            System.out.println("ERROR in retrieveOrganisationNameFromOrganisationId: " + e.getMessage());
+            System.err.println("ERROR in retrieveOrganisationNameFromOrganisationId: " + e.getMessage());
         }
         finally
         {
@@ -250,7 +250,7 @@ public class FlowsterRepository
             }
             catch(SQLException e)
             {
-                System.out.println("ERROR in retrieveOrganisationNameFromOrganisationIdFinally: " + e.getMessage());
+                System.err.println("ERROR in retrieveOrganisationNameFromOrganisationIdFinally: " + e.getMessage());
             }
         }
         
@@ -292,7 +292,7 @@ public class FlowsterRepository
         }
         catch(SQLException e)
         {
-            System.out.println("ERROR in retrieveOrganisationNameFromEmail: " + e.getMessage());
+            System.err.println("ERROR in retrieveOrganisationNameFromEmail: " + e.getMessage());
         }
         finally
         {
@@ -302,7 +302,7 @@ public class FlowsterRepository
             }
             catch(SQLException e)
             {
-                System.out.println("ERROR in retrieveOrganisationNameFromEmailFinally: " + e.getMessage());
+                System.err.println("ERROR in retrieveOrganisationNameFromEmailFinally: " + e.getMessage());
             }
         }
         
@@ -339,7 +339,7 @@ public class FlowsterRepository
         }
         catch(SQLException e)
         {
-            System.out.println("ERROR in retrieveOrganisationIdFromEmailId: " + e.getMessage());
+            System.err.println("ERROR in retrieveOrganisationIdFromEmailId: " + e.getMessage());
         }
         finally
         {
@@ -349,7 +349,7 @@ public class FlowsterRepository
             }
             catch(SQLException e)
             {
-                System.out.println("ERROR in retrieveOrganisationIdFromEmailIdFinally: " + e.getMessage());
+                System.err.println("ERROR in retrieveOrganisationIdFromEmailIdFinally: " + e.getMessage());
             }
         }
     
@@ -393,7 +393,7 @@ public class FlowsterRepository
         }
         catch(SQLException e)
         {
-            System.out.println("Error in isEmailAvailable: " + e.getMessage());
+            System.err.println("Error in isEmailAvailable: " + e.getMessage());
         }
         finally
         {
@@ -403,7 +403,7 @@ public class FlowsterRepository
             }
             catch(SQLException e)
             {
-                System.out.println("Error in isEmailAvailableFinally: " + e.getMessage());
+                System.err.println("Error in isEmailAvailableFinally: " + e.getMessage());
             }
         }
         
@@ -433,7 +433,7 @@ public class FlowsterRepository
         }
         catch(SQLException e)
         {
-            System.out.println("ERROR in insertUserIntoDb: " + e.getMessage());
+            System.err.println("ERROR in insertUserIntoDb: " + e.getMessage());
         }
         finally
         {
@@ -443,7 +443,7 @@ public class FlowsterRepository
             }
             catch(SQLException e)
             {
-                System.out.println("ERROR in insertUserIntoDbFinally: " + e.getMessage());
+                System.err.println("ERROR in insertUserIntoDbFinally: " + e.getMessage());
             }
         }
     }
@@ -477,7 +477,7 @@ public class FlowsterRepository
         }
         catch(SQLException e)
         {
-            System.out.println("ERROR in retrieveEmailId: " + e.getMessage());
+            System.err.println("ERROR in retrieveEmailId: " + e.getMessage());
         }
         finally
         {
@@ -487,7 +487,7 @@ public class FlowsterRepository
             }
             catch(SQLException e)
             {
-                System.out.println("ERROR in retrieveEmailIdFinally: " + e.getMessage());
+                System.err.println("ERROR in retrieveEmailIdFinally: " + e.getMessage());
             }
         }
         
@@ -518,7 +518,7 @@ public class FlowsterRepository
         }
         catch(SQLException e)
         {
-            System.out.println("ERROR in retrieveEmailFromEmailId: " + e.getMessage());
+            System.err.println("ERROR in retrieveEmailFromEmailId: " + e.getMessage());
         }
         finally
         {
@@ -528,7 +528,7 @@ public class FlowsterRepository
             }
             catch(SQLException e)
             {
-                System.out.println("ERROR in retrieveEmailFromEmailIdFinally: " + e.getMessage());
+                System.err.println("ERROR in retrieveEmailFromEmailIdFinally: " + e.getMessage());
             }
         }
     
