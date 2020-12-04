@@ -44,7 +44,7 @@ input[type=number]
 .index-img-container
 {
     width: 700px;
-    margin: 70px;
+    margin: 75px;
 }
 
 .font-italic
@@ -82,7 +82,8 @@ input[type=number]
     width: 90%;
 }
 
-.footer {
+.footer
+{
     display: flex;
     background-color: #3E8AC4;
     color: white;
@@ -106,7 +107,7 @@ input[type=number]
 
 .footer-logo
 {
-    width: 160px;
+    width: 170px;
 }
 
 /*css-selector*/
