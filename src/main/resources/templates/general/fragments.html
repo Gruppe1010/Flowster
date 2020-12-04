@@ -1,11 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Flowster</title>
-
+    <!-- Hvilke karakterer der kan benyttes på siden -->
+    <meta charset="utf-8">
+    <!-- Får siden til at følge skærmens størrelse -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Stylesheets til Bootstrap -->
+    <link rel="stylesheet" href="/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/bootstrap-theme.css" type="text/css">
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="/flowster.css" type="text/css">
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Padauk&family=Raleway:wght@200&display=swap" rel="stylesheet">
+
 </head>
 <body>
 
@@ -17,6 +26,37 @@
     <a href="/js/">JavaScript</a> |
     <a href="/python/">Python</a>
 </nav>
+
+
+<nav th:fragment="navbar" class="navbar navbar-default">
+    <div class="container-fluid">
+
+        <!-- BRAND -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#alignment-example" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><img class="navbar-logo" src="/images/Flowster_logo.png"></a>
+        </div>
+
+        <!-- COLLAPSIBLE NAVBAR -->
+        <div class="collapse navbar-collapse" id="alignment-example">
+
+            <!-- Links -->
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Link 1 <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Link 2</a></li>
+                <li><a href="#">Link 3</a></li>
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
+
 
 <!-- SIDEBAR -->
 
@@ -34,7 +74,7 @@
     <div class="col-sm-6">
     </div>
     <div class="col-sm-2">
-        <img class="footer-logo" src="images/Flowster_logo.png">
+        <img class="footer-logo" src="/images/Flowster_logo.png">
     </div>
 </div>
 
