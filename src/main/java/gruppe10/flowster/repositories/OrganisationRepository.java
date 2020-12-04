@@ -15,6 +15,7 @@ public class OrganisationRepository
     
     Connection organisationConnection;
     
+    // ----------------- USER/+ subclasses
     
     /**
      * Indsætter nyt User-obj i organisationens user-tabel
@@ -91,6 +92,14 @@ public class OrganisationRepository
         }
     }
     
+    /**
+     * Henter User fra organisation-db (dbName-db) ud fra logInViewModel's email og password
+     * Kalder createUserFromResultSet - som kalder createProjectManagerFromResultSet og createTeamMemberFromResultSet
+     *
+     * @param logInViewModel model vi har gemt email og password på
+     * @param dbName databasen vi skal ned i
+     * @return User User-obj hentet i db
+     * */
     public User retrieveUserFromDb(LogInViewModel logInViewModel, String dbName)
     {
         User user = null;
@@ -137,8 +146,6 @@ public class OrganisationRepository
     
         return user;
     }
-    
-    
     
     /**
      * Opretter nyt User-obj som afhængigt af jobType enten tildeles ProjectManager eller TeamMember-obj - ud fra
@@ -193,20 +200,20 @@ public class OrganisationRepository
             // find email ud fra emailId
             int emailId = resultSet.getInt("f_id_email");
             String email = flowsterRepository.retrieveEmailFromEmailId(emailId);
-    
-    
+            
+            
             // find organisationAndJobType
             int jobType = resultSet.getInt("f_id_job_type");
-    
+            
             String organisationAndJobTypeString = Integer.toString(
                     flowsterRepository.retrieveOrganisationIdFromEmailId(emailId) + jobType);
-    
+            
             int organisationAndJobType = Integer.parseInt(organisationAndJobTypeString);
-    
+            
             // find profilePictureBytes
             byte[] profilePictureBytes = convertBlobToByteArray(resultSet.getBlob("profile_picture"));
-    
-    
+            
+            
             projectManager = new ProjectManager(organisationAndJobType,
                     resultSet.getString("firstname"),
                     resultSet.getString("surname"),
@@ -231,26 +238,26 @@ public class OrganisationRepository
     public TeamMember createTeamMemberFromResultSet(ResultSet resultSet)
     {
         TeamMember teamMember = null;
-    
+        
         try
         {
             // find email ud fra emailId
             int emailId = resultSet.getInt("f_id_email");
             String email = flowsterRepository.retrieveEmailFromEmailId(emailId);
-        
-        
+            
+            
             // find organisationAndJobType
             int jobType = resultSet.getInt("f_id_job_type");
-        
+            
             String organisationAndJobTypeString = Integer.toString(
                     flowsterRepository.retrieveOrganisationIdFromEmailId(emailId) + jobType);
-        
+            
             int organisationAndJobType = Integer.parseInt(organisationAndJobTypeString);
-        
+            
             // find profilePictureBytes
             byte[] profilePictureBytes = convertBlobToByteArray(resultSet.getBlob("profile_picture"));
-    
-    
+            
+            
             teamMember = new TeamMember(organisationAndJobType,
                     resultSet.getString("firstname"),
                     resultSet.getString("surname"),
@@ -266,6 +273,9 @@ public class OrganisationRepository
         }
         return teamMember;
     }
+    
+    
+    // ----------------- ANDRE
     
     /**
      * Konverterer blob til et byteArray
@@ -292,11 +302,4 @@ public class OrganisationRepository
         
         return profilePictureBytes;
     }
-    
-    
-  
-    
-
-
-
 }

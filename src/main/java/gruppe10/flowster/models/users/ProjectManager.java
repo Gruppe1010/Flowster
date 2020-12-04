@@ -51,6 +51,12 @@ public class ProjectManager extends User
     
     // ANDRE METODER
     
+    @Override
+    public boolean isProjectManager()
+    {
+        return true;
+    }
+    
     public ProjectManager createProjectManagerFromCreateUserModel(CreateUserViewModel createUserViewModel)
     {
         return new ProjectManager(

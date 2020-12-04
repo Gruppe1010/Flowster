@@ -28,7 +28,7 @@
 </nav>
 
 
-<nav th:fragment="navbar" class="navbar navbar-default">
+<nav th:fragment="menubar(loggedInUser)" class="navbar navbar-default">
     <div class="container-fluid">
 
         <!-- BRAND -->
@@ -46,10 +46,10 @@
         <div class="collapse navbar-collapse" id="alignment-example">
 
             <!-- Links -->
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Link 1 <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Link 2</a></li>
-                <li><a href="#">Link 3</a></li>
+            <ul class="navbar-text">
+               <a href="#">Startside</a>
+                <a th:href="@{${loggedInUser.getClassName()}}">Teams</a>
+                <a href="#">Projekter</a>
             </ul>
 
         </div>

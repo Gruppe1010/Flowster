@@ -52,6 +52,12 @@ public class TeamMember extends User
     
     // ANDRE METODER
     
+    @Override
+    public boolean isTeamMember()
+    {
+        return true;
+    }
+    
     public TeamMember createTeamMemberFromCreateUserModel(CreateUserViewModel createUserViewModel)
     {
         return new TeamMember(

@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class UserService
 {
-    public User loggedInUser = null;
+    public static User loggedInUser = null;
     
     /*
     public ProjectManager loggedInProjectManager = null;
