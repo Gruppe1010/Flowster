@@ -101,17 +101,17 @@ hr
     bottom: 0;
     width: 100%;
     /*all == alle ændringer man laver undervejs tager nu 2 sek*/
-    transition: background-color 2s;
+    transition: background-color 2s; /*TODO fjern*/
 }
 
-.footer:hover
+.footer:hover /*TODO fjern*/
 {
     background-color: deeppink;
 }
 /*css-selector*/
 /* css-selector - ALLE p-tags som er i form, der har create-user-klassen*/
 /**/
-form.create-user p
+form.create-user p /*TODO fjern*/
 {
     color: deeppink;
 }

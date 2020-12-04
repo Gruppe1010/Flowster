@@ -12,7 +12,7 @@ public class TeamMemberController
     UserService userService = new UserService();
     TeamMemberService teamMemberService = new TeamMemberService();
     
-    
+    /*
     @GetMapping("/frontPage")
     public String frontPage(Model loggedInTeamMemberModel)
     {
@@ -20,6 +20,8 @@ public class TeamMemberController
         
         return "TeamMember/frontPage"; // html
     }
+    
+     */
     
     
     

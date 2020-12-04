@@ -19,7 +19,8 @@ public class User implements UserData
     
     public User() {}
     
-    public User(int organisationAndJobType, String firstname, String surname, String email, String password, double manhours)
+    public User(int organisationAndJobType, String firstname, String surname, String email, String password,
+                double manhours)
     {
         this.organisationAndJobType = organisationAndJobType;
         this.firstname = firstname;
@@ -28,6 +29,17 @@ public class User implements UserData
         this.password = password;
         this.manhours = manhours;
         this.profilePictureBytes = null;
+    }
+    public User(int organisationAndJobType, String firstname, String surname, String email, String password,
+                double manhours, byte[] profilePictureBytes)
+    {
+        this.organisationAndJobType = organisationAndJobType;
+        this.firstname = firstname;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.manhours = manhours;
+        this.profilePictureBytes = profilePictureBytes;
     }
     
     // getters + setters

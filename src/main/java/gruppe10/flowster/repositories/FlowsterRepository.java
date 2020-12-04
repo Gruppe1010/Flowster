@@ -66,6 +66,7 @@ public class FlowsterRepository
         return emailIsAvailable;
     }
     
+    
     /**
      * Tjekker om et organisation findes i organisations-tabellen i flowster-db ud fra organisationId
      *
@@ -251,6 +252,53 @@ public class FlowsterRepository
         }
         
      return organisationName;
+    }
+    
+    /**
+     * Henter organisationName ud fra email i emails_organisations-tabel i flowster-db
+     *
+     * @param email email som organisationName hentes ud fra
+     * @return String fundne organisationName
+     * */
+    public String retrieveOrganisationNameFromEmail(String email)
+    {
+        String organisationName = null;
+        
+        flowsterConnection = generalRepository.establishConnection("flowster");
+        
+        try
+        {
+            String sqlCommand = "SELECT (organisation_name) FROM emails_organisations where f_email = ?";
+            
+            PreparedStatement preparedStatement = flowsterConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setString(1, email);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next())
+            {
+                organisationName = resultSet.getString(1);
+            }
+            
+        }
+        catch(SQLException e)
+        {
+            System.out.println("ERROR in retrieveOrganisationNameFromEmail: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                flowsterConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.out.println("ERROR in retrieveOrganisationNameFromEmailFinally: " + e.getMessage());
+            }
+        }
+        
+        return organisationName;
     }
     
     /**

@@ -14,9 +14,18 @@ public class TeamMember extends User
     // constructors
     public TeamMember(){}
     
-    public TeamMember(int organisationAndJobType, String firstname, String surname, String email, String password, double manhours)
+    public TeamMember(int organisationAndJobType, String firstname, String surname, String email, String password,
+                      double manhours)
     {
         super(organisationAndJobType, firstname, surname, email, password, manhours);
+        this.joinedProjectsList = null;
+        this.joinedTeamsList = null;
+    }
+    
+    public TeamMember(int organisationAndJobType, String firstname, String surname, String email, String password,
+                      double manhours, byte[] profilePictureBytes)
+    {
+        super(organisationAndJobType, firstname, surname, email, password, manhours, profilePictureBytes);
         this.joinedProjectsList = null;
         this.joinedTeamsList = null;
     }

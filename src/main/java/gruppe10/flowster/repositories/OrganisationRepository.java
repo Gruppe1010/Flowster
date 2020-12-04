@@ -1,11 +1,11 @@
 package gruppe10.flowster.repositories;
 
 import com.mysql.cj.x.protobuf.MysqlxPrepare;
+import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.models.users.User;
+import gruppe10.flowster.viewModels.LogInViewModel;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class OrganisationRepository
 {
@@ -88,7 +88,120 @@ public class OrganisationRepository
         }
     }
     
+    public User retrieveUserFromDb(LogInViewModel logInViewModel, String dbName)
+    {
+        User user = null;
+        
+        organisationConnection = generalRepository.establishConnection(dbName);
+        
+        try
+        {
+            String sqlCommand = "SELECT * FROM users WHERE email = ? and password = ?";
+            
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setString(1, logInViewModel.getEmail());
+            preparedStatement.setString(2, logInViewModel.getPassword());
     
+    
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next())
+            {
+                user = new User();
+            }
+            
+            
+        }
+        catch(SQLException e)
+        {
+            System.out.println("ERROR in retrieveUserFromDb: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.out.println("ERROR in retrieveUserFromDbFinally: " + e.getMessage());
+            }
+        }
+        
+        
+        //
+    
+    
+        return user;
+    }
+    
+    
+    
+    
+    
+    public User createUserFromResultSet(ResultSet resultSet)
+    {
+        User user = null;
+        
+        try
+        {
+            // TODO find organisationAndJobType
+    
+            
+            
+            // TODO - find email ud fra emailId
+            String email = "email";
+            
+            byte[] profilePictureBytes = convertBlobToByteArray(resultSet.getBlob("profile_picture"));
+            
+            user = new User(resultSet.getInt("f_id_job_type"),
+                    resultSet.getString("firstname"),
+                    resultSet.getString("surname"),
+                    email,
+                    resultSet.getString("password"),
+                    resultSet.getDouble("manhours"),
+                    profilePictureBytes);
+            
+            /*
+            // tjek om projectManager
+            if(jobTypeId == 01)
+            {
+                user = new ProjectManager()
+            }
+            
+             */
+    
+            // ellers eammember
+    
+        }
+        catch(SQLException e)
+        {
+            System.out.println("ERROR in createUserFromResultSet: " + e.getMessage());
+        }
+        
+        return user;
+    }
+    
+    
+    public byte[] convertBlobToByteArray(Blob blob)
+    {
+        byte[] profilePictureBytes = new byte[0];
+        
+        if(blob != null)
+        {
+            try
+            {
+                profilePictureBytes = blob.getBytes(1, (int) blob.length());
+            }
+            catch(SQLException e)
+            {
+                System.out.println("ERROR in convertBlobToByteArray: " + e.getMessage());
+            }
+        }
+        
+        return profilePictureBytes;
+    }
     
     
   

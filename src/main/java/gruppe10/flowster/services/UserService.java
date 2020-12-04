@@ -15,8 +15,11 @@ import java.util.HashMap;
 public class UserService
 {
     public User loggedInUser = null;
+    /*
     public ProjectManager loggedInProjectManager = null;
     public TeamMember loggedInTeamMember = null;
+    
+     */
   
     
     String error; // TODO måske lav denne?
@@ -201,25 +204,51 @@ public class UserService
         String jobType =
                 flowsterRepository.retrieveJobTypeFromJobTypeId(createUserViewModel.findJobTypeIdFromOrganisationAndJopType());
         
+        // TODO ud i metode
+        if(jobType.equalsIgnoreCase("Projektleder"))
+        {
+            loggedInUser = projectManager.createProjectManagaerFromCreateUserModel(createUserViewModel);
+        }
+        
+        else if(jobType.equalsIgnoreCase("Almen medarbejder"))
+        {
+            loggedInUser = teamMember.createTeamMemberFromCreateUserModel(createUserViewModel);
+        }
+    
+        // TODO hvis vi får brug for loggedIndProjectManager og -TeamMember
+        //  setLoggedInProjectManagerOrTeamMemberToLoggedInUser();
+        
+        return loggedInUser;
+    }
+    
+    // TODO hvis i får brug for loggedInProjectManager og -TeamMember
+    /*
+    public void setLoggedInProjectManagerOrTeamMemberToLoggedInUser()
+    {
         if(jobType.equalsIgnoreCase("Projektleder"))
         {
             loggedInProjectManager = projectManager.createProjectManagaerFromCreateUserModel(createUserViewModel);
             loggedInUser = loggedInProjectManager;
         }
-        
+    
         else if(jobType.equalsIgnoreCase("Almen medarbejder"))
         {
             loggedInTeamMember = teamMember.createTeamMemberFromCreateUserModel(createUserViewModel);
             loggedInUser = loggedInTeamMember;
         }
-        
-        return loggedInUser;
+    
     }
     
-    // TODO: Lav måske denne om, så den bare returnerer className og vi så skriver resten af url'en inde i
-    //  Controlleren - for at tydeliggøre i Controlleren hvilken url det er vi kommer videre til
+     */
+    
+    /**
+     * Finder className på loggedInUser og omdanner til url-del, så den ryger til rigtige requestMapping
+     *
+     * @return String fundne className-url-del
+     * */
     public String retrieveClassNameUrl()
     {
+        // getClass == finder klassen - getSimpleName == laver klassenavn til String
         String className = loggedInUser.getClass().getSimpleName();
         
         // laver første forbogstav om til småt  - da ord i url'en står i camelCase
@@ -235,32 +264,45 @@ public class UserService
         return logInViewModel;
     }
     
-    // TODO
+    /**
+     * Konverterer organisationName til db-name
+     *
+     * @param organisationName organisationName som skal konverteres til db-name
+     * @return String konverterede db-name
+     * */
     public String convertOrganisationNameToDbName(String organisationName)
     {
-        return "hej";
+        
+        String convertedOrganisationName = organisationName.replaceAll(" ", "_");
+    
+        convertedOrganisationName = convertedOrganisationName.toLowerCase();
+        
+        return convertedOrganisationName;
     }
     // TODO HER
     public boolean checkIfLogInInfoIsValid(LogInViewModel logInViewModel)
     {
+        String email = logInViewModel.getEmail();
         //tjek om email eksisterer i emails-table
-        boolean emailExistsInDb = !(flowsterRepository.isEmailAvailable(logInViewModel.getEmail()));
+        boolean emailExistsInDb = !(flowsterRepository.isEmailAvailable(email));
     
         //  = if(emailExists): finde org_name ud fra email
         if(emailExistsInDb)
         {
-            // TODO
-            String organisationName = "hej";
+            // finder organisationName udfra email
+            String organisationName = flowsterRepository.retrieveOrganisationNameFromEmail(email);
+    
+            // konverterer organisationName til at være dbName - dvs. små bogstaver og underscore hvor mellemrum
+            String dbName = convertOrganisationNameToDbName(organisationName);
+    
+            // finder User-obj i users-tabel i dbName-db ud fra logInViewModel
+            
+            organisationRepository.retrieveUserFromDb(logInViewModel, dbName);
+           
+            
         }
         
-        
-        // String dbName = convertOrganisationNameToDbName(organisationName);
-        
-        // organisationRepository.retrieveUserFromDb(logInViewModel)
-        // String sqlCommand = "SELECT * FROM users WHERE email = ? and password = ?";
-        //finder user i users-tabel i org-name-db where
-        // email = ? and
-        // password = ?
+    
         
         
         

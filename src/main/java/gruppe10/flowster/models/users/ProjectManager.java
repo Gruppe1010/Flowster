@@ -14,9 +14,18 @@ public class ProjectManager extends User
     
     //constructors
     public ProjectManager(){}
-    public ProjectManager(int organisationAndJobType, String firstname, String surname, String email, String password, double manhours)
+    
+    public ProjectManager(int organisationAndJobType, String firstname, String surname, String email, String password
+            , double manhours)
     {
         super(organisationAndJobType, firstname, surname, email, password, manhours);
+        this.managedProjectsList = null;
+    }
+    
+    public ProjectManager(int organisationAndJobType, String firstname, String surname, String email, String password
+            , double manhours, byte[] profilePictureBytes)
+    {
+        super(organisationAndJobType, firstname, surname, email, password, manhours, profilePictureBytes);
         this.managedProjectsList = null;
     }
     
