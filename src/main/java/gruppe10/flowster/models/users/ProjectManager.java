@@ -51,7 +51,7 @@ public class ProjectManager extends User
     
     // ANDRE METODER
     
-    public ProjectManager createProjectManagaerFromCreateUserModel(CreateUserViewModel createUserViewModel)
+    public ProjectManager createProjectManagerFromCreateUserModel(CreateUserViewModel createUserViewModel)
     {
         return new ProjectManager(
                 Integer.parseInt(createUserViewModel.getOrganisationAndJobType()),

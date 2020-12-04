@@ -99,20 +99,20 @@ public class OrganisationRepository
         
         try
         {
-            String sqlCommand = "SELECT * FROM users WHERE email = ? and password = ?";
+            
+            int emailId = flowsterRepository.retrieveEmailIdFromEmail(logInViewModel.getEmail());
+            
+            String sqlCommand = "SELECT * FROM users WHERE f_id_email = ? and password = ?";
             
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
             
-            preparedStatement.setString(1, logInViewModel.getEmail());
+            preparedStatement.setInt(1, emailId);
             preparedStatement.setString(2, logInViewModel.getPassword());
     
     
             ResultSet resultSet = preparedStatement.executeQuery();
             
-            
             user = createUserFromResultSet(resultSet);
-            
-            
             
         }
         catch(SQLException e)
@@ -140,60 +140,131 @@ public class OrganisationRepository
     
     
     
-    
-    // TODO: kald 2 metoder herinde: createProjecTManagerFromResultSet
+    /**
+     * Opretter nyt User-obj som afhængigt af jobType enten tildeles ProjectManager eller TeamMember-obj - ud fra
+     * resultSet
+     *
+     * @param resultSet ResultSet som User-obj oprettes ud fra
+     * @return User Nyoprettede User-obj
+     * */
     public User createUserFromResultSet(ResultSet resultSet)
     {
-        User userToReturn = null;
+        User user = null;
         
         try
         {
             if(resultSet.next())
             {
-                // find email ud fra emailId
-                int emailId = resultSet.getInt("f_id_email");
-                String email = flowsterRepository.retrieveEmailFromEmailId(emailId);
-    
-    
                 // find organisationAndJobType
                 int jobType = resultSet.getInt("f_id_job_type");
-                
-                String organisationAndJobTypeString = Integer.toString(
-                        flowsterRepository.retrieveOrganisationIdFromEmailId(emailId) + jobType);
-                
-                int organisationAndJobType = Integer.parseInt(organisationAndJobTypeString);
-
-                // find profilePictureBytes
-                byte[] profilePictureBytes = convertBlobToByteArray(resultSet.getBlob("profile_picture"));
-
-                User user = new User(organisationAndJobType,
-                        resultSet.getString("firstname"),
-                        resultSet.getString("surname"),
-                        email,
-                        resultSet.getString("password"),
-                        resultSet.getDouble("manhours"),
-                        profilePictureBytes);
-                
-                // TODO: find ud af om den brokker sig bare for at brokke sig
+    
+                // hvis det er en ProjectManager
                 if(jobType == 1)
                 {
-                    userToReturn = (ProjectManager) user;
+                    user = createProjectManagerFromResultSet(resultSet);
                 }
+                // hvis det er en TeamMember
                 else if(jobType == 2)
                 {
-                    userToReturn = (TeamMember) user;
+                    user = createTeamMemberFromResultSet(resultSet);
                 }
-                
             }
-
         }
         catch(SQLException e)
         {
             System.out.println("ERROR in createUserFromResultSet: " + e.getMessage());
         }
         
+        return user;
+    }
+    
+    /**
+     * Opretter et nyt ProjectManager-obj ud fra resultSet
+     *
+     * @param resultSet ResultSet-obj som bruges til at oprette ProjectManager-obj fra
+     * @return ProjectManager nyoprettede ProjectManager-obj
+     * */
+    public ProjectManager createProjectManagerFromResultSet(ResultSet resultSet)
+    {
+        ProjectManager projectManager = null;
         
-        return userToReturn;
+        try
+        {
+            // find email ud fra emailId
+            int emailId = resultSet.getInt("f_id_email");
+            String email = flowsterRepository.retrieveEmailFromEmailId(emailId);
+    
+    
+            // find organisationAndJobType
+            int jobType = resultSet.getInt("f_id_job_type");
+    
+            String organisationAndJobTypeString = Integer.toString(
+                    flowsterRepository.retrieveOrganisationIdFromEmailId(emailId) + jobType);
+    
+            int organisationAndJobType = Integer.parseInt(organisationAndJobTypeString);
+    
+            // find profilePictureBytes
+            byte[] profilePictureBytes = convertBlobToByteArray(resultSet.getBlob("profile_picture"));
+    
+    
+            projectManager = new ProjectManager(organisationAndJobType,
+                    resultSet.getString("firstname"),
+                    resultSet.getString("surname"),
+                    email,
+                    resultSet.getString("password"),
+                    resultSet.getDouble("manhours"),
+                    profilePictureBytes);
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in createProjectManagerFromResultSet: " + e.getMessage());
+        }
+        return projectManager;
+    }
+    
+    /**
+     * Opretter et nyt TeamMember-obj ud fra resultSet
+     *
+     * @param resultSet ResultSet-obj som bruges til at oprette TeamMember-obj fra
+     * @return TeamMember nyoprettede TeamMember-obj
+     * */
+    public TeamMember createTeamMemberFromResultSet(ResultSet resultSet)
+    {
+        TeamMember teamMember = null;
+    
+        try
+        {
+            // find email ud fra emailId
+            int emailId = resultSet.getInt("f_id_email");
+            String email = flowsterRepository.retrieveEmailFromEmailId(emailId);
+        
+        
+            // find organisationAndJobType
+            int jobType = resultSet.getInt("f_id_job_type");
+        
+            String organisationAndJobTypeString = Integer.toString(
+                    flowsterRepository.retrieveOrganisationIdFromEmailId(emailId) + jobType);
+        
+            int organisationAndJobType = Integer.parseInt(organisationAndJobTypeString);
+        
+            // find profilePictureBytes
+            byte[] profilePictureBytes = convertBlobToByteArray(resultSet.getBlob("profile_picture"));
+    
+    
+            teamMember = new TeamMember(organisationAndJobType,
+                    resultSet.getString("firstname"),
+                    resultSet.getString("surname"),
+                    email,
+                    resultSet.getString("password"),
+                    resultSet.getDouble("manhours"),
+                    profilePictureBytes);
+            
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in createTeamMemberFromResultSet: " + e.getMessage());
+        }
+        return teamMember;
     }
     
     /**

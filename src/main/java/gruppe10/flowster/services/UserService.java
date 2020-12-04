@@ -206,7 +206,7 @@ public class UserService
         // TODO ud i metode
         if(jobType.equalsIgnoreCase("Projektleder"))
         {
-            loggedInUser = projectManager.createProjectManagaerFromCreateUserModel(createUserViewModel);
+            loggedInUser = projectManager.createProjectManagerFromCreateUserModel(createUserViewModel);
         }
         
         else if(jobType.equalsIgnoreCase("Almen medarbejder"))
@@ -298,7 +298,7 @@ public class UserService
             String dbName = convertOrganisationNameToDbName(organisationName);
     
             // finder User-obj i users-tabel i dbName-db ud fra logInViewModel
-            loggedInUser = organisationRepository.retrieveUserFromDb(logInViewModel, dbName);
+            loggedInUser = organisationRepository.retrieveUserFromDb(logInViewModel, "flowster_" + dbName);
             
             if(loggedInUser != null)
             {
