@@ -1,7 +1,7 @@
 package gruppe10.flowster.repositories;
 
-import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import gruppe10.flowster.models.users.ProjectManager;
+import gruppe10.flowster.models.users.TeamMember;
 import gruppe10.flowster.models.users.User;
 import gruppe10.flowster.viewModels.LogInViewModel;
 
@@ -27,16 +27,19 @@ public class OrganisationRepository
     {
         // finder organisationName ud fra organisationId
         String organisationName = flowsterRepository.retrieveOrganisationNameFromOrganisationId
-                                           (newUser.findOrganisationIdFromOrganisationAndJopType());
+                                           (newUser.findOrganisationId());
         
         // opretter ny String med underscore i stedet for mellemrum i organisationName
         String dbName = "flowster_" + organisationName.replaceAll(" ", "_");
         
         // FØRST indsættes email i emails-tabel i flowster-db
-        flowsterRepository.insertEmailIntoDb(newUser.getEmail());
+        flowsterRepository.insertEmailIntoEmails(newUser.getEmail());
+        
+        // SÅ indsættes række i emails_organisations-tabel i flowster-db
+        flowsterRepository.insertRowIntoEmailsAndOrganisations(newUser);
         
         // DERNÆST indsættes resten af userData i users-tabel i organisationName-db
-        insertUserDataIntoOrganisationDb(dbName, newUser);
+        insertUserDataIntoUsers(dbName, newUser);
     }
     
     /**
@@ -46,11 +49,11 @@ public class OrganisationRepository
      * @param newUser det nye User-obj som skal indsættes i db
      * @return void
      * */
-    public void insertUserDataIntoOrganisationDb(String dbName, User newUser)
+    public void insertUserDataIntoUsers(String dbName, User newUser)
     {
         // finder tilsvarende id'er til jopType + email - da de lagres i db som foreign keys m. reference til andre tab
-        int jobTypeId = newUser.findJobTypeIdFromOrganisationAndJopType();
-        int emailId = flowsterRepository.retrieveEmailId(newUser.getEmail());
+        int jobTypeId = newUser.findJobTypeId();
+        int emailId = flowsterRepository.retrieveEmailIdFromEmail(newUser.getEmail());
         
         organisationConnection = generalRepository.establishConnection(dbName);
         
@@ -106,10 +109,9 @@ public class OrganisationRepository
     
             ResultSet resultSet = preparedStatement.executeQuery();
             
-            if(resultSet.next())
-            {
-                user = new User();
-            }
+            
+            user = createUserFromResultSet(resultSet);
+            
             
             
         }
@@ -139,53 +141,70 @@ public class OrganisationRepository
     
     
     
-    
+    // TODO: kald 2 metoder herinde: createProjecTManagerFromResultSet
     public User createUserFromResultSet(ResultSet resultSet)
     {
-        User user = null;
+        User userToReturn = null;
         
         try
         {
-            // TODO find organisationAndJobType
-    
-            
-            
-            // TODO - find email ud fra emailId
-            String email = "email";
-            
-            byte[] profilePictureBytes = convertBlobToByteArray(resultSet.getBlob("profile_picture"));
-            
-            user = new User(resultSet.getInt("f_id_job_type"),
-                    resultSet.getString("firstname"),
-                    resultSet.getString("surname"),
-                    email,
-                    resultSet.getString("password"),
-                    resultSet.getDouble("manhours"),
-                    profilePictureBytes);
-            
-            /*
-            // tjek om projectManager
-            if(jobTypeId == 01)
+            if(resultSet.next())
             {
-                user = new ProjectManager()
+                // find email ud fra emailId
+                int emailId = resultSet.getInt("f_id_email");
+                String email = flowsterRepository.retrieveEmailFromEmailId(emailId);
+    
+    
+                // find organisationAndJobType
+                int jobType = resultSet.getInt("f_id_job_type")
+                
+                String organisationAndJobTypeString = Integer.toString(
+                        flowsterRepository.retrieveOrganisationIdFromEmailId(emailId) + jobType);
+                
+                int organisationAndJobType = Integer.parseInt(organisationAndJobTypeString);
+
+                // find profilePictureBytes
+                byte[] profilePictureBytes = convertBlobToByteArray(resultSet.getBlob("profile_picture"));
+
+                User user = new User(organisationAndJobType,
+                        resultSet.getString("firstname"),
+                        resultSet.getString("surname"),
+                        email,
+                        resultSet.getString("password"),
+                        resultSet.getDouble("manhours"),
+                        profilePictureBytes);
+                
+                // TODO: find ud af om den brokker sig bare for at brokke sig
+                if(jobType == 1)
+                {
+                    userToReturn = (ProjectManager) user;
+                }
+                else if(jobType == 2)
+                {
+                    userToReturn = (TeamMember) user;
+                }
+                
             }
-            
-             */
-    
-            // ellers eammember
-    
+
         }
         catch(SQLException e)
         {
             System.out.println("ERROR in createUserFromResultSet: " + e.getMessage());
         }
         
-        return user;
+        
+        return userToReturn;
     }
     
-    
+    /**
+     * Konverterer blob til et byteArray
+     *
+     * @param blob Blob-obj som skal konverteres
+     * @return byte[] konverterede blob
+     * */
     public byte[] convertBlobToByteArray(Blob blob)
     {
+        // byte[0] == null-value til byte[]
         byte[] profilePictureBytes = new byte[0];
         
         if(blob != null)

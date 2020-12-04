@@ -24,9 +24,9 @@ public class UserController
     String redirect = "redirect:/";
     
     @GetMapping("/")
-    public String index(Model createUserViewModel)
+    public String index(Model logInViewModel)
     {
-        createUserViewModel.addAttribute("createUserViewModel", this.createUserViewModel);
+        logInViewModel.addAttribute("logInViewModel", this.logInViewModel);
         
         return "general/index"; // html
     }
@@ -69,30 +69,34 @@ public class UserController
             return redirect + className + "/frontPage";
         }
         
-        
         return redirect;
     }
     
-    @GetMapping("/logIn")
-    public String logIn(Model logInViewModel)
+    @GetMapping("/createUser")
+    public String logIn(Model createUserViewModel)
     {
-        logInViewModel.addAttribute( "logInViewModel", this.logInViewModel);
+        createUserViewModel.addAttribute( "createUserViewModel", this.createUserViewModel);
 
-        return "general/log-in"; // html
+        return "general/create-user"; // html
 
     }
 
     @PostMapping("/postLogIn")
     public String postLogIn(WebRequest dataFromLogInForm)
     {
-        
         logInViewModel = userService.createLogInViewModelFromForm(dataFromLogInForm);
         
         // TODO HER
         boolean logInInfoIsValid = userService.checkIfLogInInfoIsValid(logInViewModel);
         
+        if(logInInfoIsValid)
+        {
+            String className = userService.retrieveClassNameUrl();
+    
+            return redirect + className + "/frontPage";
+        }
         
-        return redirect + "logIn";
+        return redirect;
     }
 
 

@@ -102,7 +102,7 @@ public class CreateUserViewModel implements UserData
      *
      * @return int fundne organisationId
      * */
-    public int findOrganisationIdFromOrganisationAndJopType()
+    public int findOrganisationId()
     {
         return Integer.parseInt(organisationAndJobType.substring(0,3));
     }
@@ -113,7 +113,7 @@ public class CreateUserViewModel implements UserData
      *
      * @return int fundne jobTypeId
      * */
-    public int findJobTypeIdFromOrganisationAndJopType()
+    public int findJobTypeId()
     {
         return Integer.parseInt(organisationAndJobType.substring(3,5));
     }

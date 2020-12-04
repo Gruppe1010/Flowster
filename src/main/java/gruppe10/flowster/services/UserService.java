@@ -1,6 +1,5 @@
 package gruppe10.flowster.services;
 
-import com.mysql.cj.log.Log;
 import gruppe10.flowster.models.users.TeamMember;
 import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.models.users.User;
@@ -15,10 +14,10 @@ import java.util.HashMap;
 public class UserService
 {
     public User loggedInUser = null;
+    
     /*
     public ProjectManager loggedInProjectManager = null;
     public TeamMember loggedInTeamMember = null;
-    
      */
   
     
@@ -83,15 +82,15 @@ public class UserService
         // hvis email!=brugt tjekke om orgkode findes
         if(emailIsAvailable)
         {
-            int organisationId = createUserViewModel.findOrganisationIdFromOrganisationAndJopType();
+            int organisationId = createUserViewModel.findOrganisationId();
     
             // tjek om orgkode er findes
-            boolean organisationsIdExists = flowsterRepository.doesOrganisationdExist(organisationId);
+            boolean organisationsIdExists = flowsterRepository.doesOrganisationExist(organisationId);
     
             // if orgkode == findes - tjek om jobType findes
             if(organisationsIdExists)
             {
-                int jobTypeId = createUserViewModel.findJobTypeIdFromOrganisationAndJopType();
+                int jobTypeId = createUserViewModel.findJobTypeId();
     
                 boolean jobTypeIdExists = flowsterRepository.doesJobTypeExist(jobTypeId);
     
@@ -202,7 +201,7 @@ public class UserService
     public User createUserFromCreateUserModel(CreateUserViewModel createUserViewModel)
     {
         String jobType =
-                flowsterRepository.retrieveJobTypeFromJobTypeId(createUserViewModel.findJobTypeIdFromOrganisationAndJopType());
+                flowsterRepository.retrieveJobTypeFromJobTypeId(createUserViewModel.findJobTypeId());
         
         // TODO ud i metode
         if(jobType.equalsIgnoreCase("Projektleder"))
@@ -282,7 +281,10 @@ public class UserService
     // TODO HER
     public boolean checkIfLogInInfoIsValid(LogInViewModel logInViewModel)
     {
+        boolean logInInfoIsValid = false;
+        
         String email = logInViewModel.getEmail();
+        
         //tjek om email eksisterer i emails-table
         boolean emailExistsInDb = !(flowsterRepository.isEmailAvailable(email));
     
@@ -296,20 +298,15 @@ public class UserService
             String dbName = convertOrganisationNameToDbName(organisationName);
     
             // finder User-obj i users-tabel i dbName-db ud fra logInViewModel
+            loggedInUser = organisationRepository.retrieveUserFromDb(logInViewModel, dbName);
             
-            organisationRepository.retrieveUserFromDb(logInViewModel, dbName);
-           
-            
+            if(loggedInUser != null)
+            {
+                logInInfoIsValid = true;
+            }
         }
         
-    
-        
-        
-        
-        // find bruger ud fra email
-        
-        return false;
-        
+        return logInInfoIsValid;
     }
     
     

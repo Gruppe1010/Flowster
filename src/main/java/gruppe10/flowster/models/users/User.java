@@ -107,7 +107,7 @@ public class User implements UserData
      *
      * @return int fundne organisationId
      * */
-    public int findOrganisationIdFromOrganisationAndJopType()
+    public int findOrganisationId()
     {
         String organisationAndJobTypeString = Integer.toString(organisationAndJobType);
         
@@ -120,7 +120,7 @@ public class User implements UserData
      *
      * @return int fundne jobTypeId
      * */
-    public int findJobTypeIdFromOrganisationAndJopType()
+    public int findJobTypeId()
     {
         String organisationAndJobTypeString = Integer.toString(organisationAndJobType);
     

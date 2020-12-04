@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Flowster</title>
+    <!-- Hvilke karakterer der kan benyttes på siden -->
+    <meta charset="utf-8">
+    <!-- Får siden til at følge skærmens størrelse -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Stylesheets til Bootstrap -->
+    <link rel="stylesheet" href="/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/bootstrap-theme.css" type="text/css">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/flowster.css" type="text/css">
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Padauk&family=Raleway:wght@200&display=swap" rel="stylesheet">
+
+
+
+</head>
+<body>
+
+<div class="container-fluid main-content">
+    <div class="row">
+        <!-- col==kolonne, sm==small, så den også kan benyttes på telefoner og tablets 4=del af siden den benytter ud af 12 -->
+        <div class="col-sm-4">
+
+            <div class="container col-sm-12 container-width">
+                <h2 class="text-center">Opret bruger</h2>
+                <!-- Action bestemmer hvilken PostMapping vi går til -->
+                <form action="/postCreateUser" method="post" class="create-user">
+
+                    <div class="form-group">
+
+                        <!-- LABEL-TAG -->
+                        <!-- for="" == siger hvilket inputfelt labelen skal tilhøre -->
+                        <!-- inde i selve tagget == Tekst som står før inputfelt-->
+
+                        <!-- INPUT-TAG -->
+                        <!--type="" == specificerer hvilken type input feltet kan modtage-->
+                        <!--class="" == refererer til stylling som skal bruges på form-->
+                        <!-- id="" == inputfelt SKAL have et id - KAN referere til styling -->
+                        <!--placeholder == tekst som står inde i inputfelt -->
+                        <!-- name="" == navn vi refererer til i koden, når vi skal have inputtet fra formen -->
+                        <!-- required == betyder at inputfeltet SKAL udfyldes -->
+                        <!-- min + max == spændet som inputtet skal være mellem -->
+
+                        <!--min="10000" og max="99999" == gør at der SKAL indtastes et tal på 5 cifre-->
+                        <label for="organisation-and-job-type">Organisationskode:</label>
+                        <input type="number"
+                               class="form-control"
+                               id="organisation-and-job-type"
+                               placeholder="Indtast organisationskode"
+                               th:value = "${createUserViewModel.getOrganisationAndJobType()}"
+                               name="organisation-and-job-type"
+                               required
+                               min="10000" max="99999">
+
+                        <!--min="0" og max="99" == gør at der SKAL indtastes et tal på 2 cifre-->
+
+                        <!-- Dette er den eneste værdi på createUserViewModel, som IKKE er null, fordi den er en double, hvis default er 0,0 -->
+                        <!-- Derfor skal vi lave: -->
+                        <!-- if ? then ==  den viser KUN getManHours() hvis den ikke er null -->
+                        <label class="label-padding" for="manhours">Arbejdertimer/uge:</label>
+                        <input type="number"
+                               class="form-control"
+                               id="manhours"
+                               placeholder="Indtast arbejdstimer"
+                               th:value = "(${createUserViewModel.getManhours() > 0} ? ${createUserViewModel.getManhours()})"
+                               name="manhours"
+                               required
+                               min="0" max="99">
+
+                        <!--max-length="100" == Fordi i db har sat en limit på VARCHAR(100)-->
+                        <label class="label-padding" for="firstname">Fornavn:</label>
+                        <input type="text"
+                               class="form-control"
+                               id="firstname"
+                               placeholder="Indtast fornavn"
+                               th:value = "${createUserViewModel.getFirstname()}"
+                               name="firstname"
+                               required
+                               maxlength="100"
+                               pattern="^[a-zA-ZæøåÆØÅ\s\-]*$">
+
+                        <!--max-length="100" == Fordi i db har sat en limit på VARCHAR(100)-->
+                        <label class="label-padding" for="surname">Efternavn:</label>
+                        <input type="text"
+                               class="form-control"
+                               id="surname"
+                               placeholder="Indtast fornavn"
+                               th:value = "${createUserViewModel.getSurname()}"
+                               name="surname"
+                               required
+                               maxlength="100"
+                               pattern="^[a-zA-ZæøåÆØÅ\s\-]*$">
+
+                        <!--max-length="320" == Fordi i db har sat en limit på VARCHAR(320)-->
+                        <label class="label-padding" for="email">Email:</label>
+                        <input type="email"
+                               class="form-control"
+                               id="email"
+                               placeholder="Indtast email"
+                               th:value = "${createUserViewModel.getEmail()}"
+                               name="email"
+                               required
+                               maxlength="320">
+
+
+                        <label class="label-padding" for="password">Adgangskode:</label>
+                        <input type="password"
+                               class="form-control"
+                               id="password"
+                               placeholder="Indtast adgangskode"
+                               th:value = "${createUserViewModel.getPassword()}"
+                               name="password"
+                               value="Valeas"
+                               required
+                               maxlength="320"
+                               pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
+
+                        <br>
+
+                        <input type="password"
+                               class="form-control"
+                               id="confirm-password"
+                               placeholder="Bekræft adgangskode"
+                               name="confirm-password"
+                               required
+                               maxlength="320"
+                               pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
+
+                    </div>
+                    <div class="text-center">
+
+                        <button type="submit" class="btn flowster-btn">Opret</button>
+
+                        <hr>
+
+                        <p class="font-italic">Har du allerede en bruger?</p>
+
+                        <a href="/" class="btn flowster-btn">Log ind</a>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="col-sm-8 text-center">
+
+            <img class="index-img-container" src="https://images.theconversation.com/files/350865/original/file-20200803-24-50u91u.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=675.0&fit=crop">
+
+        </div>
+
+    </div>
+</div>
+<!-- Fragments -->
+<div th:insert="general/fragments :: footer"></div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package gruppe10.flowster.controllers.users;
 
+import gruppe10.flowster.models.users.TeamMember;
 import gruppe10.flowster.services.TeamMemberService;
 import gruppe10.flowster.services.UserService;
 import org.springframework.stereotype.Controller;
@@ -12,16 +13,17 @@ public class TeamMemberController
     UserService userService = new UserService();
     TeamMemberService teamMemberService = new TeamMemberService();
     
-    /*
+    
     @GetMapping("/frontPage")
     public String frontPage(Model loggedInTeamMemberModel)
     {
-        loggedInTeamMemberModel.addAttribute("loggedInTeamMember", userService.loggedInTeamMember);
+        // TODO måske er castet (TeamMember) overflødig
+        loggedInTeamMemberModel.addAttribute("loggedInTeamMember", (TeamMember) userService.loggedInUser);
         
         return "TeamMember/frontPage"; // html
     }
     
-     */
+    
     
     
     
