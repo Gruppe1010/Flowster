@@ -76,7 +76,7 @@ public class OrganisationRepository
         }
         catch(SQLException e)
         {
-            System.out.println("ERROR in insertUserDataIntoOrganisationDb: " + e.getMessage());
+            System.err.println("ERROR in insertUserDataIntoOrganisationDb: " + e.getMessage());
         }
         finally
         {
@@ -86,7 +86,7 @@ public class OrganisationRepository
             }
             catch(SQLException e)
             {
-                System.out.println("ERROR in insertUserDataIntoOrganisationDbFinally: " + e.getMessage());
+                System.err.println("ERROR in insertUserDataIntoOrganisationDbFinally: " + e.getMessage());
             }
         }
     }
@@ -117,7 +117,7 @@ public class OrganisationRepository
         }
         catch(SQLException e)
         {
-            System.out.println("ERROR in retrieveUserFromDb: " + e.getMessage());
+            System.err.println("ERROR in retrieveUserFromDb: " + e.getMessage());
         }
         finally
         {
@@ -127,7 +127,7 @@ public class OrganisationRepository
             }
             catch(SQLException e)
             {
-                System.out.println("ERROR in retrieveUserFromDbFinally: " + e.getMessage());
+                System.err.println("ERROR in retrieveUserFromDbFinally: " + e.getMessage());
             }
         }
         
@@ -172,7 +172,7 @@ public class OrganisationRepository
         }
         catch(SQLException e)
         {
-            System.out.println("ERROR in createUserFromResultSet: " + e.getMessage());
+            System.err.println("ERROR in createUserFromResultSet: " + e.getMessage());
         }
         
         return user;
@@ -286,7 +286,7 @@ public class OrganisationRepository
             }
             catch(SQLException e)
             {
-                System.out.println("ERROR in convertBlobToByteArray: " + e.getMessage());
+                System.err.println("ERROR in convertBlobToByteArray: " + e.getMessage());
             }
         }
         

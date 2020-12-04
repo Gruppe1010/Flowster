@@ -27,7 +27,7 @@ public class GeneralRepository
         }
         catch(SQLException e)
         {
-            System.out.println("Error in establishConnection: " + e.getMessage());
+            System.err.println("Error in establishConnection: " + e.getMessage());
         }
         
         return connection;
