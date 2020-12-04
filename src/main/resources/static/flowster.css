@@ -96,7 +96,7 @@ input[type=number]
 }
 
     /*all == alle ændringer man laver undervejs tager nu 2 sek*/
-    /*transition: background-color 2s;
+/*  transition: background-color 2s;
 }
 
 .footer:hover
