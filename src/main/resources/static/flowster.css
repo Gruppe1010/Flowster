@@ -126,38 +126,37 @@ form.create-user hr
     width: 90%;
 }
 
-.flowster-navbar
-{
-    display: flex;
-    background-color: #235D89;
-    color: white;
-    height: 100px;
-    padding: 10px;
-    /*border-box = indholdet + padding - sættes til height (indholdet får højden på height minus padding)*/
-    /*content-box = KUN indholdet sættes til height-højden (denne er default)*/
-    box-sizing: border-box;
-    width: 100%;
-}
-
-.flowster-navbar-menu
-{
-    line-height: 30px;
-}
-
 .navbar-logo
 {
     width: 150px;
 }
 
-
-
-
-
-/* Remove the navbar's default margin-bottom and rounded borders */
-.navbar
+.navbar-custom
 {
+    background-color: #235D89;
     margin-bottom: 0;
     border-radius: 0;
+    height: 100px;
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text
+{
+    font-size: larger;
+    font-weight: bolder;
+    color: white;
+}
+
+a, a:focus
+{
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover, a:active
+{
+    text-decoration: none;
+    color: #3E8AC4;
 }
 
 /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
