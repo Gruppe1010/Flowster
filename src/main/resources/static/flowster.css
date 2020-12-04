@@ -18,11 +18,7 @@ input::-webkit-inner-spin-button
     /*150 fordi det er højden på den samlede footer*/
     min-height: calc(100vh - 150px);
     padding-bottom: 20px;
-
 }
-
-
-
 
 .main-content:hover
 {
@@ -34,7 +30,6 @@ input[type=number]
     -moz-appearance: textfield;
 }
 
-
 .flowster-btn
 {
     border-radius: 100px;
@@ -43,22 +38,13 @@ input[type=number]
     background-color: #3E8AC4;
     /*farven: 0,0,0 == sort. 0.2 == 80% gennemsigtighed*/
     /*3px 3px 3px højre, nedad, hvor stor - hvis sidste værdi er større end forrige, kan man se det på top og venstre*/
-    box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
 }
 
 .index-img-container
 {
     width: 700px;
     margin: 70px;
-}
-
-/*horisontal ruler - styler på et tag - men man vil typisk lave en mere præcis selector når man styler på tags*/
-/*form.create-user hr*/
-hr
-{
-    border-width: 2px;
-    border-color: #CDD3D8;
-    width: 90%;
 }
 
 .font-italic
@@ -73,6 +59,7 @@ hr
     padding-top: 8px;
 }
 
+/*Colours/Farver*/
 .darkblue
 {
     color: #235D89;
@@ -83,13 +70,20 @@ hr
     color: #3E8AC4;
 }
 
-.container-width {
+.white
+{
+    color: white;
+}
+
+.container-width
+{
     padding-left: 120px;
     padding-top: 50px;
     width: 90%;
 }
 
-.footer {
+.footer
+{
     display: flex;
     background-color: #3E8AC4;
     color: white;
@@ -101,28 +95,32 @@ hr
     bottom: 0;
     width: 100%;
     /*all == alle ændringer man laver undervejs tager nu 2 sek*/
-    transition: background-color 2s; /*TODO fjern*/
+    transition: background-color 2s;
 }
 
-.footer:hover /*TODO fjern*/
+.footer:hover
 {
-    background-color: deeppink;
+    background-color: #235D89;
 }
-/*css-selector*/
-/* css-selector - ALLE p-tags som er i form, der har create-user-klassen*/
-/**/
-form.create-user p /*TODO fjern*/
-{
-    color: deeppink;
-}
-
 
 .footer-logo
 {
     width: 160px;
 }
 
-.white
+/*css-selector*/
+/* css-selector - ALLE p-tags som er i form, der har create-user-klassen*/
+/**/
+form.create-user p
 {
-    color: white;
+    color: #235D89;
+}
+
+/*horisontal ruler - styler på et tag - men man vil typisk lave en mere præcis selector når man styler på tags*/
+/*form.create-user hr*/
+form.create-user hr
+{
+    border-width: 2px;
+    border-color: #CDD3D8;
+    width: 90%;
 }
