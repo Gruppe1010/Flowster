@@ -100,7 +100,7 @@ input[type=number]
 
 .footer:hover
 {
-    background-color: deeppink;
+    background-color: #235D89;
 }
 
 .footer-logo
@@ -113,7 +113,7 @@ input[type=number]
 /**/
 form.create-user p
 {
-    color: deeppink;
+    color: #235D89;
 }
 
 /*horisontal ruler - styler på et tag - men man vil typisk lave en mere præcis selector når man styler på tags*/
