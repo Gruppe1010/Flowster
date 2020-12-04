@@ -19,7 +19,7 @@
 <body>
 
 <!-- Navbar fragment -->
-<nav th:insert="general/fragments :: menubar(loggedInUser)"></nav>
+<nav th:insert="general/fragments :: menubar(${loggedInUser.getClassName()})"></nav>
 
 <div class="main-content">
     <div class="container-fluid text-center">

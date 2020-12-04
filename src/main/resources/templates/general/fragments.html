@@ -28,7 +28,7 @@
 </nav>
 
 
-<nav th:fragment="navbar(loggedInUser)" class="navbar navbar-custom">
+<nav th:fragment="menubar(className)" class="navbar navbar-custom">
     <div class="container-fluid">
 
         <!-- BRAND -->
@@ -48,7 +48,7 @@
             <!-- Links -->
             <ul class="navbar-text">
                 <a href="#">Startside</a>
-                <a th:href="@{${loggedInUser.getClassName()}}">Teams</a>
+                <a th:href="${className + '/teams'}">Teams</a>
                 <a href="#">Projekter</a>
             </ul>
 
