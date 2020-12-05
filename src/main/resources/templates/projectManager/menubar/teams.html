@@ -28,7 +28,7 @@
     <div class="row content">
 
         <!-- SIDEBAR-FRAGMENT -->
-        <nav th:insert="general/fragments :: teams-sidebar(${loggedInUser})"></nav>
+        <div th:insert="general/fragments :: teams-sidebar(${loggedInUser})" class="content"></div>
 
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div th:insert="general/fragments :: teams-page-content(${loggedInUser})"></div>
