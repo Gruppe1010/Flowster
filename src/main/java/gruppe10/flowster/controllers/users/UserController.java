@@ -26,6 +26,11 @@ public class UserController
     @GetMapping("/")
     public String index(Model logInViewModel)
     {
+        if(UserService.loggedInUser != null)
+        {
+            return redirect + UserService.loggedInUser.findClassNameUrlPath() + "/frontPage";
+        }
+        
         logInViewModel.addAttribute("logInViewModel", this.logInViewModel);
         
         return "general/index"; // html

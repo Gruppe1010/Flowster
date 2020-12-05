@@ -231,6 +231,8 @@ a:hover, a:active
 .sidebar
 {
     padding-top: 15px;
+    background-color: #F0F3F4; !important
+    height: 100%; !important
 }
 
 .sidebar-link
@@ -261,4 +263,10 @@ a:hover, a:active
 .test
 {
     width: 80%;
+}
+
+.wrapper
+{
+    padding: 30px 30px 30px 30px;
+    margin-top: 50px;
 }
