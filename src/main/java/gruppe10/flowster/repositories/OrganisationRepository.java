@@ -347,17 +347,20 @@ public class OrganisationRepository
             // så længe der er flere teamId'er i resultSet'et
             while(resultSet.next())
             {
+                int teamId = resultSet.getInt("f_id_team");
+                
                 // tilføjes teamId'et til teamIdsList
-                teamIdsList.add(resultSet.getInt("f_id_team"));
+                teamIdsList.add(teamId);
             }
             
             // if der er noget på teamIdList (== resultSettet ikke var tomt)
             if(teamIdsList.size() > 0)
             {
+                joinedTeamsList = new ArrayList<>();
+                
                 // find Team ud fra id og tilføj til joinedTeamsList
                 for(Integer teamId : teamIdsList)
                 {
-                    joinedTeamsList = new ArrayList<>();
                     joinedTeamsList.add(retrieveTeamFromId(teamId));
                 }
             }

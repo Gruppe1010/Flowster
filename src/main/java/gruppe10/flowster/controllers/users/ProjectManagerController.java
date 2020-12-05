@@ -22,7 +22,10 @@ public class ProjectManagerController
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         
         // TODO: RET TIL: return "projectManager/front-page"; // html
-        return "projectManager/front-page-test"; // html
+        
+        System.out.println(UserService.loggedInUser.getJoinedTeamsList().size());
+        
+        return "projectManager/front-page"; // html
     }
     
     @GetMapping("/teams")
@@ -33,6 +36,23 @@ public class ProjectManagerController
         return "projectManager/menubar/teams"; // html
     }
     
-  
+    @GetMapping("/projects")
+    public String projects(Model loggedInUserModel)
+    {
+        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
+        
+        return "projectManager/menubar/projects"; // html
+    }
+    
+    
+    
+    
+    @GetMapping("/contact")
+    public String contact(Model loggedInUserModel)
+    {
+        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
+    
+        return "general/contact"; // html
+    }
 
 }

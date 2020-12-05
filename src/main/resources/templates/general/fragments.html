@@ -51,12 +51,20 @@
         <!-- COLLAPSIBLE NAVBAR -->
         <div class="collapse navbar-collapse" id="alignment-example">
 
-            <!-- Links -->
-            <ul class="navbar-text">
+            <!-- Links --> <!-- TODO: før var det et ul-tag - men betyder det noget??-->
+
+            <a href="teams" class="navbar-text">Teams</a>
+            <a href="projects" class="navbar-text">Projekter</a>
+
+            <!--
+            <div class="navbar-text">
                 <a href="teams">Teams</a>
-                <br>
+            </div>
+            <div class="navbar-text">
                 <a href="projects">Projekter</a>
-            </ul>
+            </div>
+            -->
+
 
         </div>
 
@@ -70,23 +78,26 @@
 <!--------------- SIDEBAR --------------->
 <!-- <div th:insert="general/fragments :: teams-sidebar(${loggedInUser})"></div> -->
 
-<div th:fragment="teams-sidebar(loggedInUser)" class="col-sm-2">
-    <div class="row fontsize">
-        <a href="/createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'" class="fontsize" ></a>
+<div th:fragment="teams-sidebar(loggedInUser)" class="col-sm-2 sidebar fontsize text-center">
+
+    <div class="row create">
+        <a href="/createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"></a>
     </div>
 
     <hr class="hr">
 
-    <div class="row fontsize">
+    <div class="row">
         <!-- DET ER HER LISTEN VISES -->
         <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
-            <a th:href="'team?' + ${team.getId()}" th:text="${team.getName()}"></a>
+            <div class="sidebar-link">
+                <a th:href="'team?' + ${team.getId()}" th:text="${team.getName()}"></a>
+            </div>
         </div>
     </div>
 </div>
 
 
-<!--------------- MAIN-CONTENT --------------->
+<!--------------- MAIN-CONTENT ---------------> <!-- TODO -->
 <!-- <div th:insert="general/fragments :: teams-main-content(loggedInUser)"></div> -->
 
 <div th:fragment="teams-page-content(loggedInUser)" class="col-sm-10 text-center">
@@ -108,12 +119,13 @@
 </div>
 
 
-<!-------------------------------------------- PROJECTS -------------------------------------------->
+<!-------------------------------------------- PROJECTS --------------------------------------------> <!-- TODO -->
 
-<!--------------- SIDEBAR --------------->
+<!--------------- SIDEBAR ---------------> <!-- TODO -->
 <!-- <div th:insert="general/fragments :: projects-sidebar(${loggedInUser})"></div> -->
 
-<div th:fragment="projects-sidebar(loggedInUser)" class="col-sm-2">
+<div th:fragment="projects-sidebar(loggedInUser)" class="col-sm-2 sidebar fontsize">
+    <!--
     <div class="row fontsize">
         <a href="/createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'" class="fontsize" ></a>
     </div>
@@ -121,15 +133,16 @@
     <hr class="hr">
 
     <div class="row fontsize">
-        <!-- DET ER HER LISTEN VISES -->
+
         <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
             <a th:href="'team?' + ${team.getId()}" th:text="${team.getName()}"></a>
         </div>
     </div>
+    -->
 </div>
 
 
-<!--------------- MAIN-CONTENT --------------->
+<!--------------- MAIN-CONTENT ---------------> <!-- TODO -->
 <!-- <div th:insert="general/fragments :: projects-main-content(loggedInUser)"></div> -->
 
 <div th:fragment="projects-page-content(loggedInUser)" class="col-sm-10 text-center">
@@ -140,8 +153,6 @@
         <a th:href="'team?' + ${team.getId()}">
             <div  class ="preview-team">
                 <h1 th:text="${team.getName()}"></h1>
-
-
             </div>
 
 

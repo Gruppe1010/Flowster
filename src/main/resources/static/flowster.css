@@ -71,6 +71,11 @@ input[type=number]
     color: #3E8AC4;
 }
 
+.light-blue
+{
+    background-color: #D7EEF7;
+}
+
 .white
 {
     color: white;
@@ -164,6 +169,7 @@ div.main-content hr
     padding: 20px;
 }
 
+
 a, a:focus
 {
     text-decoration: none;
@@ -220,4 +226,39 @@ a:hover, a:active
     /*content-box = KUN indholdet sættes til height-højden (denne er default)*/
     box-sizing: border-box;
     border-width: 1px;
+}
+
+.sidebar
+{
+    padding-top: 15px;
+}
+
+.sidebar-link
+{
+    display: inline-block;
+    padding-top: 5px;
+    width: 100%;
+    float: left;
+}
+
+.sidebar-link:hover
+{
+    background-color: #D7EEF7;
+}
+
+.create:hover
+{
+    background-color: #3E8AC4;
+    color: white;
+    border-radius: 100px;
+}
+
+.create:hover a
+{
+    color: white;
+}
+
+.test
+{
+    width: 80%;
 }
