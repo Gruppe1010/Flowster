@@ -68,18 +68,21 @@
 
 
 <div th:fragment="teams-sidebar(loggedInUser)" class="col-sm-4">
-    <div class="row">
-        <p class="fontsize"><a class="fontsize" href="/createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Opret team'"></a></p>
+    <div class="row fontsize">
+        <p><a class="fontsize" href="/createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Opret team'"></a></p>
     </div>
 
-    <div class="row">
+    <div class="row fontsize">
         <!-- TODO: DET ER HER LISTEN VISES -->
+
+
+        <p>Mine teams</p>
         <tr th:each="team: ${loggedInUser.getJoinedTeamsList()}">
             <td th:text="${team.getName()}" />
         </tr>
 
 
-        <p>Mine teams</p>
+
         <p class="fontsize"><a href="#">Link</a></p>
         <p class="fontsize"><a href="#">Link</a></p>
         <p class="fontsize"><a href="#">Link</a></p>

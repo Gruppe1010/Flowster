@@ -17,9 +17,9 @@
 
 </head>
 <body>
-    <nav th:insert="general/fragments :: menubar(loggedInUser)"></nav>
+    <nav th:insert="general/fragments :: menubar(${loggedInUser})"></nav>
 
-    <div th:insert="general/fragments :: teams-sidebar(loggedInUser)"></div>
+    <div th:insert="general/fragments :: teams-sidebar(${loggedInUser})"></div>
 
 
 

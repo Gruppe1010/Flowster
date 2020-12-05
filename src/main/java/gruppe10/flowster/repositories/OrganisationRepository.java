@@ -298,7 +298,7 @@ public class OrganisationRepository
     
         try
         {
-            String sqlCommand = "SELECT f_id_team FROM teams_users WHERE id_user = ?";
+            String sqlCommand = "SELECT f_id_team FROM teams_users WHERE f_id_user = ?";
             
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
             
@@ -342,7 +342,7 @@ public class OrganisationRepository
         try
         {
             // liste med teamsId'er lavet ud fra resultSet
-            ArrayList<Integer> teamIdsList = null;
+            ArrayList<Integer> teamIdsList = new ArrayList<>();
             
             // så længe der er flere teamId'er i resultSet'et
             while(resultSet.next())
@@ -352,11 +352,12 @@ public class OrganisationRepository
             }
             
             // if der er noget på teamIdList (== resultSettet ikke var tomt)
-            if(teamIdsList != null)
+            if(teamIdsList.size() > 0)
             {
                 // find Team ud fra id og tilføj til joinedTeamsList
                 for(Integer teamId : teamIdsList)
                 {
+                    joinedTeamsList = new ArrayList<>();
                     joinedTeamsList.add(retrieveTeamFromId(teamId));
                 }
             }
