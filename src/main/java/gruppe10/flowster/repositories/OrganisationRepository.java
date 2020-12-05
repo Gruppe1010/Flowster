@@ -1,11 +1,13 @@
 package gruppe10.flowster.repositories;
 
+import gruppe10.flowster.models.teams.Team;
 import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.models.users.TeamMember;
 import gruppe10.flowster.models.users.User;
 import gruppe10.flowster.viewModels.LogInViewModel;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class OrganisationRepository
 {
@@ -26,12 +28,7 @@ public class OrganisationRepository
      */
     public void insertUserIntoDb(User newUser)
     {
-        // finder organisationName ud fra organisationId
-        String organisationName = flowsterRepository.retrieveOrganisationNameFromOrganisationId
-                                           (newUser.findOrganisationId());
-        
-        // opretter ny String med underscore i stedet for mellemrum i organisationName
-        String dbName = "flowster_" + organisationName.replaceAll(" ", "_");
+        String dbName = findDbNameFromOrganisationId(newUser.findOrganisationId());
         
         // FØRST indsættes email i emails-tabel i flowster-db
         flowsterRepository.insertEmailIntoEmails(newUser.getEmail());
@@ -42,6 +39,17 @@ public class OrganisationRepository
         // DERNÆST indsættes resten af userData i users-tabel i organisationName-db
         insertUserDataIntoUsers(dbName, newUser);
     }
+    
+    
+    public String findDbNameFromOrganisationId(int organisationId)
+    {
+        String organisationName =
+                flowsterRepository.retrieveOrganisationNameFromOrganisationId(organisationId);
+    
+        // opretter ny String med underscore i stedet for mellemrum i organisationName
+        return "flowster_" + organisationName.replaceAll(" ", "_");
+    }
+    
     
     /**
      * Indsætter et nyt User-obj i users-tabellen i dbName-databasen
@@ -202,7 +210,7 @@ public class OrganisationRepository
      */
     
     
-    // TODO NY
+    // TODO HER HER HER
     public User createUserFromResultSet(ResultSet resultSet)
     {
         User user = null;
@@ -213,40 +221,44 @@ public class OrganisationRepository
             {
                 // foreløbige variabler:
                 int jobType = resultSet.getInt("f_id_job_type");
-                // emailId
                 int emailId = resultSet.getInt("f_id_email");
-                // orgAndJobTyp som String
-                String organisationAndJobTypeString =
-                        "" + flowsterRepository.retrieveOrganisationIdFromEmailId(emailId) + jobType;
+                int organisationId = flowsterRepository.retrieveOrganisationIdFromEmailId(emailId);
+                String dbName = findDbNameFromOrganisationId(organisationId);
+                String organisationAndJobTypeString = "" + organisationId + jobType;
                 
                 // variabler som bruges til at oprette User-obj. med
                 int organisationAndJobType = Integer.parseInt(organisationAndJobTypeString);
                 String email = flowsterRepository.retrieveEmailFromEmailId(emailId);
                 byte[] profilePictureBytes = convertBlobToByteArray(resultSet.getBlob("profile_picture"));
+                int id = resultSet.getInt("id_user");
+                // TODO: hent teams
+                ArrayList<Team> joinedTeamsList = retrieveTeamsArrayListFromUserId(dbName, id);
     
-    
-                user = new User(resultSet.getInt("id_user"),
+                // TODO: hent projekter
+                // projectManager.setJoinedTeamsList(retrieveTeamsArrayListFromUserId(projectManager.getId()));
+                
+                
+                user = new User(id,
                         organisationAndJobType,
                         resultSet.getString("firstname"),
                         resultSet.getString("surname"),
                         email,
                         resultSet.getString("password"),
                         resultSet.getDouble("manhours"),
-                        profilePictureBytes);
-                
-                
+                        profilePictureBytes,
+                        joinedTeamsList);
                 
                 // hvis det er en ProjectManager
                 if(jobType == 1)
                 {
                     // omdan til ProjectManager-obj
-                    user = convertUserToProjectManager();
+                    user = convertUserToProjectManager(user);
                 }
                 // hvis det er en TeamMember
                 else if(jobType == 2)
                 {
                     // omdan til TeamMember-obj
-                    user = createTeamMemberFromResultSet(resultSet);
+                    user = convertUserToTeamMember(user);
                 }
             }
         }
@@ -258,26 +270,47 @@ public class OrganisationRepository
         return user;
     }
     
-    
+    // TODO ny
     public ProjectManager convertUserToProjectManager(User user)
     {
         // først konverter
         ProjectManager projectManager = new ProjectManager(user.getId(), user.getOrganisationAndJobType(),
                 user.getFirstname(), user.getSurname(), user.getEmail(), user.getPassword(),
-                user.getManhours(), user.getProfilePictureBytes());
+                user.getManhours(), user.getProfilePictureBytes(), user.getJoinedTeamsList());
      
       
         // TODO: hent teams
         projectManager.setJoinedTeamsList(retrieveTeamsArrayListFromUserId(projectManager.getId()));
         
         // TODO: hent projekter
-        
+        // projectManager.setJoinedTeamsList(retrieveTeamsArrayListFromUserId(projectManager.getId()));
     
     
     
     // hent begge lister
     
+        return projectManager;
+    }
     
+    
+    public ArrayList<Team> retrieveTeamsArrayListFromUserId(String dbName, int userId)
+    {
+    
+    
+    
+    }
+    
+    // TODO ny
+    public TeamMember convertUserToTeamMember(User user)
+    {
+        // først konverter
+        TeamMember teamMember = new TeamMember(user.getId(), user.getOrganisationAndJobType(),
+                user.getFirstname(), user.getSurname(), user.getEmail(), user.getPassword(),
+                user.getManhours(), user.getProfilePictureBytes(), user.getJoinedTeamsList());
+        
+     
+        
+        return teamMember;
     }
     
     
@@ -288,6 +321,7 @@ public class OrganisationRepository
      * @param resultSet ResultSet-obj som bruges til at oprette ProjectManager-obj fra
      * @return ProjectManager nyoprettede ProjectManager-obj
      * */
+    /*
     public ProjectManager createProjectManagerFromResultSet(ResultSet resultSet)
     {
         ProjectManager projectManager = null;
@@ -332,12 +366,16 @@ public class OrganisationRepository
         return projectManager;
     }
     
+     */
+    
+    // TODO: denne er måske lige meget
     /**
      * Opretter et nyt TeamMember-obj ud fra resultSet
      *
      * @param resultSet ResultSet-obj som bruges til at oprette TeamMember-obj fra
      * @return TeamMember nyoprettede TeamMember-obj
      * */
+    /*
     public TeamMember createTeamMemberFromResultSet(ResultSet resultSet)
     {
         TeamMember teamMember = null;
@@ -376,6 +414,8 @@ public class OrganisationRepository
         }
         return teamMember;
     }
+    
+     */
     
     
     // ----------------- ANDRE

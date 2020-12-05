@@ -8,10 +8,8 @@ import java.util.ArrayList;
 
 public class ProjectManager extends User
 {
-    
     private ArrayList<Project> managedProjectsList;
-    private ArrayList<Team> joinedTeamsList; // TODO: ændret til joinedTeamsList fordi vi godt vil have at
-    // ProjectManageren er med på teamsne
+
     
     //constructors
     public ProjectManager(){}
@@ -20,15 +18,13 @@ public class ProjectManager extends User
             , double manhours)
     {
         super(organisationAndJobType, firstname, surname, email, password, manhours);
-        this.managedProjectsList = null;
     }
     
     public ProjectManager(int id, int organisationAndJobType, String firstname, String surname, String email,
                           String password
-            , double manhours, byte[] profilePictureBytes)
+            , double manhours, byte[] profilePictureBytes, ArrayList<Team> joinedTeamsList)
     {
-        super(id, organisationAndJobType, firstname, surname, email, password, manhours, profilePictureBytes);
-        this.managedProjectsList = null;
+        super(id, organisationAndJobType, firstname, surname, email, password, manhours, profilePictureBytes, joinedTeamsList);
     }
     
     
@@ -41,15 +37,7 @@ public class ProjectManager extends User
     {
         this.managedProjectsList = managedProjectsList;
     }
-    public ArrayList<Team> getJoinedTeamsList()
-    {
-        return joinedTeamsList;
-    }
-    public void setJoinedTeamsList(ArrayList<Team> createdTeamsList)
-    {
-        this.joinedTeamsList = createdTeamsList;
-    }
-    
+ 
     
     // ANDRE METODER
     @Override

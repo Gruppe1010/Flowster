@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class TeamMember extends User
 {
     private ArrayList<Project> joinedProjectsList;
-    private ArrayList<Team> joinedTeamsList;
+   
     
     // constructors
     public TeamMember(){}
@@ -19,15 +19,15 @@ public class TeamMember extends User
     {
         super(organisationAndJobType, firstname, surname, email, password, manhours);
         this.joinedProjectsList = null;
-        this.joinedTeamsList = null;
     }
     
-    public TeamMember(int organisationAndJobType, String firstname, String surname, String email, String password,
-                      double manhours, byte[] profilePictureBytes)
+    public TeamMember(int id, int organisationAndJobType, String firstname, String surname, String email,
+                      String password,
+                      double manhours, byte[] profilePictureBytes, ArrayList<Team> joinedTeamsList)
     {
-        super(organisationAndJobType, firstname, surname, email, password, manhours, profilePictureBytes);
+        super(id, organisationAndJobType, firstname, surname, email, password, manhours, profilePictureBytes, joinedTeamsList);
         this.joinedProjectsList = null;
-        this.joinedTeamsList = null;
+
     }
     
     
@@ -40,15 +40,7 @@ public class TeamMember extends User
     {
         this.joinedProjectsList = joinedProjectsList;
     }
-    public ArrayList<Team> getJoinedTeamsList()
-    {
-        return joinedTeamsList;
-    }
-    public void setJoinedTeamsList(ArrayList<Team> joinedTeamsList)
-    {
-        this.joinedTeamsList = joinedTeamsList;
-    }
-    
+
     
     // ANDRE METODER
     

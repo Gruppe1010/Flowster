@@ -1,6 +1,9 @@
 package gruppe10.flowster.models.users;
 
 import gruppe10.flowster.UserData;
+import gruppe10.flowster.models.teams.Team;
+
+import java.util.ArrayList;
 
 public class User implements UserData, Comparable<User>
 {
@@ -15,6 +18,7 @@ public class User implements UserData, Comparable<User>
     private String password;
     private double manhours;
     private byte[] profilePictureBytes;
+    private ArrayList<Team> joinedTeamsList;
     
     // constructors
     
@@ -30,9 +34,10 @@ public class User implements UserData, Comparable<User>
         this.password = password;
         this.manhours = manhours;
         this.profilePictureBytes = null;
+        joinedTeamsList = null;
     }
     public User(int id, int organisationAndJobType, String firstname, String surname, String email, String password,
-                double manhours, byte[] profilePictureBytes)
+                double manhours, byte[] profilePictureBytes, ArrayList<Team> joinedTeamsList)
     {
         this.id = id;
         this.organisationAndJobType = organisationAndJobType;
@@ -42,6 +47,7 @@ public class User implements UserData, Comparable<User>
         this.password = password;
         this.manhours = manhours;
         this.profilePictureBytes = profilePictureBytes;
+        this.joinedTeamsList = joinedTeamsList;
     }
     
     // getters + setters
@@ -110,7 +116,14 @@ public class User implements UserData, Comparable<User>
     {
         this.profilePictureBytes = profilePictureBytes;
     }
-    
+    public ArrayList<Team> getJoinedTeamsList()
+    {
+        return joinedTeamsList;
+    }
+    public void setJoinedTeamsList(ArrayList<Team> joinedTeamsList)
+    {
+        this.joinedTeamsList = joinedTeamsList;
+    }
     // UserData-interface
     
     @Override
