@@ -21,17 +21,9 @@
 
 <div class="container-fluid main-content text-center">
 
-    <div class="row">
-        <nav th:insert="general/fragments :: menubar(${loggedInUser})"></nav>
-    </div>
-
     <div class="row content">
 
-        <!-- SIDEBAR-FRAGMENT -->
-        <nav th:insert="general/fragments :: projects-sidebar(${loggedInUser})"></nav>
-
-        <!-- MAIN-CONTENT-FRAGMENT -->
-        <div th:insert="general/fragments :: projects-page-content(${loggedInUser})"></div>
+        <h1>Om os</h1>
 
     </div>
 

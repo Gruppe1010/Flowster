@@ -46,13 +46,5 @@ public class ProjectManagerController
     
     
     
-    
-    @GetMapping("/contact")
-    public String contact(Model loggedInUserModel)
-    {
-        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-    
-        return "general/contact"; // html
-    }
 
 }

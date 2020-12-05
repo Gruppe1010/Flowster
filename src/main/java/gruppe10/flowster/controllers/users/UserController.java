@@ -98,8 +98,24 @@ public class UserController
         
         return redirect;
     }
-
-
-
-
+    
+    
+    @GetMapping("/contact")
+    public String contact(Model loggedInUserModel)
+    {
+        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
+        
+        return "general/contact"; // html
+    }
+    
+    @GetMapping("/about")
+    public String about(Model loggedInUserModel)
+    {
+        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
+        
+        return "general/about"; // html
+    }
+    
+    
+    
 }
