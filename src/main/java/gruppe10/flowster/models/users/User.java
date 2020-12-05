@@ -7,6 +7,7 @@ public class User implements UserData, Comparable<User>
     // 00000 = første 3 nuller = organisationskode, 2 nuller = stillingskode
     // 01 == projectManager
     // 02 == employee
+    private int id;
     private int organisationAndJobType;
     private String firstname;
     private String surname;
@@ -30,9 +31,10 @@ public class User implements UserData, Comparable<User>
         this.manhours = manhours;
         this.profilePictureBytes = null;
     }
-    public User(int organisationAndJobType, String firstname, String surname, String email, String password,
+    public User(int id, int organisationAndJobType, String firstname, String surname, String email, String password,
                 double manhours, byte[] profilePictureBytes)
     {
+        this.id = id;
         this.organisationAndJobType = organisationAndJobType;
         this.firstname = firstname;
         this.surname = surname;
@@ -43,6 +45,15 @@ public class User implements UserData, Comparable<User>
     }
     
     // getters + setters
+    
+    public int getId()
+    {
+        return id;
+    }
+    public void setId(int id)
+    {
+        this.id = id;
+    }
     public int getOrganisationAndJobType()
     {
         return organisationAndJobType;
@@ -167,6 +178,15 @@ public class User implements UserData, Comparable<User>
     public String getClassName()
     {
         return getClass().getSimpleName();
+    }
+    
+    public String findClassNameUrlPath()
+    {
+        String urlPath = getClass().getSimpleName();
+    
+        urlPath = Character.toLowerCase(urlPath.charAt(0)) + urlPath.substring(1);
+        
+        return urlPath;
     }
     
     

@@ -23,10 +23,11 @@ public class ProjectManager extends User
         this.managedProjectsList = null;
     }
     
-    public ProjectManager(int organisationAndJobType, String firstname, String surname, String email, String password
+    public ProjectManager(int id, int organisationAndJobType, String firstname, String surname, String email,
+                          String password
             , double manhours, byte[] profilePictureBytes)
     {
-        super(organisationAndJobType, firstname, surname, email, password, manhours, profilePictureBytes);
+        super(id, organisationAndJobType, firstname, surname, email, password, manhours, profilePictureBytes);
         this.managedProjectsList = null;
     }
     
@@ -51,7 +52,6 @@ public class ProjectManager extends User
     
     
     // ANDRE METODER
-    
     @Override
     public boolean isProjectManager()
     {

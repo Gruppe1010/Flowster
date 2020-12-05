@@ -19,21 +19,18 @@ public class ProjectManagerController
     @GetMapping("/frontPage")
     public String frontPage(Model loggedInUserModel)
     {
-        System.out.println(UserService.loggedInUser.getFirstname());
-        
-        
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-    
-    
-      
-        return "projectManager/front-page"; // html
+        
+        // TODO: RET TIL: return "projectManager/front-page"; // html
+        return "projectManager/front-page-test"; // html
     }
     
     @GetMapping("/teams")
     public String teams(Model loggedInUserModel)
     {
+        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         
-        return "projectManager/teams"; // html
+        return "projectManager/menubar/teams"; // html
     }
     
   

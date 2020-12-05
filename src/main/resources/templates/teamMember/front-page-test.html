@@ -19,27 +19,30 @@
 <body>
 
 
+<div class="container-fluid main-content text-center">
+    <div class="row">
+        <nav th:insert="general/fragments :: menubar(${loggedInUser})"></nav>
+    </div>
 
+    <div class="row content">
 
+        <!-- SIDEBAR-FRAGMENT -->
+        <div class="col-sm-4">
 
-
-
-
-
-
-<div class="main-content">
-
-    <!-- Navbar fragment -->
-    <nav th:insert="general/fragments :: menubar(${loggedInUser})"></nav>
-
-    <div class="container-fluid text-center">
-        <div class="row content">
-            <div class="col-sm-2 sidenav">
-                <p><a href="#">Link</a></p>
-                <p><a href="#">Link</a></p>
-                <p><a href="#">Link</a></p>
+            <div class="row">
+                <p class="fontsize"><a th:href="${'/createTeam'}" th:text="${loggedInUser.isProjectManager()} ? 'Opret team'"></a></p>
             </div>
-            <div class="col-sm-8 text-left">
+
+            <div class="row">
+                <p class="fontsize"><a href="#">Link</a></p>
+                <p class="fontsize"><a href="#">Link</a></p>
+                <p class="fontsize"><a href="#">Link</a></p>
+            </div>
+        </div>
+
+        <!-- MAIN-CONTENT-FRAGMENT -->
+        <div class="col-sm-8">
+            <div class="container col-sm-12">
                 <h1>Teams</h1>
                 <li>Team 1</li>
                 <li>Team 2</li>
@@ -50,6 +53,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 <!-- Footer fragment -->
