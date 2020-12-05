@@ -407,7 +407,7 @@ public class OrganisationRepository
             if(resultSet.next())
             {
                 // TODO: VI SKAL OGSÅ give teamet de to lister!!!!! - men det gad jeg ikke lige
-                team = new Team(resultSet.getString("team_name"));
+                team = new Team(resultSet.getInt("id_team"), resultSet.getString("team_name"));
             }
         }
         catch(SQLException e)

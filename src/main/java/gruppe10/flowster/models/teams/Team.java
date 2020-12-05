@@ -8,6 +8,7 @@ import java.util.HashSet;
 
 public class Team
 {
+    private int id;
     private String name;
     private ArrayList<TeamMember> employeesList;
     private ArrayList<Project> projectsList;
@@ -17,8 +18,9 @@ public class Team
     public Team(){}
     
     // TODO: slet muligvis denne senere hvis den ikke bliver brugt
-    public Team(String name)
+    public Team(int id, String name)
     {
+        this.id = id;
         this.name = name;
         this.employeesList = null;
         this.projectsList = null;
@@ -34,6 +36,14 @@ public class Team
     
     
     // getters + setters
+    public int getId()
+    {
+        return id;
+    }
+    public void setId(int id)
+    {
+        this.id = id;
+    }
     public String getName()
     {
         return name;

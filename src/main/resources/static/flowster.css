@@ -126,6 +126,15 @@ form.create-user hr
     width: 90%;
 }
 
+/*All hr-tags inde div's som har klassen main-content vil have denne styling*/
+/*Og siden ALT på alle html'er er omkranset af en div der har klassen main-content, vil ALLE hr-tags få denne styling*/
+div.main-content hr
+{
+    border-width: 2px;
+    border-color: #CDD3D8;
+    width: 90%;
+}
+
 /*--------NAVBAR---------*/
 
 .navbar-logo
@@ -171,7 +180,7 @@ a:hover, a:active
 
 .row.content
 {
-    height: 100vh;
+    height: 100%;
 }
 
 .sidenav
@@ -199,5 +208,16 @@ a:hover, a:active
 /* css-selector - ALLE p-tags som er i form, der har create-user-klassen form.create-user p*/
 .fontsize
 {
-    font-size: 50px;
+    font-size: 20px;
+}
+
+/*    MAIN CONTENT   */
+.preview-team
+{
+    height: 100px;
+    padding: 60px;
+    /*border-box = indholdet + padding - sættes til height (indholdet får højden på height minus padding)*/
+    /*content-box = KUN indholdet sættes til height-højden (denne er default)*/
+    box-sizing: border-box;
+    border-width: 1px;
 }
