@@ -180,7 +180,9 @@
 
 
 
-        <a class="navbar-brand" th:href="${loggedInUser != null} ? ${loggedInUser.findClassNameUrlPath()} +'/frontPage' : '/'">
+        <!-- <p>Age: <span th:text="*{age != null}? *{age} : '(no age specified)'">27</span>.</p> -->
+        <!-- ${${loggedInUser != null} ? ${loggedInUser.findClassNameUrlPath()} + -->
+        <a class="navbar-brand" th:href="${loggedInUser != null} ? '/frontPage' : '/'">
             <img class="footer-logo" src="/images/Flowster_logo.png">
         </a>
         <!--<img class="footer-logo" src="/images/Flowster_logo.png">-->
