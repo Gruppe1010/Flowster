@@ -278,9 +278,6 @@ public class OrganisationRepository
                 user.getFirstname(), user.getSurname(), user.getEmail(), user.getPassword(),
                 user.getManhours(), user.getProfilePictureBytes(), user.getJoinedTeamsList());
      
-      
-        // TODO: hent teams
-        projectManager.setJoinedTeamsList(retrieveTeamsArrayListFromUserId(projectManager.getId()));
         
         // TODO: hent projekter
         // projectManager.setJoinedTeamsList(retrieveTeamsArrayListFromUserId(projectManager.getId()));
@@ -292,12 +289,133 @@ public class OrganisationRepository
         return projectManager;
     }
     
-    
+    // TODO ny-done
     public ArrayList<Team> retrieveTeamsArrayListFromUserId(String dbName, int userId)
     {
+        ArrayList<Team> joinedTeamsList = null;
     
+        organisationConnection = generalRepository.establishConnection(dbName);
     
+        try
+        {
+            String sqlCommand = "SELECT f_id_team FROM teams_users WHERE id_user = ?";
+            
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setInt(1, userId);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            joinedTeamsList = createJoinedTeamsListFromResultSet(resultSet);
+        
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in retrieveTeamsArrayListFromUserId: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in retrieveTeamsArrayListFromUserIdFinally: " + e.getMessage());
+            }
+        }
+        
+        return joinedTeamsList;
+    }
     
+    /**
+     * Opretter joinedTeamsList ud fra resultSet der indeholder teamId'er
+     *
+     * @param resultSet indeholder teamId'er
+     * @return joinedTeamsList
+     * */
+    // TODO ny-done
+    public ArrayList<Team> createJoinedTeamsListFromResultSet(ResultSet resultSet)
+    {
+        ArrayList<Team> joinedTeamsList = null;
+    
+        try
+        {
+            // liste med teamsId'er lavet ud fra resultSet
+            ArrayList<Integer> teamIdsList = null;
+            
+            // så længe der er flere teamId'er i resultSet'et
+            while(resultSet.next())
+            {
+                // tilføjes teamId'et til teamIdsList
+                teamIdsList.add(resultSet.getInt("f_id_team"));
+            }
+            
+            // if der er noget på teamIdList (== resultSettet ikke var tomt)
+            if(teamIdsList != null)
+            {
+                // find Team ud fra id og tilføj til joinedTeamsList
+                for(Integer teamId : teamIdsList)
+                {
+                    joinedTeamsList.add(retrieveTeamFromId(teamId));
+                }
+            }
+            
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in createJoinedTeamsListFromResultSet: " + e.getMessage());
+        }
+        
+        return joinedTeamsList;
+    }
+    
+    // TODO ny-done
+    public Team retrieveTeamFromId(int teamId)
+    {
+        Team team = null;
+    
+        try
+        {
+            String sqlCommand = "SELECT * FROM teams WHERE id_team = ?";
+            
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setInt(1, teamId);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            team = createTeamFromResultSet(resultSet);
+        
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in createTeamFromId: " + e.getMessage());
+        }
+        
+        return team;
+    }
+    
+    // TODO ny-done - her mangler lige lidt også
+    public Team createTeamFromResultSet(ResultSet resultSet)
+    {
+        Team team = null;
+        try
+        {
+    
+            if(resultSet.next())
+            {
+                // TODO: VI SKAL OGSÅ give teamet de to lister!!!!! - men det gad jeg ikke lige
+                team = new Team(resultSet.getString("team_name"));
+            }
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in createTeamFromResultSet: " + e.getMessage());
+        }
+        
+        return team;
+        
     }
     
     // TODO ny

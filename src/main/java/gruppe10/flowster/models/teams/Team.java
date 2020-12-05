@@ -16,6 +16,15 @@ public class Team
     // constructors
     public Team(){}
     
+    // TODO: slet muligvis denne senere hvis den ikke bliver brugt
+    public Team(String name)
+    {
+        this.name = name;
+        this.employeesList = null;
+        this.projectsList = null;
+        
+    }
+    
     public Team(String name, ArrayList<TeamMember> employeesList, ArrayList<Project> projectsList)
     {
         this.name = name;
