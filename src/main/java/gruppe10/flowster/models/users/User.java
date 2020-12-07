@@ -118,7 +118,7 @@ public class User implements UserData, Comparable<User>
     }
     public ArrayList<Team> getJoinedTeamsList()
     {
-        return joinedTeamsList;
+        return this.joinedTeamsList;
     }
     public void setJoinedTeamsList(ArrayList<Team> joinedTeamsList)
     {

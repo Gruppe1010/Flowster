@@ -27,7 +27,7 @@ public class TeamMemberController
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         
         // TODO: RET TIL: return "projectManager/front-page"; // html
-        return "teamMember/front-page-test"; // html
+        return "teamMember/front-page"; // html
     }
     
     

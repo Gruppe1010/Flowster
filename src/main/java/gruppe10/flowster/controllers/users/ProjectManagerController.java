@@ -20,10 +20,8 @@ public class ProjectManagerController
     public String frontPage(Model loggedInUserModel)
     {
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        
-        // TODO: RET TIL: return "projectManager/front-page"; // html
-        
-        System.out.println(UserService.loggedInUser.getJoinedTeamsList().size());
+
+        //System.out.println(UserService.loggedInUser.getJoinedTeamsList().size());
         
         return "projectManager/front-page"; // html
     }
