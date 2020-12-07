@@ -186,7 +186,7 @@
 
         <!-- <td th:text="${teacher.active} ? 'ACTIVE' : 'RETIRED'" /> -->
 
-        <a th:href="(${loggedInUser != null} ? '/startPage' : '/')">
+        <a th:href="(${loggedInUser != null ? (loggedInUser.findClassNameUrlPath() + '/frontPage') : '/'})">
             <img  class="footer-logo" src="/images/Flowster_logo.png">
         </a>
 
