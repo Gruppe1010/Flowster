@@ -61,4 +61,16 @@ public class TeamMember extends User
                 createUserViewModel.getManhours());
     }
     
+    
+    
+    @Override
+    public String findClassNameUrlPath()
+    {
+        String urlPath = getClass().getSimpleName();
+        
+        urlPath = Character.toLowerCase(urlPath.charAt(0)) + urlPath.substring(1);
+        
+        return urlPath;
+    }
+    
 }

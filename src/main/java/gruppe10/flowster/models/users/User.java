@@ -34,7 +34,7 @@ public class User implements UserData, Comparable<User>
         this.password = password;
         this.manhours = manhours;
         this.profilePictureBytes = null;
-        joinedTeamsList = null;
+        this.joinedTeamsList = null;
     }
     public User(int id, int organisationAndJobType, String firstname, String surname, String email, String password,
                 double manhours, byte[] profilePictureBytes, ArrayList<Team> joinedTeamsList)
@@ -130,7 +130,6 @@ public class User implements UserData, Comparable<User>
     /**
      * Finder organisationsId ved at adskille de første 3 cifre fra organisationAndJobType-attributten
      *
-     *
      * @return int fundne organisationId
      * */
     public int findOrganisationId()
@@ -139,11 +138,11 @@ public class User implements UserData, Comparable<User>
         
         return Integer.parseInt(organisationAndJobTypeString.substring(0,3));
     }
+ 
     
     @Override
     /**
      * Finder jobTypeId ved at adskille de sidste 2 cifre fra organisationAndJobType-attributten
-     *
      *
      * @return int fundne jobTypeId
      * */

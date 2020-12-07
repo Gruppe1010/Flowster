@@ -58,5 +58,15 @@ public class ProjectManager extends User
     }
     
     
+    @Override
+    public String findClassNameUrlPath()
+    {
+        String urlPath = getClass().getSimpleName();
+        
+        urlPath = Character.toLowerCase(urlPath.charAt(0)) + urlPath.substring(1);
+        
+        return urlPath;
+    }
+    
     
 }

@@ -80,11 +80,12 @@
 
 <div th:fragment="teams-sidebar(loggedInUser)" class="col-sm-2 sidebar fontsize text-center">
 
-    <div class="row create">
-        <a href="/createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"></a>
-    </div>
+    <div th:if="${loggedInUser.isProjectManager()}" class="row create">
+        <!-- <a href="/createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"></a> -->
 
-    <hr class="hr">
+        <a href="/createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"></a>
+        <hr class="hr">
+    </div>
 
     <div class="row">
         <!-- DET ER HER LISTEN VISES -->
@@ -178,16 +179,19 @@
     </div>
     <div class="col-sm-2">
 
-
-
-
         <!-- <p>Age: <span th:text="*{age != null}? *{age} : '(no age specified)'">27</span>.</p> -->
         <!-- ${${loggedInUser != null} ? ${loggedInUser.findClassNameUrlPath()} + -->
+        <!-- <td th:text="${teacher.active} ? 'ACTIVE' : 'RETIRED'" />-->
+        <!-- <a th:href="'team?' + ${team.getId()}"> -->
 
+        <!-- <td th:text="${teacher.active} ? 'ACTIVE' : 'RETIRED'" /> -->
 
-        <a href="/">
+        <a th:href="(${loggedInUser != null} ? '/startPage' : '/')">
             <img  class="footer-logo" src="/images/Flowster_logo.png">
         </a>
+
+
+
         <!--<img class="footer-logo" src="/images/Flowster_logo.png">-->
     </div>
 </div>

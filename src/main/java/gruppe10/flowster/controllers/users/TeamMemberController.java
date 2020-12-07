@@ -14,34 +14,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TeamMemberController
 {
     UserService userService = new UserService();
-    TeamMemberService teamMemberService = new TeamMemberService();
-    
-    
     
     @GetMapping("/frontPage")
     public String frontPage(Model loggedInUserModel)
     {
-        System.out.println(UserService.loggedInUser.getFirstname());
-        
-        
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         
-        // TODO: RET TIL: return "projectManager/front-page"; // html
+        //System.out.println(UserService.loggedInUser.getJoinedTeamsList().size());
+        
         return "teamMember/front-page"; // html
     }
     
-    
-    /* GAMLE
-    @GetMapping("/frontPage")
-    public String frontPage(Model loggedInTeamMemberModel)
+    @GetMapping("/teams")
+    public String teams(Model loggedInUserModel)
     {
-        // TODO måske er castet (TeamMember) overflødig
-        loggedInTeamMemberModel.addAttribute("loggedInTeamMember", (TeamMember) userService.loggedInUser);
+        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         
-        return "teamMember/frontPage"; // html
+        // TODO ret
+        return "projectManager/menubar/teams"; // html
     }
     
-     */
+    @GetMapping("/projects")
+    public String projects(Model loggedInUserModel)
+    {
+        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
+        // TODO ret
+        return "projectManager/menubar/projects"; // html
+    }
     
     
     

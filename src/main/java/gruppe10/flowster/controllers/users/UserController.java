@@ -24,14 +24,18 @@ public class UserController
     String redirect = "redirect:/";
     
     @GetMapping("/")
-    public String index(Model logInViewModel)
+    public String index(Model logInViewModel, Model loggedInUser)
     {
+        /* TODO måske sæt ind igen - hvis footer th-fucker
         if(UserService.loggedInUser != null)
         {
             return redirect + UserService.loggedInUser.findClassNameUrlPath() + "/frontPage";
         }
         
+         */
+        
         logInViewModel.addAttribute("logInViewModel", this.logInViewModel);
+        loggedInUser.addAttribute("loggedInUser", UserService.loggedInUser);
         
         return "general/index"; // html
     }
