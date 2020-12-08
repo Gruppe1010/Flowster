@@ -227,23 +227,6 @@ a:hover, a:active
     background-color: #D7EEF7;
 }
 
-/* css-selector - ALLE p-tags som er i form, der har create-user-klassen form.create-user p*/
-.fontsize
-{
-    font-size: 20px;
-}
-
-/*    MAIN CONTENT   */
-.preview-team
-{
-    height: 100px;
-    padding: 60px;
-    /*border-box = indholdet + padding - sættes til height (indholdet får højden på height minus padding)*/
-    /*content-box = KUN indholdet sættes til height-højden (denne er default)*/
-    box-sizing: border-box;
-    border-width: 1px;
-}
-
 .create
 {
     width: 80%;
@@ -255,7 +238,6 @@ a:hover, a:active
     background-color: #3E8AC4;
     color: white;
     border-radius: 100px;
-
 }
 
 .create:hover a
@@ -263,9 +245,21 @@ a:hover, a:active
     color: white;
 }
 
-.test
+.fontsize
 {
-    width: 80%;
+    font-size: 20px;
+}
+
+/*    MAIN CONTENT   */
+
+.preview-team
+{
+    height: 100px;
+    padding: 60px;
+    /*border-box = indholdet + padding - sættes til height (indholdet får højden på height minus padding)*/
+    /*content-box = KUN indholdet sættes til height-højden (denne er default)*/
+    box-sizing: border-box;
+    border-width: 1px;
 }
 
 .wrapper
