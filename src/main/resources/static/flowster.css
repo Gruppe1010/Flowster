@@ -159,6 +159,10 @@ div.main-content hr
 {
     padding: 30px 0 0 30px;
 }
+.float-right
+{
+    float: right;
+}
 
 .navbar-custom .navbar-text
 {
@@ -233,6 +237,7 @@ a:hover, a:active
 
 .sidebar
 {
+    margin: auto;
     padding-top: 15px;
     background-color: #F0F3F4; !important
     height: 100%; !important
