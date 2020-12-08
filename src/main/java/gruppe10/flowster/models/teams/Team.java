@@ -1,16 +1,15 @@
 package gruppe10.flowster.models.teams;
 
 import gruppe10.flowster.models.project.Project;
-import gruppe10.flowster.models.users.TeamMember;
+import gruppe10.flowster.models.users.User;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class Team
 {
     private int id;
     private String name;
-    private ArrayList<TeamMember> employeesList;
+    private ArrayList<User> employeesList;
     private ArrayList<Project> projectsList;
     
     
@@ -27,13 +26,12 @@ public class Team
         
     }
     
-    public Team(String name, ArrayList<TeamMember> employeesList, ArrayList<Project> projectsList)
+    public Team(String name, ArrayList<User> employeesList, ArrayList<Project> projectsList)
     {
         this.name = name;
         this.employeesList = employeesList;
         this.projectsList = projectsList;
     }
-    
     
     // getters + setters
     public int getId()
@@ -52,11 +50,11 @@ public class Team
     {
         this.name = name;
     }
-    public ArrayList<TeamMember> getEmployeesList()
+    public ArrayList<User> getEmployeesList()
     {
         return employeesList;
     }
-    public void setEmployeesList(ArrayList<TeamMember> employeesList)
+    public void setEmployeesList(ArrayList<User> employeesList)
     {
         this.employeesList = employeesList;
     }

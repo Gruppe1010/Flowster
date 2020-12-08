@@ -230,6 +230,7 @@ public class OrganisationRepository
                 int organisationAndJobType = Integer.parseInt(organisationAndJobTypeString);
                 String email = flowsterRepository.retrieveEmailFromEmailId(emailId);
                 byte[] profilePictureBytes = convertBlobToByteArray(resultSet.getBlob("profile_picture"));
+                
                 int id = resultSet.getInt("id_user");
                 // TODO: hent teams
                 ArrayList<Team> joinedTeamsList = retrieveTeamsArrayListFromUserId(dbName, id);
@@ -298,7 +299,15 @@ public class OrganisationRepository
     
         try
         {
-            String sqlCommand = "SELECT f_id_team FROM teams_users WHERE f_id_user = ?";
+            String sqlCommand = "SELECT id_team, team_name FROM flowster_kea.teams_users " +
+                                        "RIGHT JOIN flowster_kea.teams ON f_id_team = id_team WHERE f_id_user = ?;";
+            
+            
+            /*
+             String sqlCommand = "SELECT organisation_name FROM emails_organisations RIGHT OUTER JOIN organisations ON " +
+                                        "f_id_organisation = id_organisation WHERE f_id_email = ?";
+            
+             */
             
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
             
@@ -328,13 +337,42 @@ public class OrganisationRepository
         return joinedTeamsList;
     }
     
+    public ArrayList<Team> createJoinedTeamsListFromResultSet(ResultSet resultSet)
+    {
+        ArrayList<Team> joinedTeamsList = new ArrayList<>();
+        
+        try
+        {
+            while(resultSet.next())
+            {
+                Team team = new Team(resultSet.getInt("id_team"), resultSet.getString("team_name"));
+                
+                joinedTeamsList.add(team);
+            }
+            if(joinedTeamsList.size() == 0)
+            {
+                joinedTeamsList = null;
+            }
+            
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in createJoinedTeamsListFromResultSet: " + e.getMessage());
+        }
+        
+        return joinedTeamsList;
+    }
+    
+    
+    
+    /*
     /**
      * Opretter joinedTeamsList ud fra resultSet der indeholder teamId'er
      *
      * @param resultSet indeholder teamId'er
      * @return joinedTeamsList
      * */
-    // TODO ny-done
+    /* TODO - fjern - vi laver ny metode
     public ArrayList<Team> createJoinedTeamsListFromResultSet(ResultSet resultSet)
     {
         ArrayList<Team> joinedTeamsList = null;
@@ -373,6 +411,7 @@ public class OrganisationRepository
         
         return joinedTeamsList;
     }
+    */
     
     // TODO ny-done
     public Team retrieveTeamFromId(int teamId)
@@ -406,7 +445,6 @@ public class OrganisationRepository
         Team team = null;
         try
         {
-    
             if(resultSet.next())
             {
                 // TODO: VI SKAL OGSÅ give teamet de to lister!!!!! - men det gad jeg ikke lige
@@ -419,7 +457,6 @@ public class OrganisationRepository
         }
         
         return team;
-        
     }
     
     // TODO ny

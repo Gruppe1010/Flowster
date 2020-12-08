@@ -274,8 +274,8 @@ public class FlowsterRepository
         
         try
         {
-            // TODO: nr. 2
-            String sqlCommand = "SELECT organisation_name FROM emails_organisations RIGHT OUTER JOIN organisations ON " +
+            // RIGHT JOIN er det samme som RIGHT OUTER JOIN == outer er standard når man laver en join
+            String sqlCommand = "SELECT organisation_name FROM emails_organisations RIGHT JOIN organisations ON " +
                                         "f_id_organisation = id_organisation WHERE f_id_email = ?";
             
             PreparedStatement preparedStatement = flowsterConnection.prepareStatement(sqlCommand);
