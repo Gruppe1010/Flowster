@@ -234,9 +234,6 @@ public class OrganisationRepository
                 int id = resultSet.getInt("id_user");
                 // TODO: hent teams
                 ArrayList<Team> joinedTeamsList = retrieveTeamsArrayListFromUserId(dbName, id);
-    
-                // TODO: hent projekter
-                // projectManager.setJoinedTeamsList(retrieveTeamsArrayListFromUserId(projectManager.getId()));
                 
                 
                 user = new User(id,
@@ -271,26 +268,33 @@ public class OrganisationRepository
         return user;
     }
     
-    // TODO ny
+    /**
+     * Konverterer User-obj til ProjectManager-obj
+     *
+     * @param user User-obj som skal konverteres
+     * @return ProjectManager nyoprettede ProjectManager-obj. udfra User-obj
+     * */
     public ProjectManager convertUserToProjectManager(User user)
     {
-        // først konverter
-        ProjectManager projectManager = new ProjectManager(user.getId(), user.getOrganisationAndJobType(),
+       return new ProjectManager(user.getId(), user.getOrganisationAndJobType(),
                 user.getFirstname(), user.getSurname(), user.getEmail(), user.getPassword(),
                 user.getManhours(), user.getProfilePictureBytes(), user.getJoinedTeamsList());
-     
         
-        // TODO: hent projekter
-        // projectManager.setJoinedTeamsList(retrieveTeamsArrayListFromUserId(projectManager.getId()));
-    
-    
-    
-    // hent begge lister
-    
-        return projectManager;
     }
     
-    // TODO ny-done
+    /**
+     * Konverterer User-obj til TeamMember-obj
+     *
+     * @param user User-obj som skal konverteres
+     * @return TeamMember nyoprettede TeamMember-obj. udfra User-obj
+     * */
+    public TeamMember convertUserToTeamMember(User user)
+    {
+        return new TeamMember(user.getId(), user.getOrganisationAndJobType(),
+                user.getFirstname(), user.getSurname(), user.getEmail(), user.getPassword(),
+                user.getManhours(), user.getProfilePictureBytes(), user.getJoinedTeamsList());
+    }
+    
     public ArrayList<Team> retrieveTeamsArrayListFromUserId(String dbName, int userId)
     {
         ArrayList<Team> joinedTeamsList = null;
@@ -301,13 +305,6 @@ public class OrganisationRepository
         {
             String sqlCommand = "SELECT id_team, team_name FROM flowster_kea.teams_users " +
                                         "RIGHT JOIN flowster_kea.teams ON f_id_team = id_team WHERE f_id_user = ?;";
-            
-            
-            /*
-             String sqlCommand = "SELECT organisation_name FROM emails_organisations RIGHT OUTER JOIN organisations ON " +
-                                        "f_id_organisation = id_organisation WHERE f_id_email = ?";
-            
-             */
             
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
             
@@ -345,6 +342,7 @@ public class OrganisationRepository
         {
             while(resultSet.next())
             {
+                // TODO: VI SKAL OGSÅ give teamet de to lister!!!!! - men det gad jeg ikke lige
                 Team team = new Team(resultSet.getInt("id_team"), resultSet.getString("team_name"));
                 
                 joinedTeamsList.add(team);
@@ -362,8 +360,6 @@ public class OrganisationRepository
         
         return joinedTeamsList;
     }
-    
-    
     
     /*
     /**
@@ -412,8 +408,7 @@ public class OrganisationRepository
         return joinedTeamsList;
     }
     */
-    
-    // TODO ny-done
+    /*
     public Team retrieveTeamFromId(int teamId)
     {
         Team team = null;
@@ -439,7 +434,8 @@ public class OrganisationRepository
         return team;
     }
     
-    // TODO ny-done - her mangler lige lidt også
+     */
+    /*
     public Team createTeamFromResultSet(ResultSet resultSet)
     {
         Team team = null;
@@ -459,123 +455,9 @@ public class OrganisationRepository
         return team;
     }
     
-    // TODO ny
-    public TeamMember convertUserToTeamMember(User user)
-    {
-        // først konverter
-        TeamMember teamMember = new TeamMember(user.getId(), user.getOrganisationAndJobType(),
-                user.getFirstname(), user.getSurname(), user.getEmail(), user.getPassword(),
-                user.getManhours(), user.getProfilePictureBytes(), user.getJoinedTeamsList());
-        
-     
-        
-        return teamMember;
-    }
-    
-    
-    // TODO: denne er måske lige meget
-    /**
-     * Opretter et nyt ProjectManager-obj ud fra resultSet
-     *
-     * @param resultSet ResultSet-obj som bruges til at oprette ProjectManager-obj fra
-     * @return ProjectManager nyoprettede ProjectManager-obj
-     * */
-    /*
-    public ProjectManager createProjectManagerFromResultSet(ResultSet resultSet)
-    {
-        ProjectManager projectManager = null;
-        
-        try
-        {
-            
-            // find email ud fra emailId
-            int emailId = resultSet.getInt("f_id_email");
-            String email = flowsterRepository.retrieveEmailFromEmailId(emailId);
-            
-            // find organisationAndJobType
-            int jobType = resultSet.getInt("f_id_job_type");
-            
-            String organisationAndJobTypeString = Integer.toString(
-                    flowsterRepository.retrieveOrganisationIdFromEmailId(emailId) + jobType);
-            
-            int organisationAndJobType = Integer.parseInt(organisationAndJobTypeString);
-            
-            // find profilePictureBytes
-            byte[] profilePictureBytes = convertBlobToByteArray(resultSet.getBlob("profile_picture"));
-            
-            
-            // TODO: hent teams
-            // retrieveTeamsArrayListFromUserId()
-            
-            // TODO: hent projekter
-            
-            
-            projectManager = new ProjectManager(organisationAndJobType,
-                    resultSet.getString("firstname"),
-                    resultSet.getString("surname"),
-                    email,
-                    resultSet.getString("password"),
-                    resultSet.getDouble("manhours"),
-                    profilePictureBytes);
-        }
-        catch(SQLException e)
-        {
-            System.err.println("ERROR in createProjectManagerFromResultSet: " + e.getMessage());
-        }
-        return projectManager;
-    }
-    
      */
     
-    // TODO: denne er måske lige meget
-    /**
-     * Opretter et nyt TeamMember-obj ud fra resultSet
-     *
-     * @param resultSet ResultSet-obj som bruges til at oprette TeamMember-obj fra
-     * @return TeamMember nyoprettede TeamMember-obj
-     * */
-    /*
-    public TeamMember createTeamMemberFromResultSet(ResultSet resultSet)
-    {
-        TeamMember teamMember = null;
-        
-        try
-        {
-            // find email ud fra emailId
-            int emailId = resultSet.getInt("f_id_email");
-            String email = flowsterRepository.retrieveEmailFromEmailId(emailId);
-            
-            
-            // find organisationAndJobType
-            int jobType = resultSet.getInt("f_id_job_type");
-            
-            String organisationAndJobTypeString = Integer.toString(
-                    flowsterRepository.retrieveOrganisationIdFromEmailId(emailId) + jobType);
-            
-            int organisationAndJobType = Integer.parseInt(organisationAndJobTypeString);
-            
-            // find profilePictureBytes
-            byte[] profilePictureBytes = convertBlobToByteArray(resultSet.getBlob("profile_picture"));
-            
-            
-            teamMember = new TeamMember(organisationAndJobType,
-                    resultSet.getString("firstname"),
-                    resultSet.getString("surname"),
-                    email,
-                    resultSet.getString("password"),
-                    resultSet.getDouble("manhours"),
-                    profilePictureBytes);
-            
-        }
-        catch(SQLException e)
-        {
-            System.err.println("ERROR in createTeamMemberFromResultSet: " + e.getMessage());
-        }
-        return teamMember;
-    }
-    
-     */
-    
+  
     
     // ----------------- ANDRE
     

@@ -1,4 +1,4 @@
-package gruppe10.flowster.controllers.users;
+package gruppe10.flowster.controllers;
 
 import gruppe10.flowster.repositories.OrganisationRepository;
 import gruppe10.flowster.services.UserService;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
 @Controller
-public class UserController
+public class PreLoginController
 {
     // disse attributter bliver packageprivate fordi vi ikke har givet dem nogle andre accessmodifiers
     UserService userService = new UserService();
@@ -26,6 +26,10 @@ public class UserController
     @GetMapping("/")
     public String index(Model logInViewModel, Model loggedInUser)
     {
+        // TODO nulstil loggedInUser
+    
+        UserService.loggedInUser = null;
+        
         /* TODO måske sæt ind igen - hvis footer th-fucker
         if(UserService.loggedInUser != null)
         {
@@ -114,22 +118,7 @@ public class UserController
         return redirect;
     }
     
-    @GetMapping("/contact")
-    public String contact(Model loggedInUserModel)
-    {
-        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        
-        return "footer/contact"; // html
-    }
-    
-    @GetMapping("/about")
-    public String about(Model loggedInUserModel)
-    {
-        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        
-        return "footer/about"; // html
-    }
-    
+ 
     
     
 }

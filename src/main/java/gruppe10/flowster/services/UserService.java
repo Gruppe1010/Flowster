@@ -220,7 +220,7 @@ public class UserService
         return loggedInUser;
     }
     
-    // TODO hvis i får brug for loggedInProjectManager og -TeamMember
+    // TODO hvis vi får brug for loggedInProjectManager og -TeamMember
     /*
     public void setLoggedInProjectManagerOrTeamMemberToLoggedInUser()
     {
@@ -237,7 +237,6 @@ public class UserService
         }
     
     }
-    
      */
     
     /**
@@ -278,7 +277,7 @@ public class UserService
         
         return convertedOrganisationName;
     }
-    // TODO HER
+ 
     public boolean checkIfLogInInfoIsValid(LogInViewModel logInViewModel)
     {
         boolean logInInfoIsValid = false;
@@ -308,6 +307,7 @@ public class UserService
         
         return logInInfoIsValid;
     }
+    
     
     
     

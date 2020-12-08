@@ -1,4 +1,4 @@
-package gruppe10.flowster.controllers.users;
+package gruppe10.flowster.controllers;
 
 import gruppe10.flowster.services.UserService;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/projectManager")
 
  */
-public class ProjectManagerController
+public class MenubarController
 {
     
     UserService userService = new UserService();
@@ -44,7 +44,13 @@ public class ProjectManagerController
         return "navbars/projects"; // html
     }
     
-    
+    @GetMapping("/logOut")
+    public String logOut()
+    {
+        // TODO metode som sætter loggedInUser til null
+        
+        return "redirect:/";
+    }
     
 
 }
