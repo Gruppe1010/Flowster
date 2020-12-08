@@ -5,8 +5,9 @@ import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.models.users.User;
 import gruppe10.flowster.repositories.FlowsterRepository;
 import gruppe10.flowster.repositories.OrganisationRepository;
-import gruppe10.flowster.viewModels.CreateUserViewModel;
-import gruppe10.flowster.viewModels.LogInViewModel;
+import gruppe10.flowster.repositories.TeamRepository;
+import gruppe10.flowster.viewModels.user.CreateUserViewModel;
+import gruppe10.flowster.viewModels.user.LogInViewModel;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.HashMap;
@@ -19,7 +20,6 @@ public class UserService
     public ProjectManager loggedInProjectManager = null;
     public TeamMember loggedInTeamMember = null;
      */
-  
     
     String error; // TODO måske lav denne?
     ProjectManager projectManager = new ProjectManager();
@@ -27,6 +27,7 @@ public class UserService
     
     FlowsterRepository flowsterRepository = new FlowsterRepository();
     OrganisationRepository organisationRepository = new OrganisationRepository();
+    TeamRepository teamRepository = new TeamRepository();
     
     HashMap<User, String> userHashMap = new HashMap<>();
     
@@ -270,12 +271,13 @@ public class UserService
      * */
     public String convertOrganisationNameToDbName(String organisationName)
     {
-        
+        // laver underscore hvor der er mellemrum i orgName
         String convertedOrganisationName = organisationName.replaceAll(" ", "_");
     
+        // laver til små bogstaver
         convertedOrganisationName = convertedOrganisationName.toLowerCase();
         
-        return convertedOrganisationName;
+        return "flowster_" + convertedOrganisationName;
     }
  
     public boolean checkIfLogInInfoIsValid(LogInViewModel logInViewModel)
@@ -297,7 +299,7 @@ public class UserService
             String dbName = convertOrganisationNameToDbName(organisationName);
     
             // finder User-obj i users-tabel i dbName-db ud fra logInViewModel
-            loggedInUser = organisationRepository.retrieveUserFromDb(logInViewModel, "flowster_" + dbName);
+            loggedInUser = organisationRepository.retrieveUserFromDb(logInViewModel, dbName);
             
             if(loggedInUser != null)
             {
@@ -308,7 +310,20 @@ public class UserService
         return logInInfoIsValid;
     }
     
+    public void resetLoggedInUser()
+    {
+        loggedInUser = null;
+    }
     
+    public void updateJoinedTeamsList()
+    {
+        
+        String dbName = convertOrganisationNameToDbName
+                                (flowsterRepository.retrieveOrganisationNameFromEmail(loggedInUser.getEmail()));
+    
+        loggedInUser.setJoinedTeamsList(teamRepository.retrieveTeamsArrayListFromUserId(dbName,
+                loggedInUser.getId()));
+    }
     
     
     

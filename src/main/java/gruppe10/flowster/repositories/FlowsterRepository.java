@@ -356,6 +356,52 @@ public class FlowsterRepository
         return organisationId;
     }
     
+    /**
+     *
+     *
+     * */
+    public String retrieveOrganisationNameFromEmailId(int emailId)
+    {
+        String organisationName = null;
+    
+        flowsterConnection = generalRepository.establishConnection("flowster");
+    
+        try
+        {
+            String sqlCommand = "SELECT organisation_name FROM emails_organisations RIGHT JOIN ON f_id_organisation =" +
+                                        " id_organisation WHERE f_id_email = ?";
+            
+            PreparedStatement preparedStatement = flowsterConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setInt(1, emailId);
+        
+            ResultSet resultSet = preparedStatement.executeQuery();
+        
+            if(resultSet.next())
+            {
+                organisationName = resultSet.getString(1);
+            }
+        
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in retrieveOrganisationNameFromEmailId: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                flowsterConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in retrieveOrganisationNameFromEmailIdFinally: " + e.getMessage());
+            }
+        }
+    
+        return organisationName;
+    }
+    
     
     // ------------------ EMAIL -------------
     

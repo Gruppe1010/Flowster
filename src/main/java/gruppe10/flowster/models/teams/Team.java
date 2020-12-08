@@ -9,7 +9,7 @@ public class Team
 {
     private int id;
     private String name;
-    private ArrayList<User> employeesList;
+    private ArrayList<User> usersList;
     private ArrayList<Project> projectsList;
     
     
@@ -21,15 +21,15 @@ public class Team
     {
         this.id = id;
         this.name = name;
-        this.employeesList = null;
+        this.usersList = null;
         this.projectsList = null;
         
     }
     
-    public Team(String name, ArrayList<User> employeesList, ArrayList<Project> projectsList)
+    public Team(String name, ArrayList<User> usersList, ArrayList<Project> projectsList)
     {
         this.name = name;
-        this.employeesList = employeesList;
+        this.usersList = usersList;
         this.projectsList = projectsList;
     }
     
@@ -50,13 +50,13 @@ public class Team
     {
         this.name = name;
     }
-    public ArrayList<User> getEmployeesList()
+    public ArrayList<User> getUsersList()
     {
-        return employeesList;
+        return usersList;
     }
-    public void setEmployeesList(ArrayList<User> employeesList)
+    public void setUsersList(ArrayList<User> usersList)
     {
-        this.employeesList = employeesList;
+        this.usersList = usersList;
     }
     public ArrayList<Project> getProjectsList()
     {

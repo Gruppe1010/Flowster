@@ -172,10 +172,9 @@
     <div class="col-sm-2">
 
         <!-- <p>Age: <span th:text="*{age != null}? *{age} : '(no age specified)'">27</span>.</p> -->
-        <!-- ${${loggedInUser != null} ? ${loggedInUser.findClassNameUrlPath()} + -->
+        <!-- ${${loggedInUser != null} ? ${ loggedInUser.findClassNameUrlPath()} + 'frontPage'-->
         <!-- <td th:text="${teacher.active} ? 'ACTIVE' : 'RETIRED'" />-->
         <!-- <a th:href="'team?' + ${team.getId()}"> -->
-
         <!-- <td th:text="${teacher.active} ? 'ACTIVE' : 'RETIRED'" /> -->
 
         <a th:href="@{(${loggedInUser != null ? '/frontPage' : '/'})}">

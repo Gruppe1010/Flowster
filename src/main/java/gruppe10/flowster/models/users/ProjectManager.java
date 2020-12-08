@@ -2,7 +2,7 @@ package gruppe10.flowster.models.users;
 
 import gruppe10.flowster.models.project.Project;
 import gruppe10.flowster.models.teams.Team;
-import gruppe10.flowster.viewModels.CreateUserViewModel;
+import gruppe10.flowster.viewModels.user.CreateUserViewModel;
 
 import java.util.ArrayList;
 

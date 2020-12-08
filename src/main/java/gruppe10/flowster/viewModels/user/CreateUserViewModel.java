@@ -1,4 +1,4 @@
-package gruppe10.flowster.viewModels;
+package gruppe10.flowster.viewModels.user;
 
 
 import gruppe10.flowster.UserData;

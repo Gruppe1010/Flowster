@@ -2,11 +2,12 @@ package gruppe10.flowster.controllers;
 
 import gruppe10.flowster.repositories.OrganisationRepository;
 import gruppe10.flowster.services.UserService;
-import gruppe10.flowster.viewModels.CreateUserViewModel;
-import gruppe10.flowster.viewModels.LogInViewModel;
+import gruppe10.flowster.viewModels.user.CreateUserViewModel;
+import gruppe10.flowster.viewModels.user.LogInViewModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
@@ -26,10 +27,8 @@ public class PreLoginController
     @GetMapping("/")
     public String index(Model logInViewModel, Model loggedInUser)
     {
-        // TODO nulstil loggedInUser
-    
-        UserService.loggedInUser = null;
-
+        userService.resetLoggedInUser();
+        
         logInViewModel.addAttribute("logInViewModel", this.logInViewModel);
         loggedInUser.addAttribute("loggedInUser", UserService.loggedInUser);
         
@@ -84,9 +83,10 @@ public class PreLoginController
     {
         createUserViewModel.addAttribute( "createUserViewModel", this.createUserViewModel);
         createUserViewModel.addAttribute( "loggedInUser", loggedInUserModel);
+    
+        System.out.println(id);
 
         return "pre-login/create-user"; // html
-
     }
 
     @PostMapping("/postLogIn")

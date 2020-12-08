@@ -15,15 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 public class MenubarController
 {
-    
     UserService userService = new UserService();
     
     @GetMapping("/frontPage")
     public String frontPage(Model loggedInUserModel)
     {
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-
-        //System.out.println(UserService.loggedInUser.getJoinedTeamsList().size());
         
         return "front-page"; // html
     }
@@ -31,6 +28,8 @@ public class MenubarController
     @GetMapping("/teams")
     public String teams(Model loggedInUserModel)
     {
+        userService.updateJoinedTeamsList();
+        
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         
         return "navbars/teams"; // html
