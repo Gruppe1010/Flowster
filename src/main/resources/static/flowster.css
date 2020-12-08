@@ -153,6 +153,7 @@ div.main-content hr
     margin-bottom: 0;
     border-radius: 0;
     height: 100px;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
 }
 
 .navbar-custom .navbar-brand
@@ -189,58 +190,14 @@ a:hover, a:active
     color: #3E8AC4;
 }
 
-/*-----------SIDENAV----------*/
-
-.row.content
-{
-    height: 100%;
-}
-
-.sidenav
-{
-    padding-top: 20px;
-    background-color: #f1f1f1;
-    height: 100%;
-}
-
-/* On small screens, set height to 'auto' for sidenav and grid */
-@media screen and
-(max-width: 767px)
-{
-    .sidenav
-    {
-        height: auto;
-        padding: 15px;
-    }
-    .row.content
-    {
-        height:auto;
-    }
-}
-
-/* css-selector - ALLE p-tags som er i form, der har create-user-klassen form.create-user p*/
-.fontsize
-{
-    font-size: 20px;
-}
-
-/*    MAIN CONTENT   */
-.preview-team
-{
-    height: 100px;
-    padding: 60px;
-    /*border-box = indholdet + padding - sættes til height (indholdet får højden på height minus padding)*/
-    /*content-box = KUN indholdet sættes til height-højden (denne er default)*/
-    box-sizing: border-box;
-    border-width: 1px;
-}
+/*-----------SIDEBAR----------*/
 
 .sidebar
 {
-    margin: auto;
-    padding-top: 15px;
-    background-color: #F0F3F4; !important
-    height: 100%; !important
+    padding-top: 20px;
+    background-color: #f1f1f1;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+    height: 100%;
 }
 
 .sidebar-link
@@ -255,6 +212,7 @@ a:hover, a:active
 {
     background-color: #D7EEF7;
 }
+
 .create
 {
     width: 80%;
@@ -266,7 +224,6 @@ a:hover, a:active
     background-color: #3E8AC4;
     color: white;
     border-radius: 100px;
-
 }
 
 .create:hover a
@@ -274,9 +231,21 @@ a:hover, a:active
     color: white;
 }
 
-.test
+.fontsize
 {
-    width: 80%;
+    font-size: 20px;
+}
+
+/*    MAIN CONTENT   */
+
+.preview-team
+{
+    height: 100px;
+    padding: 60px;
+    /*border-box = indholdet + padding - sættes til height (indholdet får højden på height minus padding)*/
+    /*content-box = KUN indholdet sættes til height-højden (denne er default)*/
+    box-sizing: border-box;
+    border-width: 1px;
 }
 
 .wrapper
