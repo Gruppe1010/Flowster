@@ -252,8 +252,8 @@ a:hover, a:active
 }
 .create
 {
-    width:70px;
-    text-align: center;
+    width: 80%;
+    margin: auto;
 }
 
 .create:hover
