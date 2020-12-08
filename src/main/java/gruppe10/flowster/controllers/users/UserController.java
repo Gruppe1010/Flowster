@@ -37,7 +37,7 @@ public class UserController
         logInViewModel.addAttribute("logInViewModel", this.logInViewModel);
         loggedInUser.addAttribute("loggedInUser", UserService.loggedInUser);
         
-        return "general/index"; // html
+        return "pre-login/index"; // html
     }
     
     /**
@@ -72,10 +72,12 @@ public class UserController
             // indsæt i database
             userService.insertNewUserIntoDb(createUserViewModel);
             
+            /* TODO: slettet fordi vi har slettet projectManager-mappen i templates
             // afhængigt af hvilken type user der lige er blevet oprette, guide til en url
             String className = userService.retrieveClassNameUrl();
+             */
     
-            return redirect + className + "/frontPage";
+            return redirect + "frontPage";
         }
         
         return redirect;
@@ -86,7 +88,7 @@ public class UserController
     {
         createUserViewModel.addAttribute( "createUserViewModel", this.createUserViewModel);
 
-        return "general/create-user"; // html
+        return "pre-login/create-user"; // html
 
     }
 
@@ -100,21 +102,23 @@ public class UserController
         
         if(logInInfoIsValid)
         {
+            /* /* TODO: slettet fordi vi har slettet projectManager-mappen i templates
             String className = userService.retrieveClassNameUrl();
+            
+             */
     
-            return redirect + className + "/frontPage";
+            return redirect + "frontPage";
         }
         
         return redirect;
     }
-    
     
     @GetMapping("/contact")
     public String contact(Model loggedInUserModel)
     {
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         
-        return "general/contact"; // html
+        return "footer/contact"; // html
     }
     
     @GetMapping("/about")
@@ -122,7 +126,7 @@ public class UserController
     {
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         
-        return "general/about"; // html
+        return "footer/about"; // html
     }
     
     

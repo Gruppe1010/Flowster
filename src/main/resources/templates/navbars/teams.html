@@ -22,23 +22,23 @@
 <div class="container-fluid main-content text-center">
 
     <div class="row">
-        <nav th:insert="general/fragments :: menubar(${loggedInUser})"></nav>
+        <div th:insert="fragments :: menubar(${loggedInUser})"></div>
     </div>
 
     <div class="row content">
 
         <!-- SIDEBAR-FRAGMENT -->
-        <nav th:insert="general/fragments :: projects-sidebar(${loggedInUser})"></nav>
+        <div th:insert="fragments :: teams-sidebar(${loggedInUser})" class="content"></div>
 
         <!-- MAIN-CONTENT-FRAGMENT -->
-        <div th:insert="general/fragments :: projects-page-content(${loggedInUser})"></div>
+        <div th:insert="fragments :: teams-page-content(${loggedInUser})"></div>
 
     </div>
 
 </div>
 
 <!-- Footer fragment -->
-<div th:insert="general/fragments :: footer(${loggedInUser})"></div>
+<div th:insert="fragments :: footer(${loggedInUser})"></div>
 
 </body>
 </html>

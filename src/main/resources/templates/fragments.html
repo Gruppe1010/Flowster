@@ -24,16 +24,7 @@
 
 <!----------------------------------------------- MENUBAR --------------------------------------------->
 
-<!-- TODO: hvad skal denne nav-tag? -->
-<nav>
-    <a href="/html/">HTML</a> |
-    <a href="/css/">CSS</a> |
-    <a href="/js/">JavaScript</a> |
-    <a href="/python/">Python</a>
-</nav>
-
 <!-- Kald fragment: <nav th:insert="general/fragments :: menubar(${loggedInUser})"></nav> -->
-
 <nav th:fragment="menubar(loggedInUser)" class="navbar navbar-custom">
     <div class="container-fluid">
 
@@ -78,12 +69,13 @@
 <!--------------- SIDEBAR --------------->
 <!-- <div th:insert="general/fragments :: teams-sidebar(${loggedInUser})"></div> -->
 
-<div th:fragment="teams-sidebar(loggedInUser)" class="col-sm-2 sidebar fontsize text-center">
+<nav th:fragment="teams-sidebar(loggedInUser)" class="col-sm-2 sidebar fontsize text-center">
 
-    <div th:if="${loggedInUser.isProjectManager()}" class="row create">
+    <div th:if="${loggedInUser.isProjectManager()}" class="row">
         <!-- <a href="/createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"></a> -->
-
-        <a href="/createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"></a>
+        <div class="create">
+        <a href="/createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"</a>
+        </div>
         <hr class="hr">
     </div>
 
@@ -95,7 +87,7 @@
             </div>
         </div>
     </div>
-</div>
+</nav>
 
 
 <!--------------- MAIN-CONTENT ---------------> <!-- TODO -->
@@ -125,7 +117,7 @@
 <!--------------- SIDEBAR ---------------> <!-- TODO -->
 <!-- <div th:insert="general/fragments :: projects-sidebar(${loggedInUser})"></div> -->
 
-<div th:fragment="projects-sidebar(loggedInUser)" class="col-sm-2 sidebar fontsize">
+<nav th:fragment="projects-sidebar(loggedInUser)" class="col-sm-2 sidebar fontsize">
     <!--
     <div class="row fontsize">
         <a href="/createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'" class="fontsize" ></a>
@@ -140,7 +132,7 @@
         </div>
     </div>
     -->
-</div>
+</nav>
 
 
 <!--------------- MAIN-CONTENT ---------------> <!-- TODO -->
@@ -186,7 +178,7 @@
 
         <!-- <td th:text="${teacher.active} ? 'ACTIVE' : 'RETIRED'" /> -->
 
-        <a th:href="(${loggedInUser != null ? (loggedInUser.findClassNameUrlPath() + '/frontPage') : '/'})">
+        <a th:href="@{(${loggedInUser != null ? '/frontPage' : '/'})}">
             <img  class="footer-logo" src="/images/Flowster_logo.png">
         </a>
 

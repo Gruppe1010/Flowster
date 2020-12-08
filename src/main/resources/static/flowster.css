@@ -250,12 +250,18 @@ a:hover, a:active
 {
     background-color: #D7EEF7;
 }
+.create
+{
+    width:70px;
+    text-align: center;
+}
 
 .create:hover
 {
     background-color: #3E8AC4;
     color: white;
     border-radius: 100px;
+
 }
 
 .create:hover a
