@@ -83,7 +83,7 @@ public class PreLoginController
     public String logIn(Model createUserViewModel, Model loggedInUserModel)
     {
         createUserViewModel.addAttribute( "createUserViewModel", this.createUserViewModel);
-        createUserViewModel.addAttribute( "loggedInUser", loggedInUserModel);
+        loggedInUserModel.addAttribute( "loggedInUser", UserService.loggedInUser);
 
         return "pre-login/create-user"; // html
 
