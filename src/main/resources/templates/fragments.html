@@ -65,24 +65,22 @@
 
 <!------------------------------------------------- TEAMS -------------------------------------------->
 
-
 <!--------------- SIDEBAR --------------->
 <!-- <div th:insert="general/fragments :: teams-sidebar(${loggedInUser})"></div> -->
 
-<nav th:fragment="teams-sidebar(loggedInUser)" class="col-sm-2 sidebar fontsize text-center">
+<nav th:fragment="teams-sidebar(loggedInUser)" class="col-sm-2 sidenav fontsize">
 
-    <div th:if="${loggedInUser.isProjectManager()}" class="row">
-        <!-- <a href="/createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"></a> -->
-        <div class="create text-center">
-            <a href="/createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"</a>
+    <div th:if="${loggedInUser.isProjectManager()}">
+        <div class="create">
+            <a href="/createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"></a>
         </div>
         <hr class="hr">
     </div>
 
-    <div class="row">
-        <!-- DET ER HER LISTEN VISES -->
+    <div
+        <!-- DET ER HER TEAMLISTEN VISES -->
         <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
-            <div class="sidebar-link">
+            <div class="sidenav-link">
                 <a th:href="'team?' + ${team.getId()}" th:text="${team.getName()}"></a>
             </div>
         </div>

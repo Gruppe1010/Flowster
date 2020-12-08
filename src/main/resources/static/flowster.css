@@ -153,6 +153,7 @@ div.main-content hr
     margin-bottom: 0;
     border-radius: 0;
     height: 100px;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
 }
 
 .navbar-custom .navbar-brand
@@ -191,16 +192,11 @@ a:hover, a:active
 
 /*-----------SIDENAV----------*/
 
-.row.content
-{
-    height: 100%;
-}
-
 .sidenav
 {
     padding-top: 20px;
     background-color: #f1f1f1;
-    height: 100%;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
 }
 
 /* On small screens, set height to 'auto' for sidenav and grid */
@@ -216,6 +212,19 @@ a:hover, a:active
     {
         height:auto;
     }
+}
+
+.sidenav-link
+{
+    display: inline-block;
+    padding-top: 5px;
+    width: 100%;
+    float: left;
+}
+
+.sidenav-link:hover
+{
+    background-color: #D7EEF7;
 }
 
 /* css-selector - ALLE p-tags som er i form, der har create-user-klassen form.create-user p*/
@@ -235,26 +244,6 @@ a:hover, a:active
     border-width: 1px;
 }
 
-.sidebar
-{
-    margin: auto;
-    padding-top: 15px;
-    background-color: #F0F3F4; !important
-    height: 100%; !important
-}
-
-.sidebar-link
-{
-    display: inline-block;
-    padding-top: 5px;
-    width: 100%;
-    float: left;
-}
-
-.sidebar-link:hover
-{
-    background-color: #D7EEF7;
-}
 .create
 {
     width: 80%;
