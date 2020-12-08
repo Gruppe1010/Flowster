@@ -303,8 +303,8 @@ public class OrganisationRepository
     
         try
         {
-            String sqlCommand = "SELECT id_team, team_name FROM flowster_kea.teams_users " +
-                                        "RIGHT JOIN flowster_kea.teams ON f_id_team = id_team WHERE f_id_user = ?;";
+            String sqlCommand = "SELECT id_team, team_name FROM teams_users " +
+                                        "RIGHT JOIN teams ON f_id_team = id_team WHERE f_id_user = ?;";
             
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
             
