@@ -190,31 +190,17 @@ a:hover, a:active
     color: #3E8AC4;
 }
 
-/*-----------SIDENAV----------*/
+/*-----------SIDEBAR----------*/
 
-.sidenav
+.sidebar
 {
     padding-top: 20px;
     background-color: #f1f1f1;
     box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+    height: 100%;
 }
 
-/* On small screens, set height to 'auto' for sidenav and grid */
-@media screen and
-(max-width: 767px)
-{
-    .sidenav
-    {
-        height: auto;
-        padding: 15px;
-    }
-    .row.content
-    {
-        height:auto;
-    }
-}
-
-.sidenav-link
+.sidebar-link
 {
     display: inline-block;
     padding-top: 5px;
@@ -222,7 +208,7 @@ a:hover, a:active
     float: left;
 }
 
-.sidenav-link:hover
+.sidebar-link:hover
 {
     background-color: #D7EEF7;
 }

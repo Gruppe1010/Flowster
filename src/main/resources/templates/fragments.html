@@ -68,7 +68,7 @@
 <!--------------- SIDEBAR --------------->
 <!-- <div th:insert="general/fragments :: teams-sidebar(${loggedInUser})"></div> -->
 
-<nav th:fragment="teams-sidebar(loggedInUser)" class="col-sm-2 sidenav fontsize">
+<nav th:fragment="teams-sidebar(loggedInUser)" class="col-sm-2 sidebar fontsize">
 
     <div th:if="${loggedInUser.isProjectManager()}">
         <div class="create">
@@ -80,7 +80,7 @@
     <div
         <!-- DET ER HER TEAMLISTEN VISES -->
         <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
-            <div class="sidenav-link">
+            <div class="sidebar-link">
                 <a th:href="'team?' + ${team.getId()}" th:text="${team.getName()}"></a>
             </div>
         </div>
