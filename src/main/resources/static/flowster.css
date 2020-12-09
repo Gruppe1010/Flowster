@@ -17,13 +17,6 @@ input::-webkit-inner-spin-button
     /*calc er dog ikke understøttet af explorer en eller anden version*/
     /*150 fordi det er højden på den samlede footer*/
     min-height: calc(100vh - 150px);
-    padding-bottom: 20px;
-}
-
-
-.main-content:hover
-{
-
 }
 
 input[type=number]
@@ -40,6 +33,11 @@ input[type=number]
     /*farven: 0,0,0 == sort. 0.2 == 80% gennemsigtighed*/
     /*3px 3px 3px højre, nedad, hvor stor - hvis sidste værdi er større end forrige, kan man se det på top og venstre*/
     box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+}
+
+*:focus
+{
+    outline: none;
 }
 
 .index-img-container
