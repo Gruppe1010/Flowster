@@ -71,9 +71,9 @@
 <nav th:fragment="teams-sidebar(loggedInUser, orgDbName)" class="col-sm-2 sidebar fontsize">
 
     <div th:if="${loggedInUser.isProjectManager()}">
-        <div class="create">
-            <a href="createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"></a>
-        </div>
+
+        <a class="btn flowster-btn" href="createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"></a>
+
         <hr class="hr">
     </div>
     <div>
