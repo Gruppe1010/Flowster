@@ -3,7 +3,7 @@ package gruppe10.flowster.controllers;
 import gruppe10.flowster.models.teams.Team;
 import gruppe10.flowster.services.TeamService;
 import gruppe10.flowster.services.UserService;
-import gruppe10.flowster.viewModels.team.CreateTeamViewModel;
+import gruppe10.flowster.viewModels.team.EditTeamViewModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,15 +14,15 @@ import org.springframework.web.context.request.WebRequest;
 
 @Controller
 @RequestMapping("/{orgDbName}")
+
 public class TeamController
 {
     UserService userService = new UserService();
     
     TeamService teamService = new TeamService();
     String teamNameModel = null;
-    String orgDbName;
-    
-    
+    EditTeamViewModel editTeamViewModel = null;
+  
     @GetMapping("/createTeam")
     public String createTeam(@PathVariable String orgDbName, Model loggedInUserModel, Model teamNameModel,
                              Model orgDbNameModel)
@@ -31,11 +31,11 @@ public class TeamController
         
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         teamNameModel.addAttribute("createTeamViewModel", this.teamNameModel);
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
 
         
-        return "navbars/create-team"; // html
+        return "team/create-team"; // html
     }
-    
     
     @PostMapping("/createTeam")
     public String postCreateTeam(@PathVariable String orgDbName, WebRequest dataFromCreateTeamForm)
@@ -61,6 +61,48 @@ public class TeamController
         return "redirect:createTeam";
     }
     
+    // editTeam/9
+    @GetMapping("/editTeam/{teamId}")
+    public String editTeam(@PathVariable String orgDbName, @PathVariable int teamId, Model loggedInUserModel,
+                           Model teamModel, Model orgDbNameModel)
+    {
+        userService.updateJoinedTeamsList();
+    
+        editTeamViewModel = teamService.retrieveAndCreateTeamViewModelFromId(orgDbName, teamId);
+        
+        teamModel.addAttribute("team", editTeamViewModel);
+        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
+      
+        // teamModel.addAttribute(har teamID);
+        // lav en model med url - "/postEditTeam/" + teamId + "/addUser/" - og i html: + ${user.getId()}
+     
+        return "team/edit-team";
+    }
+    
+    // th:each="user : userlist"
+    // Lav tom form med submitknap med action="/postEditTeam/${teamModel.getId()}/addUser/${user.getId()}"
+    //
+    @PostMapping("/editTeam/{teamId}/addUser/{userId}")
+    public String postAddUserToTeam(@PathVariable int teamId, @PathVariable int userId, Model loggedInUserModel)
+    {
+        System.out.println("add:" + teamId);
+    
+        // flowster_kea/editTeam/25/addUser/
+        
+        return "redirect:";//  + "/editTeam/" + teamId;
+    }
+    //
+    @PostMapping("/editTeam/{teamId}/removeUser/{userId}")
+    public String postRemoveUserFromTeam(@PathVariable int teamId, @PathVariable int userId, Model loggedInUserModel)
+    {
+        System.out.println("remove: " + teamId);
+        return "redirect:";
+    }
+    
+    
+    
+    
      
     
      @GetMapping("/viewTeam/{teamId}")
@@ -79,27 +121,7 @@ public class TeamController
         return "Hej";
     }
     
-    
-    // editTeam/9
-    @GetMapping("/editTeam/{teamId}")
-    public String editTeam(@PathVariable int teamId, Model loggedInUser, Model teamModel)
-    {
-        userService.updateJoinedTeamsList();
-        
-        // teamModel.addAttribute(har teamID);
-        // lav en model med url - "/postEditTeam/" + teamId + "/addUser/" - og i html: + ${user.getId()}
-        System.out.println(teamId);
-        return "Hej";
-    }
-    
-    // th:each="user : userlist"
-    // Lav tom form med submitknap med action="/postEditTeam/${teamModel.getId()}/addUser/${user.getId()}"
-    @PostMapping("/postEditTeam/{teamId}/addUser/{userId}")
-    public String editTeam(@PathVariable int teamId, @PathVariable int userId, Model loggedInUser)
-    {
-        System.out.println(teamId);
-        return "Hej";
-    }
+  
     
     
     

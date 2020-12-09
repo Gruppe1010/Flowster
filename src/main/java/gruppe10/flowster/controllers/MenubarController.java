@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
@@ -41,7 +40,7 @@ public class MenubarController
         
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         
-        return "navbars/teams"; // html
+        return "team/teams"; // html
     }
     
     @GetMapping("/{orgDbName}/projects")
@@ -52,7 +51,7 @@ public class MenubarController
         
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         
-        return "navbars/projects"; // html
+        return "project/projects"; // html
     }
     
     @GetMapping("/logOut")

@@ -1,27 +1,23 @@
 package gruppe10.flowster.services;
 
 import gruppe10.flowster.models.teams.Team;
-import gruppe10.flowster.repositories.GeneralRepository;
 import gruppe10.flowster.repositories.TeamRepository;
-import gruppe10.flowster.viewModels.team.CreateTeamViewModel;
+import gruppe10.flowster.viewModels.team.EditTeamViewModel;
 import org.springframework.web.context.request.WebRequest;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class TeamService
 {
     TeamRepository teamRepository = new TeamRepository();
    
     
-    public CreateTeamViewModel createTeamViewModelFromForm(WebRequest dataFromCreateTeamFrom)
+    public EditTeamViewModel createTeamViewModelFromForm(WebRequest dataFromCreateTeamFrom)
     {
         
         // automatisk-parameternavn som inkrementeres -
         // while(der er flere id'er)
         // opret bruger ud fra id og læg på createTeamViewModel's liste-attr
        
-       return new CreateTeamViewModel();
+       return new EditTeamViewModel();
        // TODO return new CreateTeamViewModel(dataFromCreateTeamFrom.getParameter("team-name"), );
     }
     
@@ -71,6 +67,12 @@ public class TeamService
     {
         return teamRepository.retrieveTeamIdFromTeamName(orgDbName, teamName);
    
+    }
+    
+    public EditTeamViewModel retrieveAndCreateTeamViewModelFromId(String orgDbName, int teamId)
+    {
+       return teamRepository.retrieveAndCreateTeamViewModelFromId(orgDbName, teamId);
+    
     }
     
     

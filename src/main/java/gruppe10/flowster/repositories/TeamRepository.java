@@ -1,12 +1,11 @@
 package gruppe10.flowster.repositories;
 
 import gruppe10.flowster.models.teams.Team;
+import gruppe10.flowster.viewModels.team.EditTeamViewModel;
+import gruppe10.flowster.viewModels.user.PreviewUserViewModel;
 
 import java.awt.desktop.ScreenSleepEvent;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class TeamRepository
@@ -307,6 +306,262 @@ public class TeamRepository
         
         
         
+    }
+    
+    public EditTeamViewModel retrieveAndCreateTeamViewModelFromId(String dbName, int teamId)
+    {
+        EditTeamViewModel editTeamViewModel = null;
+        
+        // metode til: select team_name
+        String teamName = retrieveTeamNameFromTeamId(dbName, teamId);
+        
+        // hvis teamet findes
+        if(teamName != null)
+        {
+            // laves en liste med alle brugere i org, som skal vises i viewet
+            ArrayList<PreviewUserViewModel> previewUserViewModelList = createPreviewUserList(dbName, teamId);
+    
+            editTeamViewModel = new EditTeamViewModel(teamId, teamName, previewUserViewModelList);
+        }
+        
+        // resultSet der indeholder ALLE orgbrugere
+        // opret PreviewUserViewModel-obj ud af ALLE disse - isOnTeam == null - læg på previewUserList
+        // for(int i = 0; i < previewUserList.size(); i++): PreviewUser previewUser = previewUserList.get(i);
+            //  select * FROM teams_users where f_id_team = ? AND f_id_user = previewUser.getId()
+            // if resultSet.next(){ previewUser.setIsOnTeam(true);
+            // else: previewUser.setIsOnTeam(false);
+        
+        
+        return editTeamViewModel;
+    }
+    
+    
+    public String retrieveTeamNameFromTeamId(String dbName, int teamId)
+    {
+        String teamName = null;
+        
+        organisationConnection = generalRepository.establishConnection(dbName);
+        
+        try
+        {
+            String sqlCommand = "SELECT team_name FROM teams WHERE id_team = ?";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setInt(1, teamId);
+        
+            ResultSet resultSet = preparedStatement.executeQuery();
+    
+            teamName = createTeamNameFromResultSet(resultSet);
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in retrieveTeamNameFromTeamId: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in retrieveTeamNameFromTeamIdFinally: " + e.getMessage());
+            }
+        }
+        
+        return teamName;
+    }
+    
+    public String createTeamNameFromResultSet(ResultSet resultSet)
+    {
+        String teamName = null;
+    
+        try
+        {
+            if(resultSet.next())
+            {
+                teamName = resultSet.getString("team_name");
+            }
+        
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in createTeamNameFromResultSet: " + e.getMessage());
+        }
+    
+        return teamName;
+        
+        
+    }
+    
+    
+    public ArrayList<PreviewUserViewModel> createPreviewUserList(String dbName, int teamId)
+    {
+        ArrayList<PreviewUserViewModel> previewUserViewModelList = null;
+    
+        // resultSet der indeholder ALLE org-brugere
+    
+        organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+      
+            String sqlCommand = "SELECT id_user, profile_picture, firstname, surname, job_type FROM users " +
+                                        "RIGHT JOIN flowster.job_types ON f_id_job_type = id_job_type";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            ResultSet resultSet = preparedStatement.executeQuery();
+    
+            previewUserViewModelList = createPreviewUserListFromResultSet(resultSet, teamId);
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in createPreviewUserList: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in isUserOnTeamFinally: " + e.getMessage());
+            }
+        }
+    
+        return previewUserViewModelList;
+    }
+    
+    public ArrayList<PreviewUserViewModel> createPreviewUserListFromResultSet(ResultSet resultSet, int teamId)
+    {
+        ArrayList<PreviewUserViewModel> previewUserViewModelList = new ArrayList<>();
+        
+        
+        try
+        {
+            while(resultSet.next())
+            {
+                // lav nyt obj.
+                PreviewUserViewModel previewUser = new PreviewUserViewModel(
+                    resultSet.getInt("id_user"),
+                    convertBlobToByteArray(resultSet.getBlob("profile_picture")),
+                resultSet.getString("firstname") + " " + resultSet.getString("surname"),
+                    resultSet.getString("job_type"));
+                
+                
+                //tilføj til liste
+                previewUserViewModelList.add(previewUser);
+            }
+            
+            if(previewUserViewModelList.size() > 0)
+            {
+                // gå listen igennem og tjek om bruger er på team - hvis bruger er tilknyttet teamet: isOnTeam = true
+                previewUserViewModelList = checkIfPreviewUserIsOnTeam(previewUserViewModelList, teamId);
+            }
+            else
+            {
+                previewUserViewModelList = null;
+            }
+            
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in createPreviewUserListFromResultSet: " + e.getMessage());
+        }
+        
+        
+        
+        return previewUserViewModelList;
+    }
+    
+    
+    public ArrayList<PreviewUserViewModel> checkIfPreviewUserIsOnTeam
+            (ArrayList<PreviewUserViewModel> previewUserViewModelList, int teamId)
+    {
+        for(int i = 0; i < previewUserViewModelList.size(); i++)
+        {
+            // PreviewUserViewModel previewUser = previewUserViewModelList.get(i);
+            
+            // tjek om den er tilknyttet teamet
+            boolean userIsOnTeam = isUserOnTeam(teamId, previewUserViewModelList.get(i).getId()); // previewUser
+            // .getId();
+            
+            if(userIsOnTeam)
+            {
+                previewUserViewModelList.get(i).setOnTeam(true);
+                // previewUser.setOnTeam(true);
+            }
+            else
+            {
+                previewUserViewModelList.get(i).setOnTeam(false);
+                // previewUser.setOnTeam(false);
+            }
+            // tilføjer den opdaterede
+            // previewUserViewModelList.set(i, previewUser);
+        }
+      
+       
+        return previewUserViewModelList;
+    }
+    
+    public boolean isUserOnTeam(int teamId, int userId)
+    {
+        boolean userIsOnTeam = false;
+        
+        try
+        {
+            String sqlCommand = "SELECT * FROM teams_users WHERE f_id_team = ? AND f_id_user = ?";
+            
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setInt(1, teamId);
+            preparedStatement.setInt(2, userId);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next())
+            {
+                userIsOnTeam = true;
+            }
+            
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in isUserOnTeam: " + e.getMessage());
+        }
+        return userIsOnTeam;
+    }
+    
+    
+    
+    
+    /**
+     * Konverterer blob til et byteArray
+     *
+     * @param blob Blob-obj som skal konverteres
+     * @return byte[] konverterede blob
+     * */
+    public byte[] convertBlobToByteArray(Blob blob)
+    {
+        // byte[0] == null-value til byte[]
+        byte[] profilePictureBytes = new byte[0];
+        
+        if(blob != null)
+        {
+            try
+            {
+                profilePictureBytes = blob.getBytes(1, (int) blob.length());
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in convertBlobToByteArray: " + e.getMessage());
+            }
+        }
+        
+        return profilePictureBytes;
     }
     
     
