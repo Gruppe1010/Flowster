@@ -16,13 +16,9 @@ public class PreLoginController
 {
     // disse attributter bliver packageprivate fordi vi ikke har givet dem nogle andre accessmodifiers
     UserService userService = new UserService();
+    
     CreateUserViewModel createUserViewModel = new CreateUserViewModel();
     LogInViewModel logInViewModel = new LogInViewModel();
-    
-    // TODO: nu kalder vi denne direkte herinde
-    OrganisationRepository organisationRepository = new OrganisationRepository();
-    
-    String redirect = "redirect:/";
     String orgDbName;
     
     @GetMapping("/")
@@ -62,10 +58,10 @@ public class PreLoginController
             // indsæt i database
             userService.insertNewUserIntoDb(createUserViewModel);
             
-            return redirect + orgDbName + "/frontPage";
+            return "redirect:/" + orgDbName + "/frontPage";
         }
         
-        return redirect;
+        return "redirect:/";
     }
     
     @GetMapping("/createUser")
@@ -92,10 +88,10 @@ public class PreLoginController
     
         if(logInInfoIsValid)
         {
-            return redirect + orgDbName +"/frontPage";
+            return "redirect:/" + orgDbName +"/frontPage";
         }
         
-        return redirect;
+        return "redirect:/";
     }
     
  

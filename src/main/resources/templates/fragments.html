@@ -92,7 +92,6 @@
 
 <div th:fragment="teams-page-content(loggedInUser, orgDbName)" class="col-sm-10 text-center">
     <h1>Mine teams</h1>
-
     <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
         <!-- FOR hvert team på listen: lav en kasse til det, som man kan klikke på -->
         <a th:href="${'viewTeam/' + team.getId()}">

@@ -2,6 +2,7 @@ package gruppe10.flowster.repositories;
 
 import gruppe10.flowster.models.teams.Team;
 
+import java.awt.desktop.ScreenSleepEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -134,6 +135,179 @@ public class TeamRepository
     }
     
      */
+    
+    
+    public boolean retrieveTeamFromTeamName(String dbName, String teamName)
+    {
+        Boolean teamNameIsAvailable = true;
+        
+        organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+            String sqlCommand = "SELECT * FROM teams WHERE team_name = ?";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setString(1, teamName);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            // hvis der er noget i resultSet'et, er teamName altså IKKE ledig
+            if(resultSet.next())
+            {
+                teamNameIsAvailable = false;
+            }
+         
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in TeamRepository retrieveTeamFromTeamName: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in TeamRepository retrieveTeamFromTeamNameFinally: " + e.getMessage());
+            }
+        }
+        
+        
+        return teamNameIsAvailable;
+    }
+    
+    
+    public void insertNewTeamIntoDb(String dbName, String teamName)
+    {
+        organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+            String sqlCommand = "INSERT INTO teams (team_name) value (?)";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setString(1, teamName);
+        
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in insertNewTeamIntoDb: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in insertNewTeamIntoDbFinally: " + e.getMessage());
+            }
+        }
+    }
+    
+    public int retrieveTeamIdFromTeamName(String dbName, String teamName)
+    {
+        int teamId = 0;
+        
+        organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+            String sqlCommand = "SELECT id_team FROM teams WHERE team_name = ?";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setString(1, teamName);
+        
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            teamId = createTeamIdFromResultSet(resultSet);
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in retrieveTeamIdFromTeamName: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in retrieveTeamIdFromTeamNameFinally: " + e.getMessage());
+            }
+        }
+        
+        
+        return teamId;
+    }
+    
+    public int createTeamIdFromResultSet(ResultSet resultSet)
+    {
+        int teamId = 0;
+    
+        try
+        {
+            if(resultSet.next())
+            {
+                teamId = resultSet.getInt("id_team");
+            }
+        
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in createTeamIdFromResultSet: " + e.getMessage());
+        }
+        
+        return teamId;
+    
+    }
+    
+    public void insertNewRowIntoTeamsUsers(String dbName, int teamId, int userId)
+    {
+        organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+            String sqlCommand = "INSERT INTO teams_users (f_id_team, f_id_user) values (?, ?)";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setInt(1, teamId);
+            preparedStatement.setInt(2, userId);
+            
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in insertNewRowIntoTeamsUsers: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in insertNewRowIntoTeamsUsersFinally: " + e.getMessage());
+            }
+        }
+        
+        
+        
+        
+        
+        
+    }
     
     
     
