@@ -28,15 +28,19 @@
     <div class="row content">
 
         <!-- SIDEBAR-FRAGMENT -->
-        <nav th:insert="fragments :: projects-sidebar(${loggedInUser})"></nav>
+        <!-- TODO: team-fragment :: teams-list(${loggedInUser.getJoinedTeamsList})-->
+        <!--TODO: det giver bedst mening at sende en Model med til hver fragment, som kun indeholder det som den fragment skal bruge  -->
+        <div th:insert="fragments :: teams-sidebar(${loggedInUser})" class="content"></div>
 
         <!-- MAIN-CONTENT-FRAGMENT -->
-        <div th:insert="fragments :: projects-page-content(${loggedInUser})"></div>
+        <div th:insert="fragments :: teams-page-content(${loggedInUser})"></div>
 
     </div>
 
 </div>
 
+<!-- Footer fragment -->
 <div th:insert="fragments :: footer(${loggedInUser}, ${orgDbName})"></div>
+
 </body>
 </html>

@@ -325,6 +325,22 @@ public class UserService
                 loggedInUser.getId()));
     }
     
+    /**
+     * Finder/opretter orgDbName ud fra loggedInUser
+     *
+     * @return String oprettede orgDbName
+     * */
+    public String getOrgDbName()
+    {
+        if(loggedInUser != null)
+        {
+            String orgName = flowsterRepository.retrieveOrganisationNameFromEmail(loggedInUser.getEmail());
+    
+            return convertOrganisationNameToDbName(orgName);
+        }
+        return null;
+    }
+    
     
     
 }

@@ -23,11 +23,15 @@ public class PreLoginController
     OrganisationRepository organisationRepository = new OrganisationRepository();
     
     String redirect = "redirect:/";
+    String orgDbName;
     
     @GetMapping("/")
-    public String index(Model logInViewModel, Model loggedInUser)
+    public String index(Model logInViewModel, Model loggedInUser, Model orgDbNameModel)
     {
         userService.resetLoggedInUser();
+    
+        orgDbName = userService.getOrgDbName();
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
         
         logInViewModel.addAttribute("logInViewModel", this.logInViewModel);
         loggedInUser.addAttribute("loggedInUser", UserService.loggedInUser);
@@ -42,37 +46,23 @@ public class PreLoginController
      * @return String url, som redirectes til
      * */
     @PostMapping("/postCreateUser")
-    public String postCreateUser(WebRequest dataFromCreateUserForm)
+    public String postCreateUser(WebRequest dataFromCreateUserForm, Model orgDbNameModel)
     {
         // createUserModel bliver oprettet og gemt med oplysninger som bruger har tastet ind
         createUserViewModel = userService.createCreateUserViewModelFromForm(dataFromCreateUserForm);
         
-        /* passende url som skal returneres findes ud fra createUserModel-obj
-        // if: createUserModel == projectManager: "redirect:/projectManager/frontPage"
-        // if: createUserModel == teamMember: "redirect:/frontPage"
-        // if createUserModel == ukorrekte oplydninger: "redirect:/" - herfra vises de oplysninger som brugeren
-        // tastede ind i formen
-         */
-        
-        // tjekker om indtastet data er valid
-        /*
-        organisationAndJobType-koden findes
-        email er ikke optaget
-        passwords matcher hinanden
-         */
+        // tjekker om indtastet data er valid: orgKoden findes, email != optaget, passwords matcher
         boolean dataFromFormIsValid = userService.checkDataFromCreateUserViewModel(createUserViewModel);
-        
+    
+        orgDbName = userService.getOrgDbName();
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
+    
         if(dataFromFormIsValid)
         {
             // indsæt i database
             userService.insertNewUserIntoDb(createUserViewModel);
             
-            /* TODO: slettet fordi vi har slettet projectManager-mappen i templates
-            // afhængigt af hvilken type user der lige er blevet oprette, guide til en url
-            String className = userService.retrieveClassNameUrl();
-             */
-    
-            return redirect + "frontPage";
+            return redirect + orgDbName + "/frontPage";
         }
         
         return redirect;
@@ -83,28 +73,26 @@ public class PreLoginController
     {
         createUserViewModel.addAttribute( "createUserViewModel", this.createUserViewModel);
         createUserViewModel.addAttribute( "loggedInUser", loggedInUserModel);
-    
-        System.out.println(id);
 
         return "pre-login/create-user"; // html
     }
 
     @PostMapping("/postLogIn")
-    public String postLogIn(WebRequest dataFromLogInForm)
+    public String postLogIn(WebRequest dataFromLogInForm, Model orgDbNameModel)
     {
+       
         logInViewModel = userService.createLogInViewModelFromForm(dataFromLogInForm);
         
-        // TODO HER
+        // i denne metode sættes loggedInUser
         boolean logInInfoIsValid = userService.checkIfLogInInfoIsValid(logInViewModel);
-        
+    
+        orgDbName = userService.getOrgDbName();
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
+    
+    
         if(logInInfoIsValid)
         {
-            /* /* TODO: slettet fordi vi har slettet projectManager-mappen i templates
-            String className = userService.retrieveClassNameUrl();
-            
-             */
-    
-            return redirect + "frontPage";
+            return redirect + orgDbName +"/frontPage";
         }
         
         return redirect;

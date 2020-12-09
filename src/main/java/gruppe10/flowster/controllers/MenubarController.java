@@ -4,6 +4,7 @@ import gruppe10.flowster.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -16,18 +17,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MenubarController
 {
     UserService userService = new UserService();
+    String orgDbName;
     
-    @GetMapping("/frontPage")
-    public String frontPage(Model loggedInUserModel)
+    
+    @GetMapping("/{orgDbName}/frontPage")
+    public String frontPage(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel)
     {
+        orgDbName = userService.getOrgDbName();
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
+        
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
         
         return "front-page"; // html
     }
     
-    @GetMapping("/teams")
-    public String teams(Model loggedInUserModel)
+    @GetMapping("/{orgDbName}/teams")
+    public String teams(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel)
     {
+        orgDbName = userService.getOrgDbName();
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
+        
         userService.updateJoinedTeamsList();
         
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
@@ -35,9 +44,12 @@ public class MenubarController
         return "navbars/teams"; // html
     }
     
-    @GetMapping("/projects")
-    public String projects(Model loggedInUserModel)
+    @GetMapping("/{orgDbName}/projects")
+    public String projects(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel)
     {
+        orgDbName = userService.getOrgDbName();
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
+        
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         
         return "navbars/projects"; // html

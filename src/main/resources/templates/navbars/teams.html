@@ -22,7 +22,7 @@
 <div class="container-fluid main-content text-center">
 
     <div class="row">
-        <div th:insert="fragments :: menubar(${loggedInUser})"></div>
+        <nav th:insert="fragments :: menubar(${loggedInUser}, ${orgDbName})"></nav>
     </div>
 
     <div class="row content">
@@ -30,17 +30,17 @@
         <!-- SIDEBAR-FRAGMENT -->
         <!-- TODO: team-fragment :: teams-list(${loggedInUser.getJoinedTeamsList})-->
         <!--TODO: det giver bedst mening at sende en Model med til hver fragment, som kun indeholder det som den fragment skal bruge  -->
-        <div th:insert="fragments :: teams-sidebar(${loggedInUser})" class="content"></div>
+        <div th:insert="fragments :: teams-sidebar(${loggedInUser}, ${orgDbName})" class="content"></div>
 
         <!-- MAIN-CONTENT-FRAGMENT -->
-        <div th:insert="fragments :: teams-page-content(${loggedInUser})"></div>
+        <div th:insert="fragments :: teams-page-content(${loggedInUser}, ${orgDbName})"></div>
 
     </div>
 
 </div>
 
 <!-- Footer fragment -->
-<div th:insert="fragments :: footer(${loggedInUser})"></div>
+<div th:insert="fragments :: footer(${loggedInUser}, ${orgDbName})"></div>
 
 </body>
 </html>
