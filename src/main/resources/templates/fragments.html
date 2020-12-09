@@ -36,7 +36,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" th:href="${orgDbName + 'frontPage'}"><img class="navbar-logo" src="/images/Flowster_logo_light.png" alt="Flowster_logo_light"></a>
+            <a class="navbar-brand" th:href="${'/' + orgDbName + '/frontPage'}"><img class="navbar-logo" src="/images/Flowster_logo_light.png" alt="Flowster_logo_light"></a>
         </div>
 
         <!-- COLLAPSIBLE NAVBAR -->
@@ -72,11 +72,10 @@
 
     <div th:if="${loggedInUser.isProjectManager()}">
         <div class="create">
-            <a th:href="'/createTeam'" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"></a>
+            <a th:href="${'/' + orgDbName +'/createTeam/'}" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"></a>
         </div>
         <hr class="hr">
     </div>
-
     <div>
         <!-- DET ER HER TEAMLISTEN VISES -->
         <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
@@ -171,7 +170,7 @@
         <!-- <a th:href="'team?' + ${team.getId()}"> -->
         <!-- <td th:text="${teacher.active} ? 'ACTIVE' : 'RETIRED'" /> -->
 
-        <a th:href="@{(${loggedInUser != null ? orgDbName + '/frontPage' : '/'})}">
+        <a th:href="@{(${loggedInUser != null ? '/' + orgDbName + '/frontPage' : '/'})}">
             <img  class="footer-logo" src="/images/Flowster_logo.png">
         </a>
 

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Flowster</title>
+    <!-- Hvilke karakterer der kan benyttes på siden -->
+    <meta charset="utf-8">
+    <!-- Får siden til at følge skærmens størrelse -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Stylesheets til Bootstrap -->
+    <link rel="stylesheet" href="/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/bootstrap-theme.css" type="text/css">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/flowster.css" type="text/css">
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Padauk&family=Raleway:wght@200&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+
+<div class="container-fluid main-content text-center">
+
+    <div class="row">
+        <nav th:insert="fragments :: menubar(${loggedInUser}, ${orgDbName})"></nav>
+    </div>
+
+    <div class="row content">
+
+        <!-- SIDEBAR-FRAGMENT -->
+        <!-- TODO: team-fragment :: teams-list(${loggedInUser.getJoinedTeamsList})-->
+        <!--TODO: det giver bedst mening at sende en Model med til hver fragment, som kun indeholder det som den fragment skal bruge  -->
+        <div th:insert="fragments :: teams-sidebar(${loggedInUser}, ${orgDbName})" class="content"></div>
+
+        <!-- MAIN-CONTENT-FRAGMENT -->
+        <div th:insert="fragments :: teams-page-content(${loggedInUser}, ${orgDbName})"></div>
+
+    </div>
+
+</div>
+
+<!-- Footer fragment -->
+<div th:insert="fragments :: footer(${loggedInUser}, ${orgDbName})"></div>
+
+</body>
+</html>

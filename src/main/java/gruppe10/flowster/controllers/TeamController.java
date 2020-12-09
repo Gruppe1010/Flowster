@@ -15,16 +15,22 @@ import org.springframework.web.context.request.WebRequest;
 public class TeamController
 {
     TeamService teamService = new TeamService();
-    
     CreateTeamViewModel createTeamViewModel = new CreateTeamViewModel();
-    
+    UserService userService = new UserService();
+
+    String orgDbName;
+
+
     String redirect = "redirect:/";
     
-    @GetMapping("/createTeam")
-    public String createTeam(Model loggedInUserModel, Model createTeamViewModel)
+    @GetMapping("/{orgDbName}/createTeam")
+    public String createTeam(Model loggedInUserModel, Model createTeamViewModel, Model orgDbNameModel)
     {
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         createTeamViewModel.addAttribute("createTeamViewModel", this.createTeamViewModel);
+
+        orgDbName = userService.getOrgDbName();
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
         
         return "navbars/create-team"; // html
     }
