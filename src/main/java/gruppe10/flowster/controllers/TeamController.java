@@ -14,7 +14,6 @@ import org.springframework.web.context.request.WebRequest;
 
 @Controller
 @RequestMapping("/{orgDbName}")
-
 public class TeamController
 {
     UserService userService = new UserService();
@@ -66,6 +65,8 @@ public class TeamController
     public String editTeam(@PathVariable String orgDbName, @PathVariable int teamId, Model loggedInUserModel,
                            Model teamModel, Model orgDbNameModel)
     {
+        // TODO: opdater modellen - hent ny ArrayList til teamModel - KUN her måske, og ikke i post
+        
         userService.updateJoinedTeamsList();
     
         editTeamViewModel = teamService.retrieveAndCreateTeamViewModelFromId(orgDbName, teamId);
@@ -84,20 +85,22 @@ public class TeamController
     // Lav tom form med submitknap med action="/postEditTeam/${teamModel.getId()}/addUser/${user.getId()}"
     //
     @PostMapping("/editTeam/{teamId}/addUser/{userId}")
-    public String postAddUserToTeam(@PathVariable int teamId, @PathVariable int userId, Model loggedInUserModel)
+    public String postAddUserToTeam(@PathVariable String orgDbName, @PathVariable int teamId, @PathVariable int userId)
     {
+        // TODO: opdater modellen - hent ny ArrayList til teamModel
         System.out.println("add:" + teamId);
-    
-        // flowster_kea/editTeam/25/addUser/
-        
-        return "redirect:";//  + "/editTeam/" + teamId;
+        // String.format("Jeg hedder %s", "Vibe");
+        // TODO return String.format("redirect:/%d/editTeam/%d", orgDbName, teamId);// kører hurtigere
+        return "redirect:/" + orgDbName + "/editTeam/" + teamId;
     }
     //
     @PostMapping("/editTeam/{teamId}/removeUser/{userId}")
-    public String postRemoveUserFromTeam(@PathVariable int teamId, @PathVariable int userId, Model loggedInUserModel)
+    public String postRemoveUserFromTeam(@PathVariable int orgDbName, @PathVariable int teamId, @PathVariable int userId)
     {
+        // TODO: opdater modellen - hent ny ArrayList til teamModel
+        
         System.out.println("remove: " + teamId);
-        return "redirect:";
+        return "redirect:/" + orgDbName + "/editTeam/" + teamId;
     }
     
     

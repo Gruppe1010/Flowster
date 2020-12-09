@@ -196,6 +196,8 @@ a:hover, a:active
     background-color: #f1f1f1;
     box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
     height: 100%;
+    width: 250px;
+    min-height: 100%;
 }
 
 .sidebar-link
@@ -250,4 +252,22 @@ a:hover, a:active
 {
     padding: 30px 30px 30px 30px;
     margin-top: 50px;
+}
+
+.content
+{
+    display: flex;
+    /*100 vh == hele skærmen MINUS footers height*/
+    min-height: calc(100vh - 250px);
+}
+
+.minheight
+{
+    min-height: calc(100vh - 250px);
+}
+
+.contentcontent
+{
+    box-sizing: border-box;
+    width: 100%;
 }

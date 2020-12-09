@@ -68,7 +68,7 @@
 <!--------------- SIDEBAR --------------->
 <!-- <div th:insert="general/fragments :: teams-sidebar(${loggedInUser})"></div> -->
 
-<nav th:fragment="teams-sidebar(loggedInUser, orgDbName)" class="col-sm-2 sidebar fontsize">
+<nav th:fragment="teams-sidebar(loggedInUser, orgDbName)" class="sidebar fontsize">
 
     <div th:if="${loggedInUser.isProjectManager()}">
         <a class="btn flowster-btn" href="createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"></a>
@@ -88,7 +88,7 @@
 <!--------------- MAIN-CONTENT ---------------> <!-- TODO -->
 <!-- <div th:insert="general/fragments :: teams-main-content(loggedInUser)"></div> -->
 
-<div th:fragment="teams-page-content(loggedInUser, orgDbName)" class="col-sm-10 text-center">
+<div th:fragment="teams-page-content(loggedInUser, orgDbName)" class="text-center">
     <h1>Mine teams</h1>
     <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
         <!-- FOR hvert team på listen: lav en kasse til det, som man kan klikke på -->
