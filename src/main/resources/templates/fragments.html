@@ -36,7 +36,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" th:href="${'/' + orgDbName + '/frontPage'}"><img class="navbar-logo" src="/images/Flowster_logo_light.png" alt="Flowster_logo_light"></a>
+            <a class="navbar-brand" href="frontPage"><img class="navbar-logo" src="/images/Flowster_logo_light.png" alt="Flowster_logo_light"></a>
         </div>
 
         <!-- COLLAPSIBLE NAVBAR -->
@@ -80,7 +80,7 @@
         <!-- DET ER HER TEAMLISTEN VISES -->
         <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
             <div class="sidebar-link">
-                <a th:href="${orgDbName + '/viewTeam/' + team.getId()}" th:text="${team.getName()}"></a>
+                <a th:href="${'viewTeam' + team.getId()}" th:text="${team.getName()}"></a>
             </div>
         </div>
     </div>
@@ -95,7 +95,7 @@
 
     <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
         <!-- FOR hvert team på listen: lav en kasse til det, som man kan klikke på -->
-        <a th:href="${orgDbName + '/viewTeam/' + team.getId()}">
+        <a th:href="${'viewTeam/' + team.getId()}">
             <div  class ="preview-team text-left">
                 <h2 th:text="${team.getName()}"></h2>
             </div>
@@ -170,7 +170,7 @@
         <!-- <a th:href="'team?' + ${team.getId()}"> -->
         <!-- <td th:text="${teacher.active} ? 'ACTIVE' : 'RETIRED'" /> -->
 
-        <a th:href="@{(${loggedInUser != null ? '/' + orgDbName + '/frontPage' : '/'})}">
+        <a th:href="@{(${loggedInUser != null ? 'frontPage' : '/'})}">
             <img  class="footer-logo" src="/images/Flowster_logo.png">
         </a>
 

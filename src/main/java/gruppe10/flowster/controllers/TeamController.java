@@ -29,8 +29,6 @@ public class TeamController
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         createTeamViewModel.addAttribute("createTeamViewModel", this.createTeamViewModel);
 
-        orgDbName = userService.getOrgDbName();
-        orgDbNameModel.addAttribute("orgDbName", orgDbName);
         
         return "navbars/create-team"; // html
     }
