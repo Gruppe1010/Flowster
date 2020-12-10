@@ -34,42 +34,44 @@
 
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div class="col-sm-10">
-            <label class="label-padding" for="team-name">Teamnavn:</label>
-            <form action="editTeamName" method="post">
-                <input type="text"
-                       class="form-control"
-                       id="team-name"
-                       name="team-name"
-                       th:value="${team.getName()}"
-                       maxlength="100"
-                       required>
-                <button type="submit" class="btn flowster-btn">Gem</button>
-            </form>
+            <div class="create-edit-team-container">
+                <label class="create-edit-team-label" for="team-name">Teamnavn:</label>
+                <form action="editTeamName" method="post" class="create-edit-team-form">
+                    <input type="text"
+                           class="form-control create-edit-team-input"
+                           id="team-name"
+                           name="team-name"
+                           th:value="${team.getName()}"
+                           maxlength="100"
+                           required>
+                    <button type="submit" class="btn flowster-btn">Gem</button>
+                </form>
+            </div>
+            <div class="preview-user-container">
+                <div th:each="previewUser: ${team.getUserList()}">
+                    <div class="preview-user-box">
 
-            <div th:each="previewUser: ${team.getUserList()}">
-                <div class="preview-user-box">
+                        <div class="profilepicture">
+                            <img alt="Profilebillede" th:src="'data:image/jpeg;base64,' + ${previewUser.getBase64()}">
+                        </div>
+                        <span th:text="${previewUser.getName()}"></span>
+                        <span th:text="${previewUser.getJobType()}"></span>
 
-                    <div class="profilepicture">
-                        <img alt="Profilebillede" th:src="'data:image/jpeg;base64,' + ${previewUser.getBase64()}">
+                        <div th:if="${previewUser.isOnTeam()}">
+                            <form th:action="${team.getId() + '/removeUser/' + previewUser.getId()}" method="post">
+                                <button type="submit">Fjern</button>
+                            </form>
+                        </div>
+
+                        <div th:unless="${previewUser.isOnTeam()}">
+                            <form th:action="${team.getId() + '/addUser/' + previewUser.getId()}" method="post">
+                                <button type="submit">Tilføj</button>
+                            </form>
+                        </div>
+
                     </div>
-                    <span th:text="${previewUser.getName()}"></span>
-                    <span th:text="${previewUser.getJobType()}"></span>
-
-                    <div th:if="${previewUser.isOnTeam()}">
-                        <form th:action="${team.getId() + '/removeUser/' + previewUser.getId()}" method="post">
-                            <button type="submit">Fjern</button>
-                        </form>
-                    </div>
-
-                    <div th:unless="${previewUser.isOnTeam()}">
-                        <form th:action="${team.getId() + '/addUser/' + previewUser.getId()}" method="post">
-                            <button type="submit">Tilføj</button>
-                        </form>
-                    </div>
-
                 </div>
             </div>
-
         </div>
 
     </div>
