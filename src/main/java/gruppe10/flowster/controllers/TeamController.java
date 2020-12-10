@@ -87,7 +87,6 @@ public class TeamController
     @PostMapping("/editTeam/{teamId}/addUser/{userId}")
     public String postAddUserToTeam(@PathVariable String orgDbName, @PathVariable int teamId, @PathVariable int userId)
     {
-        // TODO: opdater modellen - hent ny ArrayList til teamModel
         teamService.insertRowIntoTeamsUsers(orgDbName, teamId, userId);
 
         // String.format("Jeg hedder %s", "Vibe");
@@ -98,10 +97,9 @@ public class TeamController
     @PostMapping("/editTeam/{teamId}/removeUser/{userId}")
     public String postRemoveUserFromTeam(@PathVariable String orgDbName, @PathVariable int teamId, @PathVariable int userId)
     {
-        // TODO: opdater modellen - hent ny ArrayList til teamModel
+
         teamService.deleteRowFromTeamsUser(orgDbName, teamId, userId);
 
-        System.out.println("remove: " + teamId);
         return "redirect:/" + orgDbName + "/editTeam/" + teamId;
     }
     
