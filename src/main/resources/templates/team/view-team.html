@@ -40,8 +40,7 @@
                 <div class="preview-user-box">
 
                     <div class="preview-profile-picture">
-                        <!-- TODO sæt ind! 'data:image/jpeg;base64,' + ${previewUser.getBase64()} -->
-                        <img alt="Profilebillede" src="https://www.bdfutbol.com/i/j/94170.jpg">
+                        <img alt="Profilebillede" th:src="'data:image/jpeg;base64,' + ${previewUser.getBase64()}">
                     </div>
                     <br>
                     <p th:text="${previewUser.getName()}"></p>

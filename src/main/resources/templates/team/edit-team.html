@@ -52,7 +52,7 @@
                     <div class="preview-user-box">
 
                         <div class="preview-profile-picture">
-                            <img alt="Profilebillede" src="'data:image/jpeg;base64,' + ${previewUser.getBase64()}">
+                            <img alt="Profilebillede" th:src="'data:image/jpeg;base64,' + ${previewUser.getBase64()}">
                         </div>
                         <br>
                         <p th:text="${previewUser.getName()}"></p>
