@@ -50,10 +50,20 @@
 </nav>
 
 
+<!------------------------------------------------- FRONT-PAGE -------------------------------------------->
+
+<!--------------- SIDEBAR ---------------><!-- TODO -->
+
+<nav th:fragment="front-page-sidebar(loggedInUser, orgDbName)" class="sidebar fontsize">
+    <div>
+        <!-- DET ER HER TEAMLISTEN VISES -->
+    </div>
+</nav>
+
+
 <!------------------------------------------------- TEAMS -------------------------------------------->
 
 <!--------------- SIDEBAR --------------->
-<!-- <div th:insert="general/fragments :: teams-sidebar(${loggedInUser})"></div> -->
 
 <nav th:fragment="teams-sidebar(loggedInUser, orgDbName)" class="sidebar fontsize">
 
@@ -71,24 +81,6 @@
         </div>
     </div>
 </nav>
-
-
-<!--------------- MAIN-CONTENT ---------------> <!-- TODO -->
-<!-- <div th:insert="general/fragments :: teams-main-content(loggedInUser)"></div> -->
-
-<div th:fragment="teams-page-content(loggedInUser, orgDbName)" class="text-center">
-    <h1>Mine teams</h1>
-    <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
-        <!-- FOR hvert team på listen: lav en kasse til det, som man kan klikke på -->
-        <a th:href="${'/' + orgDbName + '/viewTeam/' + team.getId()}">
-            <div  class ="preview-team text-left">
-                <h4 th:text="${team.getName()}"></h4>
-            </div>
-        </a>
-    </div>
-
-</div>
-
 
 <!-------------------------------------------- PROJECTS --------------------------------------------> <!-- TODO -->
 
@@ -111,29 +103,6 @@
     </div>
     -->
 </nav>
-
-
-<!--------------- MAIN-CONTENT ---------------> <!-- TODO -->
-<!-- <div th:insert="general/fragments :: projects-main-content(loggedInUser)"></div> -->
-
-<div th:fragment="projects-page-content(loggedInUser)" class="col-sm-10 text-center">
-    <h1>Mine teams</h1>
-
-    <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
-        <!-- FOR hvert team på listen: lav en kasse til det, som man kan klikke på -->
-        <a th:href="'viewTeam/' + ${team.getId()}">
-            <div  class ="preview-team">
-                <h1 th:text="${team.getName()}"></h1>
-            </div>
-
-
-        </a>
-    </div>
-
-</div>
-
-
-
 
 <!------------------------------------------ FOOTER ------------------------------------------------>
 

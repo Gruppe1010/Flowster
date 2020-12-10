@@ -363,3 +363,30 @@ a:hover, a:active
     display: flex;
     justify-content: space-between;
 }
+
+.teams-projects-title
+{
+    text-align: center;
+    padding-top: 50px;
+    font-size: 25px;
+}
+
+.teams-projects-list
+{
+    padding: 0 0 20px 50px;
+    font-size: 25px;
+}
+
+ul {
+    list-style: none;
+}
+
+ul li::before
+{
+    content: "\2022";
+    color: #3E8AC4;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}

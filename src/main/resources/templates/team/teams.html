@@ -32,9 +32,19 @@
         <!--TODO: det giver bedst mening at sende en Model med til hver fragment, som kun indeholder det som den fragment skal bruge  -->
         <div th:insert="fragments :: teams-sidebar(${loggedInUser}, ${orgDbName})" class="minheight"></div>
 
-        <!-- MAIN-CONTENT-FRAGMENT -->
-        <div th:insert="fragments :: teams-page-content(${loggedInUser}, ${orgDbName})" class="contentcontent"></div>
-
+        <div class="col-sm-10">
+            <p class="teams-projects-title">Mine teams</p>
+            <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
+                <!-- FOR hvert team på listen: lav en kasse til det, som man kan klikke på -->
+                <a th:href="${'/' + orgDbName + '/viewTeam/' + team.getId()}">
+                    <div  class ="text-left">
+                        <ul>
+                            <li class="teams-projects-list" th:text="${team.getName()}"></li>
+                        </ul>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 
 </div>

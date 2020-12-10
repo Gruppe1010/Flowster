@@ -30,8 +30,9 @@
         <!-- SIDEBAR-FRAGMENT -->
         <nav th:insert="fragments :: projects-sidebar(${loggedInUser})"></nav>
 
-        <!-- MAIN-CONTENT-FRAGMENT -->
-        <div th:insert="fragments :: projects-page-content(${loggedInUser})"></div>
+        <div class="col-sm-10">
+            <p class="teams-projects-title">Mine projekter</p>
+        </div>
 
     </div>
 
