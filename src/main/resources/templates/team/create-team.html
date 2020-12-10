@@ -34,17 +34,18 @@
 
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div class="col-sm-10">
-            <div class="create-edit-team-container">
-                <label class="create-edit-team-label" for="team-name">Teamnavn:</label>
-                <form action="createTeam" method="post" class="create-edit-team-form">
+            <div class="team-container">
+                <label class="team-label" for="team-name">Teamnavn:</label>
+                <form action="createTeam" method="post" class="team-form edit-team-name-container">
+                    <div></div>
                     <input type="text"
-                       class="form-control create-edit-team-input"
+                       class="form-control team-input"
                        id="team-name"
                        name="team-name"
                        placeholder="Indtast teamnavn"
                        maxlength="100"
                        required>
-                    <button type="submit" class="btn flowster-btn">Gem</button>
+                    <button type="submit" class="btn save-team-btn">Gem</button>
                 </form>
             </div>
         </div>

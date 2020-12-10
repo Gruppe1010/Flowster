@@ -32,31 +32,32 @@
         <!--TODO: det giver bedst mening at sende en Model med til hver fragment, som kun indeholder det som den fragment skal bruge  -->
         <div th:insert="fragments :: teams-sidebar(${loggedInUser}, ${orgDbName})" class="content"></div>
 
-        <p class="create-edit-team-label" th:text="${team.getName()}"></p>
+        <div class="col-sm-10">
+            <div class="team-name-container">
+                <p></p>
+                <p class="team-name" th:text="${team.getName()}"></p>
+                <div th:if="${loggedInUser.isProjectManager()}">
+                    <a th:href="${'/' + orgDbName + '/editTeam/' + team.getId()}">
+                        <button class="btn edit-team-btn" type="submit">Rediger</button>
+                    </a>
+                </div>
+            </div>
+            <div class="preview-user-container">
+                <div th:each="previewUser: ${team.getUserList()}">
+                    <div class="preview-user-box">
 
-        <div class="preview-user-container">
-            <div th:each="previewUser: ${team.getUserList()}">
-                <div class="preview-user-box">
+                        <div class="preview-profile-picture">
+                            <img alt="Profilebillede" th:src="'data:image/jpeg;base64,' + ${previewUser.getBase64()}">
+                        </div>
+                        <br>
+                        <p th:text="${previewUser.getName()}"></p>
+                        <p th:text="${previewUser.getJobType()}"></p>
 
-                    <div class="preview-profile-picture">
-                        <img alt="Profilebillede" th:src="'data:image/jpeg;base64,' + ${previewUser.getBase64()}">
                     </div>
-                    <br>
-                    <p th:text="${previewUser.getName()}"></p>
-                    <p th:text="${previewUser.getJobType()}"></p>
-
                 </div>
             </div>
         </div>
-
-        <div th:if="${loggedInUser.isProjectManager()}">
-            <a th:href="${'/' + orgDbName + '/editTeam/' + team.getId()}">
-                <button class="btn flowster-btn" type="submit">Rediger</button>
-            </a>
-        </div>
-
     </div>
-
 </div>
 
 <!-- Footer fragment -->
