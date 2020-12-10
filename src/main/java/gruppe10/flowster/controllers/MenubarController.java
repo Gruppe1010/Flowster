@@ -22,7 +22,7 @@ public class MenubarController
     @GetMapping("/{orgDbName}/frontPage")
     public String frontPage(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel)
     {
-        orgDbName = userService.getOrgDbName();
+        orgDbName = userService.findOrgDbName();
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
@@ -33,7 +33,7 @@ public class MenubarController
     @GetMapping("/{orgDbName}/teams")
     public String teams(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel)
     {
-        orgDbName = userService.getOrgDbName();
+        orgDbName = userService.findOrgDbName();
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         
         userService.updateJoinedTeamsList();
@@ -46,7 +46,7 @@ public class MenubarController
     @GetMapping("/{orgDbName}/projects")
     public String projects(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel)
     {
-        orgDbName = userService.getOrgDbName();
+        orgDbName = userService.findOrgDbName();
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);

@@ -36,27 +36,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="frontPage"><img class="navbar-logo" src="/images/Flowster_logo_light.png" alt="Flowster_logo_light"></a>
+            <a class="navbar-brand" th:href="${'/' + orgDbName + '/frontPage'}"><img class="navbar-logo" src="/images/Flowster_logo_light.png" alt="Flowster_logo_light"></a>
         </div>
 
         <!-- COLLAPSIBLE NAVBAR -->
         <div class="collapse navbar-collapse" id="alignment-example">
-
-            <!-- Links --> <!-- TODO: før var det et ul-tag - men betyder det noget??-->
-
-            <a href="teams" class="navbar-text">Teams</a>
-            <a href="projects" class="navbar-text">Projekter</a>
+            <a th:href="${'/' + orgDbName + '/teams'}" class="navbar-text">Teams</a>
+            <a th:href="${'/' + orgDbName + '/projects'}" class="navbar-text">Projekter</a>
             <a href="/" class="navbar-text float-right">Log ud</a>
-            <!--
-            <div class="navbar-text">
-                <a href="teams">Teams</a>
-            </div>
-            <div class="navbar-text">
-                <a href="projects">Projekter</a>
-            </div>
-            -->
-
-
         </div>
 
     </div>
@@ -71,14 +58,15 @@
 <nav th:fragment="teams-sidebar(loggedInUser, orgDbName)" class="sidebar fontsize">
 
     <div th:if="${loggedInUser.isProjectManager()}">
-        <a class="btn flowster-btn" href="createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"></a>
+        <a class="btn flowster-btn" th:href="${'/' + orgDbName + '/createTeam'}" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"></a>
         <hr class="hr">
     </div>
     <div>
         <!-- DET ER HER TEAMLISTEN VISES -->
         <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
             <div class="sidebar-link">
-                <a th:href="${'viewTeam/' + team.getId()}" th:text="${team.getName()}"></a>
+                <!--  + -->
+                <a th:href="${'/' + orgDbName + 'viewTeam/' + team.getId()}" th:text="${team.getName()}"></a>
             </div>
         </div>
     </div>
@@ -92,7 +80,7 @@
     <h1>Mine teams</h1>
     <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
         <!-- FOR hvert team på listen: lav en kasse til det, som man kan klikke på -->
-        <a th:href="${'viewTeam/' + team.getId()}">
+        <a th:href="${'/' + orgDbName + 'viewTeam/' + team.getId()}">
             <div  class ="preview-team text-left">
                 <h4 th:text="${team.getName()}"></h4>
             </div>
@@ -160,20 +148,9 @@
     <div class="col-sm-6">
     </div>
     <div class="col-sm-2">
-
-        <!-- <p>Age: <span th:text="*{age != null}? *{age} : '(no age specified)'">27</span>.</p> -->
-        <!-- ${${loggedInUser != null} ? ${ loggedInUser.findClassNameUrlPath()} + 'frontPage'-->
-        <!-- <td th:text="${teacher.active} ? 'ACTIVE' : 'RETIRED'" />-->
-        <!-- <a th:href="'team?' + ${team.getId()}"> -->
-        <!-- <td th:text="${teacher.active} ? 'ACTIVE' : 'RETIRED'" /> -->
-
-        <a th:href="@{(${loggedInUser != null ? 'frontPage' : '/'})}">
+        <a th:href="${loggedInUser != null ? ('/' + orgDbName + '/frontPage') : '/'}">
             <img  class="footer-logo" src="/images/Flowster_logo.png">
         </a>
-
-
-
-        <!--<img class="footer-logo" src="/images/Flowster_logo.png">-->
     </div>
 </div>
 

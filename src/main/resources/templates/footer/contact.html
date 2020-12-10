@@ -18,6 +18,7 @@
 </head>
 <body>
 
+<nav th:if="${loggedInUser != null}" th:insert="fragments :: menubar(${loggedInUser}, ${orgDbName})"></nav>
 
 <div class="container-fluid main-content text-center">
 

@@ -276,7 +276,7 @@ public class UserService
      *
      * @return String oprettede orgDbName
      * */
-    public String getOrgDbName()
+    public String findOrgDbName()
     {
         if(loggedInUser != null)
         {

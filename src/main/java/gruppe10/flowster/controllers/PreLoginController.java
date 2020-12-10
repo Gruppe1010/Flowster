@@ -24,7 +24,7 @@ public class PreLoginController
     {
         userService.resetLoggedInUser();
     
-        orgDbName = userService.getOrgDbName();
+        orgDbName = userService.findOrgDbName();
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         
         logInViewModel.addAttribute("logInViewModel", this.logInViewModel);
@@ -54,10 +54,11 @@ public class PreLoginController
             // indsæt i database (loggedInUser bliver også sat)
             userService.insertNewUserIntoDbAndSetLoggedInUser(createUserViewModel);
 
-            orgDbName = userService.getOrgDbName();
+            orgDbName = userService.findOrgDbName();
             orgDbNameModel.addAttribute("orgDbName", orgDbName);
             
-            return "redirect:/" + orgDbName + "/frontPage";
+            return String.format("redirect:/%s/frontPage", orgDbName);
+            // return "redirect:/" + orgDbName + "/frontPage";
         }
         
         return "redirect:/createUser";
@@ -81,16 +82,18 @@ public class PreLoginController
         // i denne metode sættes loggedInUser
         boolean logInInfoIsValid = userService.checkIfLogInInfoIsValid(logInViewModel);
     
-        orgDbName = userService.getOrgDbName();
+        orgDbName = userService.findOrgDbName();
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
     
     
         if(logInInfoIsValid)
         {
-            return "redirect:/" + orgDbName +"/frontPage";
+            return String.format("redirect:/%s/frontPage", orgDbName);
+            // return "redirect:/" + orgDbName +"/frontPage";
         }
         
-        return "redirect:";
+        // hvis invalid logInInfo
+        return "redirect:/";
     }
     
  

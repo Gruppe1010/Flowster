@@ -54,9 +54,11 @@ public class TeamController
             // vi henter id på nyoprettet team
             int teamId = teamService.retrieveTeamIdFromTeamName(orgDbName, teamNameModel);
     
-            return "redirect:editTeam/" + teamId;
+            return String.format("redirect:/%s/editTeam/%d", orgDbName, teamId);
+            // return "redirect:editTeam/" + teamId;
         }
         
+        //hvis teamName er optaget: TODO tilføj error-message
         return "redirect:createTeam";
     }
     
@@ -88,10 +90,9 @@ public class TeamController
     public String postAddUserToTeam(@PathVariable String orgDbName, @PathVariable int teamId, @PathVariable int userId)
     {
         teamService.insertRowIntoTeamsUsers(orgDbName, teamId, userId);
-
-        // String.format("Jeg hedder %s", "Vibe");
-        // TODO return String.format("redirect:/%d/editTeam/%d", orgDbName, teamId);// kører hurtigere
-        return "redirect:/" + orgDbName + "/editTeam/" + teamId;
+        
+        return String.format("redirect:/%s/editTeam/%d", orgDbName, teamId); // kører hurtigere
+        // return "redirect:/" + orgDbName + "/editTeam/" + teamId;
     }
     //
     @PostMapping("/editTeam/{teamId}/removeUser/{userId}")
@@ -99,8 +100,9 @@ public class TeamController
     {
 
         teamService.deleteRowFromTeamsUser(orgDbName, teamId, userId);
-
-        return "redirect:/" + orgDbName + "/editTeam/" + teamId;
+    
+        return String.format("redirect:/%s/editTeam/%d", orgDbName, teamId);
+        // return "redirect:/" + orgDbName + "/editTeam/" + teamId;
     }
     
 
