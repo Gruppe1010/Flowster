@@ -2,7 +2,11 @@ package gruppe10.flowster.models.users;
 
 import gruppe10.flowster.UserData;
 import gruppe10.flowster.models.teams.Team;
+import org.apache.tomcat.util.codec.binary.Base64;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -19,6 +23,7 @@ public class User implements UserData, Comparable<User>
     private String password;
     private double manhours;
     private byte[] profilePictureBytes;
+    private String base64;
     private ArrayList<Team> joinedTeamsList;
     
     // constructors
@@ -34,7 +39,8 @@ public class User implements UserData, Comparable<User>
         this.email = email;
         this.password = password;
         this.manhours = manhours;
-        this.profilePictureBytes = null;
+        this.profilePictureBytes = createGenericProfilePictureBytes();
+        this.base64 = byteArrayAs64String();
         this.joinedTeamsList = null;
     }
     public User(int id, int organisationAndJobType, String firstname, String surname, String email, String password,
@@ -48,6 +54,7 @@ public class User implements UserData, Comparable<User>
         this.password = password;
         this.manhours = manhours;
         this.profilePictureBytes = profilePictureBytes;
+        this.base64 = byteArrayAs64String();
         this.joinedTeamsList = joinedTeamsList;
     }
     
@@ -217,4 +224,39 @@ public class User implements UserData, Comparable<User>
                        ", joinedTeamsList=" + joinedTeamsList +
                        '}';
     }
+    
+    // TODO
+    /**
+     * Opretter et byte[] ud fra genericProfilePicture (det som tildeles automatisk ved oprettelse af user)
+     *
+     * @return byte[] ByteArray'et der indeholder genericProfilePicture
+     */
+    public byte[] createGenericProfilePictureBytes()
+    {
+        byte[] genericProfilePictureBytes = new byte[0];
+        
+        try
+        {
+            
+            //File.seperator gør at stien virker på alle systemer
+            File genericProfilePictureFile = new File("src" +File.separator + "main" + File.separator + "resources" + File.separator +
+                                                              "static" + File.separator + "images" + File.separator + "generic-profile-picture.png");
+            
+            genericProfilePictureBytes = Files.readAllBytes(genericProfilePictureFile.toPath());
+        }
+        catch(IOException e)
+        {
+            System.out.println("Error in createGenericProfilePictureBytes: " + e.getMessage());
+        }
+        
+        return genericProfilePictureBytes;
+    }
+    
+    private String byteArrayAs64String()
+    {
+        return Base64.encodeBase64String(this.profilePictureBytes);
+    }
+    
+    
+    
 }

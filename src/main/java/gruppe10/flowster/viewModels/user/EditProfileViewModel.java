@@ -6,7 +6,6 @@ public class EditProfileViewModel
     private double manhours;
     private String email;
     private byte[] profilePictureBytes;
-    private String profilePictureInitials;
     private String password;
     private String confirmPassword;
     
@@ -14,13 +13,12 @@ public class EditProfileViewModel
     
     public EditProfileViewModel(){}
     
-    public EditProfileViewModel(String name, double manhours, String email, byte[] profilePictureBytes, String profilePictureInitials, String password, String confirmPassword)
+    public EditProfileViewModel(String name, double manhours, String email, byte[] profilePictureBytes, String password, String confirmPassword)
     {
         this.name = name;
         this.manhours = manhours;
         this.email = email;
         this.profilePictureBytes = profilePictureBytes;
-        this.profilePictureInitials = profilePictureInitials;
         this.password = password;
         this.confirmPassword = confirmPassword;
     }
@@ -58,14 +56,6 @@ public class EditProfileViewModel
     public void setProfilePictureBytes(byte[] profilePictureBytes)
     {
         this.profilePictureBytes = profilePictureBytes;
-    }
-    public String getProfilePictureInitials()
-    {
-        return profilePictureInitials;
-    }
-    public void setProfilePictureInitials(String profilePictureInitials)
-    {
-        this.profilePictureInitials = profilePictureInitials;
     }
     public String getPassword()
     {

@@ -152,8 +152,6 @@ public class UserService
         if(jobType.equalsIgnoreCase("Projektleder"))
         {
             loggedInUser = projectManager.createProjectManagerFromCreateUserModel(createUserViewModel);
-    
-            
         }
         
         else if(jobType.equalsIgnoreCase("Almen medarbejder"))

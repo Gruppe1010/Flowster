@@ -7,6 +7,7 @@ import gruppe10.flowster.models.users.User;
 import gruppe10.flowster.services.UserService;
 import gruppe10.flowster.viewModels.user.LogInViewModel;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -111,14 +112,14 @@ public class OrganisationRepository
         int emailId = flowsterRepository.retrieveEmailIdFromEmail(newUser.getEmail());
         
         organisationConnection = generalRepository.establishConnection(dbName);
-    
-        System.out.println("dbnamet: " + dbName);
         
         // lægge ALT data på newUser ned
         try
         {
+            Blob profilePictureBlob = new SerialBlob(newUser.getProfilePictureBytes());
+            
             String sqlCommand = "INSERT INTO users (f_id_job_type, f_id_email, firstname, surname, password, " +
-                                        "manhours) values(?, ?, ?, ?, ?, ?)";
+                                        "manhours, profile_picture) values(?, ?, ?, ?, ?, ?, ?)";
     
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
             
@@ -128,6 +129,7 @@ public class OrganisationRepository
             preparedStatement.setString(4, newUser.getSurname());
             preparedStatement.setString(5, newUser.getPassword());
             preparedStatement.setDouble(6, newUser.getManhours());
+            preparedStatement.setBlob(7, profilePictureBlob);
         
             preparedStatement.executeUpdate();
         }
