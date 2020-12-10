@@ -1,9 +1,8 @@
 package gruppe10.flowster.controllers;
 
-import gruppe10.flowster.models.teams.Team;
 import gruppe10.flowster.services.TeamService;
 import gruppe10.flowster.services.UserService;
-import gruppe10.flowster.viewModels.team.EditTeamViewModel;
+import gruppe10.flowster.viewModels.team.TeamViewModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +19,12 @@ public class TeamController
     
     TeamService teamService = new TeamService();
     String teamNameModel = null;
-    EditTeamViewModel editTeamViewModel = null;
   
     @GetMapping("/createTeam")
     public String createTeam(@PathVariable String orgDbName, Model loggedInUserModel, Model teamNameModel,
                              Model orgDbNameModel)
     {
+        // så sidebar hele tiden er opdateret med de teams, som man er en del af
         userService.updateJoinedTeamsList();
         
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
@@ -62,18 +61,16 @@ public class TeamController
         return "redirect:createTeam";
     }
     
-    // editTeam/9
     @GetMapping("/editTeam/{teamId}")
     public String editTeam(@PathVariable String orgDbName, @PathVariable int teamId, Model loggedInUserModel,
                            Model teamModel, Model orgDbNameModel)
     {
-        // TODO: opdater modellen - hent ny ArrayList til teamModel - KUN her måske, og ikke i post
-        
+        // så sidebar hele tiden er opdateret med de teams, som man er en del af
         userService.updateJoinedTeamsList();
     
-        editTeamViewModel = teamService.retrieveAndCreateTeamViewModelFromId(orgDbName, teamId);
+        TeamViewModel teamViewModel = teamService.retrieveAndCreateEditTeamViewModelFromId(orgDbName, teamId);
         
-        teamModel.addAttribute("team", editTeamViewModel);
+        teamModel.addAttribute("team", teamViewModel);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
       
@@ -94,7 +91,7 @@ public class TeamController
         return String.format("redirect:/%s/editTeam/%d", orgDbName, teamId); // kører hurtigere
         // return "redirect:/" + orgDbName + "/editTeam/" + teamId;
     }
-    //
+    
     @PostMapping("/editTeam/{teamId}/removeUser/{userId}")
     public String postRemoveUserFromTeam(@PathVariable String orgDbName, @PathVariable int teamId, @PathVariable int userId)
     {
@@ -105,21 +102,21 @@ public class TeamController
         // return "redirect:/" + orgDbName + "/editTeam/" + teamId;
     }
     
-
      @GetMapping("/viewTeam/{teamId}")
-    public String viewTeam(@PathVariable int teamId, Model loggedInUserModel, Model teamModel)
+    public String viewTeam(@PathVariable String orgDbName, @PathVariable int teamId,
+                           Model loggedInUserModel, Model orgDbNameModel, Model teamModel)
     {
+        // så sidebar hele tiden er opdateret med de teams, som man er en del af
         userService.updateJoinedTeamsList();
-        
-        // Team team = teamService.retrieveAndCreateTeamFromDb(teamId);
     
-        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        // teamModel.addAttribute("team", team);
+        TeamViewModel teamViewModel = teamService.retrieveAndCreateViewTeamViewModelFromId(orgDbName, teamId);
         
-        // teamModel.addAttribute(har teamID);
-        // lav en model med url - "/postEditTeam/" + teamId + "/addUser/" - og i html: + ${user.getId()}
-        System.out.println(teamId);
-        return "Hej";
+        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
+        teamModel.addAttribute("team", teamViewModel);
+        
+    
+        return "team/view-team";
     }
     
   

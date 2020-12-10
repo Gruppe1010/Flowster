@@ -1,7 +1,7 @@
 package gruppe10.flowster.services;
 
 import gruppe10.flowster.repositories.TeamRepository;
-import gruppe10.flowster.viewModels.team.EditTeamViewModel;
+import gruppe10.flowster.viewModels.team.TeamViewModel;
 import org.springframework.web.context.request.WebRequest;
 
 public class TeamService
@@ -9,14 +9,14 @@ public class TeamService
     TeamRepository teamRepository = new TeamRepository();
    
     
-    public EditTeamViewModel createTeamViewModelFromForm(WebRequest dataFromCreateTeamFrom)
+    public TeamViewModel createTeamViewModelFromForm(WebRequest dataFromCreateTeamFrom)
     {
         
         // automatisk-parameternavn som inkrementeres -
         // while(der er flere id'er)
         // opret bruger ud fra id og læg på createTeamViewModel's liste-attr
        
-       return new EditTeamViewModel();
+       return new TeamViewModel();
        // TODO return new CreateTeamViewModel(dataFromCreateTeamFrom.getParameter("team-name"), );
     }
     
@@ -70,9 +70,9 @@ public class TeamService
    
     }
     
-    public EditTeamViewModel retrieveAndCreateTeamViewModelFromId(String orgDbName, int teamId)
+    public TeamViewModel retrieveAndCreateEditTeamViewModelFromId(String orgDbName, int teamId)
     {
-       return teamRepository.retrieveAndCreateTeamViewModelFromId(orgDbName, teamId);
+       return teamRepository.retrieveAndCreateEditTeamViewModelFromId(orgDbName, teamId);
     
     }
 
@@ -84,6 +84,11 @@ public class TeamService
     public void deleteRowFromTeamsUser(String orgDbName, int teamId, int userId)
     {
         teamRepository.deleteRowFromTeamsUsers(orgDbName, teamId, userId);
+    }
+    
+    public TeamViewModel retrieveAndCreateViewTeamViewModelFromId(String orgDbName, int teamId)
+    {
+        return teamRepository.retrieveAndCreateViewTeamViewModelFromId(orgDbName, teamId);
     }
     
     
