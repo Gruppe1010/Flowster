@@ -35,6 +35,22 @@
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div th:insert="fragments :: teams-page-content(${loggedInUser})"></div>
 
+        <div class="preview-user-container">
+            <div th:each="previewUser: ${team.getUserList()}">
+                <div class="preview-user-box">
+
+                    <div class="preview-profile-picture">
+                        <!-- TODO sæt ind! 'data:image/jpeg;base64,' + ${previewUser.getBase64()} -->
+                        <img alt="Profilebillede" src="https://www.bdfutbol.com/i/j/94170.jpg">
+                    </div>
+                    <br>
+                    <p th:text="${previewUser.getName()}"></p>
+                    <p th:text="${previewUser.getJobType()}"></p>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </div>

@@ -51,21 +51,22 @@
                 <div th:each="previewUser: ${team.getUserList()}">
                     <div class="preview-user-box">
 
-                        <div class="profilepicture">
-                            <img alt="Profilebillede" th:src="'data:image/jpeg;base64,' + ${previewUser.getBase64()}">
+                        <div class="preview-profile-picture">
+                            <img alt="Profilebillede" src="'data:image/jpeg;base64,' + ${previewUser.getBase64()}">
                         </div>
-                        <span th:text="${previewUser.getName()}"></span>
-                        <span th:text="${previewUser.getJobType()}"></span>
+                        <br>
+                        <p th:text="${previewUser.getName()}"></p>
+                        <p th:text="${previewUser.getJobType()}"></p>
 
                         <div th:if="${previewUser.isOnTeam()}">
                             <form th:action="${team.getId() + '/removeUser/' + previewUser.getId()}" method="post">
-                                <button type="submit">Fjern</button>
+                                <button class="btn remove-btn" type="submit">Fjern</button>
                             </form>
                         </div>
 
                         <div th:unless="${previewUser.isOnTeam()}">
                             <form th:action="${team.getId() + '/addUser/' + previewUser.getId()}" method="post">
-                                <button type="submit">Tilføj</button>
+                                <button class="btn add-btn" type="submit">Tilføj</button>
                             </form>
                         </div>
 
