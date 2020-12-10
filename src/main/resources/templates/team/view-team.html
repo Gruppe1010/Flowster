@@ -35,7 +35,7 @@
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div th:insert="fragments :: teams-page-content(${loggedInUser})"></div>
 
-        <p class="create-edit-team-label" th:text="${team.getName()}">Teamnavn:</p>
+        <p class="create-edit-team-label" th:text="${team.getName()}"></p>
 
         <div class="preview-user-container">
             <div th:each="previewUser: ${team.getUserList()}">
