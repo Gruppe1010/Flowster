@@ -48,9 +48,12 @@
                 </div>
             </div>
         </div>
-        <a th:href="${'/' + orgDbName + '/editTeam/' + team.getId()}">
-            <button class="btn flowster-btn" type="submit">Rediger</button>
-        </a>
+
+        <div th:if="${loggedInUser.isProjectManager()}">
+            <a th:href="${'/' + orgDbName + '/editTeam/' + team.getId()}">
+                <button class="btn flowster-btn" type="submit">Rediger</button>
+            </a>
+        </div>
 
     </div>
 
