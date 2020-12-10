@@ -1,6 +1,5 @@
 package gruppe10.flowster.services;
 
-import gruppe10.flowster.models.teams.Team;
 import gruppe10.flowster.repositories.TeamRepository;
 import gruppe10.flowster.viewModels.team.EditTeamViewModel;
 import org.springframework.web.context.request.WebRequest;
@@ -60,7 +59,7 @@ public class TeamService
         int teamId = teamRepository.retrieveTeamIdFromTeamName(orgDbName, teamName);
         // ny række i teams_users-tabel med nyt teamId og loggedInUser's id
         // == teamet og brugeren der har oprettet det bliver altså knyttet til hinanden
-        teamRepository.insertNewRowIntoTeamsUsers(orgDbName, teamId, UserService.loggedInUser.getId());
+        teamRepository.insertRowIntoTeamsUsers(orgDbName, teamId, UserService.loggedInUser.getId());
     }
     
     public int retrieveTeamIdFromTeamName(String orgDbName, String teamName)
@@ -73,6 +72,11 @@ public class TeamService
     {
        return teamRepository.retrieveAndCreateTeamViewModelFromId(orgDbName, teamId);
     
+    }
+
+    public void insertRowIntoTeamsUsers(String orgDbName, int teamId, int userId)
+    {
+        teamRepository.insertRowIntoTeamsUsers(orgDbName, teamId, userId);
     }
     
     

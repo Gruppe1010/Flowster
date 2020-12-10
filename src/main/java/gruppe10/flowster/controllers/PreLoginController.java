@@ -1,13 +1,11 @@
 package gruppe10.flowster.controllers;
 
-import gruppe10.flowster.repositories.OrganisationRepository;
 import gruppe10.flowster.services.UserService;
 import gruppe10.flowster.viewModels.user.CreateUserViewModel;
 import gruppe10.flowster.viewModels.user.LogInViewModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 
@@ -50,13 +48,15 @@ public class PreLoginController
         // tjekker om indtastet data er valid: orgKoden findes, email != optaget, passwords matcher
         boolean dataFromFormIsValid = userService.checkDataFromCreateUserViewModel(createUserViewModel);
     
-        orgDbName = userService.getOrgDbName();
-        orgDbNameModel.addAttribute("orgDbName", orgDbName);
+
     
         if(dataFromFormIsValid)
         {
-            // indsæt i database
-            userService.insertNewUserIntoDb(createUserViewModel);
+            // indsæt i database (loggedInUser bliver også sat)
+            userService.insertNewUserIntoDbAndSetLoggedInUser(createUserViewModel);
+
+            orgDbName = userService.getOrgDbName();
+            orgDbNameModel.addAttribute("orgDbName", orgDbName);
             
             return "redirect:/" + orgDbName + "/frontPage";
         }

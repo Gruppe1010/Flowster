@@ -270,7 +270,7 @@ public class TeamRepository
     
     }
     
-    public void insertNewRowIntoTeamsUsers(String dbName, int teamId, int userId)
+    public void insertRowIntoTeamsUsers(String dbName, int teamId, int userId)
     {
         organisationConnection = generalRepository.establishConnection(dbName);
     

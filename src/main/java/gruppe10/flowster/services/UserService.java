@@ -106,7 +106,7 @@ public class UserService
                         // boolean newUserIsProjectManager = newUser instanceof ProjectManager;
                         // System.out.println("TEST in userService: teammember: " + newUserIsTeamMember + "
                         // projectmanager: " + newUserIsProjectManager);
-                        
+
                          */
                         
                         
@@ -124,71 +124,14 @@ public class UserService
         return password.equals(confirmPassword);
     }
     
-    public void insertNewUserIntoDb(CreateUserViewModel createUserViewModel)
+    public void insertNewUserIntoDbAndSetLoggedInUser(CreateUserViewModel createUserViewModel)
     {
         User newUser = createUserFromCreateUserModel(createUserViewModel);
-    
+        loggedInUser = newUser;
         // tilføj til newUser til db
         organisationRepository.insertUserIntoDb(newUser);
     }
-    
-    // CreateUser-metoder MED ERROR Inkluderet
-    /*
-    public String createUser(CreateUserModel createUserModel)
-    {
-        
-        // tjek om email er brugt
-        boolean emailIsAvailable = flowsterRepository.isEmailAvailable(createUserModel.getEmail());
-        
-        // hvis email!=brugt tjekke om orgkode findes
-        if(emailIsAvailable)
-        {
-            int organisationId = Integer.parseInt(createUserModel.getOrganisationAndJobType().substring(0,3));
-            
-            // tjek om orgkode er findes
-            boolean organisationsIdExists = flowsterRepository.doesOrganisationdExist(organisationId);
-            
-            // if orgkode == findes - tjek om jobType findes
-            if(organisationsIdExists)
-            {
-                int jobTypeId = Integer.parseInt(createUserModel.getOrganisationAndJobType().substring(3,5));
-                
-                boolean jobTypeIdExists = flowsterRepository.doesJobTypeExist(jobTypeId);
-                
-                // if jobType findes - tjek om password + confirmpassword match
-                if(jobTypeIdExists)
-                {
-                    if(checkIfPasswordsMatch(createUserModel.getPassword(), createUserModel.getConfirmPassword()))
-                    {
-                    
-                    }
-                    else
-                    {
-                        error = "Kodeordene matcher ikke";
-                    }
-                }
-                else
-                {
-                    error = "Organisationskode ukorrekt";
-                }
-            }
-            else
-            {
-                error = "Organisationskode ukorrekt";
-            }
-        }
-        else
-        {
-            error = "Emailen er allerede i brug";
-        }
-        
-        // if passwords match == opret bruger - sæt til loggedInProjectManager ELLER loggedInTeamMember og gem i db
-        
-        
-        return "redirect:/";
-    }
-    */
-    
+
     
     /**
      * Opretter nyt ProjectManager-obj ELLER TeamMember-obj ud fra createUserModel og jobTypeId
