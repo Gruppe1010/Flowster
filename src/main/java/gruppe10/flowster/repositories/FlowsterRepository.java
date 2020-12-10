@@ -596,12 +596,12 @@ public class FlowsterRepository
         try
         {
             // SELECT id_user FROM flowster.emails RIGHT JOIN flowster_kea.users ON id_email = f_id_email WHERE email = "vibej@hotmail.com";
-            String sqlCommand= "SELECT id_user FROM emails RIGHT JOIN ? ON id_email = f_id_email WHERE email = ?";
+            String sqlCommand= "SELECT id_user FROM emails RIGHT JOIN ?.users ON id_email = f_id_email WHERE email = ?";
             
             PreparedStatement preparedStatement = flowsterConnection.prepareStatement(sqlCommand);
             
-            preparedStatement.setString(1, dbName + ".users");
-            preparedStatement.setString(2, "\"" + email + "\"");
+            preparedStatement.setString(1, dbName);
+            preparedStatement.setString(2, email);
             
             ResultSet resultSet = preparedStatement.executeQuery();
     

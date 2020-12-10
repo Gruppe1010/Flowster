@@ -42,11 +42,49 @@ public class OrganisationRepository
         insertUserDataIntoUsers(dbName, newUser);
         
         // sæt id på loggedInUser
-        UserService.loggedInUser.setId(flowsterRepository.retrieveUserIdFromEmail(dbName, email));
+        UserService.loggedInUser.setId(retrieveUserIdFromEmail(dbName, email));
         
         System.out.println("TESTBRUGER: \n" + UserService.loggedInUser);
         
     }
+    
+    public int retrieveUserIdFromEmail(String dbName, String email)
+    {
+        int userId = 0;
+        
+        System.out.println("dbname flowsterrepository: " + dbName);
+        
+        organisationConnection = generalRepository.establishConnection(dbName);
+        
+        try
+        {
+            // SELECT id_user FROM flowster.emails RIGHT JOIN flowster_kea.users ON id_email = f_id_email WHERE email = "vibej@hotmail.com";
+            // String sqlCommand= "SELECT id_user FROM emails RIGHT JOIN ?.users ON id_email = f_id_email WHERE email
+            // = ?";
+            
+            String sqlCommand = "SELECT id_user FROM users LEFT JOIN flowster.emails ON f_id_email = id_email WHERE " +
+                                        "email = ?";
+            
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setString(1, email);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next())
+            {
+                userId = resultSet.getInt("id_user");
+            }
+            
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in retrieveUserIdFromEmail: " + e.getMessage());
+        }
+        
+        return userId;
+    }
+    
     
     
     public String findDbNameFromOrganisationId(int organisationId)

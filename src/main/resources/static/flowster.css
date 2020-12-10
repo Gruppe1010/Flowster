@@ -286,8 +286,9 @@ a:hover, a:active
 
 .preview-user-container
 {
-    display: flex;
-    width: 60%;
+    flex-wrap: wrap;
+    display: inline-flex;
+    width: 100%;
     margin: auto;
     padding: 40px;
 }
