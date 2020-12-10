@@ -4,6 +4,7 @@ import gruppe10.flowster.models.teams.Team;
 import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.models.users.TeamMember;
 import gruppe10.flowster.models.users.User;
+import gruppe10.flowster.services.UserService;
 import gruppe10.flowster.viewModels.user.LogInViewModel;
 
 import java.sql.*;
@@ -29,15 +30,22 @@ public class OrganisationRepository
     public void insertUserIntoDb(User newUser)
     {
         String dbName = findDbNameFromOrganisationId(newUser.findOrganisationId());
+        String email = newUser.getEmail();
         
         // FØRST indsættes email i emails-tabel i flowster-db
-        flowsterRepository.insertEmailIntoEmails(newUser.getEmail());
+        flowsterRepository.insertEmailIntoEmails(email);
         
         // SÅ indsættes række i emails_organisations-tabel i flowster-db
         flowsterRepository.insertRowIntoEmailsAndOrganisations(newUser);
         
         // DERNÆST indsættes resten af userData i users-tabel i organisationName-db
         insertUserDataIntoUsers(dbName, newUser);
+        
+        // sæt id på loggedInUser
+        UserService.loggedInUser.setId(flowsterRepository.retrieveUserIdFromEmail(dbName, email));
+        
+        System.out.println("TESTBRUGER: \n" + UserService.loggedInUser);
+        
     }
     
     
@@ -65,6 +73,8 @@ public class OrganisationRepository
         int emailId = flowsterRepository.retrieveEmailIdFromEmail(newUser.getEmail());
         
         organisationConnection = generalRepository.establishConnection(dbName);
+    
+        System.out.println("dbnamet: " + dbName);
         
         // lægge ALT data på newUser ned
         try

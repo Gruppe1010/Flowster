@@ -4,6 +4,7 @@ import gruppe10.flowster.UserData;
 import gruppe10.flowster.models.teams.Team;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class User implements UserData, Comparable<User>
 {
@@ -201,5 +202,19 @@ public class User implements UserData, Comparable<User>
         return urlPath;
     }
     
-    
+    @Override
+    public String toString()
+    {
+        return "User{" +
+                       "id=" + id +
+                       ", organisationAndJobType=" + organisationAndJobType +
+                       ", firstname='" + firstname + '\'' +
+                       ", surname='" + surname + '\'' +
+                       ", email='" + email + '\'' +
+                       ", password='" + password + '\'' +
+                       ", manhours=" + manhours +
+                       ", profilePictureBytes=" + Arrays.toString(profilePictureBytes) +
+                       ", joinedTeamsList=" + joinedTeamsList +
+                       '}';
+    }
 }

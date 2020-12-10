@@ -68,5 +68,11 @@ public class ProjectManager extends User
         return urlPath;
     }
     
-    
+    @Override
+    public String toString()
+    {
+        return super.toString() + "ProjectManager{" +
+                       "managedProjectsList=" + managedProjectsList +
+                       '}';
+    }
 }

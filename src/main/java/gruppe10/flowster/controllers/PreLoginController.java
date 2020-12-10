@@ -48,8 +48,7 @@ public class PreLoginController
         // tjekker om indtastet data er valid: orgKoden findes, email != optaget, passwords matcher
         boolean dataFromFormIsValid = userService.checkDataFromCreateUserViewModel(createUserViewModel);
     
-
-    
+        
         if(dataFromFormIsValid)
         {
             // indsæt i database (loggedInUser bliver også sat)
@@ -61,7 +60,7 @@ public class PreLoginController
             return "redirect:/" + orgDbName + "/frontPage";
         }
         
-        return "redirect:/";
+        return "redirect:/createUser";
     }
     
     @GetMapping("/createUser")
@@ -91,7 +90,7 @@ public class PreLoginController
             return "redirect:/" + orgDbName +"/frontPage";
         }
         
-        return "redirect:/";
+        return "redirect:";
     }
     
  

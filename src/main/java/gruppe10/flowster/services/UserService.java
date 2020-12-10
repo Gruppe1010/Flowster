@@ -80,24 +80,26 @@ public class UserService
         // tjek om email er brugt
         boolean emailIsAvailable = flowsterRepository.isEmailAvailable(createUserViewModel.getEmail());
     
-        // hvis email!=brugt tjekke om orgkode findes
+        // hvis email!=brugt
         if(emailIsAvailable)
         {
             int organisationId = createUserViewModel.findOrganisationId();
     
-            // tjek om orgkode er findes
+            // tjek om orgkode findes
             boolean organisationsIdExists = flowsterRepository.doesOrganisationExist(organisationId);
     
-            // if orgkode == findes - tjek om jobType findes
+            // if orgkode == findes
             if(organisationsIdExists)
             {
                 int jobTypeId = createUserViewModel.findJobTypeId();
-    
+                
+                // tjek om jobType findes
                 boolean jobTypeIdExists = flowsterRepository.doesJobTypeExist(jobTypeId);
     
-                // if jobType findes - tjek om password + confirmpassword match
+                // if jobType findes
                 if(jobTypeIdExists)
                 {
+                    // tjek om password + confirmpassword match
                     if(checkIfPasswordsMatch(createUserViewModel.getPassword(), createUserViewModel.getConfirmPassword()))
                     {
                         
@@ -106,7 +108,6 @@ public class UserService
                         // boolean newUserIsProjectManager = newUser instanceof ProjectManager;
                         // System.out.println("TEST in userService: teammember: " + newUserIsTeamMember + "
                         // projectmanager: " + newUserIsProjectManager);
-
                          */
                         
                         
@@ -127,11 +128,11 @@ public class UserService
     public void insertNewUserIntoDbAndSetLoggedInUser(CreateUserViewModel createUserViewModel)
     {
         User newUser = createUserFromCreateUserModel(createUserViewModel);
-        loggedInUser = newUser;
+    
         // tilføj til newUser til db
         organisationRepository.insertUserIntoDb(newUser);
     }
-
+    
     
     /**
      * Opretter nyt ProjectManager-obj ELLER TeamMember-obj ud fra createUserModel og jobTypeId
@@ -151,6 +152,8 @@ public class UserService
         if(jobType.equalsIgnoreCase("Projektleder"))
         {
             loggedInUser = projectManager.createProjectManagerFromCreateUserModel(createUserViewModel);
+    
+            
         }
         
         else if(jobType.equalsIgnoreCase("Almen medarbejder"))

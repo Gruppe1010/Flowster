@@ -585,8 +585,39 @@ public class FlowsterRepository
         
     }
     
+    public int retrieveUserIdFromEmail(String dbName, String email)
+    {
+        int userId = 0;
     
+        System.out.println("dbname flowsterrepository: " + dbName);
+        
+        flowsterConnection = generalRepository.establishConnection("flowster");
+        
+        try
+        {
+            // SELECT id_user FROM flowster.emails RIGHT JOIN flowster_kea.users ON id_email = f_id_email WHERE email = "vibej@hotmail.com";
+            String sqlCommand= "SELECT id_user FROM emails RIGHT JOIN ? ON id_email = f_id_email WHERE email = ?";
+            
+            PreparedStatement preparedStatement = flowsterConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setString(1, dbName + ".users");
+            preparedStatement.setString(2, "\"" + email + "\"");
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
     
+            if(resultSet.next())
+            {
+                userId = resultSet.getInt("id_user");
+            }
+            
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in retrieveUserIdFromEmail: " + e.getMessage());
+        }
+        
+        return userId;
+    }
     
     // retrieveJobTypeClassNameFromId
     
