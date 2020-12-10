@@ -481,15 +481,19 @@ public class TeamRepository
             while(resultSet.next())
             {
                 // lav nyt obj.
-                PreviewUserViewModel previewUser = new PreviewUserViewModel(
-                    resultSet.getInt("id_user"),
-                    convertBlobToByteArray(resultSet.getBlob("profile_picture")),
-                resultSet.getString("firstname") + " " + resultSet.getString("surname"),
-                    resultSet.getString("job_type"));
-                
-                
-                //tilføj til liste
-                previewUserViewModelList.add(previewUser);
+               
+                if(resultSet.getInt("id_user") != 0)
+                {
+                    PreviewUserViewModel previewUser = new PreviewUserViewModel(
+                            resultSet.getInt("id_user"),
+                            convertBlobToByteArray(resultSet.getBlob("profile_picture")),
+                            resultSet.getString("firstname") + " " + resultSet.getString("surname"),
+                            resultSet.getString("job_type"));
+    
+    
+                    //tilføj til liste
+                    previewUserViewModelList.add(previewUser);
+                }
             }
             
             if(previewUserViewModelList.size() > 0)
