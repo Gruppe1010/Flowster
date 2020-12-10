@@ -99,7 +99,8 @@ public class TeamController
     public String postRemoveUserFromTeam(@PathVariable String orgDbName, @PathVariable int teamId, @PathVariable int userId)
     {
         // TODO: opdater modellen - hent ny ArrayList til teamModel
-        
+        teamService.deleteRowFromTeamsUser(orgDbName, teamId, userId);
+
         System.out.println("remove: " + teamId);
         return "redirect:/" + orgDbName + "/editTeam/" + teamId;
     }

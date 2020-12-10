@@ -307,6 +307,42 @@ public class TeamRepository
         
         
     }
+
+    public void deleteRowFromTeamsUsers(String dbName, int teamId, int userId)
+    {
+        organisationConnection = generalRepository.establishConnection(dbName);
+
+        try
+        {
+            String sqlCommand = "DELETE FROM teams_users WHERE f_id_team = ? AND f_id_user = ?";
+
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+
+            preparedStatement.setInt(1, teamId);
+            preparedStatement.setInt(2, userId);
+
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in TeamRepository deleteRowFromTeamsUsers: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in TeamRepository deleteRowFromTeamsUsersFinally: " + e.getMessage());
+            }
+        }
+
+
+    }
+
+
     
     public EditTeamViewModel retrieveAndCreateTeamViewModelFromId(String dbName, int teamId)
     {
@@ -536,7 +572,12 @@ public class TeamRepository
     }
     
     
-    
+
+
+
+
+
+
     
     /**
      * Konverterer blob til et byteArray

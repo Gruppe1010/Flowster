@@ -78,6 +78,11 @@ public class TeamService
     {
         teamRepository.insertRowIntoTeamsUsers(orgDbName, teamId, userId);
     }
+
+    public void deleteRowFromTeamsUser(String orgDbName, int teamId, int userId)
+    {
+        teamRepository.deleteRowFromTeamsUsers(orgDbName, teamId, userId);
+    }
     
     
     
