@@ -236,17 +236,7 @@ a:hover, a:active
     font-size: 20px;
 }
 
-/*    MAIN CONTENT   */
-
-.preview-team
-{
-    height: 100px;
-    padding: 60px;
-    /*border-box = indholdet + padding - sættes til height (indholdet får højden på height minus padding)*/
-    /*content-box = KUN indholdet sættes til height-højden (denne er default)*/
-    box-sizing: border-box;
-    border-width: 1px;
-}
+/*-----------MAIN CONTENT----------*/
 
 .wrapper
 {
@@ -270,4 +260,39 @@ a:hover, a:active
 {
     box-sizing: border-box;
     width: 100%;
+}
+
+.create-edit-team-container
+{
+    width: 60%;
+    margin: auto;
+}
+
+.create-edit-team-form
+{
+
+}
+
+.create-edit-team-label
+{
+    font-size: 25px;
+    padding-top: 50px;
+}
+
+.create-edit-team-input
+{
+    margin: 20px;
+}
+
+.preview-user-container
+{
+    display: flex;
+    width: 60%;
+    margin: auto;
+    padding: 40px;
+}
+
+.preview-user-box
+{
+
 }

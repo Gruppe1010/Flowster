@@ -34,18 +34,19 @@
 
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div class="col-sm-10">
-            <label class="label-padding" for="team-name">Teamnavn:</label>
-            <form action="createTeam" method="post">
-                <input type="text"
-                   class="form-control"
-                   id="team-name"
-                   name="team-name"
-                   placeholder="Indtast teamnavn"
-                   maxlength="100"
-                   required>
-                <button type="submit" class="btn flowster-btn">Gem</button>
-            </form>
-
+            <div class="create-edit-team-container">
+                <label class="create-edit-team-label" for="team-name">Teamnavn:</label>
+                <form action="createTeam" method="post" class="create-edit-team-form">
+                    <input type="text"
+                       class="form-control create-edit-team-input"
+                       id="team-name"
+                       name="team-name"
+                       placeholder="Indtast teamnavn"
+                       maxlength="100"
+                       required>
+                    <button type="submit" class="btn flowster-btn">Gem</button>
+                </form>
+            </div>
         </div>
 
     </div>
