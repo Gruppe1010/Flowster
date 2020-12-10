@@ -8,6 +8,8 @@
     <meta charset="utf-8">
     <!-- Får siden til at følge skærmens størrelse -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Browser logo -->
+    <link rel="icon" href="/images/flowster-logo-thumbnail.png">
     <!-- Stylesheets til Bootstrap -->
     <link rel="stylesheet" href="/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="/bootstrap-theme.css" type="text/css">
@@ -43,7 +45,14 @@
         <div class="collapse navbar-collapse" id="alignment-example">
             <a th:href="${'/' + orgDbName + '/teams'}" class="navbar-text">Teams</a>
             <a th:href="${'/' + orgDbName + '/projects'}" class="navbar-text">Projekter</a>
+
             <a href="/" class="navbar-text float-right">Log ud</a>
+
+            <!--
+            <div class="thumbnail-profile-picture float-right">
+                <img alt="Profilebillede" th:src="'data:image/jpeg;base64,' + ${loggedInUser.previewUser.getBase64()}">
+            </div>
+            -->
         </div>
 
     </div>

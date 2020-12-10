@@ -188,6 +188,22 @@ a:hover, a:active
     color: #3E8AC4;
 }
 
+.thumbnail-profile-picture
+{
+    position: relative;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin: auto;
+}
+
+.thumbnail-profile-picture img
+{
+    width: 100%;
+    height: auto;
+}
+
 /*-----------SIDEBAR----------*/
 
 .sidebar
@@ -364,7 +380,7 @@ a:hover, a:active
     justify-content: space-between;
 }
 
-.teams-projects-title
+.page-title
 {
     text-align: center;
     padding-top: 50px;
