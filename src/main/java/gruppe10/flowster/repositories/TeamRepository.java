@@ -513,9 +513,11 @@ public class TeamRepository
     
         try
         {
-        
-            String sqlCommand = "SELECT id_user, profile_picture, firstname, surname, job_type FROM teams_users " +
-                                        "RIGHT JOIN users ON f_id_user = id_user WHERE f_id_team = ?";
+            String sqlCommand = "SELECT id_user, profile_picture, firstname, surname, job_type " +
+                                        "FROM teams_users " +
+                                        "RIGHT JOIN users ON f_id_user = id_user " +
+                                        "RIGHT JOIN flowster.job_types ON f_id_job_type = id_job_type  " +
+                                        "WHERE f_id_team = ?;";
         
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
             
