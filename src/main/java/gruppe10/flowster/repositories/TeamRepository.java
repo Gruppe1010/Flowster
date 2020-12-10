@@ -1,10 +1,9 @@
 package gruppe10.flowster.repositories;
 
 import gruppe10.flowster.models.teams.Team;
-import gruppe10.flowster.viewModels.team.EditTeamViewModel;
+import gruppe10.flowster.viewModels.team.TeamViewModel;
 import gruppe10.flowster.viewModels.user.PreviewUserViewModel;
 
-import java.awt.desktop.ScreenSleepEvent;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -344,9 +343,9 @@ public class TeamRepository
 
 
     
-    public EditTeamViewModel retrieveAndCreateTeamViewModelFromId(String dbName, int teamId)
+    public TeamViewModel retrieveAndCreateEditTeamViewModelFromId(String dbName, int teamId)
     {
-        EditTeamViewModel editTeamViewModel = null;
+        TeamViewModel teamViewModel = null;
         
         // metode til: select team_name
         String teamName = retrieveTeamNameFromTeamId(dbName, teamId);
@@ -355,9 +354,9 @@ public class TeamRepository
         if(teamName != null)
         {
             // laves en liste med alle brugere i org, som skal vises i viewet
-            ArrayList<PreviewUserViewModel> previewUserViewModelList = createPreviewUserList(dbName, teamId);
+            ArrayList<PreviewUserViewModel> previewUserViewModelList = createPreviewUserListWithAllOrgUsers(dbName, teamId);
     
-            editTeamViewModel = new EditTeamViewModel(teamId, teamName, previewUserViewModelList);
+            teamViewModel = new TeamViewModel(teamId, teamName, previewUserViewModelList);
         }
         
         // resultSet der indeholder ALLE orgbrugere
@@ -368,7 +367,37 @@ public class TeamRepository
             // else: previewUser.setIsOnTeam(false);
         
         
-        return editTeamViewModel;
+        return teamViewModel;
+    }
+    
+    
+    public TeamViewModel retrieveAndCreateViewTeamViewModelFromId(String dbName, int teamId)
+    {
+        TeamViewModel teamViewModel = null;
+    
+        // metode til: select team_name
+        String teamName = retrieveTeamNameFromTeamId(dbName, teamId);
+    
+        // hvis teamet findes
+        if(teamName != null)
+        {
+            // lav en liste med alle brugere i team, som skal vises i viewet
+            
+            ArrayList<PreviewUserViewModel> previewUserViewModelList = createPreviewUserListWithAllTeamUsers(dbName,
+                    teamId);
+        
+            teamViewModel = new TeamViewModel(teamId, teamName, previewUserViewModelList);
+        }
+    
+        // resultSet der indeholder ALLE orgbrugere
+        // opret PreviewUserViewModel-obj ud af ALLE disse - isOnTeam == null - læg på previewUserList
+        // for(int i = 0; i < previewUserList.size(); i++): PreviewUser previewUser = previewUserList.get(i);
+        //  select * FROM teams_users where f_id_team = ? AND f_id_user = previewUser.getId()
+        // if resultSet.next(){ previewUser.setIsOnTeam(true);
+        // else: previewUser.setIsOnTeam(false);
+    
+    
+        return teamViewModel;
     }
     
     
@@ -431,8 +460,12 @@ public class TeamRepository
         
     }
     
-    
-    public ArrayList<PreviewUserViewModel> createPreviewUserList(String dbName, int teamId)
+    /**
+     * Laver liste med ALLE organisationens users
+     *
+     *
+     * */
+    public ArrayList<PreviewUserViewModel> createPreviewUserListWithAllOrgUsers(String dbName, int teamId)
     {
         ArrayList<PreviewUserViewModel> previewUserViewModelList = null;
     
@@ -469,6 +502,47 @@ public class TeamRepository
         }
     
         return previewUserViewModelList;
+    }
+    
+    public ArrayList<PreviewUserViewModel> createPreviewUserListWithAllTeamUsers(String dbName, int teamId)
+    {
+        ArrayList<PreviewUserViewModel> previewUserViewModelList = null;
+    
+        // resultSet der indeholder ALLE teamusers
+        organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+        
+            String sqlCommand = "SELECT id_user, profile_picture, firstname, surname, job_type FROM teams_users " +
+                                        "RIGHT JOIN users ON f_id_user = id_user WHERE f_id_team = ?";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setInt(1, teamId);
+        
+            ResultSet resultSet = preparedStatement.executeQuery();
+        
+            previewUserViewModelList = createPreviewUserListFromResultSet(resultSet, teamId);
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in createPreviewUserListWithAllTeamUsers: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in createPreviewUserListWithAllTeamUsersFinally: " + e.getMessage());
+            }
+        }
+    
+        return previewUserViewModelList;
+        
     }
     
     public ArrayList<PreviewUserViewModel> createPreviewUserListFromResultSet(ResultSet resultSet, int teamId)
@@ -574,6 +648,8 @@ public class TeamRepository
         }
         return userIsOnTeam;
     }
+    
+  
     
     
 

@@ -4,18 +4,18 @@ import gruppe10.flowster.viewModels.user.PreviewUserViewModel;
 
 import java.util.ArrayList;
 
-public class EditTeamViewModel
+public class TeamViewModel
 {
     private int id;
     private String name;
     private ArrayList<PreviewUserViewModel> userList;
     
     // constructors
-    public EditTeamViewModel(){
+    public TeamViewModel(){
    
     }
     
-    public EditTeamViewModel(int id, String name, ArrayList<PreviewUserViewModel> userList)
+    public TeamViewModel(int id, String name, ArrayList<PreviewUserViewModel> userList)
     {
         this.id = id;
         this.name = name;

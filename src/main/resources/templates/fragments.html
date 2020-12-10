@@ -66,7 +66,7 @@
         <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
             <div class="sidebar-link">
                 <!--  + -->
-                <a th:href="${'/' + orgDbName + 'viewTeam/' + team.getId()}" th:text="${team.getName()}"></a>
+                <a th:href="${'/' + orgDbName + '/viewTeam/' + team.getId()}" th:text="${team.getName()}"></a>
             </div>
         </div>
     </div>
@@ -80,7 +80,7 @@
     <h1>Mine teams</h1>
     <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
         <!-- FOR hvert team på listen: lav en kasse til det, som man kan klikke på -->
-        <a th:href="${'/' + orgDbName + 'viewTeam/' + team.getId()}">
+        <a th:href="${'/' + orgDbName + '/viewTeam/' + team.getId()}">
             <div  class ="preview-team text-left">
                 <h4 th:text="${team.getName()}"></h4>
             </div>
