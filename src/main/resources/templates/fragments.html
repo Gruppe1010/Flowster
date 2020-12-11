@@ -77,7 +77,7 @@
 <nav th:fragment="teams-sidebar(loggedInUser, orgDbName)" class="sidebar fontsize">
 
     <div th:if="${loggedInUser.isProjectManager()}">
-        <a class="btn flowster-btn" th:href="${'/' + orgDbName + '/createTeam'}" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'"></a>
+        <a class="btn flowster-btn" th:href="${'/' + orgDbName + '/createTeam'}">Nyt team</a>
         <hr class="hr">
     </div>
     <div>
@@ -96,21 +96,20 @@
 <!--------------- SIDEBAR ---------------> <!-- TODO -->
 <!-- <div th:insert="general/fragments :: projects-sidebar(${loggedInUser})"></div> -->
 
-<nav th:fragment="projects-sidebar(loggedInUser)" class="col-sm-2 sidebar fontsize">
-    <!--
-    <div class="row fontsize">
-        <a href="/createTeam" th:text="${loggedInUser.isProjectManager()} ? 'Nyt team'" class="fontsize" ></a>
+<nav th:fragment="projects-sidebar(loggedInUser, orgDbName, joinedProjectsList)" class="sidebar fontsize">
+     <div th:if="${loggedInUser.isProjectManager()}">
+        <a class="btn flowster-btn" th:href="${'/' + orgDbName + '/createProject'}">Nyt projekt</a>
+        <hr class="hr">
     </div>
-
-    <hr class="hr">
-
-    <div class="row fontsize">
-
-        <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
-            <a th:href="'team?' + ${team.getId()}" th:text="${team.getName()}"></a>
+    <div>
+        <!-- DET ER HER TEAMLISTEN VISES -->
+        <div th:each="project: ${joinedProjectsList()}">
+            <div class="sidebar-link">
+                <!--  + -->
+                <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}" th:text="${project.getTitle()}"></a>
+            </div>
         </div>
     </div>
-    -->
 </nav>
 
 <!------------------------------------------ FOOTER ------------------------------------------------>

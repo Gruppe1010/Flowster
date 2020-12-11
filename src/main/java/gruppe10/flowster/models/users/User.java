@@ -220,7 +220,6 @@ public class User implements UserData, Comparable<User>
                        ", email='" + email + '\'' +
                        ", password='" + password + '\'' +
                        ", manhours=" + manhours +
-                       ", profilePictureBytes=" + Arrays.toString(profilePictureBytes) +
                        ", joinedTeamsList=" + joinedTeamsList +
                        '}';
     }
