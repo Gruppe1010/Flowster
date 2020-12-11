@@ -118,10 +118,10 @@
 <!-- <div th:insert="general/fragments :: footer"></div> -->
 <div th:fragment="footer(loggedInUser, orgDbName)" class="text-center footer">
     <div class="col-sm-2">
-        <a href="contact" class="white">Kontakt</a>
+        <a th:href="${'/' + orgDbName + '/contact'}" class="white">Kontakt</a>
     </div>
     <div class="col-sm-2">
-        <a href="about" class="white">Om os</a>
+        <a th:href="${'/' + orgDbName + '/about'}" class="white">Om os</a>
     </div>
     <div class="col-sm-6">
     </div>
