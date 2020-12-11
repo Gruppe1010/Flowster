@@ -268,6 +268,11 @@ public class UserService
         loggedInUser.setJoinedTeamsList(teamRepository.retrieveTeamsArrayListFromUserId(dbName,
                 loggedInUser.getId()));
     }
+
+    public void updateJoinedProjectsList()
+    {
+
+    }
     
     /**
      * Finder/opretter orgDbName ud fra loggedInUser

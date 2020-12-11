@@ -29,30 +29,7 @@ public class MenubarController
         
         return "front-page"; // html
     }
-    
-    @GetMapping("/{orgDbName}/teams")
-    public String teams(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel)
-    {
-        orgDbName = userService.findOrgDbName();
-        orgDbNameModel.addAttribute("orgDbName", orgDbName);
-        
-        userService.updateJoinedTeamsList();
-        
-        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        
-        return "team/teams"; // html
-    }
-    
-    @GetMapping("/{orgDbName}/projects")
-    public String projects(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel)
-    {
-        orgDbName = userService.findOrgDbName();
-        orgDbNameModel.addAttribute("orgDbName", orgDbName);
-        
-        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        
-        return "project/projects"; // html
-    }
+
     
     @GetMapping("/logOut")
     public String logOut()

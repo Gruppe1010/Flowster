@@ -5,16 +5,16 @@ import gruppe10.flowster.models.users.ProjectManager;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 
 public class Project
 {
+    private int id;
     private String title;
     private Date deadline;
     private double manhours;
     private ArrayList<Subproject> subprojectsList;
-    private HashSet<ProjectManager> projectManagersSet;
-    private HashSet<Team> teamsSet;
+    private ArrayList<ProjectManager> projectManagersSet;
+    private ArrayList<Team> teamsSet;
     
     // constructors
     public Project(){}
@@ -26,12 +26,21 @@ public class Project
         this.deadline = deadline;
         this.manhours = manhours;
         this.subprojectsList = subprojectsList;
-        this.projectManagersSet = new HashSet<>();
+        this.projectManagersSet = new ArrayList<>();
         projectManagersSet.add(projectManagerCreater);
-        this.teamsSet = new HashSet<>();
+        this.teamsSet = new ArrayList<>();
     }
     
     // getters + setters
+
+    public int getId()
+    {
+        return id;
+    }
+    public void setId(int id)
+    {
+        this.id = id;
+    }
     public String getTitle()
     {
         return title;
@@ -64,19 +73,19 @@ public class Project
     {
         this.subprojectsList = subprojectsList;
     }
-    public HashSet<ProjectManager> getProjectManagersSet()
+    public ArrayList<ProjectManager> getProjectManagersSet()
     {
         return projectManagersSet;
     }
-    public void setProjectManagersSet(HashSet<ProjectManager> projectManagersSet)
+    public void setProjectManagersSet(ArrayList<ProjectManager> projectManagersSet)
     {
         this.projectManagersSet = projectManagersSet;
     }
-    public HashSet<Team> getTeamsSet()
+    public ArrayList<Team> getTeamsSet()
     {
         return teamsSet;
     }
-    public void setTeamsSet(HashSet<Team> teamsSet)
+    public void setTeamsSet(ArrayList<Team> teamsSet)
     {
         this.teamsSet = teamsSet;
     }

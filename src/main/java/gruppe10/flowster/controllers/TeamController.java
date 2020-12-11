@@ -19,7 +19,21 @@ public class TeamController
     
     TeamService teamService = new TeamService();
     String teamNameModel = null;
-  
+
+    @GetMapping("/teams")
+    public String teams(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel)
+    {
+        orgDbName = userService.findOrgDbName();
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
+
+        userService.updateJoinedTeamsList();
+
+        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
+
+        return "team/teams"; // html
+    }
+
+
     @GetMapping("/createTeam")
     public String createTeam(@PathVariable String orgDbName, Model loggedInUserModel, Model teamNameModel,
                              Model orgDbNameModel)
