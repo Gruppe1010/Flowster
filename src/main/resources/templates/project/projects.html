@@ -32,16 +32,16 @@
         <!-- SIDEBAR-FRAGMENT -->
         <!-- TODO: team-fragment :: teams-list(${loggedInUser.getJoinedTeamsList})-->
         <!--TODO: det giver bedst mening at sende en Model med til hver fragment, som kun indeholder det som den fragment skal bruge  -->
-        <div th:insert="fragments :: teams-sidebar(${loggedInUser}, ${orgDbName}, ${joinedProjectsList})" class="minheight"></div>
+        <div th:insert="fragments :: projects-sidebar(${loggedInUser}, ${orgDbName}, ${joinedProjectsList})" class="minheight"></div>
 
         <div class="col-sm-10">
-            <p class="page-title">Mine teams</p>
-            <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
+            <p class="page-title">Mine projekter</p>
+            <div th:each="project: ${joinedProjectsList}">
                 <!-- FOR hvert team på listen: lav en kasse til det, som man kan klikke på -->
-                <a th:href="${'/' + orgDbName + '/viewTeam/' + team.getId()}">
+                <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}">
                     <div  class ="text-left">
                         <ul>
-                            <li class="teams-projects-list" th:text="${team.getName()}"></li>
+                            <li class="teams-projects-list" th:text="${project.getTitle()}"></li>
                         </ul>
                     </div>
                 </a>
