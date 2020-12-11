@@ -26,7 +26,7 @@ public class TeamController
         orgDbName = userService.findOrgDbName();
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
 
-        userService.updateJoinedTeamsList();
+        teamService.updateJoinedTeamsList();
 
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
 
@@ -39,7 +39,7 @@ public class TeamController
                              Model orgDbNameModel)
     {
         // så sidebar hele tiden er opdateret med de teams, som man er en del af
-        userService.updateJoinedTeamsList();
+        teamService.updateJoinedTeamsList();
         
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         teamNameModel.addAttribute("createTeamViewModel", this.teamNameModel);
@@ -80,7 +80,7 @@ public class TeamController
                            Model teamModel, Model orgDbNameModel)
     {
         // så sidebar hele tiden er opdateret med de teams, som man er en del af
-        userService.updateJoinedTeamsList();
+        teamService.updateJoinedTeamsList();
     
         TeamViewModel teamViewModel = teamService.retrieveAndCreateEditTeamViewModelFromId(orgDbName, teamId);
         
@@ -121,7 +121,7 @@ public class TeamController
                            Model loggedInUserModel, Model orgDbNameModel, Model teamModel)
     {
         // så sidebar hele tiden er opdateret med de teams, som man er en del af
-        userService.updateJoinedTeamsList();
+        teamService.updateJoinedTeamsList();
     
         TeamViewModel teamViewModel = teamService.retrieveAndCreateViewTeamViewModelFromId(orgDbName, teamId);
         

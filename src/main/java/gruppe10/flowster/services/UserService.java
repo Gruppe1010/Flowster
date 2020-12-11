@@ -259,20 +259,7 @@ public class UserService
         loggedInUser = null;
     }
     
-    public void updateJoinedTeamsList()
-    {
-        
-        String dbName = convertOrganisationNameToDbName
-                                (flowsterRepository.retrieveOrganisationNameFromEmail(loggedInUser.getEmail()));
-    
-        loggedInUser.setJoinedTeamsList(teamRepository.retrieveTeamsArrayListFromUserId(dbName,
-                loggedInUser.getId()));
-    }
 
-    public void updateJoinedProjectsList()
-    {
-
-    }
     
     /**
      * Finder/opretter orgDbName ud fra loggedInUser

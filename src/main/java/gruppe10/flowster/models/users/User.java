@@ -1,6 +1,7 @@
 package gruppe10.flowster.models.users;
 
 import gruppe10.flowster.UserData;
+import gruppe10.flowster.models.project.Project;
 import gruppe10.flowster.models.teams.Team;
 import org.apache.tomcat.util.codec.binary.Base64;
 
@@ -25,6 +26,8 @@ public class User implements UserData, Comparable<User>
     private byte[] profilePictureBytes;
     private String base64;
     private ArrayList<Team> joinedTeamsList;
+    private ArrayList<Project> joinedProjectsList;
+
     
     // constructors
     
@@ -128,7 +131,17 @@ public class User implements UserData, Comparable<User>
     {
         return this.joinedTeamsList;
     }
+    public ArrayList<Project> getJoinedProjectsList()
+    {
+        return joinedProjectsList;
+    }
+    public void setJoinedProjectsList(ArrayList<Project> joinedProjectsList)
+    {
+        this.joinedProjectsList = joinedProjectsList;
+    }
+
     public void setJoinedTeamsList(ArrayList<Team> joinedTeamsList)
+
     {
         this.joinedTeamsList = joinedTeamsList;
     }

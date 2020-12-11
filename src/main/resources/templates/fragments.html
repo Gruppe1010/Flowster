@@ -97,7 +97,7 @@
 <!-- <div th:insert="general/fragments :: projects-sidebar(${loggedInUser})"></div> -->
 
 <nav th:fragment="projects-sidebar(loggedInUser, orgDbName, joinedProjectsList)" class="sidebar fontsize">
-     <div th:if="${loggedInUser.isProjectManager()}">
+     <div th:if="${loggedInUser.isProjectManager}">
         <a class="btn flowster-btn" th:href="${'/' + orgDbName + '/createProject'}">Nyt projekt</a>
         <hr class="hr">
     </div>
