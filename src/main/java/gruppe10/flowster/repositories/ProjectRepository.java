@@ -68,7 +68,7 @@ public class ProjectRepository
                 // TODO: VI SKAL OGSÅ give teamet de to lister!!!!! - men det gad jeg ikke lige
                 Team team = new Team(resultSet.getInt("id_team"), resultSet.getString("team_name"));
 
-                joinedProjectsList.add(team);
+                // joinedProjectsList.add(team);
             }
             if(joinedProjectsList.size() == 0)
             {

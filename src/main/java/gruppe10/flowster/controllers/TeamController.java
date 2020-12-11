@@ -16,8 +16,8 @@ import org.springframework.web.context.request.WebRequest;
 public class TeamController
 {
     UserService userService = new UserService();
-    
     TeamService teamService = new TeamService();
+    
     String teamNameModel = null;
 
     @GetMapping("/teams")

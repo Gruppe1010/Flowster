@@ -32,7 +32,6 @@ public class Project
     }
     
     // getters + setters
-
     public int getId()
     {
         return id;
