@@ -60,6 +60,8 @@ public class ProjectController
                                  Model joinedProjectsList, WebRequest dataFromCreateProjectForm)
     {
         // TODO FØRST
+        // opret tabel: projects_users - id_projects_user INT NOT NULL AUTO_INCREMENT primary, f_id_project INT NOT
+        // NULL UQ, f_id_user NN
         // opret projekt og gem i db
         int projectId = 0; // HENT SENEST TILFØJEDE projekts id fra db
         
