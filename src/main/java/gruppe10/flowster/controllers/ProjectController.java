@@ -4,6 +4,7 @@ import gruppe10.flowster.models.project.Project;
 import gruppe10.flowster.models.users.User;
 import gruppe10.flowster.services.ProjectService;
 import gruppe10.flowster.services.UserService;
+import gruppe10.flowster.viewModels.project.CreateProjectViewModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +29,7 @@ public class ProjectController
         //TODO projectService.updateJoinedProjectsList();
     
         ArrayList<Project> joinedProjectsList = new ArrayList<>();
-
-        orgDbName = userService.findOrgDbName();
+        
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
 
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
@@ -44,8 +44,7 @@ public class ProjectController
     {
         //TODO projectService.updateJoinedProjectsList();
         ArrayList<Project> joinedProjectsList = new ArrayList<>();
-    
-        orgDbName = userService.findOrgDbName();
+        
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
     
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
@@ -54,18 +53,32 @@ public class ProjectController
         return "project/create-project"; // html
     }
     
-    
+    // FÆRDIG
     @PostMapping("/createProject")
-    public String postCreateProject(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel,
-                                 Model joinedProjectsList, WebRequest dataFromCreateProjectForm)
+    public String postCreateProject(@PathVariable String orgDbName, WebRequest dataFromCreateProjectForm)
     {
-        // TODO FØRST
-        // opret tabel: projects_users - id_projects_user INT NOT NULL AUTO_INCREMENT primary, f_id_project INT NOT
-        // NULL UQ, f_id_user NN
-        // opret projekt og gem i db
-        int projectId = 0; // HENT SENEST TILFØJEDE projekts id fra db
+        // opret CreateProjectViewModel(dataFromCreateProjectForm) ud fra webRequest
+        CreateProjectViewModel createProjectViewModel =
+                projectService.createProjectViewModelFromForm(dataFromCreateProjectForm);
+    
         
-        return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
+        // tjek om projekttitel optaget
+        boolean projectTitleIsAvailable = projectService.isProjectTitleAvailable(orgDbName, createProjectViewModel);
+    
+        // hvis projectTitle ikke findes allerede
+        if(projectTitleIsAvailable)
+        {
+            // tilføj nyt projekt til db
+            projectService.insertNewProjectIntoDb(orgDbName, createProjectViewModel);
+            
+            
+            // vi henter id på nyoprettet projekt
+            int projectId = projectService.retrieveProjectIdFromProjectTitle(orgDbName, createProjectViewModel.getTitle());
+        
+            return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
+        }
+        
+        return String.format("redirect:/%s/createProject", orgDbName);
     }
     
     @GetMapping("/editProject/{projectId}")
@@ -74,8 +87,7 @@ public class ProjectController
     {
     
         ArrayList<Project> joinedProjectsList = new ArrayList<>();
-    
-        orgDbName = userService.findOrgDbName();
+        
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
     
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
@@ -106,8 +118,7 @@ public class ProjectController
                                 Model projectIdModel, Model nextSubprojectIdModel)
     {
         ArrayList<Project> joinedProjectsList = new ArrayList<>();
-    
-        orgDbName = userService.findOrgDbName();
+        
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
     
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
@@ -149,8 +160,7 @@ public class ProjectController
                           Model projectIdModel, Model subprojectIdModel, Model nextTaskIdModel)
     {
         ArrayList<Project> joinedProjectsList = new ArrayList<>();
-    
-        orgDbName = userService.findOrgDbName();
+        
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
     
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
@@ -196,7 +206,6 @@ public class ProjectController
     
         ArrayList<Project> joinedProjectsList = new ArrayList<>();
     
-        orgDbName = userService.findOrgDbName();
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
     
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);

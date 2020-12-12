@@ -2,12 +2,14 @@ package gruppe10.flowster.repositories;
 
 import gruppe10.flowster.models.project.Project;
 import gruppe10.flowster.models.teams.Team;
+import gruppe10.flowster.viewModels.project.CreateProjectViewModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Date;
 
 public class ProjectRepository
 {
@@ -83,6 +85,139 @@ public class ProjectRepository
 
         return joinedProjectsList;
     }
+    
+    
+    public boolean checkIfProjectTitleIsAvailable(String dbName, String title)
+    {
+        boolean projectTitleIsAvailable = true;
+    
+        organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+            // TOD
+            String sqlCommand = "SELECT id_project FROM projects WHERE project_title = ?;";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setString(1, title);
+        
+            ResultSet resultSet = preparedStatement.executeQuery();
+        
+            // hvis der er et projekt som allerede har titlen
+            if(resultSet.next())
+            {
+                // så er titlen IKKE available
+                projectTitleIsAvailable = false;
+            }
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in checkIfProjectTitleIsAvailable: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in checkIfProjectTitleIsAvailableFinally: " + e.getMessage());
+            }
+        }
+        
+        
+        return projectTitleIsAvailable;
+    }
+    
+    public void insertNewProjectIntoDb(String dbName, CreateProjectViewModel createProjectViewModel)
+    {
+        organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+            String title = createProjectViewModel.getTitle();
+            Date deadline = null;
+            // hvis der ER noget gemt som deadline
+            if(createProjectViewModel.getDeadline() != "")
+            {
+                // konverter String til Date
+                deadline = Date.valueOf(createProjectViewModel.getDeadline());
+            }
+            
+            String sqlCommand = "INSERT INTO projects (project_title, project_deadline) values (?, ?);";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setString(1, title);
+            preparedStatement.setDate(2, deadline);
+            
+            preparedStatement.executeUpdate();
+        
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in projectRepository insertNewProjectIntoDb: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in projectRepository insertNewProjectIntoDbFinally: " + e.getMessage());
+            }
+        }
+        
+    }
+    
+    
+    public int retrieveProjectIdFromProjectTitle(String dbName, String projectTitle)
+    {
+        int projectId = 0;
+    
+        organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+            // TOD
+            String sqlCommand = "SELECT id_project FROM projects WHERE project_title = ?;";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setString(1, projectTitle);
+        
+            ResultSet resultSet = preparedStatement.executeQuery();
+        
+            if(resultSet.next())
+            {
+                projectId = resultSet.getInt("id_project");
+            }
+        
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in projectRepository retrieveProjectIdFromProjectTitle: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in projectRepository retrieveProjectIdFromProjectTitleFinally: " + e.getMessage());
+            }
+        }
+        
+        
+        return projectId;
+    }
+    
 
 
 
