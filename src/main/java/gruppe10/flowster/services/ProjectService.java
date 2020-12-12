@@ -50,19 +50,26 @@ public class ProjectService
        return projectRepository.checkIfProjectTitleIsAvailable(dbName, createProjectViewModel.getTitle());
     }
     
-    
     public void insertNewProjectIntoDb(String dbName, CreateProjectViewModel createProjectViewModel)
     {
-        
         projectRepository.insertNewProjectIntoDb(dbName, createProjectViewModel);
-        
-        
     }
-    
     
     public int retrieveProjectIdFromProjectTitle(String dbName, String projectTitle)
     {
        return projectRepository.retrieveProjectIdFromProjectTitle(dbName, projectTitle);
+    }
+    
+    
+    public void attachCreatorToCreatedProject(String dbName, int projectId, int userId)
+    {
+        projectRepository.insertRowIntoProjectsUsers(dbName, projectId, userId);
+    }
+    
+    public int findNextIdFromTable(String dbName, String tableName)
+    {
+        // + 1 fordi vi finder det sidst tilføjede id i tabel og skal have det potentielle NÆSTE id
+        return projectRepository.findMaxIdFromTable(dbName, tableName) + 1;
     }
 
 

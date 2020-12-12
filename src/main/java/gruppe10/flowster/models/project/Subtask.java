@@ -5,17 +5,27 @@ import java.util.Date;
 
 public class Subtask
 {
+    private int id;
     private String title;
     
     // constructors
     public Subtask(){}
     
-    public Subtask(String title)
+    public Subtask(int id, String title)
     {
+        this.id = id;
         this.title = title;
     }
     
     // getters + getters
+    public int getId()
+    {
+        return id;
+    }
+    public void setId(int id)
+    {
+        this.id = id;
+    }
     public String getTitle()
     {
         return title;

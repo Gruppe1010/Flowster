@@ -1,6 +1,10 @@
 package gruppe10.flowster.controllers;
 
 import gruppe10.flowster.models.project.Project;
+import gruppe10.flowster.models.project.Subproject;
+import gruppe10.flowster.models.project.Subtask;
+import gruppe10.flowster.models.project.Task;
+import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.models.users.User;
 import gruppe10.flowster.services.ProjectService;
 import gruppe10.flowster.services.UserService;
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/{orgDbName}")
@@ -71,9 +77,11 @@ public class ProjectController
             // tilføj nyt projekt til db
             projectService.insertNewProjectIntoDb(orgDbName, createProjectViewModel);
             
-            
             // vi henter id på nyoprettet projekt
             int projectId = projectService.retrieveProjectIdFromProjectTitle(orgDbName, createProjectViewModel.getTitle());
+            
+            // knyt bruger til nyoprettet projekt
+            projectService.attachCreatorToCreatedProject(orgDbName, projectId, UserService.loggedInUser.getId());
         
             return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
         }
@@ -83,20 +91,45 @@ public class ProjectController
     
     @GetMapping("/editProject/{projectId}")
     public String editProject(@PathVariable String orgDbName, @PathVariable int projectId,
-                              Model orgDbNameModel, Model loggedInUserModel, Model joinedProjectsListModel)
+                              Model orgDbNameModel, Model loggedInUserModel,
+                              Model joinedProjectsListModel, Model projectModel,
+                              Model projectIdModel, Model nextSubprojectIdModel,
+                              Model nextTaskIdModel, Model nextSubtaskIdModel)
     {
-    
+        // modeller til sidebars + menubars
         ArrayList<Project> joinedProjectsList = new ArrayList<>();
-        
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
-    
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectsListModel.addAttribute("joinedProjectsList", joinedProjectsList);
         
         
-        
-        
-        
+        // modeller til main content
+        projectModel.addAttribute("projectModel", new Project(1, "Eksamensprojekt-projekt", null, 30,
+                new ArrayList<Subproject>(Arrays.asList(
+                        new Subproject(1, "Virksomhed-delprojekt",
+                                new ArrayList<Task>(Arrays.asList(
+                                        new Task(1, "Risikoanalyse-opgave",
+                                                new ArrayList<Subtask>(Arrays.asList(
+                                                        new Subtask(1, "Risikotabel-underopgave"),
+                                                        new Subtask(2, "Beskrivelse af risikomomenter-underopgave"))))))),
+                        new Subproject(2, "Systemudvikling-delprojekt",
+                                new ArrayList<Task>(Arrays.asList(
+                                        new Task(1, "Use case model-opgave",
+                                                new ArrayList<Subtask>(Arrays.asList(
+                                                        new Subtask(1, "Use case diagram-underopgave"),
+                                                        new Subtask(2, "SSD'er-underopgave")))),
+                                        new Task(2, "FURPS",
+                                                new ArrayList<Subtask>(Arrays.asList(
+                                                        new Subtask(1, "Funktional-underopgave"),
+                                                        new Subtask(2, "Non-funktional-underopgave"))))))),
+                        new Subproject(3, "Programmering-delprojekt",
+                                new ArrayList<Task>(Arrays.asList(
+                                        new Task(1, "Kode-opgave")))))),
+                null)); // TODO ret til hent project fra db
+        projectIdModel.addAttribute("projectId", projectId);
+        nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
+        nextTaskIdModel.addAttribute("nextTaskId", projectService.findNextIdFromTable(orgDbName, "tasks"));
+        nextSubtaskIdModel.addAttribute("nextSubtaskId", projectService.findNextIdFromTable(orgDbName, "subtasks"));
         
         
         // på denne html:
@@ -109,28 +142,53 @@ public class ProjectController
         return "project/edit-project"; // html
     }
     
-
     // tilføj delprojekt-KNAP
     @GetMapping("/editProject/{projectId}/createSubproject/{nextSubprojectId}")
     public String addSubproject(@PathVariable String orgDbName, @PathVariable int projectId,
                                 @PathVariable int nextSubprojectId,
                                 Model orgDbNameModel, Model loggedInUserModel, Model joinedProjectsListModel,
-                                Model projectIdModel, Model nextSubprojectIdModel)
+                                Model projectModel, Model projectIdModel, Model nextSubprojectIdModel,
+                                Model nextTaskIdModel, Model nextSubtaskIdModel)
     {
+        // modeller til sidebars + menubars
         ArrayList<Project> joinedProjectsList = new ArrayList<>();
-        
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
-    
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectsListModel.addAttribute("joinedProjectsList", joinedProjectsList);
-        
-        
-        
-        
     
-        // modeller til th:action i form i html
+    
+        // modeller til main content
+        projectModel.addAttribute("projectModel", new Project(1, "Eksamensprojekt-projekt", null, 30,
+                new ArrayList<Subproject>(Arrays.asList(
+                        new Subproject(1, "Virksomhed-delprojekt",
+                                new ArrayList<Task>(Arrays.asList(
+                                        new Task(1, "Risikoanalyse-opgave",
+                                                new ArrayList<Subtask>(Arrays.asList(
+                                                        new Subtask(1, "Risikotabel-underopgave"),
+                                                        new Subtask(2, "Beskrivelse af risikomomenter-underopgave"))))))),
+                        new Subproject(2, "Systemudvikling-delprojekt",
+                                new ArrayList<Task>(Arrays.asList(
+                                        new Task(1, "Use case model-opgave",
+                                                new ArrayList<Subtask>(Arrays.asList(
+                                                        new Subtask(1, "Use case diagram-underopgave"),
+                                                        new Subtask(2, "SSD'er-underopgave")))),
+                                        new Task(2, "FURPS",
+                                                new ArrayList<Subtask>(Arrays.asList(
+                                                        new Subtask(1, "Funktional-underopgave"),
+                                                        new Subtask(2, "Non-funktional-underopgave"))))))),
+                        new Subproject(3, "Programmering-delprojekt",
+                                new ArrayList<Task>(Arrays.asList(
+                                        new Task(1, "Kode-opgave")))))),
+                null)); // TODO ret til hent project fra db
         projectIdModel.addAttribute("projectId", projectId);
-        nextSubprojectIdModel.addAttribute("nextSubprojectId", nextSubprojectId);
+        nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
+        nextTaskIdModel.addAttribute("nextTaskId", projectService.findNextIdFromTable(orgDbName, "tasks"));
+       
+       
+        // modeller til th:action i form i html
+        nextSubtaskIdModel.addAttribute("nextSubtaskId", projectService.findNextIdFromTable(orgDbName, "subtasks"));
+      
+        
         
         // tilføj FORM med postMapping:
         // th:action="${'/editProject/' + projectId + /createSubproject/' + nextSubprojectId}" method="post"

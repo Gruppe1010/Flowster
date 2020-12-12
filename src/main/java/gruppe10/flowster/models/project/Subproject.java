@@ -5,23 +5,40 @@ import java.util.Date;
 
 public class Subproject
 {
+    private int id;
     private String title;
     private Date deadline;
     private double manhours;
-    private ArrayList<Task> tasksList;
+    private ArrayList<Task> taskList;
     
     // constructors
     public Subproject(){}
     
-    public Subproject(String title, Date deadline, double manhours, ArrayList<Task> tasksList)
+    public Subproject(int id, String title,  ArrayList<Task> taskList)
     {
+        this.id = id;
+        this.title = title;
+        this.taskList = taskList;
+    }
+    
+    public Subproject(int id, String title, Date deadline, double manhours, ArrayList<Task> taskList)
+    {
+        this.id = id;
         this.title = title;
         this.deadline = deadline;
         this.manhours = manhours;
-        this.tasksList = tasksList;
+        this.taskList = taskList;
     }
     
     // getters + setters
+    public int getId()
+    {
+        return id;
+    }
+    public void setId(int id)
+    {
+        this.id = id;
+    }
     public String getTitle()
     {
         return title;
@@ -46,12 +63,12 @@ public class Subproject
     {
         this.manhours = manhours;
     }
-    public ArrayList<Task> getTasksList()
+    public ArrayList<Task> getTaskList()
     {
-        return tasksList;
+        return taskList;
     }
-    public void setTasksList(ArrayList<Task> tasksList)
+    public void setTaskList(ArrayList<Task> taskList)
     {
-        this.tasksList = tasksList;
+        this.taskList = taskList;
     }
 }

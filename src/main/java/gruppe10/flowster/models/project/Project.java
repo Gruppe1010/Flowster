@@ -12,24 +12,37 @@ public class Project
     private String title;
     private Date deadline;
     private double manhours;
-    private ArrayList<Subproject> subprojectsList;
+    private ArrayList<Subproject> subprojectList;
     private ArrayList<ProjectManager> projectManagersSet;
     private ArrayList<Team> teamsSet;
     
     // constructors
     public Project(){}
     
-    public Project(String title, Date deadline, double manhours, ArrayList<Subproject> subprojectsList, ProjectManager
+    public Project(String title, Date deadline, double manhours, ArrayList<Subproject> subprojectList, ProjectManager
                    projectManagerCreater)
     {
         this.title = title;
         this.deadline = deadline;
         this.manhours = manhours;
-        this.subprojectsList = subprojectsList;
+        this.subprojectList = subprojectList;
         this.projectManagersSet = new ArrayList<>();
         projectManagersSet.add(projectManagerCreater);
         this.teamsSet = new ArrayList<>();
     }
+    public Project(int id, String title, Date deadline, double manhours, ArrayList<Subproject> subprojectList,
+                   ProjectManager projectManagerCreater)
+    {
+        this.id = id;
+        this.title = title;
+        this.deadline = deadline;
+        this.manhours = manhours;
+        this.subprojectList = subprojectList;
+        this.projectManagersSet = new ArrayList<>();
+        projectManagersSet.add(projectManagerCreater);
+        this.teamsSet = new ArrayList<>();
+    }
+    
     
     // getters + setters
     public int getId()
@@ -64,13 +77,13 @@ public class Project
     {
         this.manhours = manhours;
     }
-    public ArrayList<Subproject> getSubprojectsList()
+    public ArrayList<Subproject> getSubprojectList()
     {
-        return subprojectsList;
+        return subprojectList;
     }
-    public void setSubprojectsList(ArrayList<Subproject> subprojectsList)
+    public void setSubprojectList(ArrayList<Subproject> subprojectList)
     {
-        this.subprojectsList = subprojectsList;
+        this.subprojectList = subprojectList;
     }
     public ArrayList<ProjectManager> getProjectManagersSet()
     {

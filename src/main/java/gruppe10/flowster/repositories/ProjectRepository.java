@@ -96,7 +96,7 @@ public class ProjectRepository
         try
         {
             // TOD
-            String sqlCommand = "SELECT id_project FROM projects WHERE project_title = ?;";
+            String sqlCommand = "SELECT id_project FROM projects WHERE project_title = ?";
         
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
         
@@ -145,14 +145,14 @@ public class ProjectRepository
                 // konverter String til Date
                 deadline = Date.valueOf(createProjectViewModel.getDeadline());
             }
-            
-            String sqlCommand = "INSERT INTO projects (project_title, project_deadline) values (?, ?);";
+        
+            String sqlCommand = "INSERT INTO projects (project_title, project_deadline) values (?, ?)";
         
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
         
             preparedStatement.setString(1, title);
             preparedStatement.setDate(2, deadline);
-            
+        
             preparedStatement.executeUpdate();
         
         }
@@ -171,7 +171,7 @@ public class ProjectRepository
                 System.err.println("ERROR in projectRepository insertNewProjectIntoDbFinally: " + e.getMessage());
             }
         }
-        
+    
     }
     
     
@@ -184,7 +184,7 @@ public class ProjectRepository
         try
         {
             // TOD
-            String sqlCommand = "SELECT id_project FROM projects WHERE project_title = ?;";
+            String sqlCommand = "SELECT id_project FROM projects WHERE project_title = ?";
         
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
         
@@ -216,6 +216,84 @@ public class ProjectRepository
         
         
         return projectId;
+    }
+    
+    public void insertRowIntoProjectsUsers(String dbName, int projectId, int userId)
+    {
+        organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+            String sqlCommand = "INSERT INTO projects_users (f_id_project, f_id_user) values (?, ?)";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setInt(1, projectId);
+            preparedStatement.setInt(2, userId);
+        
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in insertRowIntoProjectsUsers: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in insertRowIntoProjectsUsersFinally: " + e.getMessage());
+            }
+        }
+    }
+    
+    public int findMaxIdFromTable(String dbName, String tableName)
+    {
+        int maxId = 0;
+    
+        organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+            String idColumnName = "id_" + tableName;
+            // fjerner det sidste tegn fra db-namet (altså 's' fordi vores tabelnavne altid slutter på s)
+            idColumnName = idColumnName.substring(0,idColumnName.length()-1);
+            
+            String sqlCommand = String.format("SELECT MAX(%s) FROM %s", idColumnName, tableName);
+    
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            // preparedStatement.setString(1, tableName);
+        
+            ResultSet resultSet = preparedStatement.executeQuery();
+        
+            if(resultSet.next())
+            {
+                maxId = resultSet.getInt(String.format("MAX(%s)", idColumnName));
+            }
+        
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in findMaxIdFromTable: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in findMaxIdFromTableFinally: " + e.getMessage());
+            }
+        }
+    
+    
+        return maxId;
     }
     
 

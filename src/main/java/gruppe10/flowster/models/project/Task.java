@@ -1,23 +1,39 @@
 package gruppe10.flowster.models.project;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Task
 {
+    private int id;
     private String title;
-    private ArrayList<Subtask> subtasksList;
+    private ArrayList<Subtask> subtaskList;
     
     // constructors
     public Task(){}
     
-    public Task(String title, ArrayList<Subtask> subtasksList)
+    public Task(int id, String title)
     {
+        this.id = id;
         this.title = title;
-        this.subtasksList = subtasksList;
+        this.subtaskList = null;
+    }
+ 
+    public Task(int id, String title, ArrayList<Subtask> subtaskList)
+    {
+        this.id = id;
+        this.title = title;
+        this.subtaskList = subtaskList;
     }
     
     // getters + setters
+    public int getId()
+    {
+        return id;
+    }
+    public void setId(int id)
+    {
+        this.id = id;
+    }
     public String getTitle()
     {
         return title;
@@ -26,12 +42,12 @@ public class Task
     {
         this.title = title;
     }
-    public ArrayList<Subtask> getSubtasksList()
+    public ArrayList<Subtask> getSubtaskList()
     {
-        return subtasksList;
+        return subtaskList;
     }
-    public void setSubtasksList(ArrayList<Subtask> subtasksList)
+    public void setSubtaskList(ArrayList<Subtask> subtaskList)
     {
-        this.subtasksList = subtasksList;
+        this.subtaskList = subtaskList;
     }
 }
