@@ -18,6 +18,8 @@ public class TeamController
     UserService userService = new UserService();
     TeamService teamService = new TeamService();
     
+    // global variabel fordi hvis navnet er optaget, skal vi bruge variablen i GetMapping'en så det kan blive
+    // ved med at stå der i html'en
     String teamNameModel = null;
 
     @GetMapping("/teams")
@@ -53,7 +55,7 @@ public class TeamController
     public String postCreateTeam(@PathVariable String orgDbName, WebRequest dataFromCreateTeamForm)
     {
         // oprette createTeamViewModel(dataFromCreateTeamForm) ud fra webRequest
-        teamNameModel = teamService.createTeamNameModelFromForm(dataFromCreateTeamForm);
+        teamNameModel = teamService.createTeamNameFromForm(dataFromCreateTeamForm);
     
         // tjek om teamnavn optaget
         boolean teamNameIsAvailable = teamService.isTeamNameAvailable(orgDbName, teamNameModel);
@@ -134,6 +136,29 @@ public class TeamController
     }
     
   
+    @PostMapping("/editTeam/{teamId}/editTeamName")
+    public String editTeamName(@PathVariable String orgDbName, @PathVariable int teamId,
+                               WebRequest dataFromEditTeamNameForm)
+    {
+        // Opret og gem newTeamName i String ud fra webRequest
+        String newTeamName = teamService.createTeamNameFromForm(dataFromEditTeamNameForm);
+    
+        // tjek om teamnavn allerede eksisterer i db == er optaget
+        boolean teamNameIsAvailable = teamService.isTeamNameAvailable(orgDbName, newTeamName);
+    
+        // hvis teamName er ledigt
+        if(teamNameIsAvailable)
+        {
+            // opdater teamName på teamet der har teamId'et vi er inde på
+            teamService.updateTeamName(orgDbName, teamId, newTeamName);
+    
+            // gå tilbage til at se teamet
+            return String.format("redirect:/%s/viewTeam/%d", orgDbName, teamId);
+        }
+        
+        // hvis teamName'et er optaget, bliver man på samme side TODO: lav en fejlbesked!
+        return String.format("redirect:/%s/editTeam/%d", orgDbName, teamId);
+    }
     
     
     

@@ -300,11 +300,6 @@ public class TeamRepository
             }
         }
         
-        
-        
-        
-        
-        
     }
 
     public void deleteRowFromTeamsUsers(String dbName, int teamId, int userId)
@@ -651,11 +646,42 @@ public class TeamRepository
         return userIsOnTeam;
     }
     
-  
     
     
-
-
+    
+    
+    public void updateTeamName(String orgDbName, int teamId, String newTeamName)
+    {
+        organisationConnection = generalRepository.establishConnection(orgDbName);
+    
+        try
+        {
+            String sqlCommand = "UPDATE teams SET team_name = ? WHERE id_team = ?";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setString(1, newTeamName);
+            preparedStatement.setInt(2, teamId);
+            
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in TeamRepository updateTeamName: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in updateTeamNameFinally: " + e.getMessage());
+            }
+        }
+        
+    }
 
 
 

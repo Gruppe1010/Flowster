@@ -40,7 +40,7 @@ public class TeamService
     
      */
     
-    public String createTeamNameModelFromForm(WebRequest dataFromCreateTeamForm)
+    public String createTeamNameFromForm(WebRequest dataFromCreateTeamForm)
     {
         String teamName;
  
@@ -51,9 +51,7 @@ public class TeamService
     
     public boolean isTeamNameAvailable(String orgDbName, String teamName)
     {
-
         return teamRepository.retrieveTeamFromTeamName(orgDbName, teamName);
-       
     }
     
     public void insertNewTeamIntoDb(String orgDbName, String teamName)
@@ -94,6 +92,13 @@ public class TeamService
     public TeamViewModel retrieveAndCreateViewTeamViewModelFromId(String orgDbName, int teamId)
     {
         return teamRepository.retrieveAndCreateViewTeamViewModelFromId(orgDbName, teamId);
+    }
+    
+    public void updateTeamName(String orgDbName, int teamId, String newTeamName)
+    {
+        teamRepository.updateTeamName(orgDbName, teamId, newTeamName);
+        
+        
     }
 
 
