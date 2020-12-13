@@ -20,7 +20,7 @@ public class TeamController
     
     // global variabel fordi hvis navnet er optaget, skal vi bruge variablen i GetMapping'en så det kan blive
     // ved med at stå der i html'en
-    String teamNameModel = null;
+    String teamName = null;
 
     @GetMapping("/teams")
     public String teams(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel)
@@ -44,7 +44,7 @@ public class TeamController
         teamService.updateJoinedTeamsList();
         
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        teamNameModel.addAttribute("createTeamViewModel", this.teamNameModel);
+        teamNameModel.addAttribute("createTeamViewModel", this.teamName);
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
 
         
@@ -55,19 +55,19 @@ public class TeamController
     public String postCreateTeam(@PathVariable String orgDbName, WebRequest dataFromCreateTeamForm)
     {
         // oprette createTeamViewModel(dataFromCreateTeamForm) ud fra webRequest
-        teamNameModel = teamService.createTeamNameFromForm(dataFromCreateTeamForm);
+        teamName = teamService.createTeamNameFromForm(dataFromCreateTeamForm);
     
         // tjek om teamnavn optaget
-        boolean teamNameIsAvailable = teamService.isTeamNameAvailable(orgDbName, teamNameModel);
+        boolean teamNameIsAvailable = teamService.isTeamNameAvailable(orgDbName, teamName);
     
         // hvis teamName ikke findes allerede
         if(teamNameIsAvailable)
         {
             // tilføj nyt team til db
-            teamService.insertNewTeamIntoDb(orgDbName, teamNameModel);
+            teamService.insertNewTeamIntoDb(orgDbName, teamName);
     
             // vi henter id på nyoprettet team
-            int teamId = teamService.retrieveTeamIdFromTeamName(orgDbName, teamNameModel);
+            int teamId = teamService.retrieveTeamIdFromTeamName(orgDbName, teamName);
     
             return String.format("redirect:/%s/editTeam/%d", orgDbName, teamId);
             // return "redirect:editTeam/" + teamId;

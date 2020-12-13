@@ -215,24 +215,48 @@ public class ProjectController
     public String addTask(@PathVariable String orgDbName, @PathVariable int projectId,
                           @PathVariable int subprojectId, @PathVariable int nextTaskId,
                           Model orgDbNameModel, Model loggedInUserModel, Model joinedProjectsListModel,
-                          Model projectIdModel, Model subprojectIdModel, Model nextTaskIdModel)
+                          Model projectModel, Model nextSubprojectIdModel,  Model nextTaskIdModel,
+                          Model nextSubtaskIdModel, Model projectIdModel, Model subprojectIdModel)
     {
+        // modeller til sidebars + menubars
         ArrayList<Project> joinedProjectsList = new ArrayList<>();
-        
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
-    
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectsListModel.addAttribute("joinedProjectsList", joinedProjectsList);
-        
-        
-        
-        
-        
     
-        // modeller til th:action i form i html
+    
+        // modeller til main content
+        projectModel.addAttribute("projectModel", new Project(1, "Eksamensprojekt-projekt", null, 30,
+                new ArrayList<Subproject>(Arrays.asList(
+                        new Subproject(1, "Virksomhed-delprojekt",
+                                new ArrayList<Task>(Arrays.asList(
+                                        new Task(1, "Risikoanalyse-opgave",
+                                                new ArrayList<Subtask>(Arrays.asList(
+                                                        new Subtask(1, "Risikotabel-underopgave"),
+                                                        new Subtask(2, "Beskrivelse af risikomomenter-underopgave"))))))),
+                        new Subproject(2, "Systemudvikling-delprojekt",
+                                new ArrayList<Task>(Arrays.asList(
+                                        new Task(1, "Use case model-opgave",
+                                                new ArrayList<Subtask>(Arrays.asList(
+                                                        new Subtask(1, "Use case diagram-underopgave"),
+                                                        new Subtask(2, "SSD'er-underopgave")))),
+                                        new Task(2, "FURPS",
+                                                new ArrayList<Subtask>(Arrays.asList(
+                                                        new Subtask(1, "Funktional-underopgave"),
+                                                        new Subtask(2, "Non-funktional-underopgave"))))))),
+                        new Subproject(3, "Programmering-delprojekt",
+                                new ArrayList<Task>(Arrays.asList(
+                                        new Task(1, "Kode-opgave")))))),
+                null)); // TODO ret til hent project fra db
         projectIdModel.addAttribute("projectId", projectId);
         subprojectIdModel.addAttribute("subprojectId", subprojectId);
-        nextTaskIdModel.addAttribute("nextTaskId", nextTaskId);
+        nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
+        nextSubtaskIdModel.addAttribute("nextSubtaskId", projectService.findNextIdFromTable(orgDbName, "subtasks"));
+      
+        
+        // modeller til th:action i form i html
+        nextTaskIdModel.addAttribute("nextTaskId", projectService.findNextIdFromTable(orgDbName, "tasks"));
+      
         
         
         // tilføj FORM med postMapping:
@@ -258,28 +282,56 @@ public class ProjectController
     public String createSubtask(@PathVariable String orgDbName, @PathVariable int projectId,
                              @PathVariable int subprojectId, @PathVariable int taskId,
                              @PathVariable int nextSubtaskId, Model orgDbNameModel,
-                             Model loggedInUserModel, Model joinedProjectsListModel,
-                             Model projectIdModel, Model subprojectIdModel, Model taskIdModel, Model nextSubtaskIdModel)
+                             Model loggedInUserModel, Model joinedProjectsListModel, Model projectModel,
+                             Model projectIdModel, Model subprojectIdModel, Model taskIdModel,
+                                Model nextSubprojectIdModel, Model nextTaskIdModel, Model nextSubtaskIdModel)
     {
     
+        // modeller til sidebars + menubars
         ArrayList<Project> joinedProjectsList = new ArrayList<>();
-    
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
-    
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectsListModel.addAttribute("joinedProjectsList", joinedProjectsList);
-        
-        
-        
     
-        // modeller til th:action i form i html
+    
+        // modeller til main content
+        projectModel.addAttribute("projectModel", new Project(1, "Eksamensprojekt-projekt", null, 30,
+                new ArrayList<Subproject>(Arrays.asList(
+                        new Subproject(1, "Virksomhed-delprojekt",
+                                new ArrayList<Task>(Arrays.asList(
+                                        new Task(1, "Risikoanalyse-opgave",
+                                                new ArrayList<Subtask>(Arrays.asList(
+                                                        new Subtask(1, "Risikotabel-underopgave"),
+                                                        new Subtask(2, "Beskrivelse af risikomomenter-underopgave"))))))),
+                        new Subproject(2, "Systemudvikling-delprojekt",
+                                new ArrayList<Task>(Arrays.asList(
+                                        new Task(2, "Use case model-opgave",
+                                                new ArrayList<Subtask>(Arrays.asList(
+                                                        new Subtask(1, "Use case diagram-underopgave"),
+                                                        new Subtask(2, "SSD'er-underopgave")))),
+                                        new Task(3, "FURPS",
+                                                new ArrayList<Subtask>(Arrays.asList(
+                                                        new Subtask(1, "Funktional-underopgave"),
+                                                        new Subtask(2, "Non-funktional-underopgave"))))))),
+                        new Subproject(3, "Programmering-delprojekt",
+                                new ArrayList<Task>(Arrays.asList(
+                                        new Task(4, "Kode-opgave")))))),
+                null)); // TODO ret til hent project fra db
         projectIdModel.addAttribute("projectId", projectId);
         subprojectIdModel.addAttribute("subprojectId", subprojectId);
         taskIdModel.addAttribute("taskId", taskId);
-        nextSubtaskIdModel.addAttribute("nextSubtaskId", nextSubtaskId);
-        
-        
-        
+        nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
+        nextSubtaskIdModel.addAttribute("nextSubtaskId", projectService.findNextIdFromTable(orgDbName, "subtasks"));
+    
+    
+        // modeller til th:action i form i html
+        nextTaskIdModel.addAttribute("nextTaskId", projectService.findNextIdFromTable(orgDbName, "tasks"));
+    
+    
+    
+    
+    
+    
         // tilføj FORM med postMapping:
         // th:action="${'/editProject/' + projectId + '/subproject/' + subprojectId + '/task/' + taskId +
         // '/createSubtask/ + nextSubtaskId}"

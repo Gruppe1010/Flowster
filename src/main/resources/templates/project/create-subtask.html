@@ -36,8 +36,8 @@
 
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div class="col-sm-10">
-
             <h1 th:text="${projectModel.getTitle()}"></h1>
+
             <div th:each="subproject : ${projectModel.getSubprojectList()}">
                 <h2 th:text="${subproject.getTitle()}"></h2>
 
@@ -49,41 +49,47 @@
 
                     </div> <!-- for-each: subtask -->
 
+
+                    <!--  tilføj subtask-FORM -->
+                    <!-- HVIS loopet er nået til den task hvor der skal tilføjes en subtask, VIS formen-->
+                    <form th:if="${taskId == task.getId()}"
+                          th:action="${'/editProject/' + projectId + '/subproject/' + subprojectId + '/task/' + taskId +
+                          '/createSubtask/' + nextSubtaskId}"
+                          method="post"
+                          class="edit-team-name-container">
+                        <div></div>
+                        <input type="text"
+                               class="form-control"
+                               id="subtask-title"
+                               name="subtask-title"
+                               placeholder="Indtast underopgavetitel"
+                               maxlength="100"
+                               required>
+
+                        <button type="submit" class="btn save-team-btn">Gem</button>
+                        <a th:href="${'/' + orgDbName + '/editProject/' + projectModel.getId()}"> <!-- KRYDS-symbol --> KRYDS</a>
+                    </form>
+
                     <!--+ tilføj underopgave-KNAP-->
-                    <a th:href="${'/' + orgDbName + '/editProject/' + projectModel.getId() + '/subproject/' +
+                    <!-- Hvis loopet IKKE er kommet til den task hvor der skal tilføjes en subtask -->
+                    <a th:unless="${taskId == task.getId()}"
+                        th:href="${'/' + orgDbName + '/editProject/' + projectModel.getId() + '/subproject/' +
                         subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}">
                         + tilføj ny underopgave</a>
+
 
                 </div> <!-- for-each: task -->
 
                 <!-- + tilføj opgave-KNAP -->
+
                 <a th:href="${'/' + orgDbName + '/editProject/' + projectModel.getId() + '/subproject/'
                 + subproject.getId() + '/addTask/' + nextTaskId}"> + tilføj ny opgave</a>
 
             </div> <!-- YDERSTE for-each: subproject-->
 
-            <!--  tilføj delprojekt-FORM -->
-            <form th:action="${'/editProject/' + projectId + '/createSubproject/' + nextSubprojectId}"
-                  method="post"
-                  class="edit-team-name-container">
-                <div></div>
-                <input type="text"
-                       class="form-control"
-                       id="subproject-title"
-                       name="subproject-title"
-                       placeholder="Indtast delprojekttitel"
-                       maxlength="100"
-                       required>
-
-                <input type="number"
-                       class="form-control"
-                       id="subproject-manhours"
-                       name="subproject-manhours"
-                       placeholder="Indtast arbejdstimer">
-
-                <button type="submit" class="btn save-team-btn">Gem</button>
-                <a th:href="${'/' + orgDbName + '/editProject/' + projectModel.getId()}"> <!-- KRYDS-symbol --> </a>
-            </form>
+            <!--  tilføj delprojekt-KNAP -->
+            <a th:href="${'/' + orgDbName + '/editProject/' + projectModel.getId() + '/createSubproject/' + nextSubprojectId}">
+                + tilføj nyt delprojekt</a>
 
         </div>
     </div>
