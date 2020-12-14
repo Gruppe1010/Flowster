@@ -144,7 +144,7 @@ public class ProjectController
     
     // tilføj delprojekt-KNAP
     @GetMapping("/editProject/{projectId}/createSubproject/{nextSubprojectId}")
-    public String addSubproject(@PathVariable String orgDbName, @PathVariable int projectId,
+    public String createSubproject(@PathVariable String orgDbName, @PathVariable int projectId,
                                 @PathVariable int nextSubprojectId,
                                 Model orgDbNameModel, Model loggedInUserModel, Model joinedProjectsListModel,
                                 Model projectModel, Model projectIdModel, Model nextSubprojectIdModel,
@@ -212,7 +212,7 @@ public class ProjectController
     
     // tilføj task-KNAP
     @GetMapping("/editProject/{projectId}/subproject/{subprojectId}/createTask/{nextTaskId}")
-    public String addTask(@PathVariable String orgDbName, @PathVariable int projectId,
+    public String createTask(@PathVariable String orgDbName, @PathVariable int projectId,
                           @PathVariable int subprojectId, @PathVariable int nextTaskId,
                           Model orgDbNameModel, Model loggedInUserModel, Model joinedProjectsListModel,
                           Model projectModel, Model nextSubprojectIdModel,  Model nextTaskIdModel,
