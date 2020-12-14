@@ -37,7 +37,7 @@
                                class="form-control"
                                id="email"
                                placeholder="Indtast email"
-                               th:value = "${logInViewModel.getEmail()}"
+                               th:value = "${logInViewModel != null ? logInViewModel.getEmail() : ''}"
                                name="email"
                                required
                                maxlength="320">

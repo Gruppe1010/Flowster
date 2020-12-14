@@ -15,13 +15,14 @@ public class PreLoginController
     // disse attributter bliver packageprivate fordi vi ikke har givet dem nogle andre accessmodifiers
     UserService userService = new UserService();
     
-    CreateUserViewModel createUserViewModel = new CreateUserViewModel();
-    LogInViewModel logInViewModel = new LogInViewModel();
+    CreateUserViewModel createUserViewModel;
+    LogInViewModel logInViewModel;
     String orgDbName;
     
     @GetMapping("/")
     public String index(Model logInViewModel, Model loggedInUser, Model orgDbNameModel)
     {
+        // reset af ting:
         userService.resetLoggedInUser();
     
         orgDbName = userService.findOrgDbName();
@@ -57,6 +58,9 @@ public class PreLoginController
             orgDbName = userService.findOrgDbName();
             orgDbNameModel.addAttribute("orgDbName", orgDbName);
             
+            // reset createUserViewModel, så den ikke bliver vist i formen - da bruger er oprettet successfuldt
+            createUserViewModel = null;
+            
             return String.format("redirect:/%s/frontPage", orgDbName);
             // return "redirect:/" + orgDbName + "/frontPage";
         }
@@ -65,7 +69,7 @@ public class PreLoginController
     }
     
     @GetMapping("/createUser")
-    public String logIn(Model createUserViewModel, Model loggedInUserModel)
+    public String createUser(Model createUserViewModel, Model loggedInUserModel)
     {
         createUserViewModel.addAttribute( "createUserViewModel", this.createUserViewModel);
         loggedInUserModel.addAttribute( "loggedInUser", UserService.loggedInUser);
@@ -88,6 +92,9 @@ public class PreLoginController
     
         if(logInInfoIsValid)
         {
+            // reset modellen, så den ikke længere vises i formen, da logIn var successfuldt
+            logInViewModel = null;
+            
             return String.format("redirect:/%s/frontPage", orgDbName);
             // return "redirect:/" + orgDbName +"/frontPage";
         }

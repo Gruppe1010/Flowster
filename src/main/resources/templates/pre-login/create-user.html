@@ -54,7 +54,7 @@
                                class="form-control"
                                id="organisation-and-job-type"
                                placeholder="Indtast organisationskode"
-                               th:value = "${createUserViewModel.getOrganisationAndJobType()}"
+                               th:value = "${createUserViewModel != null ? createUserViewModel.getOrganisationAndJobType() : ''}"
                                name="organisation-and-job-type"
                                required
                                min="10000" max="99999">
@@ -69,7 +69,7 @@
                                class="form-control"
                                id="manhours"
                                placeholder="Indtast arbejdstimer"
-                               th:value = "(${createUserViewModel.getManhours() > 0} ? ${createUserViewModel.getManhours()})"
+                               th:value = "${createUserViewModel != null ? createUserViewModel.getManhours() : ''}"
                                name="manhours"
                                required
                                min="0" max="99">
@@ -80,7 +80,7 @@
                                class="form-control"
                                id="firstname"
                                placeholder="Indtast fornavn"
-                               th:value = "${createUserViewModel.getFirstname()}"
+                               th:value = "${createUserViewModel != null ? createUserViewModel.getFirstname() : ''}"
                                name="firstname"
                                required
                                maxlength="100"
@@ -92,7 +92,7 @@
                                class="form-control"
                                id="surname"
                                placeholder="Indtast fornavn"
-                               th:value = "${createUserViewModel.getSurname()}"
+                               th:value = "${createUserViewModel != null ? createUserViewModel.getSurname() : ''}"
                                name="surname"
                                required
                                maxlength="100"
@@ -104,7 +104,7 @@
                                class="form-control"
                                id="email"
                                placeholder="Indtast email"
-                               th:value = "${createUserViewModel.getEmail()}"
+                               th:value = "${createUserViewModel != null ? createUserViewModel.getEmail() : ''}"
                                name="email"
                                required
                                maxlength="320">
@@ -115,7 +115,7 @@
                                class="form-control"
                                id="password"
                                placeholder="Indtast adgangskode"
-                               th:value = "${createUserViewModel.getPassword()}"
+                               th:value = "${createUserViewModel != null ? createUserViewModel.getPassword() : ''}"
                                name="password"
                                value="Valeas"
                                required
