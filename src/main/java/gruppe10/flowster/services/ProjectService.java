@@ -4,8 +4,10 @@ import gruppe10.flowster.repositories.FlowsterRepository;
 import gruppe10.flowster.repositories.ProjectRepository;
 import gruppe10.flowster.repositories.TeamRepository;
 import gruppe10.flowster.viewModels.project.CreateProjectViewModel;
+import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 
+@Service
 public class ProjectService
 {
     FlowsterRepository flowsterRepository = new FlowsterRepository();

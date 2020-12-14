@@ -8,10 +8,12 @@ import gruppe10.flowster.repositories.OrganisationRepository;
 import gruppe10.flowster.repositories.TeamRepository;
 import gruppe10.flowster.viewModels.user.CreateUserViewModel;
 import gruppe10.flowster.viewModels.user.LogInViewModel;
+import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.HashMap;
 
+@Service
 public class UserService
 {
     public static User loggedInUser = null;
