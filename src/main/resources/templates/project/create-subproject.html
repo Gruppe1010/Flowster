@@ -58,7 +58,8 @@
 
                 <!-- + tilføj opgave-KNAP -->
                 <a th:href="${'/' + orgDbName + '/editProject/' + projectModel.getId() + '/subproject/'
-                + subproject.getId() + '/addTask/' + nextTaskId}"> + tilføj ny opgave</a>
+                + subproject.getId() + '/createTask/' + nextTaskId}">
+                    + tilføj ny opgave</a>
 
             </div> <!-- YDERSTE for-each: subproject-->
 
@@ -72,7 +73,7 @@
                        id="subproject-title"
                        name="subproject-title"
                        placeholder="Indtast delprojekttitel"
-                       maxlength="105"
+                       maxlength="100"
                        required>
 
                 <input type="number"
