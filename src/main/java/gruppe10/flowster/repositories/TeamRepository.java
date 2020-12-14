@@ -3,10 +3,12 @@ package gruppe10.flowster.repositories;
 import gruppe10.flowster.models.teams.Team;
 import gruppe10.flowster.viewModels.team.TeamViewModel;
 import gruppe10.flowster.viewModels.user.PreviewUserViewModel;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 
+@Repository
 public class TeamRepository
 {
     

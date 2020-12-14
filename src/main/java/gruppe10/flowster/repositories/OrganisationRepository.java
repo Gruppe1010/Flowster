@@ -6,11 +6,13 @@ import gruppe10.flowster.models.users.TeamMember;
 import gruppe10.flowster.models.users.User;
 import gruppe10.flowster.services.UserService;
 import gruppe10.flowster.viewModels.user.LogInViewModel;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.sql.*;
 import java.util.ArrayList;
 
+@Repository
 public class OrganisationRepository
 {
     

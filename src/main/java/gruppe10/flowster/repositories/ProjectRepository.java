@@ -3,6 +3,7 @@ package gruppe10.flowster.repositories;
 import gruppe10.flowster.models.project.Project;
 import gruppe10.flowster.models.teams.Team;
 import gruppe10.flowster.viewModels.project.CreateProjectViewModel;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.Date;
 
+@Repository
 public class ProjectRepository
 {
     

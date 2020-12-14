@@ -1,12 +1,14 @@
 package gruppe10.flowster.repositories;
 
 import gruppe10.flowster.models.users.User;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Repository
 public class FlowsterRepository
 {
     

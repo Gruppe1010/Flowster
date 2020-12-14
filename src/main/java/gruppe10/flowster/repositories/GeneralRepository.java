@@ -1,9 +1,12 @@
 package gruppe10.flowster.repositories;
 
+import org.springframework.stereotype.Repository;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+@Repository
 public class GeneralRepository
 {
     
