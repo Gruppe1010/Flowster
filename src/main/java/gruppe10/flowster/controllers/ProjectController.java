@@ -114,17 +114,17 @@ public class ProjectController
                                                         new Subtask(2, "Beskrivelse af risikomomenter-underopgave"))))))),
                         new Subproject(2, "Systemudvikling-delprojekt",
                                 new ArrayList<Task>(Arrays.asList(
-                                        new Task(1, "Use case model-opgave",
+                                        new Task(2, "Use case model-opgave",
                                                 new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(1, "Use case diagram-underopgave"),
-                                                        new Subtask(2, "SSD'er-underopgave")))),
-                                        new Task(2, "FURPS",
+                                                        new Subtask(3, "Use case diagram-underopgave"),
+                                                        new Subtask(4, "SSD'er-underopgave")))),
+                                        new Task(3, "FURPS",
                                                 new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(1, "Funktional-underopgave"),
-                                                        new Subtask(2, "Non-funktional-underopgave"))))))),
+                                                        new Subtask(5, "Funktional-underopgave"),
+                                                        new Subtask(6, "Non-funktional-underopgave"))))))),
                         new Subproject(3, "Programmering-delprojekt",
                                 new ArrayList<Task>(Arrays.asList(
-                                        new Task(1, "Kode-opgave")))))),
+                                        new Task(4, "Kode-opgave")))))),
                 null)); // TODO ret til hent project fra db
         projectIdModel.addAttribute("projectId", projectId);
         nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
@@ -168,17 +168,17 @@ public class ProjectController
                                                         new Subtask(2, "Beskrivelse af risikomomenter-underopgave"))))))),
                         new Subproject(2, "Systemudvikling-delprojekt",
                                 new ArrayList<Task>(Arrays.asList(
-                                        new Task(1, "Use case model-opgave",
+                                        new Task(2, "Use case model-opgave",
                                                 new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(1, "Use case diagram-underopgave"),
-                                                        new Subtask(2, "SSD'er-underopgave")))),
-                                        new Task(2, "FURPS",
+                                                        new Subtask(3, "Use case diagram-underopgave"),
+                                                        new Subtask(4, "SSD'er-underopgave")))),
+                                        new Task(3, "FURPS",
                                                 new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(1, "Funktional-underopgave"),
-                                                        new Subtask(2, "Non-funktional-underopgave"))))))),
+                                                        new Subtask(5, "Funktional-underopgave"),
+                                                        new Subtask(6, "Non-funktional-underopgave"))))))),
                         new Subproject(3, "Programmering-delprojekt",
                                 new ArrayList<Task>(Arrays.asList(
-                                        new Task(1, "Kode-opgave")))))),
+                                        new Task(4, "Kode-opgave")))))),
                 null)); // TODO ret til hent project fra db
         projectIdModel.addAttribute("projectId", projectId);
         nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
@@ -236,17 +236,17 @@ public class ProjectController
                                                         new Subtask(2, "Beskrivelse af risikomomenter-underopgave"))))))),
                         new Subproject(2, "Systemudvikling-delprojekt",
                                 new ArrayList<Task>(Arrays.asList(
-                                        new Task(1, "Use case model-opgave",
+                                        new Task(2, "Use case model-opgave",
                                                 new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(1, "Use case diagram-underopgave"),
-                                                        new Subtask(2, "SSD'er-underopgave")))),
-                                        new Task(2, "FURPS",
+                                                        new Subtask(3, "Use case diagram-underopgave"),
+                                                        new Subtask(4, "SSD'er-underopgave")))),
+                                        new Task(3, "FURPS",
                                                 new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(1, "Funktional-underopgave"),
-                                                        new Subtask(2, "Non-funktional-underopgave"))))))),
+                                                        new Subtask(5, "Funktional-underopgave"),
+                                                        new Subtask(6, "Non-funktional-underopgave"))))))),
                         new Subproject(3, "Programmering-delprojekt",
                                 new ArrayList<Task>(Arrays.asList(
-                                        new Task(1, "Kode-opgave")))))),
+                                        new Task(4, "Kode-opgave")))))),
                 null)); // TODO ret til hent project fra db
         projectIdModel.addAttribute("projectId", projectId);
         subprojectIdModel.addAttribute("subprojectId", subprojectId);
@@ -307,12 +307,12 @@ public class ProjectController
                                 new ArrayList<Task>(Arrays.asList(
                                         new Task(2, "Use case model-opgave",
                                                 new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(1, "Use case diagram-underopgave"),
-                                                        new Subtask(2, "SSD'er-underopgave")))),
+                                                        new Subtask(3, "Use case diagram-underopgave"),
+                                                        new Subtask(4, "SSD'er-underopgave")))),
                                         new Task(3, "FURPS",
                                                 new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(1, "Funktional-underopgave"),
-                                                        new Subtask(2, "Non-funktional-underopgave"))))))),
+                                                        new Subtask(5, "Funktional-underopgave"),
+                                                        new Subtask(6, "Non-funktional-underopgave"))))))),
                         new Subproject(3, "Programmering-delprojekt",
                                 new ArrayList<Task>(Arrays.asList(
                                         new Task(4, "Kode-opgave")))))),
