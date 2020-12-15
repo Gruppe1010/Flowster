@@ -34,4 +34,15 @@ public class Subtask
     {
         this.title = title;
     }
+    
+    
+    @Override
+    public String toString()
+    {
+        return "Subtask{" +
+                       "id=" + id +
+                       ", title='" + title + '\'' +
+                       '}';
+    }
 }
+

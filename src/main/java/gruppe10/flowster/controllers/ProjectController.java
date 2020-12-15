@@ -4,6 +4,9 @@ import gruppe10.flowster.models.project.Project;
 import gruppe10.flowster.services.ProjectService;
 import gruppe10.flowster.services.UserService;
 import gruppe10.flowster.viewModels.project.CreateProjectViewModel;
+import gruppe10.flowster.viewModels.project.CreateSubTaskViewModel;
+import gruppe10.flowster.viewModels.project.CreateSubprojectViewModel;
+import gruppe10.flowster.viewModels.project.CreateTaskViewModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,33 +22,38 @@ import java.util.ArrayList;
 public class ProjectController
 {
     ProjectService projectService = new ProjectService();
-
+    
+    // ViewModeller som bruges til at holde på foreløbig data
+    CreateProjectViewModel createProjectViewModel;
+    CreateSubprojectViewModel createSubprojectViewModel;
+    CreateTaskViewModel createTaskViewModel;
+    CreateSubTaskViewModel createSubtaskViewModel;
+    
+    
     @GetMapping("/projects")
     public String projects(@PathVariable String orgDbName, Model orgDbNameModel,
                            Model loggedInUserModel, Model joinedProjectListModel)
     {
-        // projektliste til sidebar
-        ArrayList<Project> joinedProjectList = projectService.updateJoinedProjectList(orgDbName);
-        
+        // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
-
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        joinedProjectListModel.addAttribute("joinedProjectList", joinedProjectList);
+        joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
 
         return "project/projects"; // html
     }
 
     @GetMapping("/createProject")
     public String createProject(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel,
-                                Model joinedProjectListModel)
+                                Model joinedProjectListModel, Model createProjectModel)
     {
-        // projektliste til sidebar
-        ArrayList<Project> joinedProjectList = projectService.updateJoinedProjectList(orgDbName);
-        
+        // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
-    
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        joinedProjectListModel.addAttribute("joinedProjectList", joinedProjectList);
+        joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
+        
+        // model til form-input-felt
+        createProjectModel.addAttribute("createProjectViewModel", createProjectViewModel);
+        
         
         return "project/create-project"; // html
     }
@@ -55,7 +63,7 @@ public class ProjectController
     public String postCreateProject(@PathVariable String orgDbName, WebRequest dataFromCreateProjectForm)
     {
         // opret CreateProjectViewModel(dataFromCreateProjectForm) ud fra webRequest
-        CreateProjectViewModel createProjectViewModel =
+        createProjectViewModel =
                 projectService.createProjectViewModelFromForm(dataFromCreateProjectForm);
     
         
@@ -73,6 +81,9 @@ public class ProjectController
             
             // knyt bruger til nyoprettet projekt
             projectService.attachCreatorToCreatedProject(orgDbName, projectId, UserService.loggedInUser.getId());
+            
+            // fordi projektet oprettedes succesfuldt skal createProjectViewModel nu ikke vise indtastede titel mere
+            createProjectViewModel = null;
         
             return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
         }
@@ -87,13 +98,10 @@ public class ProjectController
                               Model projectIdModel, Model nextSubprojectIdModel,
                               Model nextTaskIdModel, Model nextSubtaskIdModel)
     {
-        // projektliste til sidebar
-        ArrayList<Project> joinedProjectList = projectService.updateJoinedProjectList(orgDbName);
-        
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        joinedProjectListModel.addAttribute("joinedProjectList", joinedProjectList);
+        joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
         
         
         // modeller til main content
@@ -139,24 +147,24 @@ public class ProjectController
         return "project/edit-project"; // html
     }
     
-    // tilføj delprojekt-KNAP
+    // man kommer hertil fra: tilføj delprojekt-KNAP
     @GetMapping("/editProject/{projectId}/createSubproject/{nextSubprojectId}")
     public String createSubproject(@PathVariable String orgDbName, @PathVariable int projectId,
                                 @PathVariable int nextSubprojectId,
                                 Model orgDbNameModel, Model loggedInUserModel, Model joinedProjectListModel,
                                 Model projectModel, Model projectIdModel, Model nextSubprojectIdModel,
-                                Model nextTaskIdModel, Model nextSubtaskIdModel)
+                                Model nextTaskIdModel, Model nextSubtaskIdModel, Model createSubprojectModel)
     {
-        // projektliste til sidebar
-        ArrayList<Project> joinedProjectList = projectService.updateJoinedProjectList(orgDbName);
-        
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        joinedProjectListModel.addAttribute("joinedProjectList", joinedProjectList);
+        joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
+    
+        // model til form-input-felt
+        createSubprojectModel.addAttribute("createSubprojectViewModel", createSubprojectViewModel);
     
     
-        // modeller til main content
+        // modeller til main content TODO tjek om dette er rigtigt
         /*
         projectModel.addAttribute("projectModel", new Project(1, "Eksamensprojekt-projekt", null, 30,
                 new ArrayList<Subproject>(Arrays.asList(
@@ -184,14 +192,11 @@ public class ProjectController
          */
         projectModel.addAttribute("project", projectService.retrieveProject(orgDbName, projectId));
         projectIdModel.addAttribute("projectId", projectId);
-        nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
         nextTaskIdModel.addAttribute("nextTaskId", projectService.findNextIdFromTable(orgDbName, "tasks"));
-       
+        nextSubtaskIdModel.addAttribute("nextSubtaskId", projectService.findNextIdFromTable(orgDbName, "subtasks"));
        
         // modeller til th:action i form i html
-        nextSubtaskIdModel.addAttribute("nextSubtaskId", projectService.findNextIdFromTable(orgDbName, "subtasks"));
-      
-        
+        nextSubprojectIdModel.addAttribute("nextSubprojectId", nextSubprojectId);
         
         // tilføj FORM med postMapping:
         // th:action="${'/editProject/' + projectId + /createSubproject/' + nextSubprojectId}" method="post"
@@ -202,14 +207,34 @@ public class ProjectController
     //
     @PostMapping("/editProject/{projectId}/createSubproject/{subprojectId}")
     public String postCreateSubproject(@PathVariable String orgDbName, @PathVariable int projectId,
-                                       @PathVariable int subprojectId,
-                                       Model orgDbNameModel, Model loggedInUserModel,
-                                       Model joinedProjectList, WebRequest dataFromCreateSubprojectForm)
+                                       @PathVariable int subprojectId, WebRequest dataFromCreateSubprojectForm)
     {
-        // opret subproject og gem i db
-        int subProjectId = 0; // HENT SENEST TILFØJEDE projekts id fra db
+        // opret CreateProjectViewModel(dataFromCreateProjectForm) ud fra webRequest
+        createSubprojectViewModel =
+                projectService.createSubprojectViewModelFromForm(dataFromCreateSubprojectForm);
+    
+        // tjek om subprojekttitle er optaget
+        boolean subprojectTitleIsAvailable = projectService.isSubprojectTitleAvailable(orgDbName, projectId,
+                createSubprojectViewModel.getTitle());
+    
+        // hvis subprojectTitle ikke allerede findes på projektet
+        if(subprojectTitleIsAvailable)
+        {
+            // tilføj nyt subproject til db OG knyt delprojekt til projektet
+            projectService.insertNewSubprojectIntoDb(orgDbName, projectId, subprojectId,
+                    createSubprojectViewModel);
+    
+            // fordi delprojektet oprettedes succesfuldt skal createSubprojectViewModel nu ikke vise indtastede titel
+            // mere
+            createSubprojectViewModel = null;
+            
+            // vi ryger tilbage til editProject
+            return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
+        }
         
-        return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
+        // Subprojektet er IKKE blevet gemt i databasen og guider derfor til samme sted, hvor ugyldig title vises pga
+        // . createProjectViewModel
+        return String.format("redirect:/%s/editProject/%d/createSubproject/%d", orgDbName, projectId, subprojectId);
     }
     
     
@@ -219,15 +244,16 @@ public class ProjectController
                           @PathVariable int subprojectId, @PathVariable int nextTaskId,
                           Model orgDbNameModel, Model loggedInUserModel, Model joinedProjectListModel,
                           Model projectModel, Model nextSubprojectIdModel,  Model nextTaskIdModel,
-                          Model nextSubtaskIdModel, Model projectIdModel, Model subprojectIdModel)
+                          Model nextSubtaskIdModel, Model projectIdModel, Model subprojectIdModel,
+                          Model createTaskModel)
     {
-        // projektliste til sidebar
-        ArrayList<Project> joinedProjectList = projectService.updateJoinedProjectList(orgDbName);
-        
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        joinedProjectListModel.addAttribute("joinedProjectList", joinedProjectList);
+        joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
+    
+        // model til form-input-felt
+        createTaskModel.addAttribute("createTaskViewModel", createTaskViewModel);
     
     
         // modeller til main content
@@ -263,8 +289,8 @@ public class ProjectController
         nextSubtaskIdModel.addAttribute("nextSubtaskId", projectService.findNextIdFromTable(orgDbName, "subtasks"));
       
         
-        // modeller til th:action i form i html
-        nextTaskIdModel.addAttribute("nextTaskId", projectService.findNextIdFromTable(orgDbName, "tasks"));
+        // model til th:action i form i html
+        nextTaskIdModel.addAttribute("nextTaskId", nextTaskId);
       
         
         
@@ -278,12 +304,39 @@ public class ProjectController
     @PostMapping("/editProject/{projectId}/subproject/{subprojectId}/createTask/{taskId}")
     public String postCreateTask(@PathVariable String orgDbName, @PathVariable int projectId,
                                  @PathVariable int subprojectId, @PathVariable int taskId,
-                                 Model orgDbNameModel, Model loggedInUserModel,
-                                 Model joinedProjectList, WebRequest dataFromCreateTaskForm)
+                                 WebRequest dataFromCreateTaskForm)
     {
+        // opret CreateTaskViewModel(dataFromCreateTaskForm) ud fra webRequest
+        // TODO createTaskViewModel = projectService.createTaskViewModelFromForm(dataFromCreateTaskForm);
+    
         
+        /*
+        // tjek om tasktitel er optaget
+        boolean subprojectTitleIsAvailable = projectService.isSubprojectTitleAvailable(orgDbName, projectId,
+                createSubprojectViewModel.getTitle());
+    
+        // hvis subprojectTitle ikke allerede findes på projektet
+        if(subprojectTitleIsAvailable)
+        {
+            // tilføj nyt subproject til db og knyt delprojekt til projektet
+            projectService.insertNewSubprojectIntoDb(orgDbName, projectId, subprojectId,
+                    createSubprojectViewModel);
         
-        return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
+            // fordi delprojektet oprettedes succesfuldt skal createSubprojectViewModel nu ikke vise indtastede titel
+            // mere
+            createSubprojectViewModel = null;
+        
+            // vi ryger tilbage til editProject
+            return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
+        }
+        
+         */
+    
+        // Subprojektet er IKKE blevet gemt i databasen og guider derfor til samme GetMapping, hvor ugyldig title vises
+        // via createTaskViewModel
+    
+        return String.format("redirect:/%s/editProject/%d/subproject/%d/createTask/%d", orgDbName, projectId,
+                subprojectId, taskId);
     }
     
     // tilføj subtask-KNAP
@@ -293,15 +346,16 @@ public class ProjectController
                              @PathVariable int nextSubtaskId, Model orgDbNameModel,
                              Model loggedInUserModel, Model joinedProjectListModel, Model projectModel,
                              Model projectIdModel, Model subprojectIdModel, Model taskIdModel,
-                                Model nextSubprojectIdModel, Model nextTaskIdModel, Model nextSubtaskIdModel)
+                                Model nextSubprojectIdModel, Model nextTaskIdModel, Model nextSubtaskIdModel,
+                                Model createSubtaskModel)
     {
-        // projektliste til sidebar
-        ArrayList<Project> joinedProjectList = projectService.updateJoinedProjectList(orgDbName);
-    
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        joinedProjectListModel.addAttribute("joinedProjectList", joinedProjectList);
+        joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
+    
+        // model til form-input-felt
+        createSubtaskModel.addAttribute("createSubtaskViewModel", createSubtaskViewModel);
     
     
         // modeller til main content
@@ -331,15 +385,20 @@ public class ProjectController
                 
          */
         projectModel.addAttribute("project", projectService.retrieveProject(orgDbName, projectId));
-        projectIdModel.addAttribute("projectId", projectId);
-        subprojectIdModel.addAttribute("subprojectId", subprojectId);
-        taskIdModel.addAttribute("taskId", taskId);
+       
+        
+        // til form-knappers LINK
         nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
-        nextSubtaskIdModel.addAttribute("nextSubtaskId", projectService.findNextIdFromTable(orgDbName, "subtasks"));
+        nextTaskIdModel.addAttribute("nextTaskId", projectService.findNextIdFromTable(orgDbName, "tasks"));
+        
     
     
         // modeller til th:action i form i html
-        nextTaskIdModel.addAttribute("nextTaskId", projectService.findNextIdFromTable(orgDbName, "tasks"));
+        projectIdModel.addAttribute("projectId", projectId);
+        subprojectIdModel.addAttribute("subprojectId", subprojectId);
+        taskIdModel.addAttribute("taskId", taskId);
+        nextSubtaskIdModel.addAttribute("nextSubtaskId", nextSubtaskId);
+       
     
     
     
@@ -359,13 +418,38 @@ public class ProjectController
     @PostMapping("/editProject/{projectId}/subproject/{subprojectId}/task/{taskId}/createSubtask/{subtaskId}")
     public String postCreateSubtask(@PathVariable String orgDbName, @PathVariable int projectId,
                                     @PathVariable int subprojectId, @PathVariable int taskId,
-                                    @PathVariable int subTaskId,
-                                    Model orgDbNameModel, Model loggedInUserModel,
-                                    Model joinedProjectList, WebRequest dataFromCreateSubtaskForm)
+                                    @PathVariable int subTaskId, WebRequest dataFromCreateSubtaskForm)
     {
-      
+        // opret CreateSubtaskViewModel(dataFromCreateSubtaskForm) ud fra webRequest
+        // TODO createSubtaskViewModel = projectService.createSubtaskViewModelFromForm(dataFromCreateSubtaskForm);
+    
+    /*
+        // tjek om tasktitel er optaget
+        boolean subprojectTitleIsAvailable = projectService.isSubprojectTitleAvailable(orgDbName, projectId,
+                createSubprojectViewModel.getTitle());
+    
+        // hvis subprojectTitle ikke allerede findes på projektet
+        if(subprojectTitleIsAvailable)
+        {
+            // tilføj nyt subproject til db og knyt delprojekt til projektet
+            projectService.insertNewSubprojectIntoDb(orgDbName, projectId, subprojectId,
+                    createSubprojectViewModel);
         
-        return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
+            // fordi delprojektet oprettedes succesfuldt skal createSubprojectViewModel nu ikke vise indtastede titel
+            // mere
+            createSubprojectViewModel = null;
+        
+            // vi ryger tilbage til editProject
+            return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
+        }
+        
+         */
+    
+        // Subtask er IKKE blevet gemt i db --> guide derfor til samme GetMapping, hvor ugyldig title vises
+        // via createSubtaskViewModel
+    
+        return String.format("redirect:/%s/editProject/%d/subproject/%d/task/%d/createSubtask", orgDbName, projectId,
+                subprojectId, taskId, subTaskId);
     }
    
     

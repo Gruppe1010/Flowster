@@ -8,6 +8,7 @@ import gruppe10.flowster.models.teams.Team;
 import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.models.users.User;
 import gruppe10.flowster.viewModels.project.CreateProjectViewModel;
+import gruppe10.flowster.viewModels.project.CreateSubprojectViewModel;
 import gruppe10.flowster.viewModels.user.CreatorViewModel;
 import org.springframework.stereotype.Repository;
 
@@ -60,6 +61,7 @@ public class ProjectRepository
             
      */
     
+    // HENT ALLE BRUGERS PROJEKTER
     
     public ArrayList<Project> retrieveCreatedProjectListFromUserId(String dbName, int userId)
     {
@@ -268,16 +270,20 @@ public class ProjectRepository
     
     public ArrayList<Subproject> createSubprojectListFromResultSet(ResultSet resultSet)
     {
-        ArrayList<Subproject> subprojectList = null;
+        ArrayList<Subproject> subprojectList = new ArrayList<>();
     
        try
        {
+           System.out.println("kommer vi herind?"); // TODO
+           Subproject subproject;
+           
            while(resultSet.next())
            {
+               System.out.println("én");
                int subprojectId = resultSet.getInt("id_subproject");
                
                // opretter nyt subprojekt
-               Subproject subproject = new Subproject
+               subproject = new Subproject
                    (subprojectId,
                    resultSet.getString("subproject_title"),
                    resultSet.getString("subproject_description"),
@@ -287,6 +293,8 @@ public class ProjectRepository
         
                // tilføjer nyoprettet projekt til liste
                subprojectList.add(subproject);
+    
+               System.out.println(subproject);
            }
            if(subprojectList.size() == 0)
            {
@@ -334,7 +342,7 @@ public class ProjectRepository
     
     public ArrayList<Task> createTaskListFromResultSet(ResultSet resultSet)
     {
-        ArrayList<Task> taskList = null;
+        ArrayList<Task> taskList = new ArrayList<>();
         
         try
         {
@@ -396,7 +404,7 @@ public class ProjectRepository
     
     public ArrayList<Subtask> createSubtaskListFromResultSet(ResultSet resultSet)
     {
-        ArrayList<Subtask> subtaskList = null;
+        ArrayList<Subtask> subtaskList = new ArrayList<>();
         
         try
         {
@@ -426,7 +434,7 @@ public class ProjectRepository
     
     public ArrayList<Team> retrieveTeamList(int projectId)
     {
-        ArrayList<Team> teamList = new ArrayList<>();
+        ArrayList<Team> teamList = null;
     
         try
         {
@@ -455,6 +463,8 @@ public class ProjectRepository
     
         return teamList;
     }
+    
+    // GEM PROJEKT i db
     
     public boolean checkIfProjectTitleIsAvailable(String dbName, String title)
     {
@@ -734,5 +744,126 @@ public class ProjectRepository
         return project;
     }
 
+    
+    
+    // GEM SUBPROJEKT i db
+    
+    public boolean checkIfSubprojectTitleIsAvailable(String dbName, int projectId, String subprojectTitle)
+    {
+        boolean subprojectTitleIsAvailable = true;
+    
+        organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+            // find alt hvor projectId'et og subprojectTitel mathcer vores input
+            String sqlCommand =
+                    "SELECT * FROM projects_subprojects " +
+                        "RIGHT JOIN subprojects ON f_id_subproject = id_subproject " +
+                        "WHERE f_id_project = ? AND subproject_title = ?";
+             
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+    
+            preparedStatement.setInt(1, projectId);
+            preparedStatement.setString(2, subprojectTitle);
+           
+            ResultSet resultSet = preparedStatement.executeQuery();
+        
+            // hvis der der findes et subprojekt med titlen subprojectTitle under projektet der har id'et projectId
+            if(resultSet.next())
+            {
+                // så er titlen IKKE available
+                subprojectTitleIsAvailable = false;
+            }
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in ProjectRepository isSubprojectTitleAvailable: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in ProjectRepository isSubprojectTitleAvailableFinally: " + e.getMessage());
+            }
+        }
+        
+        return subprojectTitleIsAvailable;
+    }
+    
+    public void insertNewSubprojectIntoDb(String dbName, CreateSubprojectViewModel createSubprojectViewModel)
+    {
+        String title = createSubprojectViewModel.getTitle();
+        Double mahours = createSubprojectViewModel.getManhours();
+                
+                organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+            String sqlCommand = "INSERT INTO subprojects (subproject_title, subproject_manhours) values (?, ?)";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setString(1, title);
+            preparedStatement.setDouble(2, mahours);
+        
+            preparedStatement.executeUpdate();
+        
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in projectRepository insertNewSubprojectIntoDb: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in projectRepository insertNewSubprojectIntoDb: " + e.getMessage());
+            }
+        }
+    }
+    
+    public void insertRowIntoProjectsSubprojects(String dbName, int projectId, int subprojectId)
+    {
+        organisationConnection = generalRepository.establishConnection(dbName);
+        
+        try
+        {
+            String sqlCommand = "INSERT INTO projects_subprojects (f_id_project, f_id_subproject) values (?, ?)";
+            
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setInt(1, projectId);
+            preparedStatement.setInt(2, subprojectId);
+            
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in insertRowIntoProjectsSubprojects: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in insertRowIntoProjectsSubprojects: " + e.getMessage());
+            }
+        }
+    }
+    
+    
+    
 
 }

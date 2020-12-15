@@ -4,6 +4,7 @@ import gruppe10.flowster.models.project.Project;
 import gruppe10.flowster.repositories.FlowsterRepository;
 import gruppe10.flowster.repositories.ProjectRepository;
 import gruppe10.flowster.viewModels.project.CreateProjectViewModel;
+import gruppe10.flowster.viewModels.project.CreateSubprojectViewModel;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 
@@ -68,7 +69,8 @@ public class ProjectService
     public CreateProjectViewModel createProjectViewModelFromForm(WebRequest dataFromCreateProjectForm)
     {
         return new CreateProjectViewModel
-         (dataFromCreateProjectForm.getParameter("title"), dataFromCreateProjectForm.getParameter("deadline"));
+         (dataFromCreateProjectForm.getParameter("project-title"), dataFromCreateProjectForm.getParameter(
+                 "project-deadline"));
     }
     
     public boolean isProjectTitleAvailable(String dbName, CreateProjectViewModel createProjectViewModel)
@@ -86,7 +88,6 @@ public class ProjectService
        return projectRepository.retrieveProjectIdFromProjectTitle(dbName, projectTitle);
     }
     
-    
     public void attachCreatorToCreatedProject(String dbName, int projectId, int userId)
     {
         projectRepository.insertRowIntoProjectsUsers(dbName, projectId, userId);
@@ -103,6 +104,44 @@ public class ProjectService
         return projectRepository.retrieveProject(orgDbName, projectId);
     }
     
+    /**
+     * Opretter en CreateSubprojectViewModel ud fra data i form
+     *
+     *
+     * */
+    public CreateSubprojectViewModel createSubprojectViewModelFromForm(WebRequest dataFromCreateSubprojectForm)
+    {
+        // alt input fra form kommer ud som String
+        double manhours = 0;
+        String manhoursString =  dataFromCreateSubprojectForm.getParameter("subproject-manhours");
+        
+        // derfor - hvis input ikke er null
+        if(!manhoursString.equals(""))
+        {
+            // lav String om til double - vi behøver ikke sikre os at det der er i stringen kan konverteres til
+            // double, - det har vi sørget for via form input type="number"
+            manhours =  Double.parseDouble(manhoursString);
+        }
+        
+        return new CreateSubprojectViewModel
+                       (dataFromCreateSubprojectForm.getParameter("subproject-title"), manhours);
+    }
+    
+    public boolean isSubprojectTitleAvailable(String orgDbName, int projectId, String subprojectTitle)
+    {
+        return projectRepository.checkIfSubprojectTitleIsAvailable(orgDbName, projectId, subprojectTitle);
+    }
+    
+    
+    public void insertNewSubprojectIntoDb(String orgDbName, int projectId, int subprojectId,
+                                          CreateSubprojectViewModel createSubprojectViewModel)
+    {
+        // indsætter nyt subproject i subprojects-tabel
+        projectRepository.insertNewSubprojectIntoDb(orgDbName, createSubprojectViewModel);
+        
+        // tilknytter det nye subproject til projektet
+        projectRepository.insertRowIntoProjectsSubprojects(orgDbName, projectId, subprojectId);
+    }
     
 
 
