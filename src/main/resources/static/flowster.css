@@ -498,7 +498,7 @@ ul li::before
 .task-input
 {
     padding-left: 40px;
-    width: 35%;
+    width: 40%;
     display: flex;
     clear: both;
 }
@@ -506,7 +506,7 @@ ul li::before
 .subtask-input
 {
     padding-left: 60px;
-    width: 35%;
+    width: 40%;
     display: flex;
     clear: both;
 }
