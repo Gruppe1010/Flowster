@@ -1,27 +1,23 @@
 package gruppe10.flowster.services;
 
+import gruppe10.flowster.models.project.Project;
 import gruppe10.flowster.repositories.FlowsterRepository;
 import gruppe10.flowster.repositories.ProjectRepository;
-import gruppe10.flowster.repositories.TeamRepository;
 import gruppe10.flowster.viewModels.project.CreateProjectViewModel;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
+
+import java.util.ArrayList;
 
 @Service
 public class ProjectService
 {
     FlowsterRepository flowsterRepository = new FlowsterRepository();
-    TeamRepository teamRepository = new TeamRepository();
     ProjectRepository projectRepository = new ProjectRepository();
 
-    public void updateJoinedProjectsList()
+    public ArrayList<Project> updateJoinedProjectsList(String dbName)
     {
-
-        String dbName = convertOrganisationNameToDbName
-                (flowsterRepository.retrieveOrganisationNameFromEmail(UserService.loggedInUser.getEmail()));
-
-        UserService.loggedInUser.setJoinedProjectsList(projectRepository.retrieveProjectsArrayListFromUserId(dbName,
-                UserService.loggedInUser.getId()));
+        return projectRepository.retrieveProjectListFromUserId(dbName, UserService.loggedInUser.getId());
     }
 
     /**

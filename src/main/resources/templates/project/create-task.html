@@ -36,9 +36,9 @@
 
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div class="col-sm-10">
-            <h1 th:text="${projectModel.getTitle()}"></h1>
+            <h1 th:text="${project.getTitle()}"></h1>
 
-            <div th:each="subproject : ${projectModel.getSubprojectList()}">
+            <div th:each="subproject : ${project.getSubprojectList()}">
                 <h2 th:text="${subproject.getTitle()}"></h2>
 
                 <div th:each="task : ${subproject.getTaskList()}">
@@ -50,7 +50,7 @@
                     </div> <!-- for-each: subtask -->
 
                     <!--+ tilføj underopgave-KNAP-->
-                    <a th:href="${'/' + orgDbName + '/editProject/' + projectModel.getId() + '/subproject/' +
+                    <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/' +
                         subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}">
                         + tilføj ny underopgave</a>
 
@@ -75,18 +75,18 @@
                            required>
 
                     <button type="submit" class="btn save-team-btn">Gem</button>
-                    <a th:href="${'/' + orgDbName + '/editProject/' + projectModel.getId()}"> <!-- KRYDS-symbol --> KRYDS</a>
+                    <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}"> <!-- KRYDS-symbol --> KRYDS</a>
                 </form>
 
                 <!-- Hvis loopet IKKE er kommet til det subproject hvor der skal tilføjes en task -->
                 <a th:unless="${subprojectId == subproject.getId()}"
-                   th:href="${'/' + orgDbName + '/editProject/' + projectModel.getId() + '/subproject/'
+                   th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/'
                 + subproject.getId() + '/createTask/' + nextTaskId}"> + tilføj ny opgave</a>
 
             </div> <!-- YDERSTE for-each: subproject-->
 
             <!--  tilføj delprojekt-KNAP -->
-            <a th:href="${'/' + orgDbName + '/editProject/' + projectModel.getId() + '/createSubproject/' + nextSubprojectId}">
+            <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/createSubproject/' + nextSubprojectId}">
                 + tilføj nyt delprojekt</a>
 
         </div>

@@ -36,7 +36,7 @@
 
         <div class="col-sm-10">
             <p class="page-title">Mine teams</p>
-            <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
+            <div th:each="team: ${loggedInUser.getJoinedTeamList()}">
                 <!-- FOR hvert team på listen: lav en kasse til det, som man kan klikke på -->
                 <a th:href="${'/' + orgDbName + '/viewTeam/' + team.getId()}">
                     <div  class ="text-left">

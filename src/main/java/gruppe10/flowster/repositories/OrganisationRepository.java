@@ -1,6 +1,5 @@
 package gruppe10.flowster.repositories;
 
-import gruppe10.flowster.models.teams.Team;
 import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.models.users.TeamMember;
 import gruppe10.flowster.models.users.User;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.sql.*;
-import java.util.ArrayList;
 
 @Repository
 public class OrganisationRepository
@@ -324,7 +322,7 @@ public class OrganisationRepository
     {
        return new ProjectManager(user.getId(), user.getOrganisationAndJobType(),
                 user.getFirstname(), user.getSurname(), user.getEmail(), user.getPassword(),
-                user.getManhours(), user.getProfilePictureBytes(), user.getJoinedTeamsList());
+                user.getManhours(), user.getProfilePictureBytes(), user.getJoinedTeamList());
         
     }
     
@@ -338,7 +336,7 @@ public class OrganisationRepository
     {
         return new TeamMember(user.getId(), user.getOrganisationAndJobType(),
                 user.getFirstname(), user.getSurname(), user.getEmail(), user.getPassword(),
-                user.getManhours(), user.getProfilePictureBytes(), user.getJoinedTeamsList());
+                user.getManhours(), user.getProfilePictureBytes(), user.getJoinedTeamList());
     }
     
     //

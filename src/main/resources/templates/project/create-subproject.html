@@ -37,8 +37,8 @@
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div class="col-sm-10">
 
-            <h1 th:text="${projectModel.getTitle()}"></h1>
-            <div th:each="subproject : ${projectModel.getSubprojectList()}">
+            <h1 th:text="${project.getTitle()}"></h1>
+            <div th:each="subproject : ${project.getSubprojectList()}">
                 <h2 th:text="${subproject.getTitle()}"></h2>
 
                 <div th:each="task : ${subproject.getTaskList()}">
@@ -50,14 +50,14 @@
                     </div> <!-- for-each: subtask -->
 
                     <!--+ tilføj underopgave-KNAP-->
-                    <a th:href="${'/' + orgDbName + '/editProject/' + projectModel.getId() + '/subproject/' +
+                    <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/' +
                         subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}">
                         + tilføj ny underopgave</a>
 
                 </div> <!-- for-each: task -->
 
                 <!-- + tilføj opgave-KNAP -->
-                <a th:href="${'/' + orgDbName + '/editProject/' + projectModel.getId() + '/subproject/'
+                <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/'
                 + subproject.getId() + '/createTask/' + nextTaskId}">
                     + tilføj ny opgave</a>
 
@@ -83,7 +83,7 @@
                        placeholder="Indtast arbejdstimer">
 
                 <button type="submit" class="btn save-team-btn">Gem</button>
-                <a th:href="${'/' + orgDbName + '/editProject/' + projectModel.getId()}"> <!-- KRYDS-symbol --> </a>
+                <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}"> <!-- KRYDS-symbol --> </a>
             </form>
 
         </div>

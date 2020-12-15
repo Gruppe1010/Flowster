@@ -18,23 +18,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Controller
 @RequestMapping("/{orgDbName}")
 public class ProjectController
 {
-    UserService userService = new UserService();
     ProjectService projectService = new ProjectService();
 
     @GetMapping("/projects")
     public String projects(@PathVariable String orgDbName, Model orgDbNameModel,
                            Model loggedInUserModel, Model joinedProjectsListModel)
     {
-        //TODO projectService.updateJoinedProjectsList();
-    
-        ArrayList<Project> joinedProjectsList = new ArrayList<>();
+        // projektliste til sidebar
+        ArrayList<Project> joinedProjectsList = projectService.updateJoinedProjectsList(orgDbName);
         
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
 
@@ -48,8 +44,8 @@ public class ProjectController
     public String createProject(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel,
                                 Model joinedProjectsListModel)
     {
-        //TODO projectService.updateJoinedProjectsList();
-        ArrayList<Project> joinedProjectsList = new ArrayList<>();
+        // projektliste til sidebar
+        ArrayList<Project> joinedProjectsList = projectService.updateJoinedProjectsList(orgDbName);
         
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
     
@@ -96,14 +92,17 @@ public class ProjectController
                               Model projectIdModel, Model nextSubprojectIdModel,
                               Model nextTaskIdModel, Model nextSubtaskIdModel)
     {
+        // projektliste til sidebar
+        ArrayList<Project> joinedProjectsList = projectService.updateJoinedProjectsList(orgDbName);
+        
         // modeller til sidebars + menubars
-        ArrayList<Project> joinedProjectsList = new ArrayList<>();
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectsListModel.addAttribute("joinedProjectsList", joinedProjectsList);
         
         
         // modeller til main content
+        /*
         projectModel.addAttribute("projectModel", new Project(1, "Eksamensprojekt-projekt", null, 30,
                 new ArrayList<Subproject>(Arrays.asList(
                         new Subproject(1, "Virksomhed-delprojekt",
@@ -126,6 +125,9 @@ public class ProjectController
                                 new ArrayList<Task>(Arrays.asList(
                                         new Task(4, "Kode-opgave")))))),
                 null)); // TODO ret til hent project fra db
+                
+         */
+        projectModel.addAttribute("project");
         projectIdModel.addAttribute("projectId", projectId);
         nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
         nextTaskIdModel.addAttribute("nextTaskId", projectService.findNextIdFromTable(orgDbName, "tasks"));
@@ -150,14 +152,17 @@ public class ProjectController
                                 Model projectModel, Model projectIdModel, Model nextSubprojectIdModel,
                                 Model nextTaskIdModel, Model nextSubtaskIdModel)
     {
+        // projektliste til sidebar
+        ArrayList<Project> joinedProjectsList = projectService.updateJoinedProjectsList(orgDbName);
+        
         // modeller til sidebars + menubars
-        ArrayList<Project> joinedProjectsList = new ArrayList<>();
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectsListModel.addAttribute("joinedProjectsList", joinedProjectsList);
     
     
         // modeller til main content
+        /*
         projectModel.addAttribute("projectModel", new Project(1, "Eksamensprojekt-projekt", null, 30,
                 new ArrayList<Subproject>(Arrays.asList(
                         new Subproject(1, "Virksomhed-delprojekt",
@@ -180,6 +185,8 @@ public class ProjectController
                                 new ArrayList<Task>(Arrays.asList(
                                         new Task(4, "Kode-opgave")))))),
                 null)); // TODO ret til hent project fra db
+                
+         */
         projectIdModel.addAttribute("projectId", projectId);
         nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
         nextTaskIdModel.addAttribute("nextTaskId", projectService.findNextIdFromTable(orgDbName, "tasks"));
@@ -218,14 +225,17 @@ public class ProjectController
                           Model projectModel, Model nextSubprojectIdModel,  Model nextTaskIdModel,
                           Model nextSubtaskIdModel, Model projectIdModel, Model subprojectIdModel)
     {
+        // projektliste til sidebar
+        ArrayList<Project> joinedProjectsList = projectService.updateJoinedProjectsList(orgDbName);
+        
         // modeller til sidebars + menubars
-        ArrayList<Project> joinedProjectsList = new ArrayList<>();
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectsListModel.addAttribute("joinedProjectsList", joinedProjectsList);
     
     
         // modeller til main content
+        /*
         projectModel.addAttribute("projectModel", new Project(1, "Eksamensprojekt-projekt", null, 30,
                 new ArrayList<Subproject>(Arrays.asList(
                         new Subproject(1, "Virksomhed-delprojekt",
@@ -248,6 +258,8 @@ public class ProjectController
                                 new ArrayList<Task>(Arrays.asList(
                                         new Task(4, "Kode-opgave")))))),
                 null)); // TODO ret til hent project fra db
+               
+         */
         projectIdModel.addAttribute("projectId", projectId);
         subprojectIdModel.addAttribute("subprojectId", subprojectId);
         nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
@@ -286,15 +298,17 @@ public class ProjectController
                              Model projectIdModel, Model subprojectIdModel, Model taskIdModel,
                                 Model nextSubprojectIdModel, Model nextTaskIdModel, Model nextSubtaskIdModel)
     {
+        // projektliste til sidebar
+        ArrayList<Project> joinedProjectsList = projectService.updateJoinedProjectsList(orgDbName);
     
         // modeller til sidebars + menubars
-        ArrayList<Project> joinedProjectsList = new ArrayList<>();
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectsListModel.addAttribute("joinedProjectsList", joinedProjectsList);
     
     
         // modeller til main content
+        /*
         projectModel.addAttribute("projectModel", new Project(1, "Eksamensprojekt-projekt", null, 30,
                 new ArrayList<Subproject>(Arrays.asList(
                         new Subproject(1, "Virksomhed-delprojekt",
@@ -317,6 +331,8 @@ public class ProjectController
                                 new ArrayList<Task>(Arrays.asList(
                                         new Task(4, "Kode-opgave")))))),
                 null)); // TODO ret til hent project fra db
+                
+         */
         projectIdModel.addAttribute("projectId", projectId);
         subprojectIdModel.addAttribute("subprojectId", subprojectId);
         taskIdModel.addAttribute("taskId", taskId);

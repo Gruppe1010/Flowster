@@ -106,11 +106,11 @@ public class TeamService
 
     public void updateJoinedTeamsList()
     {
-
+        // TODO dette skridt er overflødigt - vi kan få den med som param gennem pathVariable-orgDbName
         String dbName = convertOrganisationNameToDbName
                 (flowsterRepository.retrieveOrganisationNameFromEmail(UserService.loggedInUser.getEmail()));
 
-        UserService.loggedInUser.setJoinedTeamsList(teamRepository.retrieveTeamsArrayListFromUserId(dbName,
+        UserService.loggedInUser.setJoinedTeamList(teamRepository.retrieveTeamsListFromUserId(dbName,
                 UserService.loggedInUser.getId()));
     }
 

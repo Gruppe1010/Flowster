@@ -7,6 +7,7 @@ public class Subproject
 {
     private int id;
     private String title;
+    private String description;
     private Date deadline;
     private double manhours;
     private ArrayList<Task> taskList;
@@ -14,17 +15,11 @@ public class Subproject
     // constructors
     public Subproject(){}
     
-    public Subproject(int id, String title,  ArrayList<Task> taskList)
+    public Subproject(int id, String title, String description, Date deadline, double manhours, ArrayList<Task> taskList)
     {
         this.id = id;
         this.title = title;
-        this.taskList = taskList;
-    }
-    
-    public Subproject(int id, String title, Date deadline, double manhours, ArrayList<Task> taskList)
-    {
-        this.id = id;
-        this.title = title;
+        this.description = description;
         this.deadline = deadline;
         this.manhours = manhours;
         this.taskList = taskList;
@@ -46,6 +41,14 @@ public class Subproject
     public void setTitle(String title)
     {
         this.title = title;
+    }
+    public String getDescription()
+    {
+        return description;
+    }
+    public void setDescription(String description)
+    {
+        this.description = description;
     }
     public Date getDeadline()
     {

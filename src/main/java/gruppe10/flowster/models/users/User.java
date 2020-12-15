@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class User implements UserData, Comparable<User>
 {
@@ -25,8 +24,8 @@ public class User implements UserData, Comparable<User>
     private double manhours;
     private byte[] profilePictureBytes;
     private String base64;
-    private ArrayList<Team> joinedTeamsList;
-    private ArrayList<Project> joinedProjectsList;
+    private ArrayList<Team> joinedTeamList;
+    private ArrayList<Project> joinedProjectList;
 
     
     // constructors
@@ -44,10 +43,10 @@ public class User implements UserData, Comparable<User>
         this.manhours = manhours;
         this.profilePictureBytes = createGenericProfilePictureBytes();
         this.base64 = byteArrayAs64String();
-        this.joinedTeamsList = null;
+        this.joinedTeamList = null;
     }
     public User(int id, int organisationAndJobType, String firstname, String surname, String email, String password,
-                double manhours, byte[] profilePictureBytes, ArrayList<Team> joinedTeamsList)
+                double manhours, byte[] profilePictureBytes, ArrayList<Team> joinedTeamList)
     {
         this.id = id;
         this.organisationAndJobType = organisationAndJobType;
@@ -58,7 +57,7 @@ public class User implements UserData, Comparable<User>
         this.manhours = manhours;
         this.profilePictureBytes = profilePictureBytes;
         this.base64 = byteArrayAs64String();
-        this.joinedTeamsList = joinedTeamsList;
+        this.joinedTeamList = joinedTeamList;
     }
     
     // getters + setters
@@ -127,23 +126,23 @@ public class User implements UserData, Comparable<User>
     {
         this.profilePictureBytes = profilePictureBytes;
     }
-    public ArrayList<Team> getJoinedTeamsList()
+    public ArrayList<Team> getJoinedTeamList()
     {
-        return this.joinedTeamsList;
+        return this.joinedTeamList;
     }
-    public ArrayList<Project> getJoinedProjectsList()
+    public ArrayList<Project> getJoinedProjectList()
     {
-        return joinedProjectsList;
+        return joinedProjectList;
     }
-    public void setJoinedProjectsList(ArrayList<Project> joinedProjectsList)
+    public void setJoinedProjectList(ArrayList<Project> joinedProjectList)
     {
-        this.joinedProjectsList = joinedProjectsList;
+        this.joinedProjectList = joinedProjectList;
     }
 
-    public void setJoinedTeamsList(ArrayList<Team> joinedTeamsList)
+    public void setJoinedTeamList(ArrayList<Team> joinedTeamList)
 
     {
-        this.joinedTeamsList = joinedTeamsList;
+        this.joinedTeamList = joinedTeamList;
     }
     // UserData-interface
     
@@ -233,7 +232,7 @@ public class User implements UserData, Comparable<User>
                        ", email='" + email + '\'' +
                        ", password='" + password + '\'' +
                        ", manhours=" + manhours +
-                       ", joinedTeamsList=" + joinedTeamsList +
+                       ", joinedTeamsList=" + joinedTeamList +
                        '}';
     }
     

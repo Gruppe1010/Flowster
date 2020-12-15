@@ -32,13 +32,13 @@ public class TeamMember extends User
     
     
     // getters + setters
-    public ArrayList<Project> getJoinedProjectsList()
+    public ArrayList<Project> getJoinedProjectList()
     {
         return joinedProjectsList;
     }
-    public void setJoinedProjectsList(ArrayList<Project> joinedProjectsList)
+    public void setJoinedProjectList(ArrayList<Project> joinedProjectList)
     {
-        this.joinedProjectsList = joinedProjectsList;
+        this.joinedProjectsList = joinedProjectList;
     }
 
     

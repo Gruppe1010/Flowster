@@ -2,6 +2,7 @@ package gruppe10.flowster.models.project;
 
 import gruppe10.flowster.models.teams.Team;
 import gruppe10.flowster.models.users.ProjectManager;
+import gruppe10.flowster.models.users.User;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,37 +11,29 @@ public class Project
 {
     private int id;
     private String title;
+    private String description;
     private Date deadline;
     private double manhours;
+    private User creator;
     private ArrayList<Subproject> subprojectList;
-    private ArrayList<ProjectManager> projectManagersSet;
-    private ArrayList<Team> teamsSet;
+    private ArrayList<Team> teamList;
     
     // constructors
     public Project(){}
     
-    public Project(String title, Date deadline, double manhours, ArrayList<Subproject> subprojectList, ProjectManager
-                   projectManagerCreater)
-    {
-        this.title = title;
-        this.deadline = deadline;
-        this.manhours = manhours;
-        this.subprojectList = subprojectList;
-        this.projectManagersSet = new ArrayList<>();
-        projectManagersSet.add(projectManagerCreater);
-        this.teamsSet = new ArrayList<>();
-    }
-    public Project(int id, String title, Date deadline, double manhours, ArrayList<Subproject> subprojectList,
-                   ProjectManager projectManagerCreater)
+    
+    
+    public Project(int id, String title, String description, Date deadline, double manhours, User creator,
+                   ArrayList<Subproject> subprojectList, ArrayList<Team> teamList)
     {
         this.id = id;
         this.title = title;
+        this.description = description;
         this.deadline = deadline;
         this.manhours = manhours;
+        this.creator = creator;
         this.subprojectList = subprojectList;
-        this.projectManagersSet = new ArrayList<>();
-        projectManagersSet.add(projectManagerCreater);
-        this.teamsSet = new ArrayList<>();
+        this.teamList = teamList;
     }
     
     
@@ -61,6 +54,14 @@ public class Project
     {
         this.title = title;
     }
+    public String getDescription()
+    {
+        return description;
+    }
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
     public Date getDeadline()
     {
         return deadline;
@@ -77,6 +78,14 @@ public class Project
     {
         this.manhours = manhours;
     }
+    public User getCreator()
+    {
+        return creator;
+    }
+    public void setCreator(User creator)
+    {
+        this.creator = creator;
+    }
     public ArrayList<Subproject> getSubprojectList()
     {
         return subprojectList;
@@ -85,20 +94,12 @@ public class Project
     {
         this.subprojectList = subprojectList;
     }
-    public ArrayList<ProjectManager> getProjectManagersSet()
+    public ArrayList<Team> getTeamList()
     {
-        return projectManagersSet;
+        return teamList;
     }
-    public void setProjectManagersSet(ArrayList<ProjectManager> projectManagersSet)
+    public void setTeamList(ArrayList<Team> teamList)
     {
-        this.projectManagersSet = projectManagersSet;
-    }
-    public ArrayList<Team> getTeamsSet()
-    {
-        return teamsSet;
-    }
-    public void setTeamsSet(ArrayList<Team> teamsSet)
-    {
-        this.teamsSet = teamsSet;
+        this.teamList = teamList;
     }
 }

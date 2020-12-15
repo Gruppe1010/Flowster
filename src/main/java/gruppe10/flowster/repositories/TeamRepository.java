@@ -16,7 +16,7 @@ public class TeamRepository
     
     Connection organisationConnection;
     
-    public ArrayList<Team> retrieveTeamsArrayListFromUserId(String dbName, int userId)
+    public ArrayList<Team> retrieveTeamsListFromUserId(String dbName, int userId)
     {
         ArrayList<Team> joinedTeamsList = null;
         
@@ -33,7 +33,7 @@ public class TeamRepository
             
             ResultSet resultSet = preparedStatement.executeQuery();
             
-            joinedTeamsList = createJoinedTeamsListFromResultSet(resultSet);
+            joinedTeamsList = createTeamListFromResultSet(resultSet);
             
         }
         catch(SQLException e)
@@ -55,9 +55,10 @@ public class TeamRepository
         return joinedTeamsList;
     }
     
-    public ArrayList<Team> createJoinedTeamsListFromResultSet(ResultSet resultSet)
+    // TIL SIDEBAR
+    public ArrayList<Team> createTeamListFromResultSet(ResultSet resultSet)
     {
-        ArrayList<Team> joinedTeamsList = new ArrayList<>();
+        ArrayList<Team> teamList = new ArrayList<>();
         
         try
         {
@@ -66,11 +67,11 @@ public class TeamRepository
                 // TODO: VI SKAL OGSÅ give teamet de to lister!!!!! - men det gad jeg ikke lige
                 Team team = new Team(resultSet.getInt("id_team"), resultSet.getString("team_name"));
                 
-                joinedTeamsList.add(team);
+                teamList.add(team);
             }
-            if(joinedTeamsList.size() == 0)
+            if(teamList.size() == 0)
             {
-                joinedTeamsList = null;
+                teamList = null;
             }
             
         }
@@ -79,7 +80,7 @@ public class TeamRepository
             System.err.println("ERROR in createJoinedTeamsListFromResultSet: " + e.getMessage());
         }
         
-        return joinedTeamsList;
+        return teamList;
     }
     
     // TODO HER MANGLER DER at vi henter de to lister som er attributter på Team-klasse
@@ -562,8 +563,7 @@ public class TeamRepository
                             convertBlobToByteArray(resultSet.getBlob("profile_picture")),
                             resultSet.getString("firstname") + " " + resultSet.getString("surname"),
                             resultSet.getString("job_type"));
-    
-    
+                    
                     //tilføj til liste
                     previewUserViewModelList.add(previewUser);
                 }
