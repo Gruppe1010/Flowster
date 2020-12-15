@@ -29,7 +29,13 @@ public class ProjectService
             ArrayList<Project> createdProjectList= projectRepository.retrieveCreatedProjectListFromUserId(dbName,
                     currentLoggedInUserId);
             
-            if(createdProjectList != null)
+            // hvis den ENE ikke er null
+            if(projectList == null && createdProjectList != null)
+            {
+                projectList = createdProjectList;
+            }
+            // hvis begge IKKE er null, skal de sammenlægges
+            else if(createdProjectList != null && projectList != null)
             {
                 // tilføj disse (hvis disse IKKE er dupliketter af et projekt på listen) til listen
                 projectList.addAll(createdProjectList);
