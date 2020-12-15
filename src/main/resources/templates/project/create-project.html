@@ -30,9 +30,9 @@
     <div class="row content">
 
         <!-- SIDEBAR-FRAGMENT -->
-        <!-- TODO: team-fragment :: teams-list(${loggedInUser.getJoinedTeamsList})-->
+        <!-- TODO: team-fragment :: teams-list(${loggedInUser.getJoinedTeamList})-->
         <!--TODO: det giver bedst mening at sende en Model med til hver fragment, som kun indeholder det som den fragment skal bruge  -->
-        <div th:insert="fragments :: projects-sidebar(${loggedInUser}, ${orgDbName}, ${joinedProjectsList})" class="minheight"></div>
+        <div th:insert="fragments :: projects-sidebar(${loggedInUser}, ${orgDbName}, ${joinedProjectList})" class="minheight"></div>
 
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div class="col-sm-10">

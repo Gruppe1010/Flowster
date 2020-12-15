@@ -31,7 +31,7 @@
 
         <!-- SIDEBAR-FRAGMENT -->
         <!--TODO: det giver bedst mening at sende en Model med til hver fragment, som kun indeholder det som den fragment skal bruge  -->
-        <div th:insert="fragments :: projects-sidebar(${loggedInUser}, ${orgDbName}, ${joinedProjectsList})" class="content"></div>
+        <div th:insert="fragments :: projects-sidebar(${loggedInUser}, ${orgDbName}, ${joinedProjectList})" class="content"></div>
 
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div class="col-sm-10">

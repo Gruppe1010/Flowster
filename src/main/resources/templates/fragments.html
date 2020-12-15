@@ -82,7 +82,7 @@
     </div>
     <div>
         <!-- DET ER HER TEAMLISTEN VISES -->
-        <div th:each="team: ${loggedInUser.getJoinedTeamsList()}">
+        <div th:each="team: ${loggedInUser.getJoinedTeamList()}">
             <div class="sidebar-link">
                 <!--  + -->
                 <a th:href="${'/' + orgDbName + '/viewTeam/' + team.getId()}" th:text="${team.getName()}"></a>
@@ -96,14 +96,14 @@
 <!--------------- SIDEBAR --------------->
 <!-- <div th:insert="general/fragments :: projects-sidebar(${loggedInUser})"></div> -->
 
-<nav th:fragment="projects-sidebar(loggedInUser, orgDbName, joinedProjectsList)" class="sidebar fontsize">
+<nav th:fragment="projects-sidebar(loggedInUser, orgDbName, joinedProjectList)" class="sidebar fontsize">
      <div th:if="${loggedInUser.isProjectManager}">
         <a class="btn flowster-btn" th:href="${'/' + orgDbName + '/createProject'}">Nyt projekt</a>
         <hr class="hr">
     </div>
     <div>
-        <!-- DET ER HER PROJECTSLISTEN VISES -->
-        <div th:each="project: ${joinedProjectsList}">
+        <!-- DET ER HER PROJECTLISTEN VISES -->
+        <div th:each="project: ${joinedProjectList}">
             <div class="sidebar-link">
                 <!--  + -->
                 <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}" th:text="${project.getTitle()}"></a>

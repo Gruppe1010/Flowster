@@ -30,9 +30,9 @@
     <div class="row content">
 
         <!-- SIDEBAR-FRAGMENT -->
-        <!-- TODO: team-fragment :: teams-list(${loggedInUser.getJoinedTeamsList})-->
+        <!-- TODO: team-fragment :: teams-list(${loggedInUser.getJoinedTeamList})-->
         <!--TODO: det giver bedst mening at sende en Model med til hver fragment, som kun indeholder det som den fragment skal bruge  -->
-        <div th:insert="fragments :: teams-sidebar(${loggedInUser}, ${orgDbName})" class="content"></div>
+        <div th:insert="fragments :: projects-sidebar(${loggedInUser}, ${orgDbName}, ${joinedProjectList})" class="content"></div>
 
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div class="col-sm-10">
@@ -62,7 +62,7 @@
                 <!--  tilføj TASK-FORM -->
                 <!-- HVIS loopet er nået til det subproject hvor der skal tilføjes en task, skal formen være der-->
                 <form th:if="${subprojectId == subproject.getId()}"
-                      th:action="${'/editProject/' + projectId + '/subproject/' + subprojectId + '/createTask/' + nextTaskId}"
+                      th:action="${'/' + orgDbName + '/editProject/' + projectId + '/subproject/' + subprojectId + '/createTask/' + nextTaskId}"
                       method="post"
                       class="edit-team-name-container">
                     <div></div>

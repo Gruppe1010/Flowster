@@ -30,9 +30,9 @@
     <div class="row content">
 
         <!-- SIDEBAR-FRAGMENT -->
-        <!-- TODO: team-fragment :: teams-list(${loggedInUser.getJoinedTeamsList})-->
+        <!-- TODO: team-fragment :: teams-list(${loggedInUser.getJoinedTeamList})-->
         <!--TODO: det giver bedst mening at sende en Model med til hver fragment, som kun indeholder det som den fragment skal bruge  -->
-        <div th:insert="fragments :: teams-sidebar(${loggedInUser}, ${orgDbName})" class="content"></div>
+        <div th:insert="fragments :: projects-sidebar(${loggedInUser}, ${orgDbName}, ${joinedProjectList})" class="content"></div>
 
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div class="col-sm-10">
@@ -64,7 +64,7 @@
             </div> <!-- YDERSTE for-each: subproject-->
 
             <!--  tilføj delprojekt-FORM -->
-            <form th:action="${'/editProject/' + projectId + '/createSubproject/' + nextSubprojectId}"
+            <form th:action="${'/' + orgDbName + '/editProject/' + projectId + '/createSubproject/' + nextSubprojectId}"
                   method="post"
                   class="edit-team-name-container">
                 <div></div>

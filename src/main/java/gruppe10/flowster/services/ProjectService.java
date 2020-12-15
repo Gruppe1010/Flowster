@@ -15,10 +15,29 @@ public class ProjectService
     FlowsterRepository flowsterRepository = new FlowsterRepository();
     ProjectRepository projectRepository = new ProjectRepository();
 
-    public ArrayList<Project> updateJoinedProjectsList(String dbName)
+    public ArrayList<Project> updateJoinedProjectList(String dbName)
     {
-        return projectRepository.retrieveProjectListFromUserId(dbName, UserService.loggedInUser.getId());
+        int currentLoggedInUserId =  UserService.loggedInUser.getId();
+        
+        // projekter som findes på de teams, loggedInUser er tilknyttet
+        ArrayList<Project> projectList = projectRepository.retrieveProjectListFromUserId(dbName, currentLoggedInUserId);
+        
+        // hvis brugeren er en projectManager
+        if(UserService.loggedInUser.isProjectManager())
+        {
+            // hent de projekter som hun/han har oprettet
+            ArrayList<Project> createdProjectList= projectRepository.retrieveCreatedProjectListFromUserId(dbName,
+                    currentLoggedInUserId);
+            
+            // tilføj disse (hvis disse IKKE er dupliketter af et projekt på listen) til listen
+            projectList.addAll(createdProjectList);
+        }
+        
+        return projectList;
     }
+    
+    // public ArrayList<Project> projectList
+    
 
     /**
      * Konverterer organisationName til db-name
@@ -69,6 +88,13 @@ public class ProjectService
         // + 1 fordi vi finder det sidst tilføjede id i tabel og skal have det potentielle NÆSTE id
         return projectRepository.findMaxIdFromTable(dbName, tableName) + 1;
     }
+    
+    public Project retrieveProject(String orgDbName, int projectId)
+    {
+        return projectRepository.retrieveProject(orgDbName, projectId);
+    }
+    
+    
 
 
 }

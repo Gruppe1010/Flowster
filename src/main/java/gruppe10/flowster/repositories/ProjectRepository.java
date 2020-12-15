@@ -61,6 +61,59 @@ public class ProjectRepository
      */
     
     
+    public ArrayList<Project> retrieveCreatedProjectListFromUserId(String dbName, int userId)
+    {
+        ArrayList<Project> createdProjectList = null;
+        
+        organisationConnection = generalRepository.establishConnection(dbName);
+        
+        try
+        {
+            /* TODO: indsæt dette eksempel i rapporten
+            Vi selecter alle relevante kolonner fra projekt-tabellen - disse skal vi bruge til at oprette et projekt
+            Dette gøres ud fra userId'et
+            
+            teams_users --> f_id_team --> teams_projects --> f_id_project --> projects (INFO HERFRA)
+            
+            Vi starter fra teams_users-tabellen - herfra findes alle f_id_team ud fra f_id_user
+            Så findes alle f_id_project ud fra f_id_team's i teams_projects-tabellen
+            DERFRA findes SELECT'ed rækker fra projects - ud fra f_id_project'er
+            */
+            
+            String sqlCommand =
+                    "SELECT * FROM projects_users " +
+                        "RIGHT JOIN projects ON f_id_project = id_project " +
+                        "WHERE f_id_user = ?";
+            
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setInt(1, userId);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            createdProjectList = createJoinedProjectListFromResultSet(resultSet);
+            
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in retrieveProjectArrayListFromUserId: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in retrieveProjectArrayListFromUserIdFinally: " + e.getMessage());
+            }
+        }
+        
+        return createdProjectList;
+    }
+    
+    
     public ArrayList<Project> retrieveProjectListFromUserId(String dbName, int userId)
     {
         ArrayList<Project> joinedProjectList = null;
@@ -81,8 +134,7 @@ public class ProjectRepository
             */
             
             String sqlCommand =
-                    "SELECT id_project, project_title, project_description, project_deadline, project_manhours " +
-                        "FROM teams_users " +
+                    "SELECT * FROM teams_users " +
                         "RIGHT JOIN teams_projects ON teams_users.f_id_team = teams_projects.f_id_team " +
                         "RIGHT JOIN projects ON teams_projects.f_id_project = projects.id_project " +
                         "WHERE f_id_user = ?";
@@ -92,7 +144,7 @@ public class ProjectRepository
             preparedStatement.setInt(1, userId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-
+            
             joinedProjectList = createJoinedProjectListFromResultSet(resultSet);
 
         }
@@ -372,15 +424,6 @@ public class ProjectRepository
         return subtaskList;
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
     public ArrayList<Team> retrieveTeamList(int projectId)
     {
         ArrayList<Team> teamList = new ArrayList<>();
@@ -412,9 +455,6 @@ public class ProjectRepository
     
         return teamList;
     }
-    
-    
-    
     
     public boolean checkIfProjectTitleIsAvailable(String dbName, String title)
     {
@@ -625,7 +665,74 @@ public class ProjectRepository
         return maxId;
     }
     
-
+    
+    public Project retrieveProject(String orgDbName, int projectId)
+    {
+        Project project = null;
+    
+        organisationConnection = generalRepository.establishConnection(orgDbName);
+    
+        try
+        {
+            String sqlCommand = "SELECT * FROM projects WHERE id_project = ?";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setInt(1, projectId);
+        
+            ResultSet resultSet = preparedStatement.executeQuery();
+    
+            if(resultSet.next())
+            {
+                project = createProjectFromResultSet(resultSet);
+            }
+        
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in projectRepository retrieveProject: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in projectRepository retrieveProjectFinally: " + e.getMessage());
+            }
+        }
+        
+        return project;
+    }
+    
+    public Project createProjectFromResultSet(ResultSet resultSet)
+    {
+        Project project = null;
+        
+        try
+        {
+            int projectId = resultSet.getInt("id_project");
+            
+            // opretter nyt projekt
+            project = new Project
+                          (projectId,
+                          resultSet.getString("project_title"),
+                          resultSet.getString("project_description"),
+                          resultSet.getDate("project_deadline"),
+                          resultSet.getDouble("project_manhours"),
+                          retrieveCreator(projectId),
+                          retrieveSubprojectList(projectId),
+                          retrieveTeamList(projectId));
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in createProjectFromResultSet: " + e.getMessage());
+        }
+        
+        return project;
+    }
 
 
 }

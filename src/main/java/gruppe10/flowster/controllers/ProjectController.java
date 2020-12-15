@@ -1,11 +1,6 @@
 package gruppe10.flowster.controllers;
 
 import gruppe10.flowster.models.project.Project;
-import gruppe10.flowster.models.project.Subproject;
-import gruppe10.flowster.models.project.Subtask;
-import gruppe10.flowster.models.project.Task;
-import gruppe10.flowster.models.users.ProjectManager;
-import gruppe10.flowster.models.users.User;
 import gruppe10.flowster.services.ProjectService;
 import gruppe10.flowster.services.UserService;
 import gruppe10.flowster.viewModels.project.CreateProjectViewModel;
@@ -27,30 +22,30 @@ public class ProjectController
 
     @GetMapping("/projects")
     public String projects(@PathVariable String orgDbName, Model orgDbNameModel,
-                           Model loggedInUserModel, Model joinedProjectsListModel)
+                           Model loggedInUserModel, Model joinedProjectListModel)
     {
         // projektliste til sidebar
-        ArrayList<Project> joinedProjectsList = projectService.updateJoinedProjectsList(orgDbName);
+        ArrayList<Project> joinedProjectList = projectService.updateJoinedProjectList(orgDbName);
         
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
 
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        joinedProjectsListModel.addAttribute("joinedProjectsList", joinedProjectsList);
+        joinedProjectListModel.addAttribute("joinedProjectList", joinedProjectList);
 
         return "project/projects"; // html
     }
 
     @GetMapping("/createProject")
     public String createProject(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel,
-                                Model joinedProjectsListModel)
+                                Model joinedProjectListModel)
     {
         // projektliste til sidebar
-        ArrayList<Project> joinedProjectsList = projectService.updateJoinedProjectsList(orgDbName);
+        ArrayList<Project> joinedProjectList = projectService.updateJoinedProjectList(orgDbName);
         
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
     
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        joinedProjectsListModel.addAttribute("joinedProjectsList", joinedProjectsList);
+        joinedProjectListModel.addAttribute("joinedProjectList", joinedProjectList);
         
         return "project/create-project"; // html
     }
@@ -88,17 +83,17 @@ public class ProjectController
     @GetMapping("/editProject/{projectId}")
     public String editProject(@PathVariable String orgDbName, @PathVariable int projectId,
                               Model orgDbNameModel, Model loggedInUserModel,
-                              Model joinedProjectsListModel, Model projectModel,
+                              Model joinedProjectListModel, Model projectModel,
                               Model projectIdModel, Model nextSubprojectIdModel,
                               Model nextTaskIdModel, Model nextSubtaskIdModel)
     {
         // projektliste til sidebar
-        ArrayList<Project> joinedProjectsList = projectService.updateJoinedProjectsList(orgDbName);
+        ArrayList<Project> joinedProjectList = projectService.updateJoinedProjectList(orgDbName);
         
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        joinedProjectsListModel.addAttribute("joinedProjectsList", joinedProjectsList);
+        joinedProjectListModel.addAttribute("joinedProjectList", joinedProjectList);
         
         
         // modeller til main content
@@ -127,7 +122,7 @@ public class ProjectController
                 null)); // TODO ret til hent project fra db
                 
          */
-        projectModel.addAttribute("project");
+        projectModel.addAttribute("project", projectService.retrieveProject(orgDbName, projectId));
         projectIdModel.addAttribute("projectId", projectId);
         nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
         nextTaskIdModel.addAttribute("nextTaskId", projectService.findNextIdFromTable(orgDbName, "tasks"));
@@ -148,17 +143,17 @@ public class ProjectController
     @GetMapping("/editProject/{projectId}/createSubproject/{nextSubprojectId}")
     public String createSubproject(@PathVariable String orgDbName, @PathVariable int projectId,
                                 @PathVariable int nextSubprojectId,
-                                Model orgDbNameModel, Model loggedInUserModel, Model joinedProjectsListModel,
+                                Model orgDbNameModel, Model loggedInUserModel, Model joinedProjectListModel,
                                 Model projectModel, Model projectIdModel, Model nextSubprojectIdModel,
                                 Model nextTaskIdModel, Model nextSubtaskIdModel)
     {
         // projektliste til sidebar
-        ArrayList<Project> joinedProjectsList = projectService.updateJoinedProjectsList(orgDbName);
+        ArrayList<Project> joinedProjectList = projectService.updateJoinedProjectList(orgDbName);
         
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        joinedProjectsListModel.addAttribute("joinedProjectsList", joinedProjectsList);
+        joinedProjectListModel.addAttribute("joinedProjectList", joinedProjectList);
     
     
         // modeller til main content
@@ -187,6 +182,7 @@ public class ProjectController
                 null)); // TODO ret til hent project fra db
                 
          */
+        projectModel.addAttribute("project", projectService.retrieveProject(orgDbName, projectId));
         projectIdModel.addAttribute("projectId", projectId);
         nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
         nextTaskIdModel.addAttribute("nextTaskId", projectService.findNextIdFromTable(orgDbName, "tasks"));
@@ -208,7 +204,7 @@ public class ProjectController
     public String postCreateSubproject(@PathVariable String orgDbName, @PathVariable int projectId,
                                        @PathVariable int subprojectId,
                                        Model orgDbNameModel, Model loggedInUserModel,
-                                       Model joinedProjectsList, WebRequest dataFromCreateSubprojectForm)
+                                       Model joinedProjectList, WebRequest dataFromCreateSubprojectForm)
     {
         // opret subproject og gem i db
         int subProjectId = 0; // HENT SENEST TILFØJEDE projekts id fra db
@@ -221,17 +217,17 @@ public class ProjectController
     @GetMapping("/editProject/{projectId}/subproject/{subprojectId}/createTask/{nextTaskId}")
     public String createTask(@PathVariable String orgDbName, @PathVariable int projectId,
                           @PathVariable int subprojectId, @PathVariable int nextTaskId,
-                          Model orgDbNameModel, Model loggedInUserModel, Model joinedProjectsListModel,
+                          Model orgDbNameModel, Model loggedInUserModel, Model joinedProjectListModel,
                           Model projectModel, Model nextSubprojectIdModel,  Model nextTaskIdModel,
                           Model nextSubtaskIdModel, Model projectIdModel, Model subprojectIdModel)
     {
         // projektliste til sidebar
-        ArrayList<Project> joinedProjectsList = projectService.updateJoinedProjectsList(orgDbName);
+        ArrayList<Project> joinedProjectList = projectService.updateJoinedProjectList(orgDbName);
         
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        joinedProjectsListModel.addAttribute("joinedProjectsList", joinedProjectsList);
+        joinedProjectListModel.addAttribute("joinedProjectList", joinedProjectList);
     
     
         // modeller til main content
@@ -260,6 +256,7 @@ public class ProjectController
                 null)); // TODO ret til hent project fra db
                
          */
+        projectModel.addAttribute("project", projectService.retrieveProject(orgDbName, projectId));
         projectIdModel.addAttribute("projectId", projectId);
         subprojectIdModel.addAttribute("subprojectId", subprojectId);
         nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
@@ -282,7 +279,7 @@ public class ProjectController
     public String postCreateTask(@PathVariable String orgDbName, @PathVariable int projectId,
                                  @PathVariable int subprojectId, @PathVariable int taskId,
                                  Model orgDbNameModel, Model loggedInUserModel,
-                                 Model joinedProjectsList, WebRequest dataFromCreateTaskForm)
+                                 Model joinedProjectList, WebRequest dataFromCreateTaskForm)
     {
         
         
@@ -294,17 +291,17 @@ public class ProjectController
     public String createSubtask(@PathVariable String orgDbName, @PathVariable int projectId,
                              @PathVariable int subprojectId, @PathVariable int taskId,
                              @PathVariable int nextSubtaskId, Model orgDbNameModel,
-                             Model loggedInUserModel, Model joinedProjectsListModel, Model projectModel,
+                             Model loggedInUserModel, Model joinedProjectListModel, Model projectModel,
                              Model projectIdModel, Model subprojectIdModel, Model taskIdModel,
                                 Model nextSubprojectIdModel, Model nextTaskIdModel, Model nextSubtaskIdModel)
     {
         // projektliste til sidebar
-        ArrayList<Project> joinedProjectsList = projectService.updateJoinedProjectsList(orgDbName);
+        ArrayList<Project> joinedProjectList = projectService.updateJoinedProjectList(orgDbName);
     
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        joinedProjectsListModel.addAttribute("joinedProjectsList", joinedProjectsList);
+        joinedProjectListModel.addAttribute("joinedProjectList", joinedProjectList);
     
     
         // modeller til main content
@@ -333,6 +330,7 @@ public class ProjectController
                 null)); // TODO ret til hent project fra db
                 
          */
+        projectModel.addAttribute("project", projectService.retrieveProject(orgDbName, projectId));
         projectIdModel.addAttribute("projectId", projectId);
         subprojectIdModel.addAttribute("subprojectId", subprojectId);
         taskIdModel.addAttribute("taskId", taskId);
@@ -363,7 +361,7 @@ public class ProjectController
                                     @PathVariable int subprojectId, @PathVariable int taskId,
                                     @PathVariable int subTaskId,
                                     Model orgDbNameModel, Model loggedInUserModel,
-                                    Model joinedProjectsList, WebRequest dataFromCreateSubtaskForm)
+                                    Model joinedProjectList, WebRequest dataFromCreateSubtaskForm)
     {
       
         
