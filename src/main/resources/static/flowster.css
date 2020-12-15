@@ -485,7 +485,7 @@ ul li::before
 .subproject-input
 {
     padding-left: 20px;
-    width: 45%;
+    width: 60%;
     display: flex;
     clear: both;
 }
