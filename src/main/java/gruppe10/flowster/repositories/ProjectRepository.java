@@ -255,10 +255,8 @@ public class ProjectRepository
     
             ResultSet resultSet = preparedStatement.executeQuery();
     
-            if(resultSet.next())
-            {
-                subprojectList = createSubprojectListFromResultSet(resultSet);
-            }
+            // TODO slet if'erne FRA ALLE DISSEEEEEE
+            subprojectList = createSubprojectListFromResultSet(resultSet);
         }
         catch(SQLException e)
         {
