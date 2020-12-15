@@ -28,9 +28,11 @@ public class ProjectService
             // hent de projekter som hun/han har oprettet
             ArrayList<Project> createdProjectList= projectRepository.retrieveCreatedProjectListFromUserId(dbName,
                     currentLoggedInUserId);
-            
-            // tilføj disse (hvis disse IKKE er dupliketter af et projekt på listen) til listen
-            projectList.addAll(createdProjectList);
+            if(createdProjectList != null)
+            {
+                // tilføj disse (hvis disse IKKE er dupliketter af et projekt på listen) til listen
+                projectList.addAll(createdProjectList);
+            }
         }
         
         return projectList;
