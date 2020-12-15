@@ -36,13 +36,11 @@
 
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div class="col-sm-10">
-            <div class="team-container">
+            <div class="create-project-container">
 
-                <label class="team-label" for="project-title">Projekttitel:</label>
-                <label class="team-label" for="project-deadline">Deadline:</label>
+                <form action="createProject" method="post" class="create-project-container">
+                    <label class="team-label" for="project-title">Projekttitel:</label>
 
-                <form action="createProject" method="post" class="edit-team-name-container">
-                    <div></div>
                     <input type="text"
                            class="form-control"
                            id="project-title"
@@ -51,12 +49,14 @@
                            maxlength="100"
                            required>
 
+                    <label class="deadline-label" for="project-deadline">Deadline:</label>
+
                     <input type="date"
-                           class="form-control"
+                           class="form-control project-deadline-input"
                            id="project-deadline"
                            name="deadline">
 
-                    <button type="submit" class="btn save-team-btn">Gem</button>
+                    <button type="submit" class="btn save-project-btn">Gem</button>
                 </form>
             </div>
         </div>

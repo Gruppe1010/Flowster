@@ -36,56 +36,57 @@
 
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div class="col-sm-10">
+            <div class="project-container">
 
-            <h1 th:text="${project.getTitle()}"></h1>
-            <div th:each="subproject : ${project.getSubprojectList()}">
-                <h2 th:text="${subproject.getTitle()}"></h2>
+                <p th:text="${project.getTitle()}" class="project-style"></p>
+                <div th:each="subproject : ${project.getSubprojectList()}">
+                    <p th:text="${subproject.getTitle()}" class="subproject-style"></p>
 
-                <div th:each="task : ${subproject.getTaskList()}">
-                    <h3 th:text="${task.getTitle()}"></h3>
+                    <div th:each="task : ${subproject.getTaskList()}">
+                        <p th:text="${task.getTitle()}" class="task-style"></p>
 
-                    <div th:each="subtask : ${task.getSubtaskList()}">
-                        <h4 th:text="${subtask.getTitle()}"></h4>
+                        <div th:each="subtask : ${task.getSubtaskList()}">
+                            <p th:text="${subtask.getTitle()}" class="subtask-style"></p>
 
-                    </div> <!-- for-each: subtask -->
+                        </div> <!-- for-each: subtask -->
 
-                    <!--+ tilføj underopgave-KNAP-->
-                    <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/' +
-                        subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}">
-                        + tilføj ny underopgave</a>
+                        <!--+ tilføj underopgave-KNAP-->
+                        <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/' +
+                            subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}" class="subtask-style">
+                            + tilføj ny underopgave</a>
 
-                </div> <!-- for-each: task -->
+                    </div> <!-- for-each: task -->
 
-                <!-- + tilføj opgave-KNAP -->
-                <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/'
-                + subproject.getId() + '/createTask/' + nextTaskId}">
-                    + tilføj ny opgave</a>
+                    <!-- + tilføj opgave-KNAP -->
+                    <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/'
+                    + subproject.getId() + '/createTask/' + nextTaskId}" class="task-style">
+                        + tilføj ny opgave</a>
 
-            </div> <!-- YDERSTE for-each: subproject-->
+                </div> <!-- YDERSTE for-each: subproject-->
 
-            <!--  tilføj delprojekt-FORM -->
-            <form th:action="${'/' + orgDbName + '/editProject/' + projectId + '/createSubproject/' + nextSubprojectId}"
-                  method="post"
-                  class="edit-team-name-container">
-                <div></div>
-                <input type="text"
-                       class="form-control"
-                       id="subproject-title"
-                       name="subproject-title"
-                       placeholder="Indtast delprojekttitel"
-                       maxlength="100"
-                       required>
+                <!--  tilføj delprojekt-FORM -->
+                <form th:action="${'/' + orgDbName + '/editProject/' + projectId + '/createSubproject/' + nextSubprojectId}"
+                      method="post"
+                      class="subproject-input">
+                    <div></div>
+                    <input type="text"
+                           class="form-control"
+                           id="subproject-title"
+                           name="subproject-title"
+                           placeholder="Indtast delprojekttitel"
+                           maxlength="100"
+                           required>
 
-                <input type="number"
-                       class="form-control"
-                       id="subproject-manhours"
-                       name="subproject-manhours"
-                       placeholder="Indtast arbejdstimer">
+                    <input type="number"
+                           class="form-control subproject-manhours-input"
+                           id="subproject-manhours"
+                           name="subproject-manhours"
+                           placeholder="Indtast arbejdstimer">
 
-                <button type="submit" class="btn save-team-btn">Gem</button>
-                <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}"> <!-- KRYDS-symbol --> </a>
-            </form>
-
+                    <button type="submit" class="btn save-team-btn">Gem</button>
+                    <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}"> <!-- KRYDS-symbol --> </a>
+                </form>
+            </div>
         </div>
     </div>
 

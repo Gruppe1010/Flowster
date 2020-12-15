@@ -219,6 +219,7 @@ a:hover, a:active
 .sidebar-link
 {
     display: inline-block;
+    overflow: hidden;
     padding-top: 5px;
     width: 100%;
     float: left;
@@ -405,4 +406,107 @@ ul li::before
     display: inline-block;
     width: 1em;
     margin-left: -1em;
+}
+
+.create-project-container
+{
+    margin: auto;
+}
+
+.create-project-container
+{
+    display: inline-block;
+    width: 60%;
+    margin: auto;
+}
+
+.deadline-label
+{
+    font-size: 25px;
+    font-weight: lighter;
+    padding-top: 20px;
+}
+
+.project-deadline-input
+{
+    width: 60%;
+    margin: 0 auto 20px auto;
+}
+
+.save-project-btn
+{
+    border-radius: 100px;
+    width: 200px;
+    color: white;
+    background-color: #3E8AC4;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+}
+
+.project-container
+{
+    width: 70%;
+    margin: auto;
+    display: block;
+}
+
+.project-style
+{
+    float: left;
+    font-size: 25px;
+    font-weight: lighter;
+    padding-top: 50px;
+}
+
+.subproject-style
+{
+    float: left;
+    padding-left: 20px;
+    font-size: 20px;
+    font-weight: lighter;
+    clear: both; /*positionere subproject under project*/
+}
+.task-style
+{
+    float: left;
+    padding-left: 40px;
+    font-size: 15px;
+    font-weight: lighter;
+    clear: both; /*positionere task under subproject*/
+}
+.subtask-style
+{
+    float: left;
+    padding-left: 60px;
+    font-size: 10px;
+    font-weight: lighter;
+    clear: both; /*positionere subtask under task*/
+}
+
+.subproject-input
+{
+    padding-left: 20px;
+    width: 45%;
+    display: flex;
+    clear: both;
+}
+
+.subproject-manhours-input
+{
+    width: 80%;
+}
+
+.task-input
+{
+    padding-left: 40px;
+    width: 35%;
+    display: flex;
+    clear: both;
+}
+
+.subtask-input
+{
+    padding-left: 60px;
+    width: 35%;
+    display: flex;
+    clear: both;
 }
