@@ -20,8 +20,16 @@
 </head>
 <body>
 
-
 <div class="container-fluid main-content text-center">
+
+    <div th:if="${error != null}" id="error-popup" class="overlay text-center">
+        <div class="popup">
+            <h2>Der skete en fejl</h2>
+            <a class="close" href="#">&times;</a>
+            <div class="content" th:text="${error}">
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <nav th:insert="fragments :: menubar(${loggedInUser}, ${orgDbName})"></nav>

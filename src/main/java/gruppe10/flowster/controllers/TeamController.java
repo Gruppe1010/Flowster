@@ -21,6 +21,7 @@ public class TeamController
     // global variabel fordi hvis navnet er optaget, skal vi bruge variablen i GetMapping'en så det kan blive
     // ved med at stå der i html'en
     String teamName = null;
+    String error = null;
 
     @GetMapping("/teams")
     public String teams(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel)
@@ -38,7 +39,7 @@ public class TeamController
 
     @GetMapping("/createTeam")
     public String createTeam(@PathVariable String orgDbName, Model loggedInUserModel, Model teamNameModel,
-                             Model orgDbNameModel)
+                             Model orgDbNameModel, Model errorModel)
     {
         // så sidebar hele tiden er opdateret med de teams, som man er en del af
         teamService.updateJoinedTeamsList();
@@ -46,7 +47,7 @@ public class TeamController
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         teamNameModel.addAttribute("createTeamViewModel", this.teamName);
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
-
+        errorModel.addAttribute("error", error);
         
         return "team/create-team"; // html
     }
@@ -54,6 +55,9 @@ public class TeamController
     @PostMapping("/createTeam")
     public String postCreateTeam(@PathVariable String orgDbName, WebRequest dataFromCreateTeamForm)
     {
+        // nulstil error
+        error = null;
+        
         // oprette createTeamViewModel(dataFromCreateTeamForm) ud fra webRequest
         teamName = teamService.createTeamNameFromForm(dataFromCreateTeamForm);
     
@@ -72,14 +76,17 @@ public class TeamController
             return String.format("redirect:/%s/editTeam/%d", orgDbName, teamId);
             // return "redirect:editTeam/" + teamId;
         }
-        
-        //hvis teamName er optaget: TODO tilføj error-message
-        return "redirect:createTeam";
+    
+    
+        error =
+                String.format("Der findes allerede et team ved navn \"/s\" i din virksomhed", teamName);
+      
+        return "redirect:createTeam/#error-popup";
     }
     
     @GetMapping("/editTeam/{teamId}")
-    public String editTeam(@PathVariable String orgDbName, @PathVariable int teamId, Model loggedInUserModel,
-                           Model teamModel, Model orgDbNameModel)
+    public String editTeam(@PathVariable String orgDbName, @PathVariable int teamId,
+                           Model loggedInUserModel, Model teamModel, Model orgDbNameModel, Model errorModel)
     {
         // så sidebar hele tiden er opdateret med de teams, som man er en del af
         teamService.updateJoinedTeamsList();
@@ -89,6 +96,7 @@ public class TeamController
         teamModel.addAttribute("team", teamViewModel);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
+        errorModel.addAttribute("error", error);
       
         // teamModel.addAttribute(har teamID);
         // lav en model med url - "/postEditTeam/" + teamId + "/addUser/" - og i html: + ${user.getId()}
@@ -140,6 +148,8 @@ public class TeamController
     public String editTeamName(@PathVariable String orgDbName, @PathVariable int teamId,
                                WebRequest dataFromEditTeamNameForm)
     {
+        error = null;
+        
         // Opret og gem newTeamName i String ud fra webRequest
         String newTeamName = teamService.createTeamNameFromForm(dataFromEditTeamNameForm);
     
@@ -156,8 +166,10 @@ public class TeamController
             return String.format("redirect:/%s/viewTeam/%d", orgDbName, teamId);
         }
         
-        // hvis teamName'et er optaget, bliver man på samme side TODO: lav en fejlbesked!
-        return String.format("redirect:/%s/editTeam/%d", orgDbName, teamId);
+        error =
+                String.format("Der findes allerede et team ved navn \"/s\" i din virksomhed", newTeamName);
+     
+        return String.format("redirect:/%s/editTeam/%d/#error-popup", orgDbName, teamId);
     }
     
     

@@ -553,8 +553,6 @@ ul li::before
     box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
 }
 
-
-
 /*ERROR POPUP*/
 
 .overlay {
@@ -580,6 +578,7 @@ ul li::before
     background: #fff;
     border-radius: 5px;
     width: 30%;
+    height: 200px;
     position: absolute;
     transition: all 1s ease-in-out;
     z-index: 5;

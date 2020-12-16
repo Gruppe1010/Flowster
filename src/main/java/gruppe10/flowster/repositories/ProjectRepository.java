@@ -292,8 +292,6 @@ public class ProjectRepository
         
                // tilføjer nyoprettet projekt til liste
                subprojectList.add(subproject);
-    
-               System.out.println(subproject);
            }
            if(subprojectList.size() == 0)
            {

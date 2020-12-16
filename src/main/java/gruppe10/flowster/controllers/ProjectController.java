@@ -88,6 +88,24 @@ public class ProjectController
         return String.format("redirect:/%s/createProject", orgDbName);
     }
     
+    @GetMapping("/viewProject/{projectId}")
+    public String viewProject(@PathVariable String orgDbName, @PathVariable int projectId,
+                              Model orgDbNameModel, Model loggedInUserModel,
+                              Model joinedProjectListModel, Model projectModel)
+    {
+        // modeller til sidebars + menubars
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
+        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
+        joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
+    
+    
+        // modeller til main content
+        projectModel.addAttribute("project", projectService.retrieveProject(orgDbName, projectId));
+    
+        return "project/view-project"; // html
+    }
+    
+    
     @GetMapping("/editProject/{projectId}")
     public String editProject(@PathVariable String orgDbName, @PathVariable int projectId,
                               Model orgDbNameModel, Model loggedInUserModel,
@@ -102,32 +120,9 @@ public class ProjectController
         
         
         // modeller til main content
-        /*
-        projectModel.addAttribute("projectModel", new Project(1, "Eksamensprojekt-projekt", null, 30,
-                new ArrayList<Subproject>(Arrays.asList(
-                        new Subproject(1, "Virksomhed-delprojekt",
-                                new ArrayList<Task>(Arrays.asList(
-                                        new Task(1, "Risikoanalyse-opgave",
-                                                new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(1, "Risikotabel-underopgave"),
-                                                        new Subtask(2, "Beskrivelse af risikomomenter-underopgave"))))))),
-                        new Subproject(2, "Systemudvikling-delprojekt",
-                                new ArrayList<Task>(Arrays.asList(
-                                        new Task(2, "Use case model-opgave",
-                                                new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(3, "Use case diagram-underopgave"),
-                                                        new Subtask(4, "SSD'er-underopgave")))),
-                                        new Task(3, "FURPS",
-                                                new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(5, "Funktional-underopgave"),
-                                                        new Subtask(6, "Non-funktional-underopgave"))))))),
-                        new Subproject(3, "Programmering-delprojekt",
-                                new ArrayList<Task>(Arrays.asList(
-                                        new Task(4, "Kode-opgave")))))),
-                null)); // TODO ret til hent project fra db
-                
-         */
         projectModel.addAttribute("project", projectService.retrieveProject(orgDbName, projectId));
+        
+        // modeller til hrefs
         projectIdModel.addAttribute("projectId", projectId);
         nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
         nextTaskIdModel.addAttribute("nextTaskId", projectService.findNextIdFromTable(orgDbName, "tasks"));
