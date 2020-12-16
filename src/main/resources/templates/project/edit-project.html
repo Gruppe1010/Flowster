@@ -52,20 +52,20 @@
 
                         <!--+ tilføj underopgave-KNAP-->
                         <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/' +
-                            subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}" class="subtask-style">
+                            subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}" class="subtask-style project-input-btn">
                             + tilføj ny underopgave</a>
 
                     </div> <!-- for-each: task -->
 
                     <!-- + tilføj opgave-KNAP -->
                     <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/'
-                    + subproject.getId() + '/createTask/' + nextTaskId}" class="task-style">
+                    + subproject.getId() + '/createTask/' + nextTaskId}" class="task-style project-input-btn">
                         + tilføj ny opgave</a>
 
                 </div> <!-- YDERSTE for-each: subproject-->
 
                 <!--  tilføj delprojekt-KNAP -->
-                <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/createSubproject/' + nextSubprojectId}" class="subproject-style">
+                <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/createSubproject/' + nextSubprojectId}" class="subproject-style project-input-btn">
                     + tilføj nyt delprojekt</a>
             </div>
         </div>

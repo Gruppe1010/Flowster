@@ -454,32 +454,34 @@ ul li::before
     float: left;
     font-size: 25px;
     font-weight: lighter;
-    padding-top: 50px;
+    margin: 50px 0 0 0;
 }
 
 .subproject-style
 {
     float: left;
     color: #235D89;
-    padding-left: 20px;
+    margin: 20px 0 0 30px;
     font-size: 22px;
-    font-weight: lighter;
+    font-weight: bold;
     clear: both; /*positionere subproject under project*/
 }
 .task-style
 {
     float: left;
     color: #2b669a;
-    padding-left: 40px;
+    margin: 20px 0 0 60px;
     font-size: 19px;
     font-weight: lighter;
+    font-style: italic;
     clear: both; /*positionere task under subproject*/
 }
+
 .subtask-style
 {
     float: left;
     color: #3E8AC4;
-    padding-left: 60px;
+    margin: 20px 0 0 90px;
     font-size: 16px;
     font-weight: lighter;
     clear: both; /*positionere subtask under task*/
@@ -487,7 +489,7 @@ ul li::before
 
 .subproject-input
 {
-    padding-left: 20px;
+    padding: 20px 0 0 30px;
     width: 60%;
     display: flex;
     clear: both;
@@ -495,22 +497,33 @@ ul li::before
 
 .subproject-manhours-input
 {
+    margin-left: 10px;
     width: 80%;
 }
 
 .task-input
 {
-    padding-left: 40px;
-    width: 40%;
+    padding: 20px 0 0 60px;
+    width: 60%;
     display: flex;
     clear: both;
 }
 
 .subtask-input
 {
-    padding-left: 60px;
-    width: 40%;
+    padding: 20px 0 0 90px;
+    width: 60%;
     display: flex;
     clear: both;
 }
+
+.project-input-btn
+{
+    border-radius: 100px;
+    width: 220px;
+    color: black;
+    background-color: #D7EEF7;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+}
+
 
