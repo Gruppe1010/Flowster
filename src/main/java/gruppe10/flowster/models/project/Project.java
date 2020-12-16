@@ -4,6 +4,8 @@ import gruppe10.flowster.models.teams.Team;
 import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.models.users.User;
 
+import javax.swing.text.DateFormatter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -30,7 +32,14 @@ public class Project
         this.title = title;
         this.description = description;
         this.deadline = deadline;
-        this.manhours = manhours;
+        if(manhours == 0)
+        {
+            this.manhours = calculateManhours(subprojectList);
+        }
+        else
+        {
+            this.manhours = manhours;
+        }
         this.creator = creator;
         this.subprojectList = subprojectList;
         this.teamList = teamList;
@@ -101,5 +110,61 @@ public class Project
     public void setTeamList(ArrayList<Team> teamList)
     {
         this.teamList = teamList;
+    }
+    
+    
+    
+    public double calculateManhours(ArrayList<Subproject> subprojectList)
+    {
+        double manhours = 0;
+        
+        if(subprojectList != null && subprojectList.size() > 0)
+        {
+            // for hvert subprojekt
+            for(Subproject subproject : subprojectList)
+            {
+                // tilføj subprojektets manhours til manhours der skal returneres
+                manhours += subproject.getManhours();
+            }
+        }
+        
+        return manhours;
+        
+    }
+    
+    
+    public String findHeadline()
+    {
+        String headline = title;
+        
+        if(deadline != null)
+        {
+            headline += "  - " + findFormattedDeadline();
+        }
+        
+        if(manhours != 0)
+        {
+            headline += "   - " + manhours;
+        }
+        
+        
+        return headline;
+    }
+    
+    
+    public String findFormattedDeadline()
+    {
+        if(deadline == null)
+        {
+            return "";
+        }
+        
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+        
+        String formattedDate = dateFormatter.format(deadline);
+    
+        System.out.println(formattedDate);
+        
+        return formattedDate;
     }
 }
