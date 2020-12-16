@@ -416,7 +416,7 @@ public class ProjectController
     
         // tjek om tasktitel er optaget
         boolean subtaskTitleIsAvailable = projectService.isSubtaskTitleAvailable(orgDbName, taskId,
-                createSubprojectViewModel.getTitle());
+                createSubtaskViewModel.getTitle());
     
         // hvis subprojectTitle ikke allerede findes på projektet
         if(subtaskTitleIsAvailable)
