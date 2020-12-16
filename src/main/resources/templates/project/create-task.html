@@ -75,6 +75,8 @@
                                id="task-title"
                                name="task-title"
                                placeholder="Indtast opgavetitel"
+                               oninvalid="this.setCustomValidity('Indtast venligst en opgavetitel på maks 100 karaktere')"
+                               oninput="setCustomValidity('')"
                                maxlength="100"
                                required>
 

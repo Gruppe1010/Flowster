@@ -75,6 +75,8 @@
                            id="subproject-title"
                            name="subproject-title"
                            placeholder="Indtast delprojekttitel"
+                           oninvalid="this.setCustomValidity('Indtast venligst et delprojektstitel, på maks 100 karaktere')"
+                           oninput="setCustomValidity('')"
                            maxlength="100"
                            required>
 
@@ -82,7 +84,11 @@
                            class="form-control subproject-manhours-input"
                            id="subproject-manhours"
                            name="subproject-manhours"
-                           placeholder="Indtast arbejdstimer">
+                           placeholder="Indtast arbejdstimer"
+                           oninvalid="this.setCustomValidity('Angiv venligst hvor mange estimerede arbejdstimer der ' +
+                            'forventes at der skal bruges på dette delprojekt')"
+                           oninput="setCustomValidity('')">
+
 
                     <button type="submit" class="btn save-team-btn">Gem</button>
                     <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}"><i class="material-icons clear-style">clear</i></a>

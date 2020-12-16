@@ -55,6 +55,8 @@
                                id="organisation-and-job-type"
                                placeholder="Indtast organisationskode"
                                th:value = "${createUserViewModel != null ? createUserViewModel.getOrganisationAndJobType() : ''}"
+                               oninvalid="this.setCustomValidity('Indtast venligst den organisations kode du har fået oplyst af din virksomhed')"
+                               oninput="setCustomValidity('')"
                                name="organisation-and-job-type"
                                required
                                min="10000" max="99999">
@@ -70,6 +72,8 @@
                                id="manhours"
                                placeholder="Indtast arbejdstimer"
                                th:value = "${createUserViewModel != null ? createUserViewModel.getManhours() : ''}"
+                               oninvalid="this.setCustomValidity('Angiv dine timer du er ansat til at arbejde på en uge, i heltal')"
+                               oninput="setCustomValidity('')"
                                name="manhours"
                                required
                                min="0" max="99">
@@ -77,12 +81,14 @@
                         <!--max-length="100" == Fordi i db har sat en limit på VARCHAR(100)-->
                         <label class="label-padding" for="firstname">Fornavn:</label>
                         <input type="text"
-                               class="form-control"
+                               class="form-control required"
                                id="firstname"
                                placeholder="Indtast fornavn"
                                th:value = "${createUserViewModel != null ? createUserViewModel.getFirstname() : ''}"
+                               oninvalid="this.setCustomValidity('Indtast venligst dit fornavn')"
+                               oninput="setCustomValidity('')"
                                name="firstname"
-                               required
+                               required="required"
                                maxlength="100"
                                pattern="^[a-zA-ZæøåÆØÅ\s\-]*$">
 
@@ -93,6 +99,8 @@
                                id="surname"
                                placeholder="Indtast fornavn"
                                th:value = "${createUserViewModel != null ? createUserViewModel.getSurname() : ''}"
+                               oninvalid="this.setCustomValidity('Indtast venligst dit efternavn')"
+                               oninput="setCustomValidity('')"
                                name="surname"
                                required
                                maxlength="100"
@@ -105,6 +113,8 @@
                                id="email"
                                placeholder="Indtast email"
                                th:value = "${createUserViewModel != null ? createUserViewModel.getEmail() : ''}"
+                               oninvalid="this.setCustomValidity('Indtast venligst din email. En email indeholder altid et \'@\'')"
+                               oninput="setCustomValidity('')"
                                name="email"
                                required
                                maxlength="320">
@@ -116,6 +126,9 @@
                                id="password"
                                placeholder="Indtast adgangskode"
                                th:value = "${createUserViewModel != null ? createUserViewModel.getPassword() : ''}"
+                               oninvalid="this.setCustomValidity('Indtast venligst en adgangskode. En adgangskode består af 8 karaktere, mindst' +
+                                ' én karakter skal være i uppercase og mindst ét specialtegn et \'@\'')"
+                               oninput="setCustomValidity('')"
                                name="password"
                                value="Valeas"
                                required
@@ -128,6 +141,9 @@
                                class="form-control"
                                id="confirm-password"
                                placeholder="Bekræft adgangskode"
+                               oninvalid="this.setCustomValidity('Indtast venligst en adgangskode som matcher ' +
+                                'overstående adgangskode')"
+                               oninput="setCustomValidity('')"
                                name="confirm-password"
                                required
                                maxlength="320"

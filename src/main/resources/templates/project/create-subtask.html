@@ -66,6 +66,9 @@
                                    id="subtask-title"
                                    name="subtask-title"
                                    placeholder="Indtast underopgavetitel"
+                                   oninvalid="this.setCustomValidity('Angiv venligst denne underopgavestitel, maks' +
+                                    '100 karaktere')"
+                                   oninput="setCustomValidity('')"
                                    maxlength="100"
                                    required>
 

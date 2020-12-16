@@ -32,22 +32,27 @@
                     <div class="form-group">
 
                         <!--max-length="320" == Fordi i db har sat en limit på VARCHAR(320)-->
+
                         <label for="email">Email:</label>
                         <input type="email"
-                               class="form-control"
                                id="email"
+                               class="form-control "
                                placeholder="Indtast email"
                                th:value = "${logInViewModel != null ? logInViewModel.getEmail() : ''}"
+                               oninvalid="this.setCustomValidity('Email skal indeholde \'@\'')"
+                               oninput="setCustomValidity('')"
                                name="email"
-                               required
+                               required="required"
                                maxlength="320">
 
 
                         <label class="label-padding" for="password">Adgangskode:</label>
                         <input type="password"
-                               class="form-control"
+                               class="form-control asterisk_input"
                                id="password"
                                placeholder="Indtast adgangskode"
+                               oninvalid="this.setCustomValidity('Forkert adgangskode, indtast din adgangskode på ny')"
+                               oninput="setCustomValidity('')"
                                name="password"
                                required
                                maxlength="320"
