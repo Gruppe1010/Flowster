@@ -40,6 +40,7 @@ public class ProjectManager extends User
  
     
     // ANDRE METODER
+    // denne metode bliver kun brugt i html, da vi der ikke kan bruge instanceof-operatoren
     @Override
     public boolean isProjectManager()
     {

@@ -34,7 +34,7 @@
                         <!--max-length="320" == Fordi i db har sat en limit på VARCHAR(320)-->
                         <label for="email">Email:</label>
                         <input type="email"
-                               class="form-control"
+                               class="form-control required"
                                id="email"
                                placeholder="Indtast email"
                                th:value = "${logInViewModel != null ? logInViewModel.getEmail() : ''}"
@@ -45,7 +45,7 @@
 
                         <label class="label-padding" for="password">Adgangskode:</label>
                         <input type="password"
-                               class="form-control"
+                               class="form-control required"
                                id="password"
                                placeholder="Indtast adgangskode"
                                name="password"

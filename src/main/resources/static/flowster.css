@@ -514,3 +514,25 @@ ul li::before
     clear: both;
 }
 
+.required:after
+{
+    content: " *";
+    color: red;
+
+}
+
+
+/*css-selector*/
+/* css-selector - ALLE p-tags som er i form, der har create-user-klassen*/
+
+/* alle input-tags som har klassen required, og som er i en form - efter dem: */
+form input.required:after
+{
+    content: " *";
+    color: red;
+
+}
+
+
+
+

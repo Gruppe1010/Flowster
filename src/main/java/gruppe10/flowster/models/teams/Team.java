@@ -32,7 +32,6 @@ public class Team
         this.usersList = usersList;
         this.projectsList = projectsList;
     }
-    
     // getters + setters
     public int getId()
     {

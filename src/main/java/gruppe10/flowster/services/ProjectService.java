@@ -1,6 +1,7 @@
 package gruppe10.flowster.services;
 
 import gruppe10.flowster.models.project.Project;
+import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.repositories.FlowsterRepository;
 import gruppe10.flowster.repositories.ProjectRepository;
 import gruppe10.flowster.viewModels.project.CreateProjectViewModel;
@@ -26,12 +27,13 @@ public class ProjectService
         ArrayList<Project> projectList = projectRepository.retrieveProjectListFromUserId(dbName, currentLoggedInUserId);
         
         // hvis brugeren er en projectManager
-        if(UserService.loggedInUser.isProjectManager())
+        if(UserService.loggedInUser instanceof ProjectManager)
         {
+            
             // hent de projekter som hun/han har oprettet
             ArrayList<Project> createdProjectList= projectRepository.retrieveCreatedProjectListFromUserId(dbName,
                     currentLoggedInUserId);
-            
+            // TODO lav test- over denne
             // hvis den ENE ikke er null
             if(projectList == null && createdProjectList != null)
             {
