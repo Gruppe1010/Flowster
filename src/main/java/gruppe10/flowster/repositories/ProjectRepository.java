@@ -257,7 +257,9 @@ public class ProjectRepository
             ResultSet resultSet = preparedStatement.executeQuery();
     
             // TODO slet if'erne FRA ALLE DISSEEEEEE
+       
             subprojectList = createSubprojectListFromResultSet(resultSet);
+            
         }
         catch(SQLException e)
         {
@@ -325,10 +327,8 @@ public class ProjectRepository
         
             ResultSet resultSet = preparedStatement.executeQuery();
         
-            if(resultSet.next())
-            {
-                taskList = createTaskListFromResultSet(resultSet);
-            }
+           
+            taskList = createTaskListFromResultSet(resultSet);
         }
         catch(SQLException e)
         {
@@ -388,10 +388,9 @@ public class ProjectRepository
             
             ResultSet resultSet = preparedStatement.executeQuery();
             
-            if(resultSet.next())
-            {
-                subtaskList = createSubtaskListFromResultSet(resultSet);
-            }
+          
+            subtaskList = createSubtaskListFromResultSet(resultSet);
+            
         }
         catch(SQLException e)
         {
@@ -448,11 +447,10 @@ public class ProjectRepository
     
             ResultSet resultSet = preparedStatement.executeQuery();
     
-            if(resultSet.next())
-            {
+            
                 // denne metoder gemmer reelt kun teamId og teamName
-                teamList = teamRepository.createTeamListFromResultSet(resultSet);
-            }
+            teamList = teamRepository.createTeamListFromResultSet(resultSet);
+            
         
         }
         catch(SQLException e)
