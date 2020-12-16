@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/flowster.css" type="text/css">
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Padauk&family=Raleway:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 <body>
@@ -65,18 +66,21 @@
                                    id="subtask-title"
                                    name="subtask-title"
                                    placeholder="Indtast underopgavetitel"
+                                   oninvalid="this.setCustomValidity('Angiv venligst denne underopgavestitel, maks' +
+                                    '100 karaktere')"
+                                   oninput="setCustomValidity('')"
                                    maxlength="100"
                                    required>
 
                             <button type="submit" class="btn save-team-btn">Gem</button>
-                            <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}"> <!-- KRYDS-symbol --> KRYDS</a>
+                            <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}"><i class="material-icons clear-style">clear</i></a>
                         </form>
 
                         <!--+ tilføj underopgave-KNAP-->
                         <!-- Hvis loopet IKKE er kommet til den task hvor der skal tilføjes en subtask -->
                         <a th:unless="${taskId == task.getId()}"
                             th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/' +
-                            subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}" class="subtask-style">
+                            subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}" class="subtask-style project-input-btn">
                             + tilføj ny underopgave</a>
 
 
@@ -84,13 +88,13 @@
 
                     <!-- + tilføj opgave-KNAP -->
                     <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/'
-                    + subproject.getId() + '/createTask/' + nextTaskId}" class="task-style">
+                    + subproject.getId() + '/createTask/' + nextTaskId}" class="task-style project-input-btn">
                         + tilføj ny opgave</a>
 
                 </div> <!-- YDERSTE for-each: subproject-->
 
                 <!--  tilføj delprojekt-KNAP -->
-                <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/createSubproject/' + nextSubprojectId}" class="subproject-style">
+                <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/createSubproject/' + nextSubprojectId}" class="subproject-style project-input-btn">
                     + tilføj nyt delprojekt</a>
             </div>
         </div>

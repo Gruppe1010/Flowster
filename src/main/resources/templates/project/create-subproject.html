@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/flowster.css" type="text/css">
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Padauk&family=Raleway:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 <body>
@@ -52,14 +53,14 @@
 
                         <!--+ tilføj underopgave-KNAP-->
                         <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/' +
-                            subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}" class="subtask-style">
+                            subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}" class="subtask-style project-input-btn">
                             + tilføj ny underopgave</a>
 
                     </div> <!-- for-each: task -->
 
                     <!-- + tilføj opgave-KNAP -->
                     <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/'
-                    + subproject.getId() + '/createTask/' + nextTaskId}" class="task-style">
+                    + subproject.getId() + '/createTask/' + nextTaskId}" class="task-style project-input-btn">
                         + tilføj ny opgave</a>
 
                 </div> <!-- YDERSTE for-each: subproject-->
@@ -74,6 +75,8 @@
                            id="subproject-title"
                            name="subproject-title"
                            placeholder="Indtast delprojekttitel"
+                           oninvalid="this.setCustomValidity('Indtast venligst et delprojektstitel, på maks 100 karaktere')"
+                           oninput="setCustomValidity('')"
                            maxlength="100"
                            required>
 
@@ -81,10 +84,14 @@
                            class="form-control subproject-manhours-input"
                            id="subproject-manhours"
                            name="subproject-manhours"
-                           placeholder="Estimerede arbejdstimer">
+                           placeholder="Indtast arbejdstimer"
+                           oninvalid="this.setCustomValidity('Angiv venligst hvor mange estimerede arbejdstimer der ' +
+                            'forventes at der skal bruges på dette delprojekt')"
+                           oninput="setCustomValidity('')">
+
 
                     <button type="submit" class="btn save-team-btn">Gem</button>
-                    <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}"> <!-- KRYDS-symbol --> </a>
+                    <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}"><i class="material-icons clear-style">clear</i></a>
                 </form>
             </div>
         </div>

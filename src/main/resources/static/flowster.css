@@ -454,40 +454,51 @@ ul li::before
     float: left;
     font-size: 25px;
     font-weight: lighter;
-    padding-top: 50px;
+    margin: 50px 0 0 0;
 }
 
 .subproject-style
 {
     float: left;
     color: #235D89;
-    padding-left: 20px;
+    margin: 10px 0 10px 60px;
     font-size: 22px;
-    font-weight: lighter;
+    font-weight: bold;
     clear: both; /*positionere subproject under project*/
 }
 .task-style
 {
     float: left;
     color: #2b669a;
-    padding-left: 40px;
+    margin: 10px 0 10px 120px;
     font-size: 19px;
     font-weight: lighter;
+    font-style: italic;
     clear: both; /*positionere task under subproject*/
 }
+
 .subtask-style
 {
     float: left;
     color: #3E8AC4;
-    padding-left: 60px;
+    margin: 10px 0 10px 180px;
     font-size: 16px;
     font-weight: lighter;
     clear: both; /*positionere subtask under task*/
 }
 
+.clear-style
+{
+    float: left;
+    color: black;
+    margin: 5px 0 0 10px;
+    font-size: 25px;
+    clear: both; /*positionere subtask under task*/
+}
+
 .subproject-input
 {
-    padding-left: 20px;
+    padding: 10px 0 10px 60px;
     width: 60%;
     display: flex;
     clear: both;
@@ -495,44 +506,38 @@ ul li::before
 
 .subproject-manhours-input
 {
+    margin-left: 10px;
     width: 80%;
 }
 
 .task-input
 {
-    padding-left: 40px;
-    width: 40%;
+    padding: 10px 0 10px 120px;
+    width: 60%;
     display: flex;
     clear: both;
 }
+
+
 
 .subtask-input
 {
-    padding-left: 60px;
-    width: 40%;
+    padding: 10px 0 10px 180px;
+    width: 60%;
     display: flex;
     clear: both;
 }
 
-.required:after
+.project-input-btn
 {
-    content: " *";
-    color: red;
-
+    border-radius: 100px;
+    width: 235px;
+    color: black;
+    background-color: #D7EEF7;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 20px;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
 }
-
-
-/*css-selector*/
-/* css-selector - ALLE p-tags som er i form, der har create-user-klassen*/
-
-/* alle input-tags som har klassen required, og som er i en form - efter dem: */
-form input.required:after
-{
-    content: " *";
-    color: red;
-
-}
-
-
 
 
