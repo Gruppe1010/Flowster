@@ -460,6 +460,7 @@ ul li::before
 .subproject-style
 {
     float: left;
+    color: #235D89;
     padding-left: 20px;
     font-size: 22px;
     font-weight: lighter;
@@ -468,6 +469,7 @@ ul li::before
 .task-style
 {
     float: left;
+    color: #2b669a;
     padding-left: 40px;
     font-size: 19px;
     font-weight: lighter;
@@ -476,6 +478,7 @@ ul li::before
 .subtask-style
 {
     float: left;
+    color: #3E8AC4;
     padding-left: 60px;
     font-size: 16px;
     font-weight: lighter;
@@ -510,3 +513,4 @@ ul li::before
     display: flex;
     clear: both;
 }
+
