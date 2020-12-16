@@ -468,6 +468,17 @@ ul li::before
     font-weight: bold;
     clear: both; /*positionere subproject under project*/
 }
+
+.manhours-style
+{
+    float: left;
+    color: #235D89;
+    margin: 10px 0 10px 10px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+
 .task-style
 {
     float: left;
