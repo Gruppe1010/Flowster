@@ -275,12 +275,10 @@ public class ProjectRepository
     
        try
        {
-           System.out.println("kommer vi herind?"); // TODO
            Subproject subproject;
            
            while(resultSet.next())
            {
-               System.out.println("én");
                int subprojectId = resultSet.getInt("id_subproject");
                
                // opretter nyt subprojekt
@@ -351,9 +349,7 @@ public class ProjectRepository
                 
                 // opretter nyt subprojekt
                 Task task = new Task
-                       (taskId,
-                        resultSet.getString("task_title"),
-                        retrieveSubtaskList(taskId));
+                       (taskId, resultSet.getString("task_title"), retrieveSubtaskList(taskId));
                 
                 // tilføjer nyoprettet projekt til liste
                 taskList.add(task);
@@ -388,7 +384,6 @@ public class ProjectRepository
             
             ResultSet resultSet = preparedStatement.executeQuery();
             
-          
             subtaskList = createSubtaskListFromResultSet(resultSet);
             
         }
