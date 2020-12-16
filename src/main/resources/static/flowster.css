@@ -520,9 +520,12 @@ ul li::before
 .project-input-btn
 {
     border-radius: 100px;
-    width: 220px;
+    width: 235px;
     color: black;
     background-color: #D7EEF7;
+    font-style: normal;
+    font-weight: lighter;
+    font-size: 20px;
     box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
 }
 
