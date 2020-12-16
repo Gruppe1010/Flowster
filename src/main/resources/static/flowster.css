@@ -487,6 +487,15 @@ ul li::before
     clear: both; /*positionere subtask under task*/
 }
 
+.clear-style
+{
+    float: left;
+    color: black;
+    margin: 5px 0 0 10px;
+    font-size: 25px;
+    clear: both; /*positionere subtask under task*/
+}
+
 .subproject-input
 {
     padding: 10px 0 10px 30px;
@@ -509,6 +518,8 @@ ul li::before
     clear: both;
 }
 
+
+
 .subtask-input
 {
     padding: 10px 0 10px 90px;
@@ -527,14 +538,6 @@ ul li::before
     font-weight: lighter;
     font-size: 20px;
     box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
-}
-
-div.project-container hr
-{
-    border-width: 2px;
-    margin: 0;
-    border-color: #CDD3D8;
-    width: 90%;
 }
 
 

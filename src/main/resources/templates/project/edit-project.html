@@ -40,7 +40,7 @@
 
                 <p th:text="${project.getTitle()}" class="project-style"></p>
 
-                <div th:each="subproject : ${project.getSubprojectList()}"><hr>
+                <div th:each="subproject : ${project.getSubprojectList()}">
                     <p th:text="${subproject.getTitle()}" class="subproject-style"></p>
 
                     <div th:each="task : ${subproject.getTaskList()}">
