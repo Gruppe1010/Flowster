@@ -9,6 +9,7 @@ import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.models.users.User;
 import gruppe10.flowster.viewModels.project.CreateProjectViewModel;
 import gruppe10.flowster.viewModels.project.CreateSubprojectViewModel;
+import gruppe10.flowster.viewModels.project.CreateTaskViewModel;
 import gruppe10.flowster.viewModels.user.CreatorViewModel;
 import org.springframework.stereotype.Repository;
 
@@ -745,6 +746,7 @@ public class ProjectRepository
     
     
     // GEM SUBPROJEKT i db
+    // TODO - se om de 3 følgende metoder måske kan gøres dynamiske? De bruge både til subproject, task og subtask
     
     public boolean checkIfSubprojectTitleIsAvailable(String dbName, int projectId, String subprojectTitle)
     {
@@ -776,7 +778,7 @@ public class ProjectRepository
         }
         catch(SQLException e)
         {
-            System.err.println("ERROR in ProjectRepository isSubprojectTitleAvailable: " + e.getMessage());
+            System.err.println("ERROR in ProjectRepository checkIfSubprojectTitleIsAvailable: " + e.getMessage());
         }
         finally
         {
@@ -786,7 +788,7 @@ public class ProjectRepository
             }
             catch(SQLException e)
             {
-                System.err.println("ERROR in ProjectRepository isSubprojectTitleAvailableFinally: " + e.getMessage());
+                System.err.println("ERROR in ProjectRepository checkIfSubprojectTitleIsAvailable: " + e.getMessage());
             }
         }
         
@@ -861,7 +863,238 @@ public class ProjectRepository
         }
     }
     
+    // GEM TASK i db
+    
+    public boolean checkIfTaskTitleIsAvailable(String dbName, int subprojectId, String taskTitle)
+    {
+        // returVærdi sættes til at være true - vi ændrer den KUN til false, hvis vi ud af at det givne subproject
+        // HAR en task med taskTitle-værdien
+        boolean taskTitleIsAvailable = true;
+    
+        organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+            // find alt hvor subprojedtId'et og taskTitel mathcer vores input
+            String sqlCommand =
+                    "SELECT * FROM subprojects_tasks " +
+                            "RIGHT JOIN tasks ON f_id_task = id_task " +
+                            "WHERE f_id_subproject = ? AND task_title = ?";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setInt(1, subprojectId);
+            preparedStatement.setString(2, taskTitle);
+        
+            ResultSet resultSet = preparedStatement.executeQuery();
+        
+            // hvis der der findes et task med titlen taskTitle under subproject'et der har id'et subprojectId
+            if(resultSet.next())
+            {
+                // så er titlen IKKE available
+                taskTitleIsAvailable = false;
+            }
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in ProjectRepository checkIfTaskTitleIsAvailable: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in ProjectRepository checkIfTaskTitleIsAvailable: " + e.getMessage());
+            }
+        }
+    
+        return taskTitleIsAvailable;
+        
+    }
+    
+    public void insertNewTaskIntoDb(String dbName, String title)
+    {
+        organisationConnection = generalRepository.establishConnection(dbName);
+        
+        try
+        {
+            String sqlCommand = "INSERT INTO tasks (task_title) value (?)";
+            
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setString(1, title);
+            
+            preparedStatement.executeUpdate();
+            
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in projectRepository insertNewTaskIntoDb: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in projectRepository insertNewTaskIntoDb: " + e.getMessage());
+            }
+        }
+    }
+    
+    public void insertRowIntoSubprojectsTasks(String dbName, int subprojectId, int taskId)
+    {
+        organisationConnection = generalRepository.establishConnection(dbName);
+        
+        try
+        {
+            String sqlCommand = "INSERT INTO subprojects_tasks (f_id_subproject, f_id_task) values (?, ?)";
+            
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setInt(1, subprojectId);
+            preparedStatement.setInt(2, taskId);
+            
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in insertRowIntoSubprojectsTasks: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in insertRowIntoSubprojectsTasks: " + e.getMessage());
+            }
+        }
+    }
+    
+    // GEMT SUBTASK i db
+    
+    public boolean checkIfSubtaskTitleIsAvailable(String dbName, int taskId, String subtaskTitle)
+    {
+        // returVærdi sættes til at være true - vi ændrer den KUN til false, hvis vi ud af at det givne subproject
+        // HAR en task med taskTitle-værdien
+        boolean subtaskTitleIsAvailable = true;
+        
+        organisationConnection = generalRepository.establishConnection(dbName);
+        
+        try
+        {
+            // find alt hvor taskId'et og subtaskTitel mathcer vores input
+            String sqlCommand =
+                    "SELECT * FROM tasks_subtasks " +
+                            "RIGHT JOIN subtasks ON f_id_subtask = id_subtask " +
+                            "WHERE f_id_task = ? AND subtask_title = ?";
+            
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setInt(1, taskId);
+            preparedStatement.setString(2, subtaskTitle);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            // hvis der der findes et task med titlen taskTitle under subproject'et der har id'et subprojectId
+            if(resultSet.next())
+            {
+                // så er titlen IKKE available
+                subtaskTitleIsAvailable = false;
+            }
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in ProjectRepository checkIfSubtaskTitleIsAvailable: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in ProjectRepository checkIfSubtaskTitleIsAvailable: " + e.getMessage());
+            }
+        }
+        
+        return subtaskTitleIsAvailable;
+        
+    }
+    
+    public void insertNewSubtaskIntoDb(String dbName, String title)
+    {
+        organisationConnection = generalRepository.establishConnection(dbName);
+        
+        try
+        {
+            String sqlCommand = "INSERT INTO subtasks (subtask_title) value (?)";
+            
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setString(1, title);
+            
+            preparedStatement.executeUpdate();
+            
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in projectRepository insertNewSubtaskIntoDb: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in projectRepository insertNewSubtaskIntoDb: " + e.getMessage());
+            }
+        }
+    }
+    
+    public void insertRowIntoTasksSubtasks(String dbName, int taskId, int subtaskId)
+    {
+        organisationConnection = generalRepository.establishConnection(dbName);
+        
+        try
+        {
+            String sqlCommand = "INSERT INTO tasks_subtasks (f_id_task, f_id_subtask) values (?, ?)";
+            
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setInt(1, taskId);
+            preparedStatement.setInt(2, subtaskId);
+            
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in insertRowIntoTasksSubtasks: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in insertRowIntoTasksSubtasks: " + e.getMessage());
+            }
+        }
+    }
     
     
-
+    
 }

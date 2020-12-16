@@ -1,12 +1,12 @@
 package gruppe10.flowster.viewModels.project;
 
-public class CreateSubTaskViewModel
+public class CreateSubtaskViewModel
 {
     private int id;
     private String title;
     
     // constructors
-    public CreateSubTaskViewModel(String title)
+    public CreateSubtaskViewModel(String title)
     {
         this.title = title;
     }

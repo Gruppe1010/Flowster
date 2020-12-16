@@ -4,7 +4,9 @@ import gruppe10.flowster.models.project.Project;
 import gruppe10.flowster.repositories.FlowsterRepository;
 import gruppe10.flowster.repositories.ProjectRepository;
 import gruppe10.flowster.viewModels.project.CreateProjectViewModel;
+import gruppe10.flowster.viewModels.project.CreateSubtaskViewModel;
 import gruppe10.flowster.viewModels.project.CreateSubprojectViewModel;
+import gruppe10.flowster.viewModels.project.CreateTaskViewModel;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 
@@ -104,6 +106,8 @@ public class ProjectService
         return projectRepository.retrieveProject(orgDbName, projectId);
     }
     
+    // CREATE SUBPROJECT
+    
     /**
      * Opretter en CreateSubprojectViewModel ud fra data i form
      *
@@ -143,6 +147,54 @@ public class ProjectService
         projectRepository.insertRowIntoProjectsSubprojects(orgDbName, projectId, subprojectId);
     }
     
-
-
+    // CREATE TASK
+    
+    public CreateTaskViewModel createTaskViewModelFromForm(WebRequest dataFromCreateTaskForm)
+    {
+        return new CreateTaskViewModel(dataFromCreateTaskForm.getParameter("task-title"));
+    }
+    
+    public boolean isTaskTitleAvailable(String orgDbName, int subprojectId, String taskTitle)
+    {
+        return projectRepository.checkIfTaskTitleIsAvailable(orgDbName, subprojectId, taskTitle);
+    }
+    
+    public void insertNewTaskIntoDb(String orgDbName, int subprojectId, int taskId,
+                                          CreateTaskViewModel createTaskViewModel)
+    {
+        // indsætter ny task i tasks-tabel
+        projectRepository.insertNewTaskIntoDb(orgDbName, createTaskViewModel.getTitle());
+        
+        // tilknytter den nye task til subproject'et
+        projectRepository.insertRowIntoSubprojectsTasks(orgDbName, subprojectId, taskId);
+    }
+    
+    // CREATE SUBTASK
+    
+    public CreateSubtaskViewModel createSubtaskViewModelFromForm(WebRequest dataFromCreateSubtaskForm)
+    {
+        return new CreateSubtaskViewModel(dataFromCreateSubtaskForm.getParameter("subtask-title"));
+    }
+    
+    public boolean isSubtaskTitleAvailable(String orgDbName, int taskId, String subtaskTitle)
+    {
+        return projectRepository.checkIfSubtaskTitleIsAvailable(orgDbName, taskId, subtaskTitle);
+    }
+    
+    public void insertNewSubtaskIntoDb(String orgDbName, int taskId, int subtaskId,
+                                    CreateSubtaskViewModel createSubtaskViewModel)
+    {
+        // indsætter ny subtask i subtasks-tabel
+        projectRepository.insertNewSubtaskIntoDb(orgDbName, createSubtaskViewModel.getTitle());
+        
+        // tilknytter den nye subtask til task'en
+        projectRepository.insertRowIntoTasksSubtasks(orgDbName, taskId, subtaskId);
+    }
+    
+    
+    
+    
+    
+    
+    
 }

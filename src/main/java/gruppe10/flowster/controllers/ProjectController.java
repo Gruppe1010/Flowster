@@ -1,10 +1,9 @@
 package gruppe10.flowster.controllers;
 
-import gruppe10.flowster.models.project.Project;
 import gruppe10.flowster.services.ProjectService;
 import gruppe10.flowster.services.UserService;
 import gruppe10.flowster.viewModels.project.CreateProjectViewModel;
-import gruppe10.flowster.viewModels.project.CreateSubTaskViewModel;
+import gruppe10.flowster.viewModels.project.CreateSubtaskViewModel;
 import gruppe10.flowster.viewModels.project.CreateSubprojectViewModel;
 import gruppe10.flowster.viewModels.project.CreateTaskViewModel;
 import org.springframework.stereotype.Controller;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
-
-import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/{orgDbName}")
@@ -27,7 +24,7 @@ public class ProjectController
     CreateProjectViewModel createProjectViewModel;
     CreateSubprojectViewModel createSubprojectViewModel;
     CreateTaskViewModel createTaskViewModel;
-    CreateSubTaskViewModel createSubtaskViewModel;
+    CreateSubtaskViewModel createSubtaskViewModel;
     
     
     @GetMapping("/projects")
@@ -204,6 +201,7 @@ public class ProjectController
         return "project/create-subproject"; // html
     }
     
+    
     //
     @PostMapping("/editProject/{projectId}/createSubproject/{subprojectId}")
     public String postCreateSubproject(@PathVariable String orgDbName, @PathVariable int projectId,
@@ -307,32 +305,29 @@ public class ProjectController
                                  WebRequest dataFromCreateTaskForm)
     {
         // opret CreateTaskViewModel(dataFromCreateTaskForm) ud fra webRequest
-        // TODO createTaskViewModel = projectService.createTaskViewModelFromForm(dataFromCreateTaskForm);
+        createTaskViewModel = projectService.createTaskViewModelFromForm(dataFromCreateTaskForm);
     
         
-        /*
-        // tjek om tasktitel er optaget
-        boolean subprojectTitleIsAvailable = projectService.isSubprojectTitleAvailable(orgDbName, projectId,
-                createSubprojectViewModel.getTitle());
+        // tjek om tasktitel allerede findes i delprojekt
+        boolean taskTitleIsAvailable = projectService.isTaskTitleAvailable(orgDbName, subprojectId,
+                createTaskViewModel.getTitle());
     
-        // hvis subprojectTitle ikke allerede findes på projektet
-        if(subprojectTitleIsAvailable)
+        // hvis taskTitle ikke allerede findes på subproject'et
+        if(taskTitleIsAvailable)
         {
-            // tilføj nyt subproject til db og knyt delprojekt til projektet
-            projectService.insertNewSubprojectIntoDb(orgDbName, projectId, subprojectId,
-                    createSubprojectViewModel);
+            // tilføj ny task til db og knyt task til subproject
+            projectService.insertNewTaskIntoDb(orgDbName, subprojectId, taskId,
+                    createTaskViewModel);
         
-            // fordi delprojektet oprettedes succesfuldt skal createSubprojectViewModel nu ikke vise indtastede titel
+            // fordi delprojektet oprettedes succesfuldt skal createTaskViewModel nu ikke vise indtastede titel
             // mere
-            createSubprojectViewModel = null;
+            createTaskViewModel = null;
         
             // vi ryger tilbage til editProject
             return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
         }
-        
-         */
     
-        // Subprojektet er IKKE blevet gemt i databasen og guider derfor til samme GetMapping, hvor ugyldig title vises
+        // Task'en er IKKE blevet gemt i databasen og guider derfor til samme GetMapping, hvor ugyldig title vises
         // via createTaskViewModel
     
         return String.format("redirect:/%s/editProject/%d/subproject/%d/createTask/%d", orgDbName, projectId,
@@ -398,11 +393,6 @@ public class ProjectController
         subprojectIdModel.addAttribute("subprojectId", subprojectId);
         taskIdModel.addAttribute("taskId", taskId);
         nextSubtaskIdModel.addAttribute("nextSubtaskId", nextSubtaskId);
-       
-    
-    
-    
-    
     
     
         // tilføj FORM med postMapping:
@@ -418,38 +408,36 @@ public class ProjectController
     @PostMapping("/editProject/{projectId}/subproject/{subprojectId}/task/{taskId}/createSubtask/{subtaskId}")
     public String postCreateSubtask(@PathVariable String orgDbName, @PathVariable int projectId,
                                     @PathVariable int subprojectId, @PathVariable int taskId,
-                                    @PathVariable int subTaskId, WebRequest dataFromCreateSubtaskForm)
+                                    @PathVariable int subtaskId, WebRequest dataFromCreateSubtaskForm)
     {
         // opret CreateSubtaskViewModel(dataFromCreateSubtaskForm) ud fra webRequest
-        // TODO createSubtaskViewModel = projectService.createSubtaskViewModelFromForm(dataFromCreateSubtaskForm);
+        createSubtaskViewModel = projectService.createSubtaskViewModelFromForm(dataFromCreateSubtaskForm);
     
-    /*
+    
         // tjek om tasktitel er optaget
-        boolean subprojectTitleIsAvailable = projectService.isSubprojectTitleAvailable(orgDbName, projectId,
+        boolean subtaskTitleIsAvailable = projectService.isSubtaskTitleAvailable(orgDbName, taskId,
                 createSubprojectViewModel.getTitle());
     
         // hvis subprojectTitle ikke allerede findes på projektet
-        if(subprojectTitleIsAvailable)
+        if(subtaskTitleIsAvailable)
         {
             // tilføj nyt subproject til db og knyt delprojekt til projektet
-            projectService.insertNewSubprojectIntoDb(orgDbName, projectId, subprojectId,
-                    createSubprojectViewModel);
+            projectService.insertNewSubtaskIntoDb(orgDbName, taskId, subtaskId,
+                    createSubtaskViewModel);
         
-            // fordi delprojektet oprettedes succesfuldt skal createSubprojectViewModel nu ikke vise indtastede titel
+            // fordi subtask oprettedes succesfuldt skal createSubtaskViewModel nu ikke vise indtastede titel
             // mere
-            createSubprojectViewModel = null;
+            createSubtaskViewModel = null;
         
             // vi ryger tilbage til editProject
             return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
         }
         
-         */
     
         // Subtask er IKKE blevet gemt i db --> guide derfor til samme GetMapping, hvor ugyldig title vises
         // via createSubtaskViewModel
-    
         return String.format("redirect:/%s/editProject/%d/subproject/%d/task/%d/createSubtask", orgDbName, projectId,
-                subprojectId, taskId, subTaskId);
+                subprojectId, taskId, subtaskId);
     }
    
     
