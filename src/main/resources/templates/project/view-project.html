@@ -40,7 +40,12 @@
 
                 <div class="team-name-container">
                     <p></p>
-                    <p  class="project-style" th:text="${project.getTitle()}"></p>
+                    <p class="project-style" th:text="${project.getTitle()}"></p>
+                    <p class="manhours-style">&nbsp;-&nbsp;</p>
+                    <p th:text="${project.getDeadline()}" class="manhours-style"></p>
+
+
+
 
                     <div th:if="${loggedInUser.isProjectManager()}">
                         <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}">
