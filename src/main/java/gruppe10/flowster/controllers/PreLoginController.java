@@ -19,8 +19,10 @@ public class PreLoginController
     LogInViewModel logInViewModel;
     String orgDbName;
     
+    String error = null;
+    
     @GetMapping("/")
-    public String index(Model logInViewModel, Model loggedInUser, Model orgDbNameModel)
+    public String index(Model logInViewModel, Model loggedInUser, Model orgDbNameModel, Model errorModel)
     {
         // reset af ting:
         userService.resetLoggedInUser();
@@ -30,6 +32,7 @@ public class PreLoginController
         
         logInViewModel.addAttribute("logInViewModel", this.logInViewModel);
         loggedInUser.addAttribute("loggedInUser", UserService.loggedInUser);
+        errorModel.addAttribute("error", error);
         
         return "pre-login/index"; // html
     }
@@ -80,7 +83,8 @@ public class PreLoginController
     @PostMapping("/postLogIn")
     public String postLogIn(WebRequest dataFromLogInForm, Model orgDbNameModel)
     {
-       
+        error = null;
+        
         logInViewModel = userService.createLogInViewModelFromForm(dataFromLogInForm);
         
         // i denne metode sættes loggedInUser
@@ -99,8 +103,10 @@ public class PreLoginController
             // return "redirect:/" + orgDbName +"/frontPage";
         }
         
+        error = "Forkert login-info";
+        
         // hvis invalid logInInfo
-        return "redirect:/";
+        return "redirect:/#error-popup";
     }
     
  

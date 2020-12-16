@@ -126,8 +126,8 @@
                                id="password"
                                placeholder="Indtast adgangskode"
                                th:value = "${createUserViewModel != null ? createUserViewModel.getPassword() : ''}"
-                               oninvalid="this.setCustomValidity('Indtast venligst en adgangskode. En adgangskode består af 8 karaktere, mindst' +
-                                ' én karakter skal være i uppercase og mindst ét specialtegn et \'@\'')"
+                               oninvalid="this.setCustomValidity('Indtast venligst en adgangskode. En adgangskode består af 8 karakterer, mindst' +
+                                ' ét stort bogstav og mindst ét specialtegn')"
                                oninput="setCustomValidity('')"
                                name="password"
                                value="Valeas"
@@ -142,7 +142,7 @@
                                id="confirm-password"
                                placeholder="Bekræft adgangskode"
                                oninvalid="this.setCustomValidity('Indtast venligst en adgangskode som matcher ' +
-                                'overstående adgangskode')"
+                                'ovenstående adgangskode')"
                                oninput="setCustomValidity('')"
                                name="confirm-password"
                                required
