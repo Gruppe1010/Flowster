@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/flowster.css" type="text/css">
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Padauk&family=Raleway:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
 <body>
@@ -39,7 +40,7 @@
 
                 <p th:text="${project.getTitle()}" class="project-style"></p>
 
-                <div th:each="subproject : ${project.getSubprojectList()}">
+                <div th:each="subproject : ${project.getSubprojectList()}"><hr>
                     <p th:text="${subproject.getTitle()}" class="subproject-style"></p>
 
                     <div th:each="task : ${subproject.getTaskList()}">

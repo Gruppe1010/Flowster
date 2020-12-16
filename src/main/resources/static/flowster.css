@@ -461,7 +461,7 @@ ul li::before
 {
     float: left;
     color: #235D89;
-    margin: 20px 0 0 30px;
+    margin: 10px 0 10px 30px;
     font-size: 22px;
     font-weight: bold;
     clear: both; /*positionere subproject under project*/
@@ -470,7 +470,7 @@ ul li::before
 {
     float: left;
     color: #2b669a;
-    margin: 20px 0 0 60px;
+    margin: 10px 0 10px 60px;
     font-size: 19px;
     font-weight: lighter;
     font-style: italic;
@@ -481,7 +481,7 @@ ul li::before
 {
     float: left;
     color: #3E8AC4;
-    margin: 20px 0 0 90px;
+    margin: 10px 0 10px 90px;
     font-size: 16px;
     font-weight: lighter;
     clear: both; /*positionere subtask under task*/
@@ -489,7 +489,7 @@ ul li::before
 
 .subproject-input
 {
-    padding: 20px 0 0 30px;
+    padding: 10px 0 10px 30px;
     width: 60%;
     display: flex;
     clear: both;
@@ -503,7 +503,7 @@ ul li::before
 
 .task-input
 {
-    padding: 20px 0 0 60px;
+    padding: 10px 0 10px 60px;
     width: 60%;
     display: flex;
     clear: both;
@@ -511,7 +511,7 @@ ul li::before
 
 .subtask-input
 {
-    padding: 20px 0 0 90px;
+    padding: 10px 0 10px 90px;
     width: 60%;
     display: flex;
     clear: both;
@@ -527,6 +527,14 @@ ul li::before
     font-weight: lighter;
     font-size: 20px;
     box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+}
+
+div.project-container hr
+{
+    border-width: 2px;
+    margin: 0;
+    border-color: #CDD3D8;
+    width: 90%;
 }
 
 
