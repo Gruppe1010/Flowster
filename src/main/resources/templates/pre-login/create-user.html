@@ -66,12 +66,12 @@
                         <!-- Dette er den eneste værdi på createUserViewModel, som IKKE er null, fordi den er en double, hvis default er 0,0 -->
                         <!-- Derfor skal vi lave: -->
                         <!-- if ? then ==  den viser KUN getManHours() hvis den ikke er null -->
-                        <!--step="any" gør at vi kan indtaste et enkelt tal efter decimal altså 37.5 er nu valid -->
+                        <!--step="0.1" gør at vi kan indtaste et enkelt tal efter decimal altså 37.5 er nu valid -->
                         <label class="label-padding" for="manhours">Ugentlige arbejdstimer:</label>
                         <input type="number"
                                class="form-control"
                                id="manhours"
-                               step="any"
+                               step=".1"
                                placeholder="Indtast arbejdstimer"
                                th:value = "${createUserViewModel != null ? createUserViewModel.getManhours() : ''}"
                                oninvalid="this.setCustomValidity('Angiv dine ugentlige arbejdstimer')"
