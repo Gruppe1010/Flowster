@@ -42,7 +42,7 @@
 
                 <div class="name-button-container">
                     <p></p>
-                    <p class="team-name" th:text="${project.findHeadline()}"></p>
+                    <p></p>
                     <div th:if="${loggedInUser.isProjectManager()}">
                         <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}">
                             <button class="btn project-btn" type="submit">Se projekt</button>
