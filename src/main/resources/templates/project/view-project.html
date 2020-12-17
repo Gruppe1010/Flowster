@@ -38,12 +38,12 @@
         <div class="col-sm-10">
             <div class="project-container">
 
-                <div class="team-name-container">
+                <div class="name-button-container">
                     <p></p>
                     <p class="team-name" th:text="${project.findHeadline()}"></p>
                     <div th:if="${loggedInUser.isProjectManager()}">
                         <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}">
-                            <button class="btn edit-team-btn" type="submit">Rediger</button>
+                            <button class="btn project-btn" type="submit">Rediger</button>
                         </a>
                     </div>
                 </div>
