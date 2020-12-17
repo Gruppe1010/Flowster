@@ -387,13 +387,6 @@ public class TeamRepository
             teamViewModel = new TeamViewModel(teamId, teamName, previewUserViewModelList);
         }
     
-        // resultSet der indeholder ALLE orgbrugere
-        // opret PreviewUserViewModel-obj ud af ALLE disse - isOnTeam == null - læg på previewUserList
-        // for(int i = 0; i < previewUserList.size(); i++): PreviewUser previewUser = previewUserList.get(i);
-        //  select * FROM teams_users where f_id_team = ? AND f_id_user = previewUser.getId()
-        // if resultSet.next(){ previewUser.setIsOnTeam(true);
-        // else: previewUser.setIsOnTeam(false);
-    
     
         return teamViewModel;
     }

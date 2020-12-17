@@ -104,7 +104,7 @@ public class TeamService
     }
 
 
-    public void updateJoinedTeamsList()
+    public void updateJoinedTeamList()
     {
         // TODO dette skridt er overflødigt - vi kan få den med som param gennem pathVariable-orgDbName
         String dbName = convertOrganisationNameToDbName
