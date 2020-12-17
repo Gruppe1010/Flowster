@@ -243,6 +243,8 @@ public class UserService
  
     public boolean checkIfLogInInfoIsValid(LogInViewModel logInViewModel)
     {
+        error = "Der er ikke oprettet en bruger med denne email";
+        
         boolean logInInfoIsValid = false;
         
         String email = logInViewModel.getEmail();
@@ -253,17 +255,21 @@ public class UserService
         //  = if(emailExists): finde org_name ud fra email
         if(emailExistsInDb)
         {
+            error = "Adgangskoden mathcer ikke emailen";
             // finder organisationName udfra email
             String organisationName = flowsterRepository.retrieveOrganisationNameFromEmail(email);
     
             // konverterer organisationName til at være dbName - dvs. små bogstaver og underscore hvor mellemrum
             String dbName = convertOrganisationNameToDbName(organisationName);
     
-            // finder User-obj i users-tabel i dbName-db ud fra logInViewModel
+            // finder User-obj i users-tabel i dbName-db ud fra logInViewModel - HVIS password ikke matcher email, er
+            // loggedInUser null
             loggedInUser = organisationRepository.retrieveUserFromDb(logInViewModel, dbName);
             
             if(loggedInUser != null)
             {
+                error = null;
+                
                 logInInfoIsValid = true;
             }
         }

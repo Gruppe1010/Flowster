@@ -59,10 +59,8 @@ public class PreLoginController
             return String.format("redirect:/%s/frontPage", orgDbName);
             // return "redirect:/" + orgDbName +"/frontPage";
         }
-        
-        // TODO tilføj noget errror-noget her
-        
-        error = "Forkert login-info - prøv igen";
+  
+        error = userService.getError();
         
         // hvis invalid logInInfo
         return "redirect:/#error-popup";

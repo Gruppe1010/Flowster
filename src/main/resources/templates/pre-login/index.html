@@ -37,12 +37,13 @@
                         <!--max-length="320" == Fordi i db har sat en limit på VARCHAR(320)-->
 
                         <label for="email">Email:</label>
-                        <input type="email"
+                        <input type="text"
                                id="email"
                                class="form-control "
+                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                                placeholder="Indtast email"
                                th:value = "${logInViewModel != null ? logInViewModel.getEmail() : ''}"
-                               oninvalid="this.setCustomValidity('Email skal indeholde \'@\'')"
+                               oninvalid="this.setCustomValidity('Ugyldigt email format')"
                                oninput="setCustomValidity('')"
                                name="email"
                                required="required"
@@ -54,34 +55,13 @@
                                class="form-control asterisk_input"
                                id="password"
                                placeholder="Indtast adgangskode"
-                               oninvalid="this.setCustomValidity('Forkert adgangskode, indtast din adgangskode igen')"
-                               oninput="setCustomValidity('')"
                                name="password"
                                required
-                               maxlength="320"
-                               pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
+                               maxlength="320">
 
                     </div>
 
                     <div class="text-center">
-                    <!--
-                        <h1>Popup/Modal Windows without JavaScript</h1>
-                        <div class="box">
-                            <a class="button" href="#popup1">Let me Pop up</a>
-                        </div>
-
-                        <div id="error-popup" class="overlay">
-                            <div class="popup">
-                                <h2>Here i am</h2>
-                                <a class="close" href="#">&times;</a>
-                                <div class="content">
-                                    Thank to pop me out of that button, but now i'm done so you can close this window.
-                                </div>
-                            </div>
-                        </div>
-                        -->
-
-
 
                         <button type="submit" class="btn flowster-btn" href="#error-popup">Log ind</button>
 
