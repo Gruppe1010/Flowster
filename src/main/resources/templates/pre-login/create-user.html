@@ -109,11 +109,12 @@
                         <!--max-length="320" == Fordi i db har sat en limit på VARCHAR(320)-->
                         <label class="label-padding" for="email">Email:</label>
                         <input type="email"
+                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                                class="form-control"
                                id="email"
                                placeholder="Indtast email"
                                th:value = "${createUserViewModel != null ? createUserViewModel.getEmail() : ''}"
-                               oninvalid="this.setCustomValidity('Indtast venligst din email. En email indeholder altid et \'@\'')"
+                               oninvalid="this.setCustomValidity('Indtast venligst din email. En email indeholder altid et \'@\' og et \'.\'-domæne')"
                                oninput="setCustomValidity('')"
                                name="email"
                                required
