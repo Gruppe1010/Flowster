@@ -53,7 +53,7 @@ class UserServiceTest
         boolean expectedTrue = true;
         boolean expectedFalse = false;
     
-        // værdier som er ligegyldige for metoden - hånderes af formen
+        // værdier som er ligegyldige for metoden - håndteres af formen
         double manhours = 13.5;
         String firstname = "Tobi";
         String surname = "BojBoy";
@@ -85,7 +85,6 @@ class UserServiceTest
         CreateUserViewModel viewModel4 = new CreateUserViewModel(organisationAndJobType, manhours, firstname,
                 surname, email, password, invalidPassword);
         
-    
         // ACT
         boolean result1 = userService.checkDataFromCreateUserViewModel(viewModel1);
         boolean result2 = userService.checkDataFromCreateUserViewModel(viewModel2);
@@ -104,10 +103,6 @@ class UserServiceTest
         
         // password + confirmPassword == no match --> false
         assertEquals(expectedFalse, result4);
-        
-        //
-        
-        
     }
     
     
