@@ -87,20 +87,10 @@
             <img class="index-img-container rel" src="https://images.theconversation.com/files/350865/original/file-20200803-24-50u91u.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=675.0&fit=crop">
 
         </div>
-
-
     </div>
 
-    <div th:if="${error != null}" id="error-popup" class="overlay text-center">
-        <div></div>
-        <div class="popup">
-            <h2>Der skete en fejl</h2>
-            <a class="close" href="#">&times;</a>
-            <div class="content" th:text="${error}">
-            </div>
-        </div>
-        <div></div>
-    </div>
+    <div th:if="${error != null}" th:replace="fragments :: error-popup(${error})"></div>
+
 </div>
 
 <!-- Fragments -->

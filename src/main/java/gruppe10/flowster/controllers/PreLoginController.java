@@ -65,7 +65,6 @@ public class PreLoginController
         // hvis invalid logInInfo
         return "redirect:/#error-popup";
     }
-    
  
     @GetMapping("/createUser")
     public String createUser(Model createUserViewModel, Model loggedInUserModel, Model errorModel)
@@ -88,12 +87,13 @@ public class PreLoginController
     @PostMapping("/postCreateUser")
     public String postCreateUser(WebRequest dataFromCreateUserForm, Model orgDbNameModel)
     {
+        error = null;
+        
         // createUserModel bliver oprettet og gemt med oplysninger som bruger har tastet ind
         createUserViewModel = userService.createCreateUserViewModelFromForm(dataFromCreateUserForm);
         
         // tjekker om indtastet data er valid: orgKoden findes, email != optaget, passwords matcher
         boolean dataFromFormIsValid = userService.checkDataFromCreateUserViewModel(createUserViewModel);
-        
         
         if(dataFromFormIsValid)
         {
