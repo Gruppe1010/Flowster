@@ -72,10 +72,12 @@ public class PreLoginController
     }
     
     @GetMapping("/createUser")
-    public String createUser(Model createUserViewModel, Model loggedInUserModel)
+    public String createUser(Model createUserViewModel, Model loggedInUserModel, Model errorModel)
     {
         createUserViewModel.addAttribute( "createUserViewModel", this.createUserViewModel);
         loggedInUserModel.addAttribute( "loggedInUser", UserService.loggedInUser);
+        errorModel.addAttribute("error", error);
+
 
         return "pre-login/create-user"; // html
     }

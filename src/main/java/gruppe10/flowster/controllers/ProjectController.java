@@ -25,6 +25,8 @@ public class ProjectController
     CreateSubprojectViewModel createSubprojectViewModel;
     CreateTaskViewModel createTaskViewModel;
     CreateSubtaskViewModel createSubtaskViewModel;
+
+    String error = null;
     
     
     @GetMapping("/projects")
@@ -41,13 +43,15 @@ public class ProjectController
 
     @GetMapping("/createProject")
     public String createProject(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel,
-                                Model joinedProjectListModel, Model createProjectModel)
+                                Model joinedProjectListModel, Model createProjectModel, Model errorModel)
     {
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
-        
+        errorModel.addAttribute("error", error);
+
+
         // model til form-input-felt
         createProjectModel.addAttribute("createProjectViewModel", createProjectViewModel);
         
@@ -145,13 +149,15 @@ public class ProjectController
                                 @PathVariable int nextSubprojectId,
                                 Model orgDbNameModel, Model loggedInUserModel, Model joinedProjectListModel,
                                 Model projectModel, Model projectIdModel, Model nextSubprojectIdModel,
-                                Model nextTaskIdModel, Model nextSubtaskIdModel, Model createSubprojectModel)
+                                Model nextTaskIdModel, Model nextSubtaskIdModel, Model createSubprojectModel, Model errorModel)
     {
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
-    
+        errorModel.addAttribute("error", error);
+
+
         // model til form-input-felt
         createSubprojectModel.addAttribute("createSubprojectViewModel", createSubprojectViewModel);
     
@@ -238,13 +244,15 @@ public class ProjectController
                           Model orgDbNameModel, Model loggedInUserModel, Model joinedProjectListModel,
                           Model projectModel, Model nextSubprojectIdModel,  Model nextTaskIdModel,
                           Model nextSubtaskIdModel, Model projectIdModel, Model subprojectIdModel,
-                          Model createTaskModel)
+                          Model createTaskModel, Model errorModel)
     {
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
-    
+        errorModel.addAttribute("error", error);
+
+
         // model til form-input-felt
         createTaskModel.addAttribute("createTaskViewModel", createTaskViewModel);
     
@@ -337,13 +345,15 @@ public class ProjectController
                              Model loggedInUserModel, Model joinedProjectListModel, Model projectModel,
                              Model projectIdModel, Model subprojectIdModel, Model taskIdModel,
                                 Model nextSubprojectIdModel, Model nextTaskIdModel, Model nextSubtaskIdModel,
-                                Model createSubtaskModel)
+                                Model createSubtaskModel, Model errorModel)
     {
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
-    
+        errorModel.addAttribute("error", error);
+
+
         // model til form-input-felt
         createSubtaskModel.addAttribute("createSubtaskViewModel", createSubtaskViewModel);
     
