@@ -44,7 +44,7 @@
                     <p></p>
                     <p></p>
                     <div th:if="${loggedInUser.isProjectManager()}">
-                        <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}">
+                        <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}">
                             <button class="btn project-btn" type="submit">Se projekt</button>
                         </a>
                     </div>
