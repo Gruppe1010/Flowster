@@ -451,6 +451,17 @@ ul li::before
     display: block;
 }
 
+.project-title
+{
+    font-size: 25px;
+}
+
+.project-subtitle
+{
+    font-size: 15px;
+    font-weight: bold;
+}
+
 .project-btn
 {
     position: absolute;
@@ -566,7 +577,8 @@ ul li::before
 
 /*ERROR POPUP*/
 
-.overlay {
+.overlay
+{
     position: fixed;
     top: 0;
     bottom: 0;
@@ -578,13 +590,16 @@ ul li::before
     opacity: 0;
     z-index: 0;
 }
-.overlay:target {
+.overlay:target
+{
     visibility: visible;
     opacity: 1;
 }
 
-.popup {
-    left: 500px;
+.popup
+{
+    left: 1px;
+    right: 1px;
     margin: 70px auto;
     padding: 20px;
     background: #fff;
@@ -596,13 +611,15 @@ ul li::before
     z-index: 5;
 }
 
-.popup h2 {
+.popup h2
+{
     margin-top: 0;
     color: #333;
     font-family: Tahoma, Arial, sans-serif;
 }
 
-.popup .close {
+.popup .close
+{
     position: absolute;
     top: 20px;
     right: 30px;
@@ -614,19 +631,26 @@ ul li::before
 }
 
 
-.popup .close:hover {
+.popup .close:hover
+{
     color: #06D85F;
 }
-.popup .content {
+.popup .content
+{
+    margin-top: 50px;
     max-height: 30%;
     overflow: auto;
+    display: block;
 }
 
-@media screen and (max-width: 700px){
-    .box{
+@media screen and (max-width: 700px)
+{
+    .box
+    {
         width: 70%;
     }
-    .popup{
+    .popup
+    {
         width: 70%;
     }
 }

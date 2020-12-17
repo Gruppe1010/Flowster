@@ -40,12 +40,18 @@
 
                 <div class="name-button-container">
                     <p></p>
-                    <p class="team-name" th:text="${project.findHeadline()}"></p>
+                    <p class="project-title" th:text="${project.getTitle()}"></p>
                     <div th:if="${loggedInUser.isProjectManager()}">
                         <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}">
                             <button class="btn project-btn" type="submit">Rediger</button>
                         </a>
                     </div>
+                </div>
+
+                <div>
+
+                    <p class="project-subtitle" th:text="${project.findSubHeadline}"></p>
+
                 </div>
 
                 <div th:each="subproject : ${project.getSubprojectList()}">

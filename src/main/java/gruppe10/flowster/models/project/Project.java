@@ -138,18 +138,18 @@ public class Project
     }
     
     
-    public String findHeadline()
+    public String findSubHeadline()
     {
-        String headline = title;
+        String headline = "";
         
         if(deadline != null)
         {
-            headline += "  - " + findFormattedDeadline();
+            headline += "Deadline " + findFormattedDeadline();
         }
         
         if(manhours != 0)
         {
-            headline += "   - " + manhours;
+            headline += " - Estimeret timer " + manhours;
         }
     
         // System.out.println(calculateManhoursPrDay());

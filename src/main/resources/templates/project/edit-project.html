@@ -40,7 +40,7 @@
 
                 <div class="name-button-container">
                     <p></p>
-                    <p></p>
+                    <p class="project-title" th:text="${project.getTitle()}"></p>
                     <div th:if="${loggedInUser.isProjectManager()}">
                         <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}">
                             <button class="btn project-btn" type="submit">Se projekt</button>
@@ -48,7 +48,11 @@
                     </div>
                 </div>
 
-                <p class="project-style" th:text="${project.findHeadline()}"></p>
+                <div>
+
+                    <p class="project-subtitle" th:text="${project.findSubHeadline}"></p>
+
+                </div>
 
                 <div th:each="subproject : ${project.getSubprojectList()}">
                     <p th:text="${subproject.getTitle()}" class="subproject-style"></p>
