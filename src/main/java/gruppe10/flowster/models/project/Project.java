@@ -5,7 +5,12 @@ import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.models.users.User;
 
 import javax.swing.text.DateFormatter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -146,9 +151,10 @@ public class Project
         {
             headline += "   - " + manhours;
         }
+    
+        // System.out.println(calculateManhoursPrDay());
         
-        
-        return headline;
+        return headline; // + " " + calculateManhoursPrDay();
     }
     
     
@@ -167,4 +173,32 @@ public class Project
         
         return formattedDate;
     }
+    
+    public double calculateManhoursPrDay()
+    {
+        double manhoursPrDay = 0;
+        
+        // udregn det kun hvis det BÅDE er en deadline OG angivede arbejdstimer
+        if(deadline != null && manhours != 0)
+        {
+    
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            String deadlineString = findFormattedDeadline().toString();
+            
+            LocalDateTime today = LocalDateTime.now();
+            
+            System.out.println(deadlineString);
+            
+            LocalDateTime dead = LocalDateTime.parse(deadlineString, dtf);
+    
+            long daysBetween = Duration.between(dead, today).toDays();
+            System.out.println ("Days: " + daysBetween);
+            
+            manhoursPrDay = manhours / daysBetween;
+            
+        }
+        
+        return manhoursPrDay;
+    }
+    
 }

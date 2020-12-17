@@ -23,7 +23,7 @@ public class UserService
     public TeamMember loggedInTeamMember = null;
      */
     
-    String error; // TODO måske lav denne?
+    String error = null; // TODO måske lav denne?
     ProjectManager projectManager = new ProjectManager();
     TeamMember teamMember = new TeamMember();
     
@@ -33,6 +33,16 @@ public class UserService
     
     HashMap<User, String> userHashMap = new HashMap<>();
     
+    
+    // getters + setters
+    
+    public String getError()
+    {
+        return error;
+    }
+    
+    
+    // ANDRE METODER
     
     /*
     * private int organisationAndJobType;
@@ -65,6 +75,8 @@ public class UserService
     
     public boolean checkDataFromCreateUserViewModel(CreateUserViewModel createUserViewModel)
     {
+        
+        error = "Der er allerede oprettet en bruger med denne email";
     
         /* createUserForm i index-html skal indeholde:
          *
@@ -85,14 +97,18 @@ public class UserService
         // hvis email!=brugt
         if(emailIsAvailable)
         {
+            error = "Organisationskoden findes ikke - indtast venligst koden du har fået udleveret af din virksomhed";
+            
             int organisationId = createUserViewModel.findOrganisationId();
     
             // tjek om orgkode findes
             boolean organisationsIdExists = flowsterRepository.doesOrganisationExist(organisationId);
-    
+            
             // if orgkode == findes
             if(organisationsIdExists)
             {
+                // her er error stadig at org-koden ikke findes - fordi jobType er en del af orgkoden
+                
                 int jobTypeId = createUserViewModel.findJobTypeId();
                 
                 // tjek om jobType findes
@@ -101,24 +117,23 @@ public class UserService
                 // if jobType findes
                 if(jobTypeIdExists)
                 {
+                    error = "Adgangskoderne matcher ikke - angiv venligst igen";
+                    
                     // tjek om password + confirmpassword match
                     if(checkIfPasswordsMatch(createUserViewModel.getPassword(), createUserViewModel.getConfirmPassword()))
                     {
-                        
-                        /* TODO:  TJEK OM USER BLIVER REGISTRERET SOM ENTEN
-                        // boolean newUserIsTeamMember = newUser instanceof TeamMember;
-                        // boolean newUserIsProjectManager = newUser instanceof ProjectManager;
-                        // System.out.println("TEST in userService: teammember: " + newUserIsTeamMember + "
-                        // projectmanager: " + newUserIsProjectManager);
-                         */
-                        
-                        
                         // her står vi KUN hvis alle tjek er successfulde
+                        // derfor er der INGEN fejl-meddelelse
+                        error = null;
+                        
                         dataIsValid = true;
                     }
                 }
             }
         }
+        
+       
+        
         return dataIsValid;
     }
     
@@ -279,6 +294,5 @@ public class UserService
         return null;
     }
     
-    
-    
+  
 }

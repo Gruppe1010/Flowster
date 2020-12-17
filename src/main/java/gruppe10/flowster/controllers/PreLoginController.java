@@ -37,6 +37,50 @@ public class PreLoginController
         return "pre-login/index"; // html
     }
     
+    @PostMapping("/postLogIn")
+    public String postLogIn(WebRequest dataFromLogInForm, Model orgDbNameModel)
+    {
+        error = null;
+        
+        logInViewModel = userService.createLogInViewModelFromForm(dataFromLogInForm);
+        
+        // i denne metode sættes loggedInUser
+        boolean logInInfoIsValid = userService.checkIfLogInInfoIsValid(logInViewModel);
+        
+        orgDbName = userService.findOrgDbName();
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
+        
+        
+        if(logInInfoIsValid)
+        {
+            // reset modellen, så den ikke længere vises i formen, da logIn var successfuldt
+            logInViewModel = null;
+            
+            return String.format("redirect:/%s/frontPage", orgDbName);
+            // return "redirect:/" + orgDbName +"/frontPage";
+        }
+        
+        // TODO tilføj noget errror-noget her
+        
+        error = "Forkert login-info - prøv igen";
+        
+        // hvis invalid logInInfo
+        return "redirect:/#error-popup";
+    }
+    
+ 
+    @GetMapping("/createUser")
+    public String createUser(Model createUserViewModel, Model loggedInUserModel, Model errorModel)
+    {
+        createUserViewModel.addAttribute( "createUserViewModel", this.createUserViewModel);
+        loggedInUserModel.addAttribute( "loggedInUser", UserService.loggedInUser);
+        errorModel.addAttribute("error", error);
+       
+
+        return "pre-login/create-user"; // html
+    }
+    
+    
     /**
      * Sender bruger videre til korrekt url, når hun/han trykker "opret" på index-html
      *
@@ -51,13 +95,13 @@ public class PreLoginController
         
         // tjekker om indtastet data er valid: orgKoden findes, email != optaget, passwords matcher
         boolean dataFromFormIsValid = userService.checkDataFromCreateUserViewModel(createUserViewModel);
-    
+        
         
         if(dataFromFormIsValid)
         {
             // indsæt i database (loggedInUser bliver også sat)
             userService.insertNewUserIntoDbAndSetLoggedInUser(createUserViewModel);
-
+            
             orgDbName = userService.findOrgDbName();
             orgDbNameModel.addAttribute("orgDbName", orgDbName);
             
@@ -68,50 +112,13 @@ public class PreLoginController
             // return "redirect:/" + orgDbName + "/frontPage";
         }
         
-        return "redirect:/createUser";
+        error = userService.getError();
+        
+        return "redirect:/createUser/#error-popup";
     }
     
-    @GetMapping("/createUser")
-    public String createUser(Model createUserViewModel, Model loggedInUserModel, Model errorModel)
-    {
-        createUserViewModel.addAttribute( "createUserViewModel", this.createUserViewModel);
-        loggedInUserModel.addAttribute( "loggedInUser", UserService.loggedInUser);
-        errorModel.addAttribute("error", error);
-
-
-        return "pre-login/create-user"; // html
-    }
-
-    @PostMapping("/postLogIn")
-    public String postLogIn(WebRequest dataFromLogInForm, Model orgDbNameModel)
-    {
-        error = null;
-        
-        logInViewModel = userService.createLogInViewModelFromForm(dataFromLogInForm);
-        
-        // i denne metode sættes loggedInUser
-        boolean logInInfoIsValid = userService.checkIfLogInInfoIsValid(logInViewModel);
-    
-        orgDbName = userService.findOrgDbName();
-        orgDbNameModel.addAttribute("orgDbName", orgDbName);
     
     
-        if(logInInfoIsValid)
-        {
-            // reset modellen, så den ikke længere vises i formen, da logIn var successfuldt
-            logInViewModel = null;
-            
-            return String.format("redirect:/%s/frontPage", orgDbName);
-            // return "redirect:/" + orgDbName +"/frontPage";
-        }
-        
-        error = "Forkert login-info";
-        
-        // hvis invalid logInInfo
-        return "redirect:/#error-popup";
-    }
-    
- 
     
     
 }
