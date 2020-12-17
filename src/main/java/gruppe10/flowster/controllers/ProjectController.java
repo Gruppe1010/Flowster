@@ -45,15 +45,16 @@ public class ProjectController
     public String createProject(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel,
                                 Model joinedProjectListModel, Model createProjectModel, Model errorModel)
     {
+        // model til error-popup
+        errorModel.addAttribute("error", error);
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
-        errorModel.addAttribute("error", error);
-
 
         // model til form-input-felt
         createProjectModel.addAttribute("createProjectViewModel", createProjectViewModel);
+    
         
         
         return "project/create-project"; // html
@@ -63,6 +64,8 @@ public class ProjectController
     @PostMapping("/createProject")
     public String postCreateProject(@PathVariable String orgDbName, WebRequest dataFromCreateProjectForm)
     {
+        error = null;
+        
         // opret CreateProjectViewModel(dataFromCreateProjectForm) ud fra webRequest
         createProjectViewModel =
                 projectService.createProjectViewModelFromForm(dataFromCreateProjectForm);
@@ -89,7 +92,11 @@ public class ProjectController
             return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
         }
         
-        return String.format("redirect:/%s/createProject", orgDbName);
+        error = String.format("Der findes allerede et projekt med titlen \"%s\" i organisationen. " +
+                                      "Vælg venligst en anden titel til dit projekt.",
+                createProjectViewModel.getTitle());
+        
+        return String.format("redirect:/%s/createProject/#error-popup", orgDbName);
     }
     
     @GetMapping("/viewProject/{projectId}")
@@ -131,15 +138,7 @@ public class ProjectController
         nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
         nextTaskIdModel.addAttribute("nextTaskId", projectService.findNextIdFromTable(orgDbName, "tasks"));
         nextSubtaskIdModel.addAttribute("nextSubtaskId", projectService.findNextIdFromTable(orgDbName, "subtasks"));
-        
-        
-        // på denne html:
-        // tilføj delprojekt-KNAP= th:href="”${’/’ + orgDbName + ’/editProject/’ + projectModel.getId() +
-        // ’/addSubproject/’ + nextSubprojectId}”
     
-        // HER er der knapper som linker videre til GetMappings nedenunder
-        // + tilføj opgave-KNAP – th:href=”${’/’ + orgDbName + ’/editProject/’ + projectModel.getId() + ’/subproject/’
-        // + subproject.getId() + ’/addTask/’ + nextTaskId}”
         return "project/edit-project"; // html
     }
     
@@ -151,16 +150,16 @@ public class ProjectController
                                 Model projectModel, Model projectIdModel, Model nextSubprojectIdModel,
                                 Model nextTaskIdModel, Model nextSubtaskIdModel, Model createSubprojectModel, Model errorModel)
     {
+        // model til error-popup
+        errorModel.addAttribute("error", error);
+        
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
-        errorModel.addAttribute("error", error);
-
 
         // model til form-input-felt
         createSubprojectModel.addAttribute("createSubprojectViewModel", createSubprojectViewModel);
-    
     
         // modeller til main content TODO tjek om dette er rigtigt
         /*
@@ -195,10 +194,7 @@ public class ProjectController
        
         // modeller til th:action i form i html
         nextSubprojectIdModel.addAttribute("nextSubprojectId", nextSubprojectId);
-        
-        // tilføj FORM med postMapping:
-        // th:action="${'/editProject/' + projectId + /createSubproject/' + nextSubprojectId}" method="post"
-        // 'tilføj delprojekt'-KNAP SKAL IKKE VÆRE DER
+    
         return "project/create-subproject"; // html
     }
     
@@ -208,6 +204,8 @@ public class ProjectController
     public String postCreateSubproject(@PathVariable String orgDbName, @PathVariable int projectId,
                                        @PathVariable int subprojectId, WebRequest dataFromCreateSubprojectForm)
     {
+        error = null;
+        
         // opret CreateProjectViewModel(dataFromCreateProjectForm) ud fra webRequest
         createSubprojectViewModel =
                 projectService.createSubprojectViewModelFromForm(dataFromCreateSubprojectForm);
@@ -230,10 +228,15 @@ public class ProjectController
             // vi ryger tilbage til editProject
             return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
         }
+    
+        error = String.format("Der findes allerede et delprojekt med titlen \"%s\" i dette projekt. " +
+                                      "Vælg venligst en anden titel til dit delprojekt.",
+                createSubprojectViewModel.getTitle());
         
         // Subprojektet er IKKE blevet gemt i databasen og guider derfor til samme sted, hvor ugyldig title vises pga
         // . createProjectViewModel
-        return String.format("redirect:/%s/editProject/%d/createSubproject/%d", orgDbName, projectId, subprojectId);
+        return String.format("redirect:/%s/editProject/%d/createSubproject/%d/#error-popup", orgDbName, projectId,
+                subprojectId);
     }
     
     
@@ -246,13 +249,14 @@ public class ProjectController
                           Model nextSubtaskIdModel, Model projectIdModel, Model subprojectIdModel,
                           Model createTaskModel, Model errorModel)
     {
+        // model til error-popup
+        errorModel.addAttribute("error", error);
+        
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
-        errorModel.addAttribute("error", error);
-
-
+       
         // model til form-input-felt
         createTaskModel.addAttribute("createTaskViewModel", createTaskViewModel);
     
@@ -307,6 +311,8 @@ public class ProjectController
                                  @PathVariable int subprojectId, @PathVariable int taskId,
                                  WebRequest dataFromCreateTaskForm)
     {
+        error = null;
+        
         // opret CreateTaskViewModel(dataFromCreateTaskForm) ud fra webRequest
         createTaskViewModel = projectService.createTaskViewModelFromForm(dataFromCreateTaskForm);
     
@@ -333,7 +339,12 @@ public class ProjectController
         // Task'en er IKKE blevet gemt i databasen og guider derfor til samme GetMapping, hvor ugyldig title vises
         // via createTaskViewModel
     
-        return String.format("redirect:/%s/editProject/%d/subproject/%d/createTask/%d", orgDbName, projectId,
+        error = String.format("Der findes allerede en opgave med titlen \"%s\" i dette delprojekt. " +
+                                      "Vælg venligst en anden titel til din opgave.",
+                createTaskViewModel.getTitle());
+    
+    
+        return String.format("redirect:/%s/editProject/%d/subproject/%d/createTask/%d/#error-popup", orgDbName, projectId,
                 subprojectId, taskId);
     }
     
@@ -347,12 +358,13 @@ public class ProjectController
                                 Model nextSubprojectIdModel, Model nextTaskIdModel, Model nextSubtaskIdModel,
                                 Model createSubtaskModel, Model errorModel)
     {
+        // model til error-popup
+        errorModel.addAttribute("error", error);
+        
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
-        errorModel.addAttribute("error", error);
-
 
         // model til form-input-felt
         createSubtaskModel.addAttribute("createSubtaskViewModel", createSubtaskViewModel);
@@ -415,10 +427,11 @@ public class ProjectController
                                     @PathVariable int subprojectId, @PathVariable int taskId,
                                     @PathVariable int subtaskId, WebRequest dataFromCreateSubtaskForm)
     {
+        error = null;
+        
         // opret CreateSubtaskViewModel(dataFromCreateSubtaskForm) ud fra webRequest
         createSubtaskViewModel = projectService.createSubtaskViewModelFromForm(dataFromCreateSubtaskForm);
-    
-    
+        
         // tjek om tasktitel er optaget
         boolean subtaskTitleIsAvailable = projectService.isSubtaskTitleAvailable(orgDbName, taskId,
                 createSubtaskViewModel.getTitle());
@@ -437,11 +450,15 @@ public class ProjectController
             // vi ryger tilbage til editProject
             return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
         }
-        
+    
+        error = String.format("Der findes allerede en underopgave med titlen \"%s\" under denne opgave. " +
+                                      "Vælg venligst en anden titel til din underopgave.",
+                createSubtaskViewModel.getTitle());
     
         // Subtask er IKKE blevet gemt i db --> guide derfor til samme GetMapping, hvor ugyldig title vises
         // via createSubtaskViewModel
-        return String.format("redirect:/%s/editProject/%d/subproject/%d/task/%d/createSubtask", orgDbName, projectId,
+        return String.format("redirect:/%s/editProject/%d/subproject/%d/task/%d/createSubtask/%d/#error-popup",
+                orgDbName, projectId,
                 subprojectId, taskId, subtaskId);
     }
    

@@ -50,7 +50,7 @@
                     </div>
                 </div>
 
-                <p class="project-style" th:text="${project.findHeadline()}"></p>
+                <p class="project-style" th:text="${project.findSubHeadline()}"></p>
 
                 <div th:each="subproject : ${project.getSubprojectList()}">
                     <p th:text="${subproject.getTitle()}" class="subproject-style"></p>
