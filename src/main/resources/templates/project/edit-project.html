@@ -54,37 +54,41 @@
 
                 </div>
 
-                <div th:each="subproject : ${project.getSubprojectList()}">
-                    <p th:text="${subproject.getTitle()}" class="subproject-style"></p>
-                        <p class="manhours-style">&nbsp;-&nbsp;</p>
-                            <p th:text="${subproject.getManhours()}" class="manhours-style"></p>
-                                <p class="manhours-style">timer</p>
+                <div class="edit-view-project-container">
+                    <div th:each="subproject : ${project.getSubprojectList()}">
+                        <p th:text="${subproject.getTitle()}" class="subproject-style"></p>
+                            <p class="manhours-style">&nbsp;-&nbsp;</p>
+                                <p th:text="${subproject.getManhours()}" class="manhours-style"></p>
+                                    <p class="manhours-style">timer</p>
 
-                    <div th:each="task : ${subproject.getTaskList()}">
-                        <span th:text="${task.getTitle()}" class="task-style"></span>
+                        <div th:each="task : ${subproject.getTaskList()}">
+                            <span class="task-style material-icons">fiber_manual_record</span>
+                            <p th:text="${task.getTitle()}" class="task-style"></p>
 
-                        <div th:each="subtask : ${task.getSubtaskList()}">
-                            <span th:text="${subtask.getTitle()}" class="subtask-style"></span>
+                            <div th:each="subtask : ${task.getSubtaskList()}">
+                                <span class="subtask-style material-icons">radio_button_unchecked</span>
+                                <p th:text="${subtask.getTitle()}" class="subtask-style"></p>
 
-                        </div> <!-- for-each: subtask -->
+                            </div> <!-- for-each: subtask -->
 
-                        <!--+ tilføj underopgave-KNAP-->
-                        <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/' +
-                            subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}" class="subtask-style project-input-btn">
-                            + tilføj ny underopgave</a>
+                            <!--+ tilføj underopgave-KNAP-->
+                            <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/' +
+                                subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}" class="subtask-btn-style project-input-btn">
+                                + tilføj ny underopgave</a>
 
-                    </div> <!-- for-each: task -->
+                        </div> <!-- for-each: task -->
 
-                    <!-- + tilføj opgave-KNAP -->
-                    <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/'
-                    + subproject.getId() + '/createTask/' + nextTaskId}" class="task-style project-input-btn">
-                        + tilføj ny opgave</a>
+                        <!-- + tilføj opgave-KNAP -->
+                        <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/'
+                        + subproject.getId() + '/createTask/' + nextTaskId}" class="task-btn-style project-input-btn">
+                            + tilføj ny opgave</a>
 
-                </div> <!-- YDERSTE for-each: subproject-->
+                    </div> <!-- YDERSTE for-each: subproject-->
 
-                <!--  tilføj delprojekt-KNAP -->
-                <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/createSubproject/' + nextSubprojectId}" class="subproject-style project-input-btn">
-                    + tilføj nyt delprojekt</a>
+                    <!--  tilføj delprojekt-KNAP -->
+                    <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/createSubproject/' + nextSubprojectId}" class="subproject-style project-input-btn">
+                        + tilføj nyt delprojekt</a>
+                </div>
             </div>
         </div>
     </div>

@@ -41,7 +41,7 @@
 
                 <div class="name-button-container">
                     <p></p>
-                    <p></p>
+                    <p class="project-title" th:text="${project.getTitle()}"></p>
                     <div th:if="${loggedInUser.isProjectManager()}">
                         <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}">
                             <button class="btn project-btn" type="submit">Se projekt</button>
@@ -49,7 +49,7 @@
                     </div>
                 </div>
 
-                <p class="project-style" th:text="${project.findSubHeadline()}"></p>
+                <p class="project-subtitle" th:text="${project.findSubHeadline()}"></p>
 
                 <div th:each="subproject : ${project.getSubprojectList()}">
                     <p th:text="${subproject.getTitle()}" class="subproject-style"></p>
@@ -58,9 +58,11 @@
                                 <p class="manhours-style">timer</p>
 
                     <div th:each="task : ${subproject.getTaskList()}">
+                        <span class="task-style material-icons">fiber_manual_record</span>
                         <p th:text="${task.getTitle()}" class="task-style"></p>
 
                         <div th:each="subtask : ${task.getSubtaskList()}">
+                            <span class="subtask-style material-icons">radio_button_unchecked</span>
                             <p th:text="${subtask.getTitle()}" class="subtask-style"></p>
 
                         </div> <!-- for-each: subtask -->
@@ -93,7 +95,7 @@
                         <!-- Hvis loopet IKKE er kommet til den task hvor der skal tilføjes en subtask -->
                         <a th:unless="${taskId == task.getId()}"
                             th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/' +
-                            subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}" class="subtask-style project-input-btn">
+                            subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}" class="subtask-btn-style project-input-btn">
                             + tilføj ny underopgave</a>
 
 
@@ -101,7 +103,7 @@
 
                     <!-- + tilføj opgave-KNAP -->
                     <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/'
-                    + subproject.getId() + '/createTask/' + nextTaskId}" class="task-style project-input-btn">
+                    + subproject.getId() + '/createTask/' + nextTaskId}" class="task-btn-style project-input-btn">
                         + tilføj ny opgave</a>
 
                 </div> <!-- YDERSTE for-each: subproject-->
