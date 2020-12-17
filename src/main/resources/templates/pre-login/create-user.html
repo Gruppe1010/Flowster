@@ -74,7 +74,7 @@
                                step="any"
                                placeholder="Indtast arbejdstimer"
                                th:value = "${createUserViewModel != null ? createUserViewModel.getManhours() : ''}"
-                               oninvalid="this.setCustomValidity('Angiv dine timer du er ansat til at arbejde på en uge, i heltal')"
+                               oninvalid="this.setCustomValidity('Angiv dine ugentlige arbejdstimer')"
                                oninput="setCustomValidity('')"
                                name="manhours"
                                required
