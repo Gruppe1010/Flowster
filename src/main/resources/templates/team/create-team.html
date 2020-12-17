@@ -41,7 +41,7 @@
         <div class="col-sm-10">
             <div class="team-container">
                 <label class="team-label" for="team-name">Teamnavn:</label>
-                <form action="createTeam" method="post" class="edit-team-name-container">
+                <form th:action="${'/' + orgDbName + '/createTeam'}" method="post" class="edit-team-name-container">
                     <div></div>
                     <input type="text"
                        class="form-control"

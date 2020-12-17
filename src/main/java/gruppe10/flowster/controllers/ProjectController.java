@@ -47,6 +47,7 @@ public class ProjectController
     {
         // model til error-popup
         errorModel.addAttribute("error", error);
+        
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);

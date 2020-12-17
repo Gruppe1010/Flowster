@@ -37,7 +37,7 @@ public class PreLoginController
         return "pre-login/index"; // html
     }
     
-    @PostMapping("/postLogIn")
+    @PostMapping("/logIn")
     public String postLogIn(WebRequest dataFromLogInForm, Model orgDbNameModel)
     {
         error = null;
@@ -84,7 +84,7 @@ public class PreLoginController
      * @param dataFromCreateUserForm Data fra 'createUserForm'
      * @return String url, som redirectes til
      * */
-    @PostMapping("/postCreateUser")
+    @PostMapping("/createUser")
     public String postCreateUser(WebRequest dataFromCreateUserForm, Model orgDbNameModel)
     {
         error = null;
