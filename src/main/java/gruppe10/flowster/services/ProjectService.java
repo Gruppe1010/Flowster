@@ -34,13 +34,19 @@ public class ProjectService
             // hent de projekter som hun/han har oprettet
             ArrayList<Project> createdProjectList= projectRepository.retrieveCreatedProjectListFromUserId(dbName,
                     currentLoggedInUserId);
-            
-            for(Project project : createdProjectList)
+            if(joinedProjectList != null)
             {
-                if(ifProjectAlreadyNotOnList(joinedProjectList, project.getId()))
+                for(Project project : createdProjectList)
                 {
-                    joinedProjectList.add(project);
+                    if(ifProjectAlreadyNotOnList(joinedProjectList, project.getId()))
+                    {
+                        joinedProjectList.add(project);
+                    }
                 }
+            }
+            else
+            {
+                joinedProjectList = createdProjectList;
             }
     
             Collections.sort(joinedProjectList);
