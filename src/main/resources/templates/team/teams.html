@@ -30,13 +30,11 @@
     <div class="row content">
 
         <!-- SIDEBAR-FRAGMENT -->
-        <!-- TODO: team-fragment :: teams-list(${loggedInUser.getJoinedTeamList})-->
-        <!--TODO: det giver bedst mening at sende en Model med til hver fragment, som kun indeholder det som den fragment skal bruge  -->
-        <div th:insert="fragments :: teams-sidebar(${loggedInUser}, ${orgDbName})" class="minheight"></div>
+        <div th:insert="fragments :: teams-sidebar(${loggedInUser}, ${orgDbName}, ${joinedTeamList})" class="minheight"></div>
 
         <div class="col-sm-10">
             <p class="page-title">Mine teams</p>
-            <div th:each="team: ${loggedInUser.getJoinedTeamList()}">
+            <div th:each="team: ${joinedTeamList}">
                 <!-- FOR hvert team på listen: lav en kasse til det, som man kan klikke på -->
                 <a th:href="${'/' + orgDbName + '/viewTeam/' + team.getId()}">
                     <div  class ="text-left">

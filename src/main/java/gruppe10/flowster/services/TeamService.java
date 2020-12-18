@@ -1,10 +1,13 @@
 package gruppe10.flowster.services;
 
+import gruppe10.flowster.models.teams.Team;
 import gruppe10.flowster.repositories.FlowsterRepository;
 import gruppe10.flowster.repositories.TeamRepository;
 import gruppe10.flowster.viewModels.team.TeamViewModel;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
+
+import java.util.ArrayList;
 
 @Service
 public class TeamService
@@ -102,17 +105,17 @@ public class TeamService
         
         
     }
-
-
-    public void updateJoinedTeamList()
+    
+    
+    public ArrayList<Team> retrieveJoinedTeamList()
     {
         // TODO dette skridt er overflødigt - vi kan få den med som param gennem pathVariable-orgDbName
         String dbName = convertOrganisationNameToDbName
-                (flowsterRepository.retrieveOrganisationNameFromEmail(UserService.loggedInUser.getEmail()));
-
-        UserService.loggedInUser.setJoinedTeamList(teamRepository.retrieveTeamsListFromUserId(dbName,
-                UserService.loggedInUser.getId()));
+                                (flowsterRepository.retrieveOrganisationNameFromEmail(UserService.loggedInUser.getEmail()));
+        
+        return teamRepository.retrieveTeamsListFromUserId(dbName, UserService.loggedInUser.getId());
     }
+    
 
     /**
      * Konverterer organisationName til db-name

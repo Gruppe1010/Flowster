@@ -1,6 +1,8 @@
 package gruppe10.flowster.repositories;
 
+import gruppe10.flowster.models.project.Project;
 import gruppe10.flowster.models.teams.Team;
+import gruppe10.flowster.services.UserService;
 import gruppe10.flowster.viewModels.team.TeamViewModel;
 import gruppe10.flowster.viewModels.user.PreviewUserViewModel;
 import org.springframework.stereotype.Repository;
@@ -24,6 +26,24 @@ public class TeamRepository
         
         try
         {
+            
+            /* TODO
+            * For at hente id-projekter ud også, ville man kunne lave denne sql:
+            *   SELECT id_team, team_name, f_id_project FROM flowster_kea.teams_users
+                RIGHT JOIN flowster_kea.teams ON f_id_team = id_team
+                RIGHT JOIN flowster_kea.teams_projects ON flowster_kea.teams.id_team = flowster_kea.teams_projects.f_id_team
+                WHERE f_id_user = 1;
+                
+              For KUN at hente id-projekter ud som en bestemt bruger er knyttet til (KUN via teams), vil man kunne
+              * bruge denne syntaks
+                SELECT distinct f_id_project FROM flowster_kea.teams_users
+                RIGHT JOIN flowster_kea.teams ON f_id_team = id_team
+                RIGHT JOIN flowster_kea.teams_projects ON flowster_kea.teams.id_team = flowster_kea.teams_projects.f_id_team
+                WHERE f_id_user = 1;
+
+            *
+            * */
+            
             String sqlCommand = "SELECT id_team, team_name FROM teams_users " +
                                         "RIGHT JOIN teams ON f_id_team = id_team WHERE f_id_user = ?;";
             
@@ -65,7 +85,10 @@ public class TeamRepository
             while(resultSet.next())
             {
                 // TODO: VI SKAL OGSÅ give teamet de to lister!!!!! - men det gad jeg ikke lige
-                Team team = new Team(resultSet.getInt("id_team"), resultSet.getString("team_name"));
+                
+                // ArrayList<Project> projectList = retrieveProjectListFromTeamId(teamId, organisationConnection);
+                
+                Team team = new Team(resultSet.getInt("id_team"), resultSet.getString("team_name"));// projectList);
                 
                 teamList.add(team);
             }
@@ -82,6 +105,63 @@ public class TeamRepository
         
         return teamList;
     }
+    
+    /*
+    public ArrayList<Project> retrieveProjectListFromTeamId(int teamId, Connection organisationConnection)
+    {
+        ArrayList<Project> projectList = null;
+        
+        try
+        {
+            
+            String sqlCommand = "SELECT DISTINCT f_id_project FROM teams_projects WHERE f_id_team = ?";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setInt(1, teamId);
+        
+            ResultSet resultSet = preparedStatement.executeQuery();
+    
+            projectList = createProjectListFromResultSet(resultSet);
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in retrieveProjectListFromTeamId: " + e.getMessage());
+        }
+   
+        return projectList;
+        
+    }
+    
+    
+    public ArrayList<Project> createProjectListFromResultSet(ResultSet resultSet)
+    {
+    
+        ArrayList<Project> projectList = new ArrayList<>();
+    
+        try
+        {
+            while(resultSet.next())
+            {
+                Project project = new Project(resultSet.getInt("f_id_project"));
+    
+                projectList.add(project);
+            }
+            if(projectList.size() == 0)
+            {
+                projectList = null;
+            }
+        
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in createProjectListFromResultSet: " + e.getMessage());
+        }
+    
+        return projectList;
+    }
+   
+    */
     
     // TODO HER MANGLER DER at vi henter de to lister som er attributter på Team-klasse
     

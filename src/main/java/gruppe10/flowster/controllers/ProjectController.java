@@ -1,6 +1,8 @@
 package gruppe10.flowster.controllers;
 
+import gruppe10.flowster.models.teams.Team;
 import gruppe10.flowster.services.ProjectService;
+import gruppe10.flowster.services.TeamService;
 import gruppe10.flowster.services.UserService;
 import gruppe10.flowster.viewModels.project.CreateProjectViewModel;
 import gruppe10.flowster.viewModels.project.CreateSubtaskViewModel;
@@ -14,11 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.ArrayList;
+
 @Controller
 @RequestMapping("/{orgDbName}")
 public class ProjectController
 {
     ProjectService projectService = new ProjectService();
+    TeamService teamService = new TeamService();
     
     // ViewModeller som bruges til at holde på foreløbig data
     CreateProjectViewModel createProjectViewModel;
@@ -359,18 +364,6 @@ public class ProjectController
                                 Model nextSubprojectIdModel, Model nextTaskIdModel, Model nextSubtaskIdModel,
                                 Model createSubtaskModel, Model errorModel)
     {
-        // model til error-popup
-        errorModel.addAttribute("error", error);
-        
-        // modeller til sidebars + menubars
-        orgDbNameModel.addAttribute("orgDbName", orgDbName);
-        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
-        joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
-
-        // model til form-input-felt
-        createSubtaskModel.addAttribute("createSubtaskViewModel", createSubtaskViewModel);
-    
-    
         // modeller til main content
         /*
         projectModel.addAttribute("projectModel", new Project(1, "Eksamensprojekt-projekt", null, 30,
@@ -398,19 +391,27 @@ public class ProjectController
                 
          */
         projectModel.addAttribute("project", projectService.retrieveProject(orgDbName, projectId));
-       
         
         // til form-knappers LINK
         nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
         nextTaskIdModel.addAttribute("nextTaskId", projectService.findNextIdFromTable(orgDbName, "tasks"));
         
-    
-    
         // modeller til th:action i form i html
         projectIdModel.addAttribute("projectId", projectId);
         subprojectIdModel.addAttribute("subprojectId", subprojectId);
         taskIdModel.addAttribute("taskId", taskId);
         nextSubtaskIdModel.addAttribute("nextSubtaskId", nextSubtaskId);
+    
+        // model til form-input-felt
+        createSubtaskModel.addAttribute("createSubtaskViewModel", createSubtaskViewModel);
+    
+        // modeller til sidebars + menubars
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
+        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
+        joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
+    
+        // model til error-popup
+        errorModel.addAttribute("error", error);
     
     
         // tilføj FORM med postMapping:
@@ -462,10 +463,59 @@ public class ProjectController
                 orgDbName, projectId,
                 subprojectId, taskId, subtaskId);
     }
-   
     
-
-
-
-
+    @GetMapping("/editProject/{projectId}/editTeams")
+    public String postEditTeams(@PathVariable String orgDbName, @PathVariable int projectId,
+                                Model orgDbNameModel, Model loggedInUserModel,
+                                Model joinedProjectListModel, Model projectModel, Model projectIdModel,
+                                Model joinedTeamListModel, Model errorModel)
+    {
+        // til main content
+        projectIdModel.addAttribute("projectId", projectId);
+        joinedTeamListModel.addAttribute("joinedTeamList", teamService.retrieveJoinedTeamList());
+        projectModel.addAttribute("project", projectService.retrieveProject(orgDbName, projectId));
+        
+        // modeller til menu-, sidebar og footer
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
+        loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
+        joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
+    
+        // model til error-popup
+        errorModel.addAttribute("error", error);
+    
+        return "project/edit-teams"; // html
+    }
+    
+    
+    // th:each="user : userlist"
+    // Lav tom form med submitknap med action="/postEditTeam/${teamModel.getId()}/addUser/${user.getId()}"
+    //
+    @PostMapping("/editProject/{projectId}/addTeam/{teamId}")
+    public String postAddTeamToProject(@PathVariable String orgDbName, @PathVariable int projectId,
+                                    @PathVariable int teamId)
+    {
+        // projectService.insertRowIntoProjectsTeams(orgDbName, projectId, teamId);
+        
+        
+        return String.format("/%s/editProject/%d/editTeams", orgDbName, projectId);
+    }
+    
+    @PostMapping("/editProject/{projectId}/removeTeam/{teamId}")
+    public String postRemoveTeamFromProject(@PathVariable String orgDbName, @PathVariable int projectId,
+                                    @PathVariable int teamId)
+    {
+    
+        // projectService.deleteRowFromProjectsTeams(orgDbName, projectId, teamId);
+    
+        return String.format("/%s/editProject/%d/editTeams", orgDbName, projectId);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

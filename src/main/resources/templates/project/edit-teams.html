@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Flowster</title>
+    <!-- Hvilke karakterer der kan benyttes på siden -->
+    <meta charset="utf-8">
+    <!-- Får siden til at følge skærmens størrelse -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Browser logo -->
+    <link rel="icon" href="/images/flowster-logo-thumbnail.png">
+    <!-- Stylesheets til Bootstrap -->
+    <link rel="stylesheet" href="/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/bootstrap-theme.css" type="text/css">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/flowster.css" type="text/css">
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Padauk&family=Raleway:wght@200&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="container-fluid main-content text-center">
+
+    <div class="row">
+        <nav th:insert="fragments :: menubar(${loggedInUser}, ${orgDbName})"></nav>
+    </div>
+
+    <div class="row content">
+
+        <!-- SIDEBAR-FRAGMENT -->
+        <div th:insert="fragments :: projects-sidebar(${loggedInUser}, ${orgDbName}, ${joinedProjectList})" class="content"></div>
+
+        <!-- MAIN-CONTENT-FRAGMENT -->
+        <div class="col-sm-10">
+            <div class="preview-user-container">
+
+                <div class="name-button-container">
+                    <p></p>
+                    <p class="project-title">Tilføj teams til projekt</p>
+                    <br>
+                    <p class="project-title" th:text="${project.getTitle()}"></p>
+
+                    <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}">
+                        <button class="btn project-btn" type="submit">Se projekt</button>
+                    </a>
+
+                </div>
+
+                <div th:each="team: ${joinedTeamList}">
+                    <div class="preview-user-box">
+
+                        <br>
+                        <p th:text="${team.getName()}"></p>
+
+                        <!-- TILFØJ-KNAP -->
+                        <div th:if="${team.isOnProject(${projectId})}">
+                            <form th:action="${'/' + orgDbName + '/editProject/' + projectId + '/addTeam/' + team.getId()}" method="post">
+                                <button class="btn remove-btn" type="submit">Tilføj</button>
+                            </form>
+                        </div>
+
+                        <!-- FJERN-KNAP -->
+                        <div th:unless="${team.isOnProject(${projectId})}">
+                            <form th:action="${'/' + orgDbName + '/editProject/' + projectId + '/removeTeam/' + team.getId()}" method="post">
+                                <button class="btn remove-btn" type="submit">Fjern</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div th:if="${error != null}" id="error-popup" class="overlay text-center">
+        <div class="popup">
+            <h2>Der skete en fejl</h2>
+            <a class="close" href="#">&times;</a>
+            <div class="content" th:text="${error}">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer fragment -->
+<div th:insert="fragments :: footer(${loggedInUser}, ${orgDbName})"></div>
+
+</body>
+</html>

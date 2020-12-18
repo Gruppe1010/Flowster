@@ -41,11 +41,11 @@
                 <div class="name-button-container">
                     <p></p>
                     <p class="project-title" th:text="${project.getTitle()}"></p>
-                    <div th:if="${loggedInUser.isProjectManager()}">
-                        <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}">
-                            <button class="btn project-btn" type="submit">Se projekt</button>
-                        </a>
-                    </div>
+
+                    <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}">
+                        <button class="btn project-btn" type="submit">Se projekt</button>
+                    </a>
+
                 </div>
 
                 <div>

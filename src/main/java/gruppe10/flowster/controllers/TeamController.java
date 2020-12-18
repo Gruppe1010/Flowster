@@ -1,5 +1,6 @@
 package gruppe10.flowster.controllers;
 
+import gruppe10.flowster.models.teams.Team;
 import gruppe10.flowster.services.TeamService;
 import gruppe10.flowster.services.UserService;
 import gruppe10.flowster.viewModels.team.TeamViewModel;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
+
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/{orgDbName}")
@@ -24,14 +27,13 @@ public class TeamController
     String error = null;
 
     @GetMapping("/teams")
-    public String teams(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel)
+    public String teams(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel,
+                        Model joinedTeamListModel)
     {
-        orgDbName = userService.findOrgDbName();
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
 
-        teamService.updateJoinedTeamList();
-
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
+        joinedTeamListModel.addAttribute("joinedTeamList", teamService.retrieveJoinedTeamList());
 
         return "team/teams"; // html
     }
@@ -39,12 +41,8 @@ public class TeamController
 
     @GetMapping("/createTeam")
     public String createTeam(@PathVariable String orgDbName, Model loggedInUserModel, Model teamNameModel,
-                             Model orgDbNameModel, Model errorModel)
+                             Model orgDbNameModel, Model joinedTeamListModel, Model errorModel)
     {
-    
-        // så sidebar hele tiden er opdateret med de teams, som man er en del af
-        teamService.updateJoinedTeamList();
-        
         // model til error-popup
         errorModel.addAttribute("error", error);
     
@@ -52,6 +50,7 @@ public class TeamController
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         teamNameModel.addAttribute("createTeamViewModel", this.teamName);
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
+        joinedTeamListModel.addAttribute("joinedTeamList", teamService.retrieveJoinedTeamList());
         
         return "team/create-team"; // html
     }
@@ -90,20 +89,19 @@ public class TeamController
     
     @GetMapping("/editTeam/{teamId}")
     public String editTeam(@PathVariable String orgDbName, @PathVariable int teamId,
-                           Model loggedInUserModel, Model teamModel, Model orgDbNameModel, Model errorModel)
+                           Model loggedInUserModel, Model teamModel, Model orgDbNameModel,
+                           Model errorModel, Model joinedTeamListModel)
     {
         // model til error-popup
         errorModel.addAttribute("error", error);
-    
-        // så sidebar hele tiden er opdateret med de teams, som man er en del af
-        teamService.updateJoinedTeamList();
-    
+
         TeamViewModel teamViewModel = teamService.retrieveAndCreateEditTeamViewModelFromId(orgDbName, teamId);
     
         // modeller til menu-, sidebar og footer
         teamModel.addAttribute("team", teamViewModel);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
+        joinedTeamListModel.addAttribute("joinedTeamList", teamService.retrieveJoinedTeamList());
       
         // teamModel.addAttribute(har teamID);
         // lav en model med url - "/postEditTeam/" + teamId + "/addUser/" - og i html: + ${user.getId()}
@@ -165,20 +163,15 @@ public class TeamController
     
      @GetMapping("/viewTeam/{teamId}")
     public String viewTeam(@PathVariable String orgDbName, @PathVariable int teamId,
-                           Model loggedInUserModel, Model orgDbNameModel, Model teamModel)
+                           Model loggedInUserModel, Model orgDbNameModel, Model teamModel, Model joinedTeamListModel)
     {
-        // så sidebar hele tiden er opdateret med de teams, som man er en del af
-        teamService.updateJoinedTeamList();
-        
         TeamViewModel teamViewModel = teamService.retrieveAndCreateViewTeamViewModelFromId(orgDbName, teamId);
-    
     
         // modeller til menu-, sidebar og footer
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         teamModel.addAttribute("team", teamViewModel);
-        
-        
+        joinedTeamListModel.addAttribute("joinedTeamList", teamService.retrieveJoinedTeamList());
         
     
         return "team/view-team";

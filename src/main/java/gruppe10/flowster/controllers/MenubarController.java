@@ -15,14 +15,10 @@ import org.springframework.web.bind.annotation.PathVariable;
  */
 public class MenubarController
 {
-    UserService userService = new UserService();
-    String orgDbName;
-    
-    
+
     @GetMapping("/{orgDbName}/frontPage")
     public String frontPage(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel)
     {
-        orgDbName = userService.findOrgDbName();
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         
         orgDbNameModel.addAttribute("orgDbName", orgDbName);

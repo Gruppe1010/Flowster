@@ -10,7 +10,7 @@ public class Team
     private int id;
     private String name;
     private ArrayList<User> usersList;
-    private ArrayList<Project> projectsList;
+    private ArrayList<Project> projectList;
     
     
     // constructors
@@ -22,15 +22,15 @@ public class Team
         this.id = id;
         this.name = name;
         this.usersList = null;
-        this.projectsList = null;
+        this.projectList = null;
         
     }
     
-    public Team(String name, ArrayList<User> usersList, ArrayList<Project> projectsList)
+    public Team(String name, ArrayList<User> usersList, ArrayList<Project> projectList)
     {
         this.name = name;
         this.usersList = usersList;
-        this.projectsList = projectsList;
+        this.projectList = projectList;
     }
     // getters + setters
     public int getId()
@@ -57,12 +57,42 @@ public class Team
     {
         this.usersList = usersList;
     }
-    public ArrayList<Project> getProjectsList()
+    public ArrayList<Project> getProjectList()
     {
-        return projectsList;
+        return projectList;
     }
-    public void setProjectsList(ArrayList<Project> projectsList)
+    public void setProjectList(ArrayList<Project> projectList)
     {
-        this.projectsList = projectsList;
+        this.projectList = projectList;
     }
+    
+    
+    public boolean isOnProject()
+    {
+        return true;
+    }
+ 
+    // TODO
+    public boolean isOnProject(int projectId)
+    {
+        
+        // int projectIdInt = Integer.parseInt(projectId);
+        
+        boolean teamIsOnProject = false;
+        
+        for(Project project : projectList)
+        {
+            if(projectId == project.getId())
+            {
+                teamIsOnProject = true;
+                
+                break;
+            }
+        }
+        return teamIsOnProject;
+    }
+    
+    
+    
+    
 }

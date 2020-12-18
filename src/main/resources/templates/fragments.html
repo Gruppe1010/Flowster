@@ -88,7 +88,7 @@
 
 <!--------------- SIDEBAR --------------->
 
-<nav th:fragment="teams-sidebar(loggedInUser, orgDbName)" class="sidebar fontsize">
+<nav th:fragment="teams-sidebar(loggedInUser, orgDbName, joinedTeamList)" class="sidebar fontsize">
 
     <div th:if="${loggedInUser.isProjectManager()}">
         <a class="btn flowster-btn" th:href="${'/' + orgDbName + '/createTeam'}">Nyt team</a>
@@ -96,7 +96,7 @@
     </div>
     <div>
         <!-- DET ER HER TEAMLISTEN VISES -->
-        <div th:each="team: ${loggedInUser.getJoinedTeamList()}">
+        <div th:each="team: ${joinedTeamList}">
             <div class="sidebar-link">
                 <!--  + -->
                 <a th:href="${'/' + orgDbName + '/viewTeam/' + team.getId()}" th:text="${team.getName()}"></a>

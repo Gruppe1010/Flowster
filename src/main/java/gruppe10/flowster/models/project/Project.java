@@ -26,7 +26,10 @@ public class Project
     private ArrayList<Team> teamList;
     
     // constructors
-    public Project(){}
+    public Project(int id)
+    {
+        this.id = id;
+    }
     
     
     

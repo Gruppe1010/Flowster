@@ -24,7 +24,7 @@ public class ProjectService
         int currentLoggedInUserId =  UserService.loggedInUser.getId();
         
         // projekter som findes på de teams, loggedInUser er tilknyttet
-        ArrayList<Project> projectList = projectRepository.retrieveProjectListFromUserId(dbName, currentLoggedInUserId);
+        ArrayList<Project> projectListViaTeams = projectRepository.retrieveProjectListFromUserId(dbName, currentLoggedInUserId);
         
         // hvis brugeren er en projectManager
         if(UserService.loggedInUser instanceof ProjectManager)
@@ -35,19 +35,19 @@ public class ProjectService
                     currentLoggedInUserId);
             // TODO lav test- over denne
             // hvis den ENE ikke er null
-            if(projectList == null && createdProjectList != null)
+            if(projectListViaTeams == null && createdProjectList != null)
             {
-                projectList = createdProjectList;
+                projectListViaTeams = createdProjectList;
             }
             // hvis begge IKKE er null, skal de sammenlægges
-            else if(createdProjectList != null && projectList != null)
+            else if(createdProjectList != null && projectListViaTeams != null)
             {
                 // tilføj disse (hvis disse IKKE er dupliketter af et projekt på listen) til listen
-                projectList.addAll(createdProjectList);
+                projectListViaTeams.addAll(createdProjectList);
             }
         }
         
-        return projectList;
+        return projectListViaTeams;
     }
     
     // public ArrayList<Project> projectList
