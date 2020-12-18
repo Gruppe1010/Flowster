@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Project
+public class Project implements Comparable<Project>
 {
     private int id;
     private String title;
@@ -204,4 +204,28 @@ public class Project
         return manhoursPrDay;
     }
     
+    
+    @Override
+    public int compareTo(Project project)
+    {
+        if(id > project.id)
+        {
+            return 1; //hvis this.obj > param.obj
+        }
+        else if(id < project.id)
+        {
+            return -1; // hvis this.obj < param.obj
+        }
+  
+        return 0; // this.obj == param.obj (dette vil dog ALDRIG ske, fordi vores id_project er UNIQUE)
+    }
+    
+
+    
+    
+    
+    
+    
 }
+
+

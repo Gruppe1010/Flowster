@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 
 @Service
 public class ProjectService
@@ -24,16 +26,52 @@ public class ProjectService
         int currentLoggedInUserId =  UserService.loggedInUser.getId();
         
         // projekter som findes på de teams, loggedInUser er tilknyttet
-        ArrayList<Project> projectListViaTeams = projectRepository.retrieveProjectListFromUserId(dbName, currentLoggedInUserId);
+        ArrayList<Project> joinedProjectList = projectRepository.retrieveProjectListFromUserId(dbName, currentLoggedInUserId);
         
         // hvis brugeren er en projectManager
         if(UserService.loggedInUser instanceof ProjectManager)
         {
-            
             // hent de projekter som hun/han har oprettet
             ArrayList<Project> createdProjectList= projectRepository.retrieveCreatedProjectListFromUserId(dbName,
                     currentLoggedInUserId);
-            // TODO lav test- over denne
+            
+            for(Project project : createdProjectList)
+            {
+                if(ifProjectAlreadyNotOnList(joinedProjectList, project.getId()))
+                {
+                    joinedProjectList.add(project);
+                }
+            }
+    
+            Collections.sort(joinedProjectList);
+            
+            
+            /*
+            LinkedHashSet<Project> combinedJoinedProjectList = new LinkedHashSet<>();
+            
+            if(projectListViaTeams != null)
+            {
+                combinedJoinedProjectList.addAll(projectListViaTeams);
+            }
+            if(createdProjectList != null)
+            {
+                combinedJoinedProjectList.addAll(createdProjectList);
+            }
+            // hvis der ER noget på den kombinerede liste, skal retur-ArrayListen sættes til denne
+            if(combinedJoinedProjectList.size() > 0)
+            {
+                
+                
+                joinedProjectList = new ArrayList<>(combinedJoinedProjectList);
+                Collections.sort(joinedProjectList);
+    
+                System.out.println(joinedProjectList);
+            }
+            
+             */
+            
+            
+            /*
             // hvis den ENE ikke er null
             if(projectListViaTeams == null && createdProjectList != null)
             {
@@ -45,10 +83,28 @@ public class ProjectService
                 // tilføj disse (hvis disse IKKE er dupliketter af et projekt på listen) til listen
                 projectListViaTeams.addAll(createdProjectList);
             }
+            
+             */
         }
         
-        return projectListViaTeams;
+        return joinedProjectList;
     }
+    
+    
+    public boolean ifProjectAlreadyNotOnList(ArrayList<Project> projectList, int id)
+    {
+        
+        for(Project project : projectList)
+        {
+            if(id == project.getId())
+            {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
     
     // public ArrayList<Project> projectList
     

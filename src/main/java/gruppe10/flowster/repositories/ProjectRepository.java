@@ -19,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.util.LinkedHashSet;
 
 @Repository
 public class ProjectRepository
@@ -125,9 +126,10 @@ public class ProjectRepository
             Så findes alle f_id_project ud fra f_id_team's i teams_projects-tabellen
             DERFRA findes SELECT'ed rækker fra projects - ud fra f_id_project'er
             */
-            
+            // henter alle projektid'er som er bruger er tilknyttet via teams
             String sqlCommand =
-                    "SELECT * FROM teams_users " +
+                    "SELECT DISTINCT id_project, project_title, project_description, project_deadline, project_manhours " +
+                            "FROM teams_users " +
                         "RIGHT JOIN teams_projects ON teams_users.f_id_team = teams_projects.f_id_team " +
                         "RIGHT JOIN projects ON teams_projects.f_id_project = projects.id_project " +
                         "WHERE f_id_user = ?";
@@ -156,9 +158,9 @@ public class ProjectRepository
                 System.err.println("ERROR in retrieveProjectArrayListFromUserIdFinally: " + e.getMessage());
             }
         }
-
         return joinedProjectList;
     }
+    
     
     public ArrayList<Project> createJoinedProjectListFromResultSet(ResultSet resultSet)
     {

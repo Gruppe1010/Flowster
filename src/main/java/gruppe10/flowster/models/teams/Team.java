@@ -75,20 +75,23 @@ public class Team
     // TODO
     public boolean isOnProject(int projectId)
     {
-        
         // int projectIdInt = Integer.parseInt(projectId);
         
         boolean teamIsOnProject = false;
         
-        for(Project project : projectList)
+        if(projectList != null)
         {
-            if(projectId == project.getId())
+            for(Project project : projectList)
             {
-                teamIsOnProject = true;
-                
-                break;
+                if(projectId == project.getId())
+                {
+                    teamIsOnProject = true;
+            
+                    break;
+                }
             }
         }
+        
         return teamIsOnProject;
     }
     

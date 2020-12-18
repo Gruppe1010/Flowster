@@ -54,14 +54,14 @@
                         <p th:text="${team.getName()}"></p>
 
                         <!-- TILFØJ-KNAP -->
-                        <div th:if="${team.isOnProject(${projectId})}">
+                        <div th:if="${team.isOnProject(projectId)}">
                             <form th:action="${'/' + orgDbName + '/editProject/' + projectId + '/addTeam/' + team.getId()}" method="post">
                                 <button class="btn remove-btn" type="submit">Tilføj</button>
                             </form>
                         </div>
 
                         <!-- FJERN-KNAP -->
-                        <div th:unless="${team.isOnProject(${projectId})}">
+                        <div th:unless="${team.isOnProject(projectId)}">
                             <form th:action="${'/' + orgDbName + '/editProject/' + projectId + '/removeTeam/' + team.getId()}" method="post">
                                 <button class="btn remove-btn" type="submit">Fjern</button>
                             </form>
@@ -73,14 +73,8 @@
         </div>
 
     </div>
-    <div th:if="${error != null}" id="error-popup" class="overlay text-center">
-        <div class="popup">
-            <h2>Der skete en fejl</h2>
-            <a class="close" href="#">&times;</a>
-            <div class="content" th:text="${error}">
-            </div>
-        </div>
-    </div>
+
+    <div th:if="${error != null}" th:replace="fragments :: error-popup(${error})"></div>
 </div>
 
 <!-- Footer fragment -->
