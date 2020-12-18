@@ -10,7 +10,7 @@ public class Team
 {
     private int id;
     private String name;
-    private ArrayList<User> usersList;
+    private ArrayList<User> usersList; // TODO maybe hent denne -
     private ArrayList<Project> projectList;
     
     

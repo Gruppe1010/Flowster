@@ -1,5 +1,6 @@
 package gruppe10.flowster.controllers;
 
+import gruppe10.flowster.models.project.Project;
 import gruppe10.flowster.models.teams.Team;
 import gruppe10.flowster.services.ProjectService;
 import gruppe10.flowster.services.TeamService;
@@ -38,7 +39,6 @@ public class ProjectController
     CreateSubtaskViewModel createSubtaskViewModel;
 
     String error = null;
-    
     
     @GetMapping("/projects")
     public String projects(@PathVariable String orgDbName, Model orgDbNameModel,
@@ -120,17 +120,20 @@ public class ProjectController
     @GetMapping("/viewProject/{projectId}")
     public String viewProject(@PathVariable String orgDbName, @PathVariable int projectId,
                               Model orgDbNameModel, Model loggedInUserModel,
-                              Model joinedProjectListModel, Model projectModel)
+                              Model joinedProjectListModel, Model projectModel, Model manhoursPrDayModel)
     {
+        Project project = projectService.retrieveProject(orgDbName, projectId);
+        
+        
+        // modeller til main content
+        projectModel.addAttribute("project", project);
+        //manhoursPrDayModel.addAttribute("manhoursPrDay", project.calculateManhoursPrDay());
+    
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
-    
-    
-        // modeller til main content
-        projectModel.addAttribute("project", projectService.retrieveProject(orgDbName, projectId));
-    
+      
         return "project/view-project"; // html
     }
     

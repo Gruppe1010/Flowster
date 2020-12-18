@@ -116,20 +116,10 @@ public class ProjectRepository
 
         try
         {
-            /* TODO: indsæt dette eksempel i rapporten
-            Vi selecter alle relevante kolonner fra projekt-tabellen - disse skal vi bruge til at oprette et projekt
-            Dette gøres ud fra userId'et
-            
-            teams_users --> f_id_team --> teams_projects --> f_id_project --> projects (INFO HERFRA)
-            
-            Vi starter fra teams_users-tabellen - herfra findes alle f_id_team ud fra f_id_user
-            Så findes alle f_id_project ud fra f_id_team's i teams_projects-tabellen
-            DERFRA findes SELECT'ed rækker fra projects - ud fra f_id_project'er
-            */
-            // henter alle projektid'er som er bruger er tilknyttet via teams
             String sqlCommand =
-                    "SELECT DISTINCT id_project, project_title, project_description, project_deadline, project_manhours " +
-                            "FROM teams_users " +
+                    "SELECT DISTINCT " +
+                        "id_project, project_title, project_description, project_deadline, project_manhours " +
+                        "FROM teams_users " +
                         "RIGHT JOIN teams_projects ON teams_users.f_id_team = teams_projects.f_id_team " +
                         "RIGHT JOIN projects ON teams_projects.f_id_project = projects.id_project " +
                         "WHERE f_id_user = ?";

@@ -5,6 +5,7 @@ import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.models.users.User;
 
 import javax.swing.text.DateFormatter;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -13,6 +14,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import static java.lang.StrictMath.round;
 
 public class Project implements Comparable<Project>
 {
@@ -121,26 +125,7 @@ public class Project implements Comparable<Project>
     }
     
     
-    
-    public double calculateManhours(ArrayList<Subproject> subprojectList)
-    {
-        double manhours = 0;
-        
-        if(subprojectList != null && subprojectList.size() > 0)
-        {
-            // for hvert subprojekt
-            for(Subproject subproject : subprojectList)
-            {
-                // tilføj subprojektets manhours til manhours der skal returneres
-                manhours += subproject.getManhours();
-            }
-        }
-        
-        return manhours;
-        
-    }
-    
-    
+  
     public String findSubHeadline()
     {
         String headline = "";
@@ -149,10 +134,15 @@ public class Project implements Comparable<Project>
         {
             headline += "Deadline " + findFormattedDeadline();
         }
-        
         if(manhours != 0)
         {
-            headline += " - Estimeret timer " + manhours;
+            headline += " - Estimerede timer " + manhours;
+        }
+        double manhoursPrDay = calculateManhoursPrDay();
+        
+        if(manhoursPrDay != 0)
+        {
+            headline += " - Arbejdstimer på projekt pr. dag " + manhoursPrDay;
         }
     
         // System.out.println(calculateManhoursPrDay());
@@ -177,14 +167,47 @@ public class Project implements Comparable<Project>
         return formattedDate;
     }
     
+    /**
+     * Sammenlægger arbejdstimer fra alle delprojekter der tages imod som parameter
+     *
+     * @param subprojectList Liste af delprojekter vis arbejdstimer lægges sammen
+     * @return double: sammenlagte timer fra delprojekter
+     * */
+    public double calculateManhours(ArrayList<Subproject> subprojectList)
+    {
+        double manhours = 0;
+        
+        if(subprojectList != null && subprojectList.size() > 0)
+        {
+            // for hvert subprojekt
+            for(Subproject subproject : subprojectList)
+            {
+                // tilføj subprojektets manhours til manhours der skal returneres
+                manhours += subproject.getManhours();
+            }
+        }
+        
+        return manhours;
+        
+    }
+    
+    
     public double calculateManhoursPrDay()
     {
         double manhoursPrDay = 0;
         
-        // udregn det kun hvis det BÅDE er en deadline OG angivede arbejdstimer
+        // udregn det kun hvis der BÅDE er en deadline OG angivede arbejdstimer
         if(deadline != null && manhours != 0)
         {
-    
+            //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+            Date currentDate = new Date();
+            
+            if(currentDate.before(deadline))
+            {
+                long diff = deadline.getTime() - currentDate.getTime();
+                double daysBetween = (double) (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)) + 1;
+       
+            /*
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
             String deadlineString = findFormattedDeadline().toString();
             
@@ -197,12 +220,34 @@ public class Project implements Comparable<Project>
             long daysBetween = Duration.between(dead, today).toDays();
             System.out.println ("Days: " + daysBetween);
             
-            manhoursPrDay = manhours / daysBetween;
+             */
+    
+                manhoursPrDay = manhours/daysBetween;
+                
+                //DecimalFormat df = new DecimalFormat("#.##");
+                //manhoursPrDay = Double.parseDouble(df.format(manhoursPrDay));
+                
+                manhoursPrDay = Math.round(manhoursPrDay * 100.0) / 100.0;
+                
+                // fx: 33.3333 * 100 == 3333  -->  3333/ 100 == 33.33
+    
+                System.out.println(manhoursPrDay);
+            }
             
         }
         
         return manhoursPrDay;
     }
+    
+
+    
+    
+    /*
+    *
+  
+    *
+    * */
+    
     
     
     @Override
