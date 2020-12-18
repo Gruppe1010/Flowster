@@ -1080,4 +1080,78 @@ public class ProjectRepository
     
     
     
+    // GEM/SLET TEAM i db
+    
+    public void insertRowIntoTeamsProjects(String dbName, int teamId, int projectId)
+    {
+        organisationConnection = generalRepository.establishConnection(dbName);
+        
+        try
+        {
+            String sqlCommand = "INSERT INTO teams_projects (f_id_team, f_id_project) values (?, ?)";
+            
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setInt(1, teamId);
+            preparedStatement.setInt(2, projectId);
+            
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in ProjectRepository insertRowIntoTeamsProjects: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in ProjectRepository insertRowIntoTeamsProjectsFinally: " + e.getMessage());
+            }
+        }
+        
+    }
+    
+    public void deleteRowFromTeamsProjects(String dbName, int teamId, int projectId)
+    {
+        organisationConnection = generalRepository.establishConnection(dbName);
+        
+        try
+        {
+            String sqlCommand = "DELETE FROM teams_projects WHERE f_id_team = ? AND f_id_project = ?";
+            
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setInt(1, teamId);
+            preparedStatement.setInt(2, projectId);
+            
+            preparedStatement.executeUpdate();
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in ProjectRepository deleteRowFromTeamsProjects: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in ProjectRepository deleteRowFromTeamsProjects:: " + e.getMessage());
+            }
+        }
+        
+        
+    }
+    
+    
+    
+    
+    
+    
 }

@@ -145,20 +145,18 @@ public class TeamController
     public String postAddUserToTeam(@PathVariable String orgDbName, @PathVariable int teamId, @PathVariable int userId)
     {
         teamService.insertRowIntoTeamsUsers(orgDbName, teamId, userId);
-        
-        return String.format("redirect:/%s/editTeam/%d", orgDbName, teamId); // kører hurtigere
-        // return "redirect:/" + orgDbName + "/editTeam/" + teamId;
+    
+        // string.format kører hurtigere end string-concat
+        return String.format("redirect:/%s/editTeam/%d", orgDbName, teamId);
     }
     
     @PostMapping("/editTeam/{teamId}/removeUser/{userId}")
     public String postRemoveUserFromTeam(@PathVariable String orgDbName, @PathVariable int teamId,
                                          @PathVariable int userId)
     {
-   
         teamService.deleteRowFromTeamsUser(orgDbName, teamId, userId);
     
         return String.format("redirect:/%s/editTeam/%d", orgDbName, teamId);
-        // return "redirect:/" + orgDbName + "/editTeam/" + teamId;
     }
     
      @GetMapping("/viewTeam/{teamId}")

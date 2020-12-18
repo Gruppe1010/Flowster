@@ -216,6 +216,17 @@ public class ProjectService
     
     
     
+    // TILFØJ/FJERN TEAM
+    public void insertRowIntoTeamsProjects(String orgDbName, int teamId, int projectId)
+    {
+        projectRepository.insertRowIntoTeamsProjects(orgDbName, teamId, projectId);
+    }
+    
+    public void deleteRowFromTeamsProjects(String orgDbName, int teamId, int projectId)
+    {
+        projectRepository.deleteRowFromTeamsProjects(orgDbName, teamId, projectId);
+    }
+    
     
     
     

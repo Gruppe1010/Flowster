@@ -494,20 +494,18 @@ public class ProjectController
     public String postAddTeamToProject(@PathVariable String orgDbName, @PathVariable int projectId,
                                     @PathVariable int teamId)
     {
-        // projectService.insertRowIntoProjectsTeams(orgDbName, projectId, teamId);
+        projectService.insertRowIntoTeamsProjects(orgDbName, teamId, projectId);
         
-        
-        return String.format("/%s/editProject/%d/editTeams", orgDbName, projectId);
+        return String.format("redirect:/%s/editProject/%d/editTeams", orgDbName, projectId);
     }
     
     @PostMapping("/editProject/{projectId}/removeTeam/{teamId}")
     public String postRemoveTeamFromProject(@PathVariable String orgDbName, @PathVariable int projectId,
                                     @PathVariable int teamId)
     {
+        projectService.deleteRowFromTeamsProjects(orgDbName, teamId, projectId);
     
-        // projectService.deleteRowFromProjectsTeams(orgDbName, projectId, teamId);
-    
-        return String.format("/%s/editProject/%d/editTeams", orgDbName, projectId);
+        return String.format("redirect:/%s/editProject/%d/editTeams", orgDbName, projectId);
     }
     
     
