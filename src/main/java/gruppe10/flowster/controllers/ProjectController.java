@@ -16,7 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.swing.text.DateFormatter;
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/{orgDbName}")
@@ -48,8 +54,15 @@ public class ProjectController
 
     @GetMapping("/createProject")
     public String createProject(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel,
-                                Model joinedProjectListModel, Model createProjectModel, Model errorModel)
+                                Model joinedProjectListModel, Model createProjectModel, Model errorModel,
+                                Model currentDateModel)
     {
+        // model til form-input-felter
+        createProjectModel.addAttribute("createProjectViewModel", createProjectViewModel);
+    
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        currentDateModel.addAttribute("currentDate", dateFormat.format(new Date()));
+        
         // model til error-popup
         errorModel.addAttribute("error", error);
         
@@ -58,8 +71,7 @@ public class ProjectController
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
 
-        // model til form-input-felt
-        createProjectModel.addAttribute("createProjectViewModel", createProjectViewModel);
+     
     
         
         
