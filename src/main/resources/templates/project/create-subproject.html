@@ -87,8 +87,8 @@
                     <input type="text"
                            class="form-control"
                            id="subproject-title"
-                           name="subproject-title"
-                           placeholder="Indtast delprojekttitel"
+                           name="title"
+                           placeholder="Titel"
                            oninvalid="this.setCustomValidity('Indtast venligst et delprojektstitel, på maks 100 karakterer')"
                            oninput="setCustomValidity('')"
                            maxlength="100"
@@ -97,10 +97,9 @@
                     <input type="number"
                            class="form-control subproject-manhours-input"
                            id="subproject-manhours"
-                           name="subproject-manhours"
-                           placeholder="Indtast arbejdstimer"
-                           oninvalid="this.setCustomValidity('Angiv venligst et estimat for hvor mange arbejdstimer der ' +
-                            'forventes at skulle bruges på delprojektet')"
+                           name="manhours"
+                           placeholder="Arbejdstimer"
+                           oninvalid="this.setCustomValidity('Angiv venligst estimat i tal')"
                            oninput="setCustomValidity('')">
 
 

@@ -1,19 +1,19 @@
 package gruppe10.flowster.viewModels.project;
 
-public class CreateSubprojectViewModel
+public class CreateSubViewModel
 {
     private int id;
     private String title;
     private double manhours;
     
     // constructors
-    public CreateSubprojectViewModel(){}
-    public CreateSubprojectViewModel(String title, double manhours)
+    public CreateSubViewModel(){}
+    public CreateSubViewModel(String title, double manhours)
     {
         this.title = title;
         this.manhours = manhours;
     }
-    public CreateSubprojectViewModel(int id, String title, double manhours)
+    public CreateSubViewModel(int id, String title, double manhours)
     {
         this.id = id;
         this.title = title;

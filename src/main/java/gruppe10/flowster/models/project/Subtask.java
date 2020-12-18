@@ -20,6 +20,14 @@ public class Subtask
     }
     
     // getters + getters
+    public double getManhours()
+    {
+        return manhours;
+    }
+    public void setManhours(double manhours)
+    {
+        this.manhours = manhours;
+    }
     public int getId()
     {
         return id;

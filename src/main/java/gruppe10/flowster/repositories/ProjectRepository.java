@@ -5,12 +5,9 @@ import gruppe10.flowster.models.project.Subproject;
 import gruppe10.flowster.models.project.Subtask;
 import gruppe10.flowster.models.project.Task;
 import gruppe10.flowster.models.teams.Team;
-import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.models.users.User;
 import gruppe10.flowster.viewModels.project.CreateProjectViewModel;
-import gruppe10.flowster.viewModels.project.CreateSubprojectViewModel;
-import gruppe10.flowster.viewModels.project.CreateTaskViewModel;
-import gruppe10.flowster.viewModels.user.CreatorViewModel;
+import gruppe10.flowster.viewModels.project.CreateSubViewModel;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -19,7 +16,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.Date;
-import java.util.LinkedHashSet;
 
 @Repository
 public class ProjectRepository
@@ -770,10 +766,10 @@ public class ProjectRepository
         return subprojectTitleIsAvailable;
     }
     
-    public void insertNewSubprojectIntoDb(String dbName, CreateSubprojectViewModel createSubprojectViewModel)
+    public void insertNewSubprojectIntoDb(String dbName, CreateSubViewModel createSubViewModel)
     {
-        String title = createSubprojectViewModel.getTitle();
-        Double mahours = createSubprojectViewModel.getManhours();
+        String title = createSubViewModel.getTitle();
+        Double mahours = createSubViewModel.getManhours();
                 
                 organisationConnection = generalRepository.establishConnection(dbName);
     
@@ -890,17 +886,18 @@ public class ProjectRepository
         
     }
     
-    public void insertNewTaskIntoDb(String dbName, String title)
+    public void insertNewTaskIntoDb(String dbName, String title, double manhours)
     {
         organisationConnection = generalRepository.establishConnection(dbName);
         
         try
         {
-            String sqlCommand = "INSERT INTO tasks (task_title) value (?)";
+            String sqlCommand = "INSERT INTO tasks (task_title, task_manhours) value (?, ?)";
             
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
             
             preparedStatement.setString(1, title);
+            preparedStatement.setDouble(2, manhours);
             
             preparedStatement.executeUpdate();
             
@@ -1006,17 +1003,18 @@ public class ProjectRepository
         
     }
     
-    public void insertNewSubtaskIntoDb(String dbName, String title)
+    public void insertNewSubtaskIntoDb(String dbName, String title, double manhours)
     {
         organisationConnection = generalRepository.establishConnection(dbName);
         
         try
         {
-            String sqlCommand = "INSERT INTO subtasks (subtask_title) value (?)";
+            String sqlCommand = "INSERT INTO subtasks (subtask_title, subtask_manhours) value (?,?)";
             
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
             
             preparedStatement.setString(1, title);
+            preparedStatement.setDouble(2, manhours);
             
             preparedStatement.executeUpdate();
             

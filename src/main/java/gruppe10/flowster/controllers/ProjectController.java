@@ -1,14 +1,11 @@
 package gruppe10.flowster.controllers;
 
 import gruppe10.flowster.models.project.Project;
-import gruppe10.flowster.models.teams.Team;
 import gruppe10.flowster.services.ProjectService;
 import gruppe10.flowster.services.TeamService;
 import gruppe10.flowster.services.UserService;
 import gruppe10.flowster.viewModels.project.CreateProjectViewModel;
-import gruppe10.flowster.viewModels.project.CreateSubtaskViewModel;
-import gruppe10.flowster.viewModels.project.CreateSubprojectViewModel;
-import gruppe10.flowster.viewModels.project.CreateTaskViewModel;
+import gruppe10.flowster.viewModels.project.CreateSubViewModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
-import javax.swing.text.DateFormatter;
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 @Controller
@@ -34,9 +26,7 @@ public class ProjectController
     
     // ViewModeller som bruges til at holde på foreløbig data
     CreateProjectViewModel createProjectViewModel;
-    CreateSubprojectViewModel createSubprojectViewModel;
-    CreateTaskViewModel createTaskViewModel;
-    CreateSubtaskViewModel createSubtaskViewModel;
+    CreateSubViewModel createSubViewModel;
 
     String error = null;
     
@@ -180,7 +170,7 @@ public class ProjectController
         joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
 
         // model til form-input-felt
-        createSubprojectModel.addAttribute("createSubprojectViewModel", createSubprojectViewModel);
+        createSubprojectModel.addAttribute("createSubprojectViewModel", createSubViewModel);
     
         // modeller til main content TODO tjek om dette er rigtigt
         /*
@@ -228,23 +218,23 @@ public class ProjectController
         error = null;
         
         // opret CreateProjectViewModel(dataFromCreateProjectForm) ud fra webRequest
-        createSubprojectViewModel =
+        createSubViewModel =
                 projectService.createSubprojectViewModelFromForm(dataFromCreateSubprojectForm);
     
         // tjek om subprojekttitle er optaget
         boolean subprojectTitleIsAvailable = projectService.isSubprojectTitleAvailable(orgDbName, projectId,
-                createSubprojectViewModel.getTitle());
+                createSubViewModel.getTitle());
     
         // hvis subprojectTitle ikke allerede findes på projektet
         if(subprojectTitleIsAvailable)
         {
             // tilføj nyt subproject til db OG knyt delprojekt til projektet
             projectService.insertNewSubprojectIntoDb(orgDbName, projectId, subprojectId,
-                    createSubprojectViewModel);
+                    createSubViewModel);
     
             // fordi delprojektet oprettedes succesfuldt skal createSubprojectViewModel nu ikke vise indtastede titel
             // mere
-            createSubprojectViewModel = null;
+            createSubViewModel = null;
             
             // vi ryger tilbage til editProject
             return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
@@ -252,7 +242,7 @@ public class ProjectController
     
         error = String.format("Der findes allerede et delprojekt med titlen \"%s\" i dette projekt. " +
                                       "Vælg venligst en anden titel til dit delprojekt.",
-                createSubprojectViewModel.getTitle());
+                createSubViewModel.getTitle());
         
         // Subprojektet er IKKE blevet gemt i databasen og guider derfor til samme sted, hvor ugyldig title vises pga
         // . createProjectViewModel
@@ -279,7 +269,7 @@ public class ProjectController
         joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
        
         // model til form-input-felt
-        createTaskModel.addAttribute("createTaskViewModel", createTaskViewModel);
+        createTaskModel.addAttribute("createTaskViewModel", createSubViewModel);
     
     
         // modeller til main content
@@ -335,23 +325,23 @@ public class ProjectController
         error = null;
         
         // opret CreateTaskViewModel(dataFromCreateTaskForm) ud fra webRequest
-        createTaskViewModel = projectService.createTaskViewModelFromForm(dataFromCreateTaskForm);
+        createSubViewModel = projectService.createSubprojectViewModelFromForm(dataFromCreateTaskForm);
     
         
         // tjek om tasktitel allerede findes i delprojekt
         boolean taskTitleIsAvailable = projectService.isTaskTitleAvailable(orgDbName, subprojectId,
-                createTaskViewModel.getTitle());
+                createSubViewModel.getTitle());
     
         // hvis taskTitle ikke allerede findes på subproject'et
         if(taskTitleIsAvailable)
         {
             // tilføj ny task til db og knyt task til subproject
             projectService.insertNewTaskIntoDb(orgDbName, subprojectId, taskId,
-                    createTaskViewModel);
+                    createSubViewModel);
         
             // fordi delprojektet oprettedes succesfuldt skal createTaskViewModel nu ikke vise indtastede titel
             // mere
-            createTaskViewModel = null;
+            createSubViewModel = null;
         
             // vi ryger tilbage til editProject
             return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
@@ -362,7 +352,7 @@ public class ProjectController
     
         error = String.format("Der findes allerede en opgave med titlen \"%s\" i dette delprojekt. " +
                                       "Vælg venligst en anden titel til din opgave.",
-                createTaskViewModel.getTitle());
+                createSubViewModel.getTitle());
     
     
         return String.format("redirect:/%s/editProject/%d/subproject/%d/createTask/%d/#error-popup", orgDbName, projectId,
@@ -418,7 +408,7 @@ public class ProjectController
         nextSubtaskIdModel.addAttribute("nextSubtaskId", nextSubtaskId);
     
         // model til form-input-felt
-        createSubtaskModel.addAttribute("createSubtaskViewModel", createSubtaskViewModel);
+        createSubtaskModel.addAttribute("createSubtaskViewModel", createSubViewModel);
     
         // modeller til sidebars + menubars
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
@@ -447,22 +437,22 @@ public class ProjectController
         error = null;
         
         // opret CreateSubtaskViewModel(dataFromCreateSubtaskForm) ud fra webRequest
-        createSubtaskViewModel = projectService.createSubtaskViewModelFromForm(dataFromCreateSubtaskForm);
+        createSubViewModel = projectService.createSubprojectViewModelFromForm(dataFromCreateSubtaskForm);
         
         // tjek om tasktitel er optaget
         boolean subtaskTitleIsAvailable = projectService.isSubtaskTitleAvailable(orgDbName, taskId,
-                createSubtaskViewModel.getTitle());
+                createSubViewModel.getTitle());
     
         // hvis subprojectTitle ikke allerede findes på projektet
         if(subtaskTitleIsAvailable)
         {
             // tilføj nyt subproject til db og knyt delprojekt til projektet
             projectService.insertNewSubtaskIntoDb(orgDbName, taskId, subtaskId,
-                    createSubtaskViewModel);
+                    createSubViewModel);
         
             // fordi subtask oprettedes succesfuldt skal createSubtaskViewModel nu ikke vise indtastede titel
             // mere
-            createSubtaskViewModel = null;
+            createSubViewModel = null;
         
             // vi ryger tilbage til editProject
             return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
@@ -470,7 +460,7 @@ public class ProjectController
     
         error = String.format("Der findes allerede en underopgave med titlen \"%s\" under denne opgave. " +
                                       "Vælg venligst en anden titel til din underopgave.",
-                createSubtaskViewModel.getTitle());
+                createSubViewModel.getTitle());
     
         // Subtask er IKKE blevet gemt i db --> guide derfor til samme GetMapping, hvor ugyldig title vises
         // via createSubtaskViewModel

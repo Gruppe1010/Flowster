@@ -86,12 +86,20 @@
                         <input type="text"
                                class="form-control"
                                id="task-title"
-                               name="task-title"
-                               placeholder="Indtast opgavetitel"
+                               name="title"
+                               placeholder="Titel"
                                oninvalid="this.setCustomValidity('Indtast venligst en opgavetitel på maks 100 karakterer')"
                                oninput="setCustomValidity('')"
                                maxlength="100"
                                required>
+
+                        <input type="number"
+                               class="form-control subproject-manhours-input"
+                               id="task-manhours"
+                               name="manhours"
+                               placeholder="Arbejdstimer"
+                               oninvalid="this.setCustomValidity('Angiv venligst estimat i tal')"
+                               oninput="setCustomValidity('')">
 
                         <button type="submit" class="btn save-team-btn">Opret</button>
                         <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}"><i class="material-icons clear-style">clear</i></a>

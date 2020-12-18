@@ -76,13 +76,21 @@
                             <input type="text"
                                    class="form-control"
                                    id="subtask-title"
-                                   name="subtask-title"
-                                   placeholder="Indtast underopgavetitel"
-                                   oninvalid="this.setCustomValidity('Angiv venligst denne underopgavestitel, maks' +
+                                   name="title"
+                                   placeholder="Titel"
+                                   oninvalid="this.setCustomValidity('Angiv venligst denne underopgavestitel, maks ' +
                                     '100 karakterer')"
                                    oninput="setCustomValidity('')"
                                    maxlength="100"
                                    required>
+
+                            <input type="number"
+                                   class="form-control subproject-manhours-input"
+                                   id="subtask-manhours"
+                                   name="manhours"
+                                   placeholder="Arbejdstimer"
+                                   oninvalid="this.setCustomValidity('Angiv venligst estimat i tal')"
+                                   oninput="setCustomValidity('')">
 
                             <button type="submit" class="btn save-team-btn">Opret</button>
                             <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}"><i class="material-icons clear-style">clear</i></a>

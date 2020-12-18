@@ -146,6 +146,7 @@
 <div th:fragment="subtask-info(subtask)">
     <span class="subtask-style material-icons">radio_button_unchecked</span>
     <p th:text="${subtask.getTitle()}" class="subtask-style"></p>
+    <p th:if="${subtask.getManhours() > 0}" th:text="${' - ' + subtask.getManhours() + ' timer'}" class="task-style"></p>
 </div>
 
 
