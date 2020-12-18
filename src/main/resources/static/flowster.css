@@ -451,6 +451,11 @@ ul li::before
     display: block;
 }
 
+.edit-view-project-container
+{
+
+}
+
 .project-title
 {
     font-size: 25px;
@@ -505,8 +510,29 @@ ul li::before
 {
     float: left;
     color: #2b669a;
-    margin: 10px 0 10px 120px;
+    margin: 10px 0 10px 10px;
     font-size: 19px;
+    font-weight: lighter;
+    font-style: italic;
+
+}
+
+span.task-style
+{
+    float: left;
+    color: #235D89;
+    margin: 17px 0 10px 120px;
+    font-size: 11px;
+    font-weight: bold;
+    clear: both; /*positionere task under subproject*/
+}
+
+.task-btn-style
+{
+    float: left;
+    color: #2b669a;
+    margin: 10px 0 10px 120px;
+    font-size: 11px;
     font-weight: lighter;
     font-style: italic;
     clear: both; /*positionere task under subproject*/
@@ -516,10 +542,31 @@ ul li::before
 {
     float: left;
     color: #3E8AC4;
-    margin: 10px 0 10px 180px;
+    margin: 10px 0 10px 10px;
     font-size: 16px;
     font-weight: lighter;
+
+}
+
+span.subtask-style
+{
+    float: left;
+    color: #235D89;
+    margin: 15px 0 10px 180px;
+    font-size: 11px;
+    font-weight: bold;
     clear: both; /*positionere subtask under task*/
+}
+
+.subtask-btn-style
+{
+    float: left;
+    color: #2b669a;
+    margin: 10px 0 10px 180px;
+    font-size: 19px;
+    font-weight: lighter;
+    font-style: italic;
+    clear: both; /*positionere task under subproject*/
 }
 
 .clear-style
@@ -590,6 +637,7 @@ ul li::before
     opacity: 0;
     z-index: 0;
 }
+
 .overlay:target
 {
     visibility: visible;
@@ -629,7 +677,6 @@ ul li::before
     text-decoration: none;
     color: #333;
 }
-
 
 .popup .close:hover
 {
