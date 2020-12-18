@@ -43,13 +43,14 @@ public class ProjectService
                         joinedProjectList.add(project);
                     }
                 }
+                Collections.sort(joinedProjectList);
             }
             else
             {
                 joinedProjectList = createdProjectList;
             }
     
-            Collections.sort(joinedProjectList);
+            
         }
         
         return joinedProjectList;

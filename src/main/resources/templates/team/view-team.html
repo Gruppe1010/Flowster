@@ -41,6 +41,10 @@
                         <button class="btn edit-team-btn" type="submit">Rediger</button>
                     </a>
                 </div>
+                <div th:unless="${loggedInUser.isProjectManager()}">
+                    <!-- Denne div sørger for at teamnavnet ikke floater right hvis man er almen medarbejer -->
+                </div>
+
             </div>
             <div class="preview-user-container">
                 <div th:each="previewUser: ${team.getUserList()}">

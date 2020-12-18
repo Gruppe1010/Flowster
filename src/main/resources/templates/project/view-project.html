@@ -49,6 +49,9 @@
                             <button class="btn add-temas-btn" type="submit">Tilføj teams</button>
                         </a>
                     </div>
+                    <div th:unless="${loggedInUser.isProjectManager()}">
+                        <!-- Denne div sørger for at teamnavnet ikke floater right hvis man er almen medarbejer -->
+                    </div>
                 </div>
 
                 <div>
