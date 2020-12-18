@@ -11,7 +11,7 @@ class UserServiceTest
     @Test
     void checkIfPasswordsMatch()
     {
-        // arrange
+        // ARRANGE
         UserService userService = new UserService();
 
         String password = "Hejhej123";
@@ -21,18 +21,19 @@ class UserServiceTest
         boolean expectedTrue = true;
         boolean expectedFalse = false;
 
-        // act
-
+        // ACT
         // password + repeatedPassword  ---> expectedTrue
         boolean result1 = userService.checkIfPasswordsMatch(password, repeatedPassword);
 
         // password + differentPassword ---> expectedFalse
         boolean result2 = userService.checkIfPasswordsMatch(password, differentPassword);
 
-        // assert
+        // ASSERT
         assertEquals(expectedTrue, result1);
         assertEquals(expectedFalse, result2);
     }
+
+
 
     /*
     * Vi tester ikke ugyldige input, fx manhours = 100 (som skal være mellem 0-99 for at være gyldige) eller manhours
