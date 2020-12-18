@@ -505,7 +505,7 @@ ul li::before
     margin: 10px 0 10px 60px;
     font-size: 22px;
     font-weight: bold;
-    clear: both; /*positionere subproject under project*/
+    clear: both; /*positionerer subproject under project*/
 }
 
 .manhours-style

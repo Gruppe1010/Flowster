@@ -6,6 +6,7 @@ public class Task
 {
     private int id;
     private String title;
+    private double manhours;
     private ArrayList<Subtask> subtaskList;
     
     // constructors
@@ -18,14 +19,23 @@ public class Task
         this.subtaskList = null;
     }
  
-    public Task(int id, String title, ArrayList<Subtask> subtaskList)
+    public Task(int id, String title, double manhours, ArrayList<Subtask> subtaskList)
     {
         this.id = id;
         this.title = title;
+        this.manhours = manhours;
         this.subtaskList = subtaskList;
     }
     
     // getters + setters
+    public double getManhours()
+    {
+        return manhours;
+    }
+    public void setManhours(double manhours)
+    {
+        this.manhours = manhours;
+    }
     public int getId()
     {
         return id;

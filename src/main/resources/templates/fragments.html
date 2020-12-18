@@ -126,6 +126,29 @@
     </div>
 </nav>
 
+
+<!--------------- subproject-overskrift --------------->
+
+<div th:fragment="subproject-info(subproject)">
+    <p th:text="${subproject.getTitle()}" class="subproject-style"></p>
+    <p th:if="${subproject.getManhours() > 0}" th:text="${' - ' + subproject.getManhours() + ' timer'}" class="manhours-style"></p>
+</div>
+
+<!--------------- task-overskrift --------------->
+
+<div th:fragment="task-info(task)">
+    <span class="task-style material-icons">fiber_manual_record</span>
+    <p th:text="${task.getTitle()}" class="task-style"></p>
+    <p th:if="${task.getManhours() > 0}" th:text="${' - ' + task.getManhours() + ' timer'}" class="task-style"></p>
+</div>
+
+<!--------------- subtask-overskrift --------------->
+<div th:fragment="subtask-info(subtask)">
+    <span class="subtask-style material-icons">radio_button_unchecked</span>
+    <p th:text="${subtask.getTitle()}" class="subtask-style"></p>
+</div>
+
+
 <!------------------------------------------ FOOTER ------------------------------------------------>
 
 <!-- <div th:insert="general/fragments :: footer"></div> -->

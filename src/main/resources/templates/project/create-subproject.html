@@ -52,18 +52,16 @@
                 <p class="project-subtitle" th:text="${project.findSubHeadline()}"></p>
 
                 <div th:each="subproject : ${project.getSubprojectList()}">
-                    <p th:text="${subproject.getTitle()}" class="subproject-style"></p>
-                        <p class="manhours-style">&nbsp;-&nbsp;</p>
-                            <p th:text="${subproject.getManhours()}" class="manhours-style"></p>
-                                <p class="manhours-style">timer</p>
+
+                    <div th:replace="fragments :: subproject-info(${subproject})"></div>
 
                     <div th:each="task : ${subproject.getTaskList()}">
-                        <span class="task-style material-icons">fiber_manual_record</span>
-                        <p th:text="${task.getTitle()}" class="task-style"></p>
+
+                        <div th:replace="fragments :: task-info(${task})"></div>
 
                         <div th:each="subtask : ${task.getSubtaskList()}">
-                            <span class="subtask-style material-icons">radio_button_unchecked</span>
-                            <p th:text="${subtask.getTitle()}" class="subtask-style"></p>
+
+                            <div th:replace="fragments :: subtask-info(${subtask})"></div>
 
                         </div> <!-- for-each: subtask -->
 

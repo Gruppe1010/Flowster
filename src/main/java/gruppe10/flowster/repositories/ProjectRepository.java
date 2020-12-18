@@ -329,7 +329,8 @@ public class ProjectRepository
                 
                 // opretter nyt subprojekt
                 Task task = new Task
-                       (taskId, resultSet.getString("task_title"), retrieveSubtaskList(taskId));
+                       (taskId, resultSet.getString("task_title"), resultSet.getDouble("task_manhours"),
+                               retrieveSubtaskList(taskId));
                 
                 // tilføjer nyoprettet projekt til liste
                 taskList.add(task);
@@ -387,7 +388,8 @@ public class ProjectRepository
                 // opretter nyt subprojekt
                 Subtask subtask = new Subtask
                             (resultSet.getInt("id_subtask"),
-                            resultSet.getString("subtask_title"));
+                            resultSet.getString("subtask_title"),
+                            resultSet.getDouble("subtask_manhours"));
                 
                 // tilføjer nyoprettet projekt til liste
                 subtaskList.add(subtask);
