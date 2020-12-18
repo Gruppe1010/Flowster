@@ -2,6 +2,7 @@ package gruppe10.flowster.models.teams;
 
 import gruppe10.flowster.models.project.Project;
 import gruppe10.flowster.models.users.User;
+import gruppe10.flowster.services.TeamService;
 
 import java.util.ArrayList;
 
@@ -66,33 +67,11 @@ public class Team
         this.projectList = projectList;
     }
     
+    public boolean isOnProject(String orgDbName, int projectId)
+    {
+        TeamService teamService = new TeamService();
     
-    public boolean isOnProject()
-    {
-        return true;
-    }
- 
-    // TODO
-    public boolean isOnProject(int projectId)
-    {
-        // int projectIdInt = Integer.parseInt(projectId);
-        
-        boolean teamIsOnProject = false;
-        
-        if(projectList != null)
-        {
-            for(Project project : projectList)
-            {
-                if(projectId == project.getId())
-                {
-                    teamIsOnProject = true;
-            
-                    break;
-                }
-            }
-        }
-        
-        return teamIsOnProject;
+        return teamService.checkIfTeamIsOnProject(orgDbName, id, projectId);
     }
     
     

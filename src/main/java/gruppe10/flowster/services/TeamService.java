@@ -135,5 +135,10 @@ public class TeamService
     }
     
     
+    public boolean checkIfTeamIsOnProject(String orgDbName, int teamId, int projectId)
+    {
+        return teamRepository.checkIfTeamIsOnProject(orgDbName, teamId, projectId);
+    }
+    
     
 }

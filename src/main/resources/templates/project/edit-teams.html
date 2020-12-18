@@ -54,14 +54,14 @@
                         <p th:text="${team.getName()}"></p>
 
                         <!-- TILFØJ-KNAP -->
-                        <div th:if="${team.isOnProject(projectId)}">
+                        <div th:if="${team.isOnProject(orgDbName, projectId)}">
                             <form th:action="${'/' + orgDbName + '/editProject/' + projectId + '/addTeam/' + team.getId()}" method="post">
                                 <button class="btn remove-btn" type="submit">Tilføj</button>
                             </form>
                         </div>
 
                         <!-- FJERN-KNAP -->
-                        <div th:unless="${team.isOnProject(projectId)}">
+                        <div th:unless="${team.isOnProject(orgDbName, projectId)}">
                             <form th:action="${'/' + orgDbName + '/editProject/' + projectId + '/removeTeam/' + team.getId()}" method="post">
                                 <button class="btn remove-btn" type="submit">Fjern</button>
                             </form>

@@ -50,47 +50,6 @@ public class ProjectService
             }
     
             Collections.sort(joinedProjectList);
-            
-            
-            /*
-            LinkedHashSet<Project> combinedJoinedProjectList = new LinkedHashSet<>();
-            
-            if(projectListViaTeams != null)
-            {
-                combinedJoinedProjectList.addAll(projectListViaTeams);
-            }
-            if(createdProjectList != null)
-            {
-                combinedJoinedProjectList.addAll(createdProjectList);
-            }
-            // hvis der ER noget på den kombinerede liste, skal retur-ArrayListen sættes til denne
-            if(combinedJoinedProjectList.size() > 0)
-            {
-                
-                
-                joinedProjectList = new ArrayList<>(combinedJoinedProjectList);
-                Collections.sort(joinedProjectList);
-    
-                System.out.println(joinedProjectList);
-            }
-            
-             */
-            
-            
-            /*
-            // hvis den ENE ikke er null
-            if(projectListViaTeams == null && createdProjectList != null)
-            {
-                projectListViaTeams = createdProjectList;
-            }
-            // hvis begge IKKE er null, skal de sammenlægges
-            else if(createdProjectList != null && projectListViaTeams != null)
-            {
-                // tilføj disse (hvis disse IKKE er dupliketter af et projekt på listen) til listen
-                projectListViaTeams.addAll(createdProjectList);
-            }
-            
-             */
         }
         
         return joinedProjectList;

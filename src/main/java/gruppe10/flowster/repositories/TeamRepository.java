@@ -725,9 +725,9 @@ public class TeamRepository
     
     
     
-    public void updateTeamName(String orgDbName, int teamId, String newTeamName)
+    public void updateTeamName(String dbName, int teamId, String newTeamName)
     {
-        organisationConnection = generalRepository.establishConnection(orgDbName);
+        organisationConnection = generalRepository.establishConnection(dbName);
     
         try
         {
@@ -756,6 +756,50 @@ public class TeamRepository
             }
         }
         
+    }
+    
+    
+    public boolean checkIfTeamIsOnProject(String dbName, int teamId, int projectId)
+    {
+        boolean teamIsOnProject = false;
+    
+        organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+            String sqlCommand = "SELECT * FROM teams_projects WHERE f_id_team = ? AND f_id_project = ?";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setInt(1, teamId);
+            preparedStatement.setInt(2, projectId);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+        
+            // hvis der er noget i resultSet'et, er teamName altså IKKE ledig
+            if(resultSet.next())
+            {
+                teamIsOnProject = true;
+            }
+        
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in TeamRepository checkIfTeamIsOnProject: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in TeamRepository checkIfTeamIsOnProjectFinally: " + e.getMessage());
+            }
+        }
+        
+        return teamIsOnProject;
     }
 
 
