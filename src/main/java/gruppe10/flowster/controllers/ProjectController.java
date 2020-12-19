@@ -60,15 +60,10 @@ public class ProjectController
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         joinedProjectListModel.addAttribute("joinedProjectList", projectService.updateJoinedProjectList(orgDbName));
-
-     
-    
-        
         
         return "project/create-project"; // html
     }
     
-    // FÆRDIG
     @PostMapping("/createProject")
     public String postCreateProject(@PathVariable String orgDbName, WebRequest dataFromCreateProjectForm)
     {
@@ -171,33 +166,7 @@ public class ProjectController
 
         // model til form-input-felt
         createSubprojectModel.addAttribute("createSubprojectViewModel", createSubViewModel);
-    
-        // modeller til main content TODO tjek om dette er rigtigt
-        /*
-        projectModel.addAttribute("projectModel", new Project(1, "Eksamensprojekt-projekt", null, 30,
-                new ArrayList<Subproject>(Arrays.asList(
-                        new Subproject(1, "Virksomhed-delprojekt",
-                                new ArrayList<Task>(Arrays.asList(
-                                        new Task(1, "Risikoanalyse-opgave",
-                                                new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(1, "Risikotabel-underopgave"),
-                                                        new Subtask(2, "Beskrivelse af risikomomenter-underopgave"))))))),
-                        new Subproject(2, "Systemudvikling-delprojekt",
-                                new ArrayList<Task>(Arrays.asList(
-                                        new Task(2, "Use case model-opgave",
-                                                new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(3, "Use case diagram-underopgave"),
-                                                        new Subtask(4, "SSD'er-underopgave")))),
-                                        new Task(3, "FURPS",
-                                                new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(5, "Funktional-underopgave"),
-                                                        new Subtask(6, "Non-funktional-underopgave"))))))),
-                        new Subproject(3, "Programmering-delprojekt",
-                                new ArrayList<Task>(Arrays.asList(
-                                        new Task(4, "Kode-opgave")))))),
-                null)); // TODO ret til hent project fra db
-                
-         */
+        
         projectModel.addAttribute("project", projectService.retrieveProject(orgDbName, projectId));
         projectIdModel.addAttribute("projectId", projectId);
         nextTaskIdModel.addAttribute("nextTaskId", projectService.findNextIdFromTable(orgDbName, "tasks"));
@@ -250,8 +219,6 @@ public class ProjectController
                 subprojectId);
     }
     
-    
-    // tilføj task-KNAP
     @GetMapping("/editProject/{projectId}/subproject/{subprojectId}/createTask/{nextTaskId}")
     public String createTask(@PathVariable String orgDbName, @PathVariable int projectId,
                           @PathVariable int subprojectId, @PathVariable int nextTaskId,
@@ -270,45 +237,15 @@ public class ProjectController
        
         // model til form-input-felt
         createTaskModel.addAttribute("createTaskViewModel", createSubViewModel);
-    
-    
-        // modeller til main content
-        /*
-        projectModel.addAttribute("projectModel", new Project(1, "Eksamensprojekt-projekt", null, 30,
-                new ArrayList<Subproject>(Arrays.asList(
-                        new Subproject(1, "Virksomhed-delprojekt",
-                                new ArrayList<Task>(Arrays.asList(
-                                        new Task(1, "Risikoanalyse-opgave",
-                                                new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(1, "Risikotabel-underopgave"),
-                                                        new Subtask(2, "Beskrivelse af risikomomenter-underopgave"))))))),
-                        new Subproject(2, "Systemudvikling-delprojekt",
-                                new ArrayList<Task>(Arrays.asList(
-                                        new Task(2, "Use case model-opgave",
-                                                new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(3, "Use case diagram-underopgave"),
-                                                        new Subtask(4, "SSD'er-underopgave")))),
-                                        new Task(3, "FURPS",
-                                                new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(5, "Funktional-underopgave"),
-                                                        new Subtask(6, "Non-funktional-underopgave"))))))),
-                        new Subproject(3, "Programmering-delprojekt",
-                                new ArrayList<Task>(Arrays.asList(
-                                        new Task(4, "Kode-opgave")))))),
-                null)); // TODO ret til hent project fra db
-               
-         */
+        
         projectModel.addAttribute("project", projectService.retrieveProject(orgDbName, projectId));
         projectIdModel.addAttribute("projectId", projectId);
         subprojectIdModel.addAttribute("subprojectId", subprojectId);
         nextSubprojectIdModel.addAttribute("nextSubprojectId", projectService.findNextIdFromTable(orgDbName, "subprojects"));
         nextSubtaskIdModel.addAttribute("nextSubtaskId", projectService.findNextIdFromTable(orgDbName, "subtasks"));
-      
         
         // model til th:action i form i html
         nextTaskIdModel.addAttribute("nextTaskId", nextTaskId);
-      
-        
         
         // tilføj FORM med postMapping:
         // th:action="${'/editProject/' + projectId + '/subproject/' + subprojectId + '/createTask/' + nextTaskId}"
@@ -369,32 +306,7 @@ public class ProjectController
                                 Model nextSubprojectIdModel, Model nextTaskIdModel, Model nextSubtaskIdModel,
                                 Model createSubtaskModel, Model errorModel)
     {
-        // modeller til main content
-        /*
-        projectModel.addAttribute("projectModel", new Project(1, "Eksamensprojekt-projekt", null, 30,
-                new ArrayList<Subproject>(Arrays.asList(
-                        new Subproject(1, "Virksomhed-delprojekt",
-                                new ArrayList<Task>(Arrays.asList(
-                                        new Task(1, "Risikoanalyse-opgave",
-                                                new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(1, "Risikotabel-underopgave"),
-                                                        new Subtask(2, "Beskrivelse af risikomomenter-underopgave"))))))),
-                        new Subproject(2, "Systemudvikling-delprojekt",
-                                new ArrayList<Task>(Arrays.asList(
-                                        new Task(2, "Use case model-opgave",
-                                                new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(3, "Use case diagram-underopgave"),
-                                                        new Subtask(4, "SSD'er-underopgave")))),
-                                        new Task(3, "FURPS",
-                                                new ArrayList<Subtask>(Arrays.asList(
-                                                        new Subtask(5, "Funktional-underopgave"),
-                                                        new Subtask(6, "Non-funktional-underopgave"))))))),
-                        new Subproject(3, "Programmering-delprojekt",
-                                new ArrayList<Task>(Arrays.asList(
-                                        new Task(4, "Kode-opgave")))))),
-                null)); // TODO ret til hent project fra db
-                
-         */
+        
         projectModel.addAttribute("project", projectService.retrieveProject(orgDbName, projectId));
         
         // til form-knappers LINK
@@ -512,13 +424,4 @@ public class ProjectController
     
         return String.format("redirect:/%s/editProject/%d/editTeams", orgDbName, projectId);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

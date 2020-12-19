@@ -108,7 +108,6 @@ public class PreLoginController
             createUserViewModel = null;
             
             return String.format("redirect:/%s/frontPage", orgDbName);
-            // return "redirect:/" + orgDbName + "/frontPage";
         }
         
         error = userService.getError();
