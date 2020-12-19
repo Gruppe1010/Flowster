@@ -54,7 +54,7 @@
 
                 </div>
 
-                <div class="edit-view-project-container">
+                <div class="project-content-container">
                     <div th:each="subproject : ${project.getSubprojectList()}">
                         <div th:replace="fragments :: subproject-info(${subproject})"></div>
 
@@ -86,6 +86,8 @@
                     <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/createSubproject/' + nextSubprojectId}" class="subproject-style project-input-btn">
                         + tilføj nyt delprojekt</a>
                 </div>
+
+
             </div>
         </div>
     </div>
