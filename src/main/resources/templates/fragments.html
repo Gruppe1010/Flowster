@@ -88,7 +88,7 @@
         <div th:each="team: ${joinedTeamList}">
             <div class="sidebar-link">
                 <!--  + -->
-                <a th:href="${'/' + orgDbName + '/viewTeam/' + team.getId()}" th:text="${team.getName()}"></a>
+                <a th:href="${'/' + orgDbName + '/viewTeam/' + team.getId()}"><p th:text="${team.getName()}"></p></a>
             </div>
         </div>
     </div>
@@ -109,7 +109,7 @@
         <div th:each="project: ${joinedProjectList}">
             <div class="sidebar-link">
                 <!--  + -->
-                <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}" th:text="${project.getTitle()}"></a>
+                <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}"><p th:text="${project.getTitle()}"></p></a>
             </div>
         </div>
     </div>
