@@ -590,8 +590,6 @@ public class FlowsterRepository
     public int retrieveUserIdFromEmail(String dbName, String email)
     {
         int userId = 0;
-    
-        System.out.println("dbname flowsterrepository: " + dbName);
         
         flowsterConnection = generalRepository.establishConnection("flowster");
         

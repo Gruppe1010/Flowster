@@ -144,8 +144,6 @@ public class Project implements Comparable<Project>
         {
             headline += " - Arbejdstimer på projekt pr. dag " + manhoursPrDay;
         }
-    
-        // System.out.println(calculateManhoursPrDay());
         
         return headline; // + " " + calculateManhoursPrDay();
     }
@@ -161,8 +159,6 @@ public class Project implements Comparable<Project>
         SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
         
         String formattedDate = dateFormatter.format(deadline);
-    
-        System.out.println(formattedDate);
         
         return formattedDate;
     }
@@ -230,8 +226,7 @@ public class Project implements Comparable<Project>
                 manhoursPrDay = Math.round(manhoursPrDay * 100.0) / 100.0;
                 
                 // fx: 33.3333 * 100 == 3333  -->  3333/ 100 == 33.33
-    
-                System.out.println(manhoursPrDay);
+                
             }
             
         }

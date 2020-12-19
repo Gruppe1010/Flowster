@@ -257,7 +257,7 @@ public class User implements UserData, Comparable<User>
         }
         catch(IOException e)
         {
-            System.out.println("Error in createGenericProfilePictureBytes: " + e.getMessage());
+            System.err.println("Error in createGenericProfilePictureBytes: " + e.getMessage());
         }
         
         return genericProfilePictureBytes;

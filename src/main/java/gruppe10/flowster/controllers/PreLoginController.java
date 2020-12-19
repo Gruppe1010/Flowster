@@ -26,6 +26,7 @@ public class PreLoginController
     {
         // reset af ting:
         userService.resetLoggedInUser();
+        
     
         orgDbName = userService.findOrgDbName();
         orgDbNameModel.addAttribute("orgDbName", orgDbName);

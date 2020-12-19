@@ -45,7 +45,6 @@ public class OrganisationRepository
         // sæt id på loggedInUser
         UserService.loggedInUser.setId(retrieveUserIdFromEmail(dbName, email));
         
-        System.out.println("TESTBRUGER: \n" + UserService.loggedInUser);
         
     }
     
@@ -53,7 +52,6 @@ public class OrganisationRepository
     {
         int userId = 0;
         
-        System.out.println("dbname flowsterrepository: " + dbName);
         
         organisationConnection = generalRepository.establishConnection(dbName);
         
