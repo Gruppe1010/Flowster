@@ -60,11 +60,7 @@ public class FlowsterRepository
                 System.err.println("ERROR in insertRowIntoEmailsAndOrganisationsFinally: " + e.getMessage());
             }
         }
-        
-        
-        
     }
-    
     
     
     // ------------------ JOBTYPE -------------
@@ -404,9 +400,7 @@ public class FlowsterRepository
         return organisationName;
     }
     
-    
     // ------------------ EMAIL -------------
-    
     
     /**
      * Tjekker om email allerede er gemt på anden user i db
@@ -581,10 +575,7 @@ public class FlowsterRepository
         }
     
         return email;
-        
-        
-        
-        
+ 
     }
     
     public int retrieveUserIdFromEmail(String dbName, String email)
@@ -618,7 +609,4 @@ public class FlowsterRepository
         
         return userId;
     }
-    
-    // retrieveJobTypeClassNameFromId
-    
 }

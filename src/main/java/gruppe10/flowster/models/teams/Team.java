@@ -73,8 +73,5 @@ public class Team
     
         return teamService.checkIfTeamIsOnProject(orgDbName, id, projectId);
     }
-    
-    
-    
-    
+
 }

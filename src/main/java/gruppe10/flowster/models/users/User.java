@@ -191,7 +191,6 @@ public class User implements UserData, Comparable<User>
             return 0; // this.obj == param.obj
         }
         
-   
         // else hvis de begge er TeamMember's
         return 0; // this.obj == param.obj
     }
@@ -236,7 +235,6 @@ public class User implements UserData, Comparable<User>
                        '}';
     }
     
-    // TODO
     /**
      * Opretter et byte[] ud fra genericProfilePicture (det som tildeles automatisk ved oprettelse af user)
      *
@@ -267,7 +265,5 @@ public class User implements UserData, Comparable<User>
     {
         return Base64.encodeBase64String(this.profilePictureBytes);
     }
-    
-    
     
 }

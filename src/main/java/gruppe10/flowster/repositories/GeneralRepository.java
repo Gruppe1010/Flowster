@@ -10,8 +10,6 @@ import java.sql.SQLException;
 public class GeneralRepository
 {
     
-    
-    
     // TODO Måske ryk ud
     /**
      * Laver en connection til tilfældig-databasen
@@ -35,10 +33,5 @@ public class GeneralRepository
         
         return connection;
     }
-    
-    
-    
-    
-    
     
 }

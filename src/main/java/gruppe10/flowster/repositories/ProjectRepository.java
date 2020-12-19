@@ -233,8 +233,6 @@ public class ProjectRepository
             preparedStatement.setInt(1, projectId);
     
             ResultSet resultSet = preparedStatement.executeQuery();
-    
-            // TODO slet if'erne FRA ALLE DISSEEEEEE
        
             subprojectList = createSubprojectListFromResultSet(resultSet);
             
@@ -476,7 +474,6 @@ public class ProjectRepository
             }
         }
         
-        
         return projectTitleIsAvailable;
     }
     
@@ -532,7 +529,6 @@ public class ProjectRepository
     
         try
         {
-            // TOD
             String sqlCommand = "SELECT id_project FROM projects WHERE project_title = ?";
         
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
@@ -562,7 +558,6 @@ public class ProjectRepository
                 System.err.println("ERROR in projectRepository retrieveProjectIdFromProjectTitleFinally: " + e.getMessage());
             }
         }
-        
         
         return projectId;
     }
@@ -640,8 +635,7 @@ public class ProjectRepository
                 System.err.println("ERROR in findMaxIdFromTableFinally: " + e.getMessage());
             }
         }
-    
-    
+        
         return maxId;
     }
     
@@ -713,7 +707,6 @@ public class ProjectRepository
         
         return project;
     }
-
     
     
     // GEM SUBPROJEKT i db
@@ -1068,8 +1061,6 @@ public class ProjectRepository
         }
     }
     
-    
-    
     // GEM/SLET TEAM i db
     
     public void insertRowIntoTeamsProjects(String dbName, int teamId, int projectId)
@@ -1138,10 +1129,5 @@ public class ProjectRepository
         
         
     }
-    
-    
-    
-    
-    
     
 }

@@ -124,7 +124,6 @@ public class Project implements Comparable<Project>
         this.teamList = teamList;
     }
     
-    
   
     public String findSubHeadline()
     {
@@ -187,7 +186,6 @@ public class Project implements Comparable<Project>
         
     }
     
-    
     public double calculateManhoursPrDay()
     {
         double manhoursPrDay = 0;
@@ -202,48 +200,16 @@ public class Project implements Comparable<Project>
             {
                 long diff = deadline.getTime() - currentDate.getTime();
                 double daysBetween = (double) (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)) + 1;
-       
-            /*
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            String deadlineString = findFormattedDeadline().toString();
-            
-            LocalDateTime today = LocalDateTime.now();
-            
-            System.out.println(deadlineString);
-            
-            LocalDateTime dead = LocalDateTime.parse(deadlineString, dtf);
-    
-            long daysBetween = Duration.between(dead, today).toDays();
-            System.out.println ("Days: " + daysBetween);
-            
-             */
     
                 manhoursPrDay = manhours/daysBetween;
-                
-                //DecimalFormat df = new DecimalFormat("#.##");
-                //manhoursPrDay = Double.parseDouble(df.format(manhoursPrDay));
                 
                 manhoursPrDay = Math.round(manhoursPrDay * 100.0) / 100.0;
                 
                 // fx: 33.3333 * 100 == 3333  -->  3333/ 100 == 33.33
-                
             }
-            
         }
-        
         return manhoursPrDay;
     }
-    
-
-    
-    
-    /*
-    *
-  
-    *
-    * */
-    
-    
     
     @Override
     public int compareTo(Project project)
@@ -259,12 +225,6 @@ public class Project implements Comparable<Project>
   
         return 0; // this.obj == param.obj (dette vil dog ALDRIG ske, fordi vores id_project er UNIQUE)
     }
-    
-
-    
-    
-    
-    
     
 }
 

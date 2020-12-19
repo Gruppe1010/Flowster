@@ -415,10 +415,8 @@ public class TeamRepository
                 System.err.println("ERROR in TeamRepository deleteRowFromTeamsUsersFinally: " + e.getMessage());
             }
         }
-
-
+        
     }
-
 
     
     public TeamViewModel retrieveAndCreateEditTeamViewModelFromId(String dbName, int teamId)
