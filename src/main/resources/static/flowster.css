@@ -173,6 +173,12 @@ div.main-content hr
     color: white;
     padding: 20px;
 }
+
+a.navbar-text:hover
+{
+    text-decoration: underline;
+}
+
 nav.navbar-nav1 > li > a
 {
     text-shadow: 0 1px 0 rgba(200, 150, 0, 0.25);
