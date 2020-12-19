@@ -281,6 +281,12 @@ a:hover, a:active
     width: 100%;
 }
 
+.info-container
+{
+    width: 35%;
+    margin: auto;
+}
+
 .name-button-container
 {
     display: flex;
