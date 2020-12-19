@@ -327,6 +327,9 @@ public class ProjectController
         // opret CreateTaskViewModel(dataFromCreateTaskForm) ud fra webRequest
         createSubViewModel = projectService.createSubprojectViewModelFromForm(dataFromCreateTaskForm);
     
+        error = String.format("Der findes allerede en opgave med titlen \"%s\" i dette delprojekt. " +
+                                                 "Vælg venligst en anden titel til din opgave.",
+            createSubViewModel.getTitle());
         
         // tjek om tasktitel allerede findes i delprojekt
         boolean taskTitleIsAvailable = projectService.isTaskTitleAvailable(orgDbName, subprojectId,
@@ -335,25 +338,33 @@ public class ProjectController
         // hvis taskTitle ikke allerede findes på subproject'et
         if(taskTitleIsAvailable)
         {
+    
+            /* TODO find lige ud af hvordan det skal gøres med en højere manhours-værdi
+            // tjek om indtastede manhours-værdi er for høj ift. projektets timer
+            boolean subprojectHoursExceedTaskHours =
+                    projectService.doSubrojectHoursExceedTaskHours(orgDbName, subprojectId,
+                            createSubViewModel.getManhours());
+    
+    
+    
+             */
+    
+    
+    
             // tilføj ny task til db og knyt task til subproject
             projectService.insertNewTaskIntoDb(orgDbName, subprojectId, taskId,
                     createSubViewModel);
-        
+
             // fordi delprojektet oprettedes succesfuldt skal createTaskViewModel nu ikke vise indtastede titel
             // mere
             createSubViewModel = null;
-        
+
             // vi ryger tilbage til editProject
             return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
         }
     
         // Task'en er IKKE blevet gemt i databasen og guider derfor til samme GetMapping, hvor ugyldig title vises
         // via createTaskViewModel
-    
-        error = String.format("Der findes allerede en opgave med titlen \"%s\" i dette delprojekt. " +
-                                      "Vælg venligst en anden titel til din opgave.",
-                createSubViewModel.getTitle());
-    
     
         return String.format("redirect:/%s/editProject/%d/subproject/%d/createTask/%d/#error-popup", orgDbName, projectId,
                 subprojectId, taskId);

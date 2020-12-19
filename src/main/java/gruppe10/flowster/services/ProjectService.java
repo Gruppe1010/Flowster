@@ -158,6 +158,30 @@ public class ProjectService
     }
     
     
+    public boolean doSubrojectHoursExceedTaskHours(String orgDbName, int subprojectId, double manhours)
+    {
+        boolean subprojectHoursExceedTaskHours = true;
+    
+        // hvis der ikke er indtastet en værdi, så overstiger det IKKE delprojektets tidsramme
+        if(manhours != 0)
+        {
+            double difference =
+                    projectRepository.calcHoursDiffBetweenSubprojectAndTasks(orgDbName, subprojectId, manhours);
+            
+            // hvis difference == 0 projectTimer exceeder, men grænseværdi
+            // if difference > 0 exceeder
+            // if difference < 0 exceeder IKKE
+    
+            // returnerer true hvis subproject-timer er over/= tasks'
+            // returnerer false hvis subproject-timer er under tasks'
+            
+            return difference >= 0;
+        }
+    
+        return subprojectHoursExceedTaskHours;
+    }
+    
+    
     public void insertNewSubprojectIntoDb(String orgDbName, int projectId, int subprojectId,
                                           CreateSubViewModel createSubViewModel)
     {

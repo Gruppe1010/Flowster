@@ -886,6 +886,116 @@ public class ProjectRepository
         
     }
     
+    /**
+     * returnerer positiv værdi hvis subprojektet har FLERE timer end task'ene
+     *
+     *
+     *
+     * */
+    public double calcHoursDiffBetweenSubprojectAndTasks(String dbName, int subproject, double manhours)
+    {
+        // hent subprojekts arbejdstimer ud fra id
+        double subprojectManhours = retrieveManhoursFromSubprojectId(dbName, subproject);
+    
+        // hent samlede task-hours under subprojektet + indtastede manhours
+        double tasksManhours = retrieveTasksManhours(dbName, subproject) + manhours;
+        
+        return subprojectManhours - tasksManhours;
+    }
+    
+    
+    public double retrieveManhoursFromSubprojectId(String dbName, int subprojectId)
+    {
+        double subprojectManhours = 0;
+    
+        organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+            // TOD
+            String sqlCommand = "SELECT subproject_manhours FROM subprojects WHERE id_subproject = ?";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setInt(1, subprojectId);
+        
+            ResultSet resultSet = preparedStatement.executeQuery();
+        
+            if(resultSet.next())
+            {
+                subprojectManhours = resultSet.getDouble("project_manhours");
+            }
+        
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in projectRepository retrieveManhoursFromSubprojectId: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in projectRepository retrieveManhoursFromSubprojectIdFinally: " + e.getMessage());
+            }
+        }
+        
+        return subprojectManhours;
+    }
+    
+    public double retrieveTasksManhours(String dbName, int subprojectId)
+    {
+        double tasksManhours = 0;
+        
+        organisationConnection = generalRepository.establishConnection(dbName);
+        
+        try
+        {
+            // TOD
+            String sqlCommand = "SELECT task_manhours FROM subprojects_tasks " +
+                                "RIGHT JOIN tasks ON f_id_task = id_task " +
+                                "WHERE id_subproject = ?";
+            
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+            
+            preparedStatement.setInt(1, subprojectId);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            while(resultSet.next())
+            {
+                tasksManhours += resultSet.getDouble("task_manhours");
+            }
+            
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in projectRepository retrieveTasksManhours: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in projectRepository retrieveTasksManhoursFinally: " + e.getMessage());
+            }
+        }
+        
+        return tasksManhours;
+    }
+    
+    
+    
+    
+    
+    
+    
     public void insertNewTaskIntoDb(String dbName, String title, double manhours)
     {
         organisationConnection = generalRepository.establishConnection(dbName);

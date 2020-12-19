@@ -199,41 +199,23 @@ public class Project implements Comparable<Project>
         // udregn det kun hvis der BÅDE er en deadline OG angivede arbejdstimer
         if(deadline != null && manhours != 0)
         {
-            //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
             Date currentDate = new Date();
             
+            // hvis currentdate er FØR deadlinen
             if(currentDate.before(deadline))
             {
+                // find forskel på NU og deadline
                 long diff = deadline.getTime() - currentDate.getTime();
+                // få resultatet i dage
                 double daysBetween = (double) (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)) + 1;
-       
-            /*
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            String deadlineString = findFormattedDeadline().toString();
-            
-            LocalDateTime today = LocalDateTime.now();
-            
-            System.out.println(deadlineString);
-            
-            LocalDateTime dead = LocalDateTime.parse(deadlineString, dtf);
     
-            long daysBetween = Duration.between(dead, today).toDays();
-            System.out.println ("Days: " + daysBetween);
-            
-             */
-    
+                
                 manhoursPrDay = manhours/daysBetween;
-                
-                //DecimalFormat df = new DecimalFormat("#.##");
-                //manhoursPrDay = Double.parseDouble(df.format(manhoursPrDay));
-                
-                manhoursPrDay = Math.round(manhoursPrDay * 100.0) / 100.0;
-                
-                // fx: 33.3333 * 100 == 3333  -->  3333/ 100 == 33.33
     
-                System.out.println(manhoursPrDay);
+                // sørg for kun 2 decimaler
+                // fx: 33.3333 * 100 == 3333  -->  3333/ 100 == 33.33
+                manhoursPrDay = Math.round(manhoursPrDay * 100.0) / 100.0;
             }
-            
         }
         
         return manhoursPrDay;
