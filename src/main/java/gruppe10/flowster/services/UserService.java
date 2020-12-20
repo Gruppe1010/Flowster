@@ -17,40 +17,21 @@ import java.util.HashMap;
 public class UserService
 {
     public static User loggedInUser = null;
-    
-    /*
-    public ProjectManager loggedInProjectManager = null;
-    public TeamMember loggedInTeamMember = null;
-     */
-    
-    String error = null; // TODO måske lav denne?
     ProjectManager projectManager = new ProjectManager();
     TeamMember teamMember = new TeamMember();
     
     FlowsterRepository flowsterRepository = new FlowsterRepository();
     OrganisationRepository organisationRepository = new OrganisationRepository();
-    TeamRepository teamRepository = new TeamRepository();
     
-    HashMap<User, String> userHashMap = new HashMap<>();
-    
+    String error = null;
     
     // getters + setters
-    
     public String getError()
     {
         return error;
     }
     
-    
     // ANDRE METODER
-    
-    /*
-    * private int organisationAndJobType;
-    private String firstname;
-    private String surname;
-    private String email;
-    private String password;*/
-    
     
     /**
      * Opretter et createUserModel-obj. ud fra info i createUserForm
@@ -77,18 +58,7 @@ public class UserService
     {
         
         error = "Der er allerede oprettet en bruger med denne email";
-    
-        /* createUserForm i index-html skal indeholde:
-         *
-         * organisationAndJobType = required, number, min+max 5 char
-         *
-         * firstname + surname = required, only letters, max-length: 100
-         *
-         * email = required, valid email-input
-         *
-         * password + confirmpassword = required, uppercase, lowercase, number/specialchar, 8-length
-         *
-         * */
+        
         boolean dataIsValid = false;
         
         // tjek om email er brugt
@@ -132,8 +102,6 @@ public class UserService
             }
         }
         
-       
-        
         return dataIsValid;
     }
     
@@ -149,7 +117,6 @@ public class UserService
         // tilføj til newUser til db
         organisationRepository.insertUserIntoDb(newUser);
     }
-    
     
     /**
      * Opretter nyt ProjectManager-obj ELLER TeamMember-obj ud fra createUserModel og jobTypeId
@@ -181,25 +148,6 @@ public class UserService
         
         return loggedInUser;
     }
-    
-    // TODO hvis vi får brug for loggedInProjectManager og -TeamMember
-    /*
-    public void setLoggedInProjectManagerOrTeamMemberToLoggedInUser()
-    {
-        if(jobType.equalsIgnoreCase("Projektleder"))
-        {
-            loggedInProjectManager = projectManager.createProjectManagaerFromCreateUserModel(createUserViewModel);
-            loggedInUser = loggedInProjectManager;
-        }
-    
-        else if(jobType.equalsIgnoreCase("Almen medarbejder"))
-        {
-            loggedInTeamMember = teamMember.createTeamMemberFromCreateUserModel(createUserViewModel);
-            loggedInUser = loggedInTeamMember;
-        }
-    
-    }
-     */
     
     /**
      * Finder className på loggedInUser og omdanner til url-del, så den ryger til rigtige requestMapping
@@ -281,8 +229,6 @@ public class UserService
     {
         loggedInUser = null;
     }
-    
-
     
     /**
      * Finder/opretter orgDbName ud fra loggedInUser

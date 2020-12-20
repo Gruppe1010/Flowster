@@ -13,7 +13,6 @@ import java.sql.*;
 @Repository
 public class OrganisationRepository
 {
-    
     GeneralRepository generalRepository = new GeneralRepository();
     FlowsterRepository flowsterRepository = new FlowsterRepository();
     
@@ -44,7 +43,6 @@ public class OrganisationRepository
         
         // sæt id på loggedInUser
         UserService.loggedInUser.setId(retrieveUserIdFromEmail(dbName, email));
-        
     }
     
     public int retrieveUserIdFromEmail(String dbName, String email)
@@ -165,12 +163,10 @@ public class OrganisationRepository
             
             preparedStatement.setInt(1, emailId);
             preparedStatement.setString(2, logInViewModel.getPassword());
-    
-    
+            
             ResultSet resultSet = preparedStatement.executeQuery();
             
             user = createUserFromResultSet(resultSet);
-            
         }
         catch(SQLException e)
         {

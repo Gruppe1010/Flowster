@@ -13,8 +13,6 @@ public class PreviewUserViewModel
     
     
     // constructors
-    public PreviewUserViewModel(){}
-    
     public PreviewUserViewModel(int id, byte[] profilePictureBytes, String name, String jobType)
     {
         this.id = id;
@@ -24,17 +22,6 @@ public class PreviewUserViewModel
         this.jobType = jobType;
         this.isOnTeam = false;
     }
-    
-    public PreviewUserViewModel(int id, byte[] profilePictureBytes, String name, String jobType, boolean isOnTeam)
-    {
-        this.id = id;
-        this.profilePictureBytes = profilePictureBytes;
-        this.base64 = byteArrayAs64String();
-        this.name = name;
-        this.jobType = jobType;
-        this.isOnTeam = isOnTeam;
-    }
-    
     
     // getters + setters
     public int getId()

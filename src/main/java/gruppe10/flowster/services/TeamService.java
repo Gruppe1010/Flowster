@@ -15,35 +15,6 @@ public class TeamService
     TeamRepository teamRepository = new TeamRepository();
    
     FlowsterRepository flowsterRepository = new FlowsterRepository();
-
-
-
-
-    public TeamViewModel createTeamViewModelFromForm(WebRequest dataFromCreateTeamFrom)
-    {
-        
-        // automatisk-parameternavn som inkrementeres -
-        // while(der er flere id'er)
-        // opret bruger ud fra id og læg på createTeamViewModel's liste-attr
-       
-       return new TeamViewModel();
-       // TODO return new CreateTeamViewModel(dataFromCreateTeamFrom.getParameter("team-name"), );
-    }
-    
-    /* TODO
-    public Team retrieveAndCreateTeamFromDb(int teamId)
-    {
-        
-        ResultSet resultSet = teamRepository.retrieveTeamResultSetFromId(teamId);
-        
-        
-        
-        
-        
-        return new Team();
-    }
-    
-     */
     
     public String createTeamNameFromForm(WebRequest dataFromCreateTeamForm)
     {
@@ -70,8 +41,6 @@ public class TeamService
         teamRepository.insertRowIntoTeamsUsers(orgDbName, teamId, UserService.loggedInUser.getId());
     }
     
-    
-    
     public int retrieveTeamIdFromTeamName(String orgDbName, String teamName)
     {
         return teamRepository.retrieveTeamIdFromTeamName(orgDbName, teamName);
@@ -81,7 +50,6 @@ public class TeamService
     public TeamViewModel retrieveAndCreateEditTeamViewModelFromId(String orgDbName, int teamId)
     {
        return teamRepository.retrieveAndCreateEditTeamViewModelFromId(orgDbName, teamId);
-    
     }
 
     public void insertRowIntoTeamsUsers(String orgDbName, int teamId, int userId)
@@ -102,20 +70,17 @@ public class TeamService
     public void updateTeamName(String orgDbName, int teamId, String newTeamName)
     {
         teamRepository.updateTeamName(orgDbName, teamId, newTeamName);
-        
-        
     }
-    
     
     public ArrayList<Team> retrieveJoinedTeamList()
     {
-        // TODO dette skridt er overflødigt - vi kan få den med som param gennem pathVariable-orgDbName
+        // Til fremtidig udvikling: Dette skridt er overflødigt,
+        // da vi kan få den med som param gennem pathVariable-orgDbName
         String dbName = convertOrganisationNameToDbName
                                 (flowsterRepository.retrieveOrganisationNameFromEmail(UserService.loggedInUser.getEmail()));
         
         return teamRepository.retrieveTeamsListFromUserId(dbName, UserService.loggedInUser.getId());
     }
-    
 
     /**
      * Konverterer organisationName til db-name
@@ -133,7 +98,6 @@ public class TeamService
 
         return "flowster_" + convertedOrganisationName;
     }
-    
     
     public boolean checkIfTeamIsOnProject(String orgDbName, int teamId, int projectId)
     {

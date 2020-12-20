@@ -30,12 +30,6 @@ public class Project implements Comparable<Project>
     private ArrayList<Team> teamList;
     
     // constructors
-    public Project(int id)
-    {
-        this.id = id;
-    }
-    
-    
     
     public Project(int id, String title, String description, Date deadline, double manhours, User creator,
                    ArrayList<Subproject> subprojectList, ArrayList<Team> teamList)
@@ -124,7 +118,7 @@ public class Project implements Comparable<Project>
         this.teamList = teamList;
     }
     
-  
+    // ANDRE metoder
     public String findSubHeadline()
     {
         String headline = "";
@@ -144,7 +138,7 @@ public class Project implements Comparable<Project>
             headline += " - Arbejdstimer på projekt pr. dag " + manhoursPrDay;
         }
         
-        return headline; // + " " + calculateManhoursPrDay();
+        return headline;
     }
     
     
@@ -181,9 +175,7 @@ public class Project implements Comparable<Project>
                 manhours += subproject.getManhours();
             }
         }
-        
         return manhours;
-        
     }
     
     public double calculateManhoursPrDay()
@@ -202,10 +194,9 @@ public class Project implements Comparable<Project>
                 double daysBetween = (double) (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)) + 1;
     
                 manhoursPrDay = manhours/daysBetween;
-                
-                manhoursPrDay = Math.round(manhoursPrDay * 100.0) / 100.0;
-                
+    
                 // fx: 33.3333 * 100 == 3333  -->  3333/ 100 == 33.33
+                manhoursPrDay = Math.round(manhoursPrDay * 100.0) / 100.0;
             }
         }
         return manhoursPrDay;

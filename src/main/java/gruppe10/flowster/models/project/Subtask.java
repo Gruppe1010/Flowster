@@ -10,8 +10,6 @@ public class Subtask
     private double manhours;
     
     // constructors
-    public Subtask(){}
-    
     public Subtask(int id, String title, double manhours)
     {
         this.id = id;

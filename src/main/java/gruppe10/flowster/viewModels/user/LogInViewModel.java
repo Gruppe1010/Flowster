@@ -7,8 +7,6 @@ public class LogInViewModel
     
     
     // constructors
-    public LogInViewModel(){}
-    
     public LogInViewModel(String email, String password)
     {
         this.email = email;

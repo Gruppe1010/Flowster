@@ -156,7 +156,6 @@ public class FlowsterRepository
                 System.err.println("Error in retrieveJobTypeFromJobTypeIdFinally: " + e.getMessage());
             }
         }
-    
         return jobType;
     }
     
@@ -426,7 +425,7 @@ public class FlowsterRepository
             
             ResultSet resultSet = preparedStatement.executeQuery();
             
-            // hvis der ligger en email i resultSet'et, er email'en ikke tilgængelig, og emailIsAvailable sættes til
+            // hvis der ligger en email i resultSet'et, er email'en IKKE tilgængelig, og emailIsAvailable sættes til
             // false
             if(resultSet.next())
             {

@@ -10,15 +10,6 @@ public class Task
     private ArrayList<Subtask> subtaskList;
     
     // constructors
-    public Task(){}
-    
-    public Task(int id, String title)
-    {
-        this.id = id;
-        this.title = title;
-        this.subtaskList = null;
-    }
- 
     public Task(int id, String title, double manhours, ArrayList<Subtask> subtaskList)
     {
         this.id = id;

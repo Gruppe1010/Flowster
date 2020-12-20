@@ -6,13 +6,6 @@ public class CreateProjectViewModel
     private String deadline;
     
     // constructors
-    public CreateProjectViewModel(){}
-    
-    public CreateProjectViewModel(String title)
-    {
-        this.title = title;
-    }
-    
     public CreateProjectViewModel(String title, String deadline)
     {
         this.title = title;

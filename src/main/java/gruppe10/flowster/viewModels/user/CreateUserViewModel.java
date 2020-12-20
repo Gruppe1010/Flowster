@@ -21,8 +21,6 @@ public class CreateUserViewModel implements UserData
     
     
     // constructors
-    public CreateUserViewModel(){}
-    
     public CreateUserViewModel(String organisationAndJobType, double manhours, String firstname, String surname,
                                String email,
                                String password, String confirmPassword)
