@@ -1,6 +1,5 @@
 package gruppe10.flowster.controllers;
 
-import gruppe10.flowster.models.users.User;
 import gruppe10.flowster.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

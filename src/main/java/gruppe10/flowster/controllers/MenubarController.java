@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class MenubarController
 {
-
     @GetMapping("/{orgDbName}/frontPage")
     public String frontPage(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel)
     {
@@ -20,13 +19,10 @@ public class MenubarController
         
         return "front-page"; // html
     }
-
     
     @GetMapping("/logOut")
     public String logOut()
     {
         return "redirect:/";
     }
-    
-
 }

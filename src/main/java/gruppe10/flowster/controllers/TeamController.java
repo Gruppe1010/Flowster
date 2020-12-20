@@ -18,7 +18,6 @@ import java.util.ArrayList;
 @RequestMapping("/{orgDbName}")
 public class TeamController
 {
-    UserService userService = new UserService();
     TeamService teamService = new TeamService();
     
     // global variabel fordi hvis navnet er optaget, skal vi bruge variablen i GetMapping'en så det kan blive
@@ -26,6 +25,7 @@ public class TeamController
     String teamName = null;
     String error = null;
 
+    // vises ved tryk på "teams" i menubar
     @GetMapping("/teams")
     public String teams(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel,
                         Model joinedTeamListModel)
@@ -38,7 +38,7 @@ public class TeamController
         return "team/teams"; // html
     }
 
-
+    // rammes hvis projektleder trykker på "nyt team"-knap i sidebar
     @GetMapping("/createTeam")
     public String createTeam(@PathVariable String orgDbName, Model loggedInUserModel, Model teamNameModel,
                              Model orgDbNameModel, Model joinedTeamListModel, Model errorModel)
@@ -55,6 +55,7 @@ public class TeamController
         return "team/create-team"; // html
     }
     
+    // rammes når projektleder trykker "Gem" i createTeam-formen
     @PostMapping("/createTeam")
     public String postCreateTeam(@PathVariable String orgDbName, WebRequest dataFromCreateTeamForm)
     {
@@ -79,14 +80,15 @@ public class TeamController
             return String.format("redirect:/%s/editTeam/%d", orgDbName, teamId);
             // return "redirect:editTeam/" + teamId;
         }
-    
-    
+        
+        // teamet bliver IKKE oprettet, og der vises derfor fejl
         error =
                 String.format("Der findes allerede et team ved navn \"%s\" i din virksomhed", teamName);
         
         return String.format("redirect:/%s/createTeam/#error-popup", orgDbName);
     }
     
+    // rammes når bruger har oprette team med navn successfuldt
     @GetMapping("/editTeam/{teamId}")
     public String editTeam(@PathVariable String orgDbName, @PathVariable int teamId,
                            Model loggedInUserModel, Model teamModel, Model orgDbNameModel,
@@ -102,10 +104,7 @@ public class TeamController
         loggedInUserModel.addAttribute("loggedInUser", UserService.loggedInUser);
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
         joinedTeamListModel.addAttribute("joinedTeamList", teamService.retrieveJoinedTeamList());
-      
-        // teamModel.addAttribute(har teamID);
-        // lav en model med url - "/postEditTeam/" + teamId + "/addUser/" - og i html: + ${user.getId()}
-     
+        
         return "team/edit-team";
     }
     
@@ -138,9 +137,6 @@ public class TeamController
     }
     
     
-    // th:each="user : userlist"
-    // Lav tom form med submitknap med action="/postEditTeam/${teamModel.getId()}/addUser/${user.getId()}"
-    //
     @PostMapping("/editTeam/{teamId}/addUser/{userId}")
     public String postAddUserToTeam(@PathVariable String orgDbName, @PathVariable int teamId, @PathVariable int userId)
     {

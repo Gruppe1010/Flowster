@@ -40,10 +40,8 @@ public class TeamMember extends User
     {
         this.joinedProjectsList = joinedProjectList;
     }
-
     
     // ANDRE METODER
-    
     @Override
     public boolean isTeamMember()
     {

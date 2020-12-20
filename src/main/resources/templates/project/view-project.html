@@ -46,7 +46,7 @@
                             <button class="btn project-btn" type="submit">Rediger</button>
                         </a>
                         <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/editTeams'}">
-                            <button class="btn add-temas-btn" type="submit">Tilføj teams</button>
+                            <button class="btn add-temas-btn" type="submit">Tilføj/fjern teams</button>
                         </a>
                     </div>
                     <div th:unless="${loggedInUser.isProjectManager()}">

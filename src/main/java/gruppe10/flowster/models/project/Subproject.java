@@ -13,8 +13,6 @@ public class Subproject
     private ArrayList<Task> taskList;
     
     // constructors
-    public Subproject(){}
-    
     public Subproject(int id, String title, String description, Date deadline, double manhours, ArrayList<Task> taskList)
     {
         this.id = id;

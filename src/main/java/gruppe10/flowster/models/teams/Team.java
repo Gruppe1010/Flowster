@@ -10,14 +10,10 @@ public class Team
 {
     private int id;
     private String name;
-    private ArrayList<User> usersList; // TODO maybe hent denne -
+    private ArrayList<User> usersList;
     private ArrayList<Project> projectList;
     
-    
     // constructors
-    public Team(){}
-    
-    // TODO: slet muligvis denne senere hvis den ikke bliver brugt
     public Team(int id, String name)
     {
         this.id = id;
@@ -27,12 +23,6 @@ public class Team
         
     }
     
-    public Team(String name, ArrayList<User> usersList, ArrayList<Project> projectList)
-    {
-        this.name = name;
-        this.usersList = usersList;
-        this.projectList = projectList;
-    }
     // getters + setters
     public int getId()
     {
@@ -67,6 +57,7 @@ public class Team
         this.projectList = projectList;
     }
     
+    // ANDRE metoder
     public boolean isOnProject(String orgDbName, int projectId)
     {
         TeamService teamService = new TeamService();

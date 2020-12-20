@@ -27,7 +27,8 @@
 
 <!-- <div th:if="${error != null}" th:replace="general/fragments :: error-popup(${errror})"></div> -->
 
-<div th:fragment="error-popup(error)" id="error-popup" class="overlay text-center">
+<div th:fragment="error-popup(error)" id="error-popup"
+     class="overlay text-center">
     <div></div>
     <div class="popup">
         <h2>Der skete en fejl</h2>
@@ -77,10 +78,13 @@
 
 <!--------------- SIDEBAR --------------->
 
-<nav th:fragment="teams-sidebar(loggedInUser, orgDbName, joinedTeamList)" class="sidebar fontsize">
+<nav th:fragment="teams-sidebar(loggedInUser, orgDbName, joinedTeamList)"
+     class="sidebar fontsize">
 
     <div th:if="${loggedInUser.isProjectManager()}">
-        <a class="btn flowster-btn" th:href="${'/' + orgDbName + '/createTeam'}">Nyt team</a>
+        <a class="btn flowster-btn" th:href="${'/' + orgDbName + '/createTeam'}">
+            Nyt team
+        </a>
         <hr class="hr">
     </div>
     <div>
@@ -88,7 +92,9 @@
         <div th:each="team: ${joinedTeamList}">
             <div class="sidebar-link">
                 <!--  + -->
-                <a th:href="${'/' + orgDbName + '/viewTeam/' + team.getId()}"><p th:text="${team.getName()}"></p></a>
+                <a th:href="${'/' + orgDbName + '/viewTeam/' + team.getId()}">
+                    <p th:text="${team.getName()}"></p>
+                </a>
             </div>
         </div>
     </div>
@@ -145,10 +151,10 @@
 <!-- <div th:insert="general/fragments :: footer"></div> -->
 <div th:fragment="footer(loggedInUser, orgDbName)" class="text-center footer">
     <div class="col-sm-2">
-        <a th:href="${'/' + orgDbName + '/contact'}" class="white">Kontakt</a>
+        <a th:href="${loggedInUser != null ? ('/' + orgDbName + '/contact') : '/contact'}" class="white">Kontakt</a>
     </div>
     <div class="col-sm-2">
-        <a th:href="${'/' + orgDbName + '/about'}" class="white">Om Flowster</a>
+        <a th:href="${loggedInUser != null ? ('/' + orgDbName + '/about') : '/about'}" class="white">Om Flowster</a>
     </div>
     <div class="col-sm-6">
     </div>

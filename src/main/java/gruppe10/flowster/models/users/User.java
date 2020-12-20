@@ -138,14 +138,13 @@ public class User implements UserData, Comparable<User>
     {
         this.joinedProjectList = joinedProjectList;
     }
-
     public void setJoinedTeamList(ArrayList<Team> joinedTeamList)
 
     {
         this.joinedTeamList = joinedTeamList;
     }
-    // UserData-interface
     
+    // UserData-interface
     @Override
     /**
      * Finder organisationsId ved at adskille de første 3 cifre fra organisationAndJobType-attributten
@@ -177,7 +176,6 @@ public class User implements UserData, Comparable<User>
     @Override
     public int compareTo(User user)
     {
-        //if(user.isTennisBall() && !isTennisBall())
         if(isProjectManager() && user.isTeamMember())
         {
             return 1; //hvis this.obj > param.obj
@@ -205,12 +203,10 @@ public class User implements UserData, Comparable<User>
     {
         return false;
     }
-    
     public String getClassName()
     {
         return getClass().getSimpleName();
     }
-    
     public String findClassNameUrlPath()
     {
         String urlPath = getClass().getSimpleName();
@@ -219,6 +215,7 @@ public class User implements UserData, Comparable<User>
         
         return urlPath;
     }
+    
     
     @Override
     public String toString()
