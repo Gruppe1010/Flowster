@@ -142,7 +142,7 @@ public class TeamRepository
     }
    
     */
-    // TODO HER MANGLER DER at vi henter de to lister som er attributter på Team-klasse
+    // TODO TIL VIDEREUDVIKLING: HER MANGLER DER at vi henter de to lister som er attributter på Team-klasse
     /*
     public ResultSet retrieveTeamResultSetFromId(int teamId)
     {
@@ -410,13 +410,7 @@ public class TeamRepository
             teamViewModel = new TeamViewModel(teamId, teamName, previewUserViewModelList);
         }
         
-        // resultSet der indeholder ALLE orgbrugere
-        // opret PreviewUserViewModel-obj ud af ALLE disse - isOnTeam == null - læg på previewUserList
-        // for(int i = 0; i < previewUserList.size(); i++): PreviewUser previewUser = previewUserList.get(i);
-            //  select * FROM teams_users where f_id_team = ? AND f_id_user = previewUser.getId()
-            // if resultSet.next(){ previewUser.setIsOnTeam(true);
-            // else: previewUser.setIsOnTeam(false);
-        
+       
         
         return teamViewModel;
     }
@@ -652,8 +646,7 @@ public class TeamRepository
                 previewUserViewModelList.get(i).setOnTeam(false);
                 // previewUser.setOnTeam(false);
             }
-            // tilføjer den opdaterede
-            // previewUserViewModelList.set(i, previewUser);
+
         }
       
        

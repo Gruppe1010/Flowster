@@ -30,6 +30,7 @@ public class ProjectController
 
     String error = null;
     
+    // projects i menubar
     @GetMapping("/projects")
     public String projects(@PathVariable String orgDbName, Model orgDbNameModel,
                            Model loggedInUserModel, Model joinedProjectListModel)
@@ -43,6 +44,7 @@ public class ProjectController
         return "project/projects"; // html
     }
 
+    // knap i sidebar
     @GetMapping("/createProject")
     public String createProject(@PathVariable String orgDbName, Model orgDbNameModel, Model loggedInUserModel,
                                 Model joinedProjectListModel, Model createProjectModel, Model errorModel,
@@ -64,6 +66,7 @@ public class ProjectController
         return "project/create-project"; // html
     }
     
+    // rammes når man trykker gem i createProject-form
     @PostMapping("/createProject")
     public String postCreateProject(@PathVariable String orgDbName, WebRequest dataFromCreateProjectForm)
     {
@@ -101,6 +104,7 @@ public class ProjectController
         return String.format("redirect:/%s/createProject/#error-popup", orgDbName);
     }
     
+    // rammes når man trykker på et projekt i sidebar eller main content
     @GetMapping("/viewProject/{projectId}")
     public String viewProject(@PathVariable String orgDbName, @PathVariable int projectId,
                               Model orgDbNameModel, Model loggedInUserModel,
@@ -178,7 +182,7 @@ public class ProjectController
     }
     
     
-    // Rammes når man trykke gem - ved delprojekt-form
+    // rammes når man trykke gem - ved delprojekt-form
     @PostMapping("/editProject/{projectId}/createSubproject/{subprojectId}")
     public String postCreateSubproject(@PathVariable String orgDbName, @PathVariable int projectId,
                                        @PathVariable int subprojectId, WebRequest dataFromCreateSubprojectForm)
@@ -341,13 +345,7 @@ public class ProjectController
     
         // model til error-popup
         errorModel.addAttribute("error", error);
-    
-    
-        // tilføj FORM med postMapping:
-        // th:action="${'/editProject/' + projectId + '/subproject/' + subprojectId + '/task/' + taskId +
-        // '/createSubtask/ + nextSubtaskId}"
-        // method="post"
-        // tilføj underopgave-KNAP SKAL IKKE VÆRE DER
+        
         return "project/create-subtask"; // html
     }
     
