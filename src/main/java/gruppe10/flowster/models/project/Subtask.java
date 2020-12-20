@@ -1,8 +1,5 @@
 package gruppe10.flowster.models.project;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 public class Subtask
 {
     private int id;

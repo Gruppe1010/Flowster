@@ -25,7 +25,6 @@ public class OrganisationRepository
      *
      *
      * @param newUser User-obj som skal tilføjes til db
-     * @return void
      */
     public void insertUserIntoDb(User newUser)
     {
@@ -91,7 +90,7 @@ public class OrganisationRepository
      *
      * @param dbName navnet på db'en User-obj skal indsættes i
      * @param newUser det nye User-obj som skal indsættes i db
-     * @return void
+
      * */
     public void insertUserDataIntoUsers(String dbName, User newUser)
     {

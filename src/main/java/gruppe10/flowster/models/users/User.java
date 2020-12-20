@@ -145,26 +145,25 @@ public class User implements UserData, Comparable<User>
     }
     
     // UserData-interface
-    @Override
     /**
      * Finder organisationsId ved at adskille de første 3 cifre fra organisationAndJobType-attributten
      *
      * @return int fundne organisationId
      * */
+    @Override
     public int findOrganisationId()
     {
         String organisationAndJobTypeString = Integer.toString(organisationAndJobType);
         
         return Integer.parseInt(organisationAndJobTypeString.substring(0,3));
     }
- 
     
-    @Override
     /**
      * Finder jobTypeId ved at adskille de sidste 2 cifre fra organisationAndJobType-attributten
      *
      * @return int fundne jobTypeId
      * */
+    @Override
     public int findJobTypeId()
     {
         String organisationAndJobTypeString = Integer.toString(organisationAndJobType);

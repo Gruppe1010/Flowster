@@ -22,7 +22,6 @@ public class FlowsterRepository
      * Indsætter række i emails_organisations-tabel i flowster-db - dvs. tilføjer f_id_email og f_id_organisation
      *
      * @param user User-obj som info der sættes ind i tabel hentes ud fra
-     * @return void
      * */
     public void insertRowIntoEmailsAndOrganisations(User user)
     {
@@ -455,7 +454,6 @@ public class FlowsterRepository
      * Tilføjer email til emails-tabel i flowster-db
      *
      * @param email email som skal indsættes i db
-     * @return void
      * */
     public void insertEmailIntoEmails(String email)
     {

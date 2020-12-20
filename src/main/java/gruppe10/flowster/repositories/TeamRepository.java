@@ -1,8 +1,6 @@
 package gruppe10.flowster.repositories;
 
-import gruppe10.flowster.models.project.Project;
 import gruppe10.flowster.models.teams.Team;
-import gruppe10.flowster.services.UserService;
 import gruppe10.flowster.viewModels.team.TeamViewModel;
 import gruppe10.flowster.viewModels.user.PreviewUserViewModel;
 import org.springframework.stereotype.Repository;
@@ -86,6 +84,7 @@ public class TeamRepository
         return teamList;
     }
     
+    // TODO TIL VIDEREUDVIKLING: HER MANGLER DER at vi henter de to lister som er attributter på Team-klasse
     /*
     public ArrayList<Project> retrieveProjectListFromTeamId(int teamId, Connection organisationConnection)
     {
@@ -141,9 +140,6 @@ public class TeamRepository
         return projectList;
     }
    
-    */
-    // TODO TIL VIDEREUDVIKLING: HER MANGLER DER at vi henter de to lister som er attributter på Team-klasse
-    /*
     public ResultSet retrieveTeamResultSetFromId(int teamId)
     {
         
@@ -184,12 +180,6 @@ public class TeamRepository
                 System.err.println("ERROR in retrieveUserFromDbFinally: " + e.getMessage());
             }
         }
-    
-    
-    
-    
-    
-    
         return resultSet;
     }
     
@@ -197,7 +187,7 @@ public class TeamRepository
     
     public boolean retrieveTeamFromTeamName(String dbName, String teamName)
     {
-        Boolean teamNameIsAvailable = true;
+        boolean teamNameIsAvailable = true;
         
         organisationConnection = generalRepository.establishConnection(dbName);
     

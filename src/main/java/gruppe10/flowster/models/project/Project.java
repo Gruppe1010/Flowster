@@ -1,22 +1,11 @@
 package gruppe10.flowster.models.project;
 
 import gruppe10.flowster.models.teams.Team;
-import gruppe10.flowster.models.users.ProjectManager;
 import gruppe10.flowster.models.users.User;
-
-import javax.swing.text.DateFormatter;
-import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-
-import static java.lang.StrictMath.round;
 
 public class Project implements Comparable<Project>
 {

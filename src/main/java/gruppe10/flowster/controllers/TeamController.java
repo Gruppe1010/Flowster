@@ -1,6 +1,6 @@
 package gruppe10.flowster.controllers;
 
-import gruppe10.flowster.models.teams.Team;
+
 import gruppe10.flowster.services.TeamService;
 import gruppe10.flowster.services.UserService;
 import gruppe10.flowster.viewModels.team.TeamViewModel;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
-import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/{orgDbName}")
