@@ -30,7 +30,8 @@ public class ProjectService
             // hent de projekter som hun/han har oprettet
             ArrayList<Project> createdProjectList= projectRepository.retrieveCreatedProjectListFromUserId(dbName,
                     currentLoggedInUserId);
-            if(joinedProjectList != null)
+            //Kun hvis der er noget på begge lister skal de sammenlægges
+            if(joinedProjectList != null && createdProjectList != null)
             {
                 for(Project project : createdProjectList)
                 {
@@ -53,15 +54,16 @@ public class ProjectService
     
     public boolean ifProjectAlreadyNotOnList(ArrayList<Project> projectList, int id)
     {
-        
-        for(Project project : projectList)
+        if(projectList != null)
         {
-            if(id == project.getId())
+            for (Project project : projectList)
             {
-                return false;
+                if (id == project.getId())
+                {
+                    return false;
+                }
             }
         }
-        
         return true;
     }
 
