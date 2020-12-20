@@ -14,8 +14,8 @@ input::-webkit-inner-spin-button
 {
     width: 750px;
     position: relative;
-    margin: 75px;
-    padding-right: 550px;
+    margin: 30px;
+    padding-right: 600px;
 }
 
 .image-slideshow img
