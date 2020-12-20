@@ -645,7 +645,6 @@ public class ProjectRepository
         return maxId;
     }
     
-    
     public Project retrieveProject(String orgDbName, int projectId)
     {
         Project project = null;
@@ -923,7 +922,7 @@ public class ProjectRepository
         
             if(resultSet.next())
             {
-                subprojectManhours = resultSet.getDouble("project_manhours");
+                subprojectManhours = resultSet.getDouble("subproject_manhours");
             }
         
         }
@@ -957,7 +956,7 @@ public class ProjectRepository
             // TOD
             String sqlCommand = "SELECT task_manhours FROM subprojects_tasks " +
                                 "RIGHT JOIN tasks ON f_id_task = id_task " +
-                                "WHERE id_subproject = ?";
+                                "WHERE f_id_subproject = ?";
             
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
             
@@ -991,7 +990,46 @@ public class ProjectRepository
     }
     
     
+    public String retrieveSubprojectTitleFromId(String dbName, int subprojectId)
+    {
+        String subprojectTitle = null;
     
+        organisationConnection = generalRepository.establishConnection(dbName);
+    
+        try
+        {
+            // TOD
+            String sqlCommand = "SELECT subproject_title FROM subprojects WHERE id_subproject = ?";
+        
+            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
+        
+            preparedStatement.setInt(1, subprojectId);
+        
+            ResultSet resultSet = preparedStatement.executeQuery();
+        
+            if(resultSet.next())
+            {
+                subprojectTitle = resultSet.getString("subproject_title");
+            }
+        
+        }
+        catch(SQLException e)
+        {
+            System.err.println("ERROR in projectRepository retrieveSubprojectTitleFromId: " + e.getMessage());
+        }
+        finally
+        {
+            try
+            {
+                organisationConnection.close();
+            }
+            catch(SQLException e)
+            {
+                System.err.println("ERROR in projectRepository retrieveSubprojectTitleFromIdFinally: " + e.getMessage());
+            }
+        }
+        return subprojectTitle;
+    }
     
     
     

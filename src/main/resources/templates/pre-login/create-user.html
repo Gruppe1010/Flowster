@@ -49,17 +49,17 @@
 
                         <!--min="10000" og max="99999" == gør at der SKAL indtastes et tal på 5 cifre-->
 
-                        <label for="organisation-and-job-type">Organisationskode:</label>
-                        <input type="number"
-                               class="form-control"
-                               id="organisation-and-job-type"
-                               placeholder="Indtast organisationskode"
-                               th:value = "${createUserViewModel != null ? createUserViewModel.getOrganisationAndJobType() : ''}"
-                               oninvalid="this.setCustomValidity('Indtast venligst den organisations kode du har fået oplyst af din virksomhed')"
-                               oninput="setCustomValidity('')"
-                               name="organisation-and-job-type"
-                               required
-                               min="10000" max="99999">
+<label for="organisation-and-job-type">Organisationskode:</label>
+<input type="number"
+       class="form-control"
+       id="organisation-and-job-type"
+       placeholder="Indtast organisationskode"
+       th:value = "${createUserViewModel != null ? createUserViewModel.getOrganisationAndJobType() : ''}"
+       oninvalid="this.setCustomValidity('Indtast venligst den organisations kode du har fået oplyst af din virksomhed')"
+       oninput="setCustomValidity('')"
+       name="organisation-and-job-type"
+       required
+       min="10000" max="99999">
 
                         <!--min="0" og max="99" == gør at der SKAL indtastes et tal på 2 cifre-->
 
@@ -172,7 +172,8 @@
 
         <div class="col-sm-8 text-center">
 
-            <img class="index-img-container" src="https://images.theconversation.com/files/350865/original/file-20200803-24-50u91u.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=675.0&fit=crop">
+            <br><br>
+            <img class="index-img-container" src="/images/edit-project.png" alt="edit-project">
 
         </div>
 

@@ -320,7 +320,7 @@ public class ProjectController
     @PostMapping("/editProject/{projectId}/subproject/{subprojectId}/createTask/{taskId}")
     public String postCreateTask(@PathVariable String orgDbName, @PathVariable int projectId,
                                  @PathVariable int subprojectId, @PathVariable int taskId,
-                                 WebRequest dataFromCreateTaskForm)
+                                 WebRequest dataFromCreateTaskForm, Model exceedModel)
     {
         error = null;
         
@@ -338,29 +338,32 @@ public class ProjectController
         // hvis taskTitle ikke allerede findes på subproject'et
         if(taskTitleIsAvailable)
         {
+            error = String.format("De indtastede arbejdstimer for opgaven \"%s\" overstiger delprojektet \"%s\"'s " +
+                                          "estimerede arbejdstid med %s timer",
+                    createSubViewModel.getTitle(), projectService.retrieveSubprojectNameFromId(orgDbName, subprojectId),
+                    projectService.calcHoursDiffBetweenSubprojectAndTasks(orgDbName, subprojectId,
+                            createSubViewModel.getManhours()));
+            
     
-            /* TODO find lige ud af hvordan det skal gøres med en højere manhours-værdi
+            // TODO find lige ud af hvordan det skal gøres med en højere manhours-værdi
             // tjek om indtastede manhours-værdi er for høj ift. projektets timer
             boolean subprojectHoursExceedTaskHours =
                     projectService.doSubrojectHoursExceedTaskHours(orgDbName, subprojectId,
                             createSubViewModel.getManhours());
+                            
+             if(subprojectHoursExceedTaskHours)
+             {
+                 // tilføj ny task til db og knyt task til subproject
+                 projectService.insertNewTaskIntoDb(orgDbName, subprojectId, taskId,
+                         createSubViewModel);
     
+                 // fordi delprojektet oprettedes succesfuldt skal createTaskViewModel nu ikke vise indtastede titel
+                 // mere
+                 createSubViewModel = null;
     
-    
-             */
-    
-    
-    
-            // tilføj ny task til db og knyt task til subproject
-            projectService.insertNewTaskIntoDb(orgDbName, subprojectId, taskId,
-                    createSubViewModel);
-
-            // fordi delprojektet oprettedes succesfuldt skal createTaskViewModel nu ikke vise indtastede titel
-            // mere
-            createSubViewModel = null;
-
-            // vi ryger tilbage til editProject
-            return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
+                 // vi ryger tilbage til editProject
+                 return String.format("redirect:/%s/editProject/%d", orgDbName, projectId);
+             }
         }
     
         // Task'en er IKKE blevet gemt i databasen og guider derfor til samme GetMapping, hvor ugyldig title vises

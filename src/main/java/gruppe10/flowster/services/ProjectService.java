@@ -181,6 +181,24 @@ public class ProjectService
         return subprojectHoursExceedTaskHours;
     }
     
+    public double calcHoursDiffBetweenSubprojectAndTasks(String orgDbName, int subprojectId, double manhours)
+    {
+        // finde difference i timer mellem subpro og tasks
+        double diff = projectRepository.calcHoursDiffBetweenSubprojectAndTasks(orgDbName, subprojectId, manhours);
+    
+        // gør værdi positiv
+        double posDiff = Math.abs(diff);
+    
+        System.out.println("posDiff: " + posDiff);
+        
+        // sørger for 1 decimal-tal
+        double posDiffRounded = Math.round(posDiff * 100.0) / 100.0;
+    
+        System.out.println("posDiffRounded: " + posDiffRounded);
+     
+        return posDiffRounded;
+    }
+    
     
     public void insertNewSubprojectIntoDb(String orgDbName, int projectId, int subprojectId,
                                           CreateSubViewModel createSubViewModel)
@@ -207,6 +225,12 @@ public class ProjectService
         
         // tilknytter den nye task til subproject'et
         projectRepository.insertRowIntoSubprojectsTasks(orgDbName, subprojectId, taskId);
+    }
+    
+    
+    public String retrieveSubprojectNameFromId(String dbName, int subprojectId)
+    {
+        return projectRepository.retrieveSubprojectTitleFromId(dbName, subprojectId);
     }
     
     // CREATE SUBTASK
