@@ -13,7 +13,6 @@ import java.util.ArrayList;
 @Repository
 public class TeamRepository
 {
-    
     GeneralRepository generalRepository = new GeneralRepository();
     
     Connection organisationConnection;
@@ -26,24 +25,6 @@ public class TeamRepository
         
         try
         {
-            
-            /* TODO
-            * For at hente id-projekter ud også, ville man kunne lave denne sql:
-            *   SELECT id_team, team_name, f_id_project FROM flowster_kea.teams_users
-                RIGHT JOIN flowster_kea.teams ON f_id_team = id_team
-                RIGHT JOIN flowster_kea.teams_projects ON flowster_kea.teams.id_team = flowster_kea.teams_projects.f_id_team
-                WHERE f_id_user = 1;
-                
-              For KUN at hente id-projekter ud som en bestemt bruger er knyttet til (KUN via teams), vil man kunne
-              * bruge denne syntaks
-                SELECT distinct f_id_project FROM flowster_kea.teams_users
-                RIGHT JOIN flowster_kea.teams ON f_id_team = id_team
-                RIGHT JOIN flowster_kea.teams_projects ON flowster_kea.teams.id_team = flowster_kea.teams_projects.f_id_team
-                WHERE f_id_user = 1;
-
-            *
-            * */
-            
             String sqlCommand = "SELECT id_team, team_name FROM teams_users " +
                                         "RIGHT JOIN teams ON f_id_team = id_team WHERE f_id_user = ?;";
             
@@ -84,9 +65,8 @@ public class TeamRepository
         {
             while(resultSet.next())
             {
-                // TODO: VI SKAL OGSÅ give teamet de to lister!!!!! - men det gad jeg ikke lige
-                
-                // ArrayList<Project> projectList = retrieveProjectListFromTeamId(teamId, organisationConnection);
+                // til videreudvikling: ArrayList<Project> projectList = retrieveProjectListFromTeamId(teamId,
+                // organisationConnection);
                 
                 Team team = new Team(resultSet.getInt("id_team"), resultSet.getString("team_name"));// projectList);
                 
@@ -162,10 +142,8 @@ public class TeamRepository
     }
    
     */
-    
     // TODO HER MANGLER DER at vi henter de to lister som er attributter på Team-klasse
-    
-    /* TODO her er vi i gang lige nu
+    /*
     public ResultSet retrieveTeamResultSetFromId(int teamId)
     {
         
@@ -217,7 +195,6 @@ public class TeamRepository
     
      */
     
-    
     public boolean retrieveTeamFromTeamName(String dbName, String teamName)
     {
         Boolean teamNameIsAvailable = true;
@@ -260,7 +237,6 @@ public class TeamRepository
         
         return teamNameIsAvailable;
     }
-    
     
     public void insertNewTeamIntoDb(String dbName, String teamName)
     {
@@ -418,7 +394,6 @@ public class TeamRepository
         
     }
 
-    
     public TeamViewModel retrieveAndCreateEditTeamViewModelFromId(String dbName, int teamId)
     {
         TeamViewModel teamViewModel = null;
@@ -446,7 +421,6 @@ public class TeamRepository
         return teamViewModel;
     }
     
-    
     public TeamViewModel retrieveAndCreateViewTeamViewModelFromId(String dbName, int teamId)
     {
         TeamViewModel teamViewModel = null;
@@ -458,17 +432,14 @@ public class TeamRepository
         if(teamName != null)
         {
             // lav en liste med alle brugere i team, som skal vises i viewet
-            
             ArrayList<PreviewUserViewModel> previewUserViewModelList = createPreviewUserListWithAllTeamUsers(dbName,
                     teamId);
         
             teamViewModel = new TeamViewModel(teamId, teamName, previewUserViewModelList);
         }
-    
-    
+        
         return teamViewModel;
     }
-    
     
     public String retrieveTeamNameFromTeamId(String dbName, int teamId)
     {
@@ -537,9 +508,7 @@ public class TeamRepository
     public ArrayList<PreviewUserViewModel> createPreviewUserListWithAllOrgUsers(String dbName, int teamId)
     {
         ArrayList<PreviewUserViewModel> previewUserViewModelList = null;
-    
-        // resultSet der indeholder ALLE org-brugere
-    
+        
         organisationConnection = generalRepository.establishConnection(dbName);
     
         try
@@ -549,7 +518,8 @@ public class TeamRepository
                                         "RIGHT JOIN flowster.job_types ON f_id_job_type = id_job_type";
         
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
-        
+    
+            // resultSet der indeholder ALLE org-brugere
             ResultSet resultSet = preparedStatement.executeQuery();
     
             previewUserViewModelList = createPreviewUserListFromResultSet(resultSet, teamId);
@@ -661,7 +631,6 @@ public class TeamRepository
         return previewUserViewModelList;
     }
     
-    
     public ArrayList<PreviewUserViewModel> checkIfPreviewUserIsOnTeam
             (ArrayList<PreviewUserViewModel> previewUserViewModelList, int teamId)
     {
@@ -719,10 +688,6 @@ public class TeamRepository
         return userIsOnTeam;
     }
     
-    
-    
-    
-    
     public void updateTeamName(String dbName, int teamId, String newTeamName)
     {
         organisationConnection = generalRepository.establishConnection(dbName);
@@ -755,7 +720,6 @@ public class TeamRepository
         }
         
     }
-    
     
     public boolean checkIfTeamIsOnProject(String dbName, int teamId, int projectId)
     {
@@ -799,10 +763,6 @@ public class TeamRepository
         
         return teamIsOnProject;
     }
-
-
-
-
     
     /**
      * Konverterer blob til et byteArray

@@ -11,10 +11,6 @@ public class TeamViewModel
     private ArrayList<PreviewUserViewModel> userList;
     
     // constructors
-    public TeamViewModel(){
-   
-    }
-    
     public TeamViewModel(int id, String name, ArrayList<PreviewUserViewModel> userList)
     {
         this.id = id;

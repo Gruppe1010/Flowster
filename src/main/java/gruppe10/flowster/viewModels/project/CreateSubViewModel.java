@@ -7,7 +7,6 @@ public class CreateSubViewModel
     private double manhours;
     
     // constructors
-    public CreateSubViewModel(){}
     public CreateSubViewModel(String title, double manhours)
     {
         this.title = title;

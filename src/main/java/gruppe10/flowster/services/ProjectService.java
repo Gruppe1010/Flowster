@@ -15,7 +15,6 @@ import java.util.Collections;
 @Service
 public class ProjectService
 {
-    FlowsterRepository flowsterRepository = new FlowsterRepository();
     ProjectRepository projectRepository = new ProjectRepository();
 
     public ArrayList<Project> updateJoinedProjectList(String dbName)
@@ -40,19 +39,17 @@ public class ProjectService
                         joinedProjectList.add(project);
                     }
                 }
+                
                 Collections.sort(joinedProjectList);
             }
             else
             {
                 joinedProjectList = createdProjectList;
             }
-    
-            
         }
         
         return joinedProjectList;
     }
-    
     
     public boolean ifProjectAlreadyNotOnList(ArrayList<Project> projectList, int id)
     {
@@ -67,10 +64,6 @@ public class ProjectService
         
         return true;
     }
-    
-    
-    // public ArrayList<Project> projectList
-    
 
     /**
      * Konverterer organisationName til db-name
@@ -156,7 +149,6 @@ public class ProjectService
     {
         return projectRepository.checkIfSubprojectTitleIsAvailable(orgDbName, projectId, subprojectTitle);
     }
-    
     
     public boolean doSubrojectHoursExceedTaskHours(String orgDbName, int subprojectId, double manhours)
     {
@@ -249,8 +241,6 @@ public class ProjectService
         // tilknytter den nye subtask til task'en
         projectRepository.insertRowIntoTasksSubtasks(orgDbName, taskId, subtaskId);
     }
-    
-    
     
     // TILFØJ/FJERN TEAM
     public void insertRowIntoTeamsProjects(String orgDbName, int teamId, int projectId)

@@ -29,38 +29,14 @@ public class ProjectRepository
     Connection organisationConnection;
     
     
-    // find teams som bruger er i - og find projekter som disse teams er tilknyttet
-    // teams_users --> f_id_team --> projects_teams --> f_id_project --> projects (INFO HERFRA)
-    
-    /*
-    SELECT id_project, project_title, project_description, project_deadline, project_manhours
-    FROM teams_users
-    RIGHT JOIN teams_projects ON teams_users.f_id_team = teams_projects.f_id_team
-    RIGHT JOIN projects ON teams_projects.f_id_project = projects.id_project
-    WHERE f_id_user = ?
-    
-     */
-    
-    
-    // id_user - find f_id_team i team_users --> ud fra f_id_team find id_project i projects_teans -->
-    // opret et project-Obj ud fra hvert id --> find subproject-kols ud fra id_project i projects_subprojects -
-    // via join --> opret subproject-obj ud i whileloop hvor vi tager ting ud fra subproject-kols --> osv.
-    //
-    // teams_users
-    // SELECT id_project
-    
-    
-    /*
-    "SELECT id_user, profile_picture, firstname, surname, job_type " +
-            "FROM teams_users " +
-            "RIGHT JOIN users ON f_id_user = id_user " +
-            "RIGHT JOIN flowster.job_types ON f_id_job_type = id_job_type  " +
-            "WHERE f_id_team = ?;";
-            
-     */
-    
-    // HENT ALLE BRUGERS PROJEKTER
-    
+    /**
+     * Metoder der henter alle de projekter op, som en bruger er tilknyttet via teams hun/han er i
+     * Finder først teams som bruger er i --> dernæst findes de projekter teams'ene er tilknyttet
+     * teams_users --> f_id_team --> projects_teams --> f_id_project --> projects (INFO HERFRA)
+     *
+     * @param dbName databasens navn, som projekter skal hentes fra
+     * @param userId brugerens id, som tilknyttede teams findes ud fra
+     * */
     public ArrayList<Project> retrieveCreatedProjectListFromUserId(String dbName, int userId)
     {
         ArrayList<Project> createdProjectList = null;
@@ -154,11 +130,12 @@ public class ProjectRepository
 
         try
         {
+            // så længe der er flere rækker i resultSet'et
             while(resultSet.next())
             {
                 int projectId = resultSet.getInt("id_project");
                 
-                // opretter nyt projekt
+                // opret nyt projekt
                 Project project = new Project
                       (projectId,
                         resultSet.getString("project_title"),
@@ -169,14 +146,13 @@ public class ProjectRepository
                         retrieveSubprojectList(projectId),
                         retrieveTeamList(projectId));
 
-                // tilføjer nyoprettet projekt til liste
+                // tilføj nyoprettet projekt til liste
                 joinedProjectList.add(project);
             }
             if(joinedProjectList.size() == 0)
             {
                 joinedProjectList = null;
             }
-
         }
         catch(SQLException e)
         {
@@ -251,14 +227,13 @@ public class ProjectRepository
     
        try
        {
-           Subproject subproject;
-           
+           // så længe der er en række mere i resultSet'et
            while(resultSet.next())
            {
                int subprojectId = resultSet.getInt("id_subproject");
                
-               // opretter nyt subprojekt
-               subproject = new Subproject
+               // opret nyt subprojekt
+               Subproject subproject = new Subproject
                    (subprojectId,
                    resultSet.getString("subproject_title"),
                    resultSet.getString("subproject_description"),
@@ -266,7 +241,7 @@ public class ProjectRepository
                    resultSet.getDouble("subproject_manhours"),
                    retrieveTaskList(subprojectId));
         
-               // tilføjer nyoprettet projekt til liste
+               // tilføj nyoprettet projekt til liste
                subprojectList.add(subproject);
            }
            if(subprojectList.size() == 0)
@@ -323,8 +298,9 @@ public class ProjectRepository
                 
                 // opretter nyt subprojekt
                 Task task = new Task
-                       (taskId, resultSet.getString("task_title"), resultSet.getDouble("task_manhours"),
-                               retrieveSubtaskList(taskId));
+                       (taskId, resultSet.getString("task_title"),
+                       resultSet.getDouble("task_manhours"),
+                       retrieveSubtaskList(taskId));
                 
                 // tilføjer nyoprettet projekt til liste
                 taskList.add(task);
@@ -419,10 +395,8 @@ public class ProjectRepository
             ResultSet resultSet = preparedStatement.executeQuery();
     
             
-                // denne metoder gemmer reelt kun teamId og teamName
+            // denne metoder gemmer reelt kun teamId og teamName - vi mangler altså at gemme userList og projectList
             teamList = teamRepository.createTeamListFromResultSet(resultSet);
-            
-        
         }
         catch(SQLException e)
         {
@@ -485,8 +459,9 @@ public class ProjectRepository
         {
             String title = createProjectViewModel.getTitle();
             Date deadline = null;
+            
             // hvis der ER noget gemt som deadline
-            if(createProjectViewModel.getDeadline() != "")
+            if(createProjectViewModel.getDeadline().equals(""))
             {
                 // konverter String til Date
                 deadline = Date.valueOf(createProjectViewModel.getDeadline());
@@ -519,7 +494,6 @@ public class ProjectRepository
         }
     
     }
-    
     
     public int retrieveProjectIdFromProjectTitle(String dbName, String projectTitle)
     {
@@ -610,8 +584,6 @@ public class ProjectRepository
     
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
             
-            // preparedStatement.setString(1, tableName);
-        
             ResultSet resultSet = preparedStatement.executeQuery();
         
             if(resultSet.next())
@@ -761,7 +733,7 @@ public class ProjectRepository
     public void insertNewSubprojectIntoDb(String dbName, CreateSubViewModel createSubViewModel)
     {
         String title = createSubViewModel.getTitle();
-        Double mahours = createSubViewModel.getManhours();
+        double mahours = createSubViewModel.getManhours();
                 
                 organisationConnection = generalRepository.establishConnection(dbName);
     
@@ -904,7 +876,6 @@ public class ProjectRepository
     
         try
         {
-            // TOD
             String sqlCommand = "SELECT subproject_manhours FROM subprojects WHERE id_subproject = ?";
         
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
@@ -991,7 +962,6 @@ public class ProjectRepository
     
         try
         {
-            // TOD
             String sqlCommand = "SELECT subproject_title FROM subprojects WHERE id_subproject = ?";
         
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
@@ -1023,9 +993,6 @@ public class ProjectRepository
         }
         return subprojectTitle;
     }
-    
-    
-    
     
     public void insertNewTaskIntoDb(String dbName, String title, double manhours)
     {
@@ -1096,8 +1063,8 @@ public class ProjectRepository
     
     public boolean checkIfSubtaskTitleIsAvailable(String dbName, int taskId, String subtaskTitle)
     {
-        // returVærdi sættes til at være true - vi ændrer den KUN til false, hvis vi ud af at det givne subproject
-        // HAR en task med taskTitle-værdien
+        // returVærdi sættes til at være true
+        // vi ændrer den KUN til false, hvis vi ud af at det givne subproject HAR en task med taskTitle-værdien
         boolean subtaskTitleIsAvailable = true;
         
         organisationConnection = generalRepository.establishConnection(dbName);

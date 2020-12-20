@@ -23,8 +23,6 @@
 
 <!----------------------------------------------- FEJLBESKED-POPUP --------------------------------------------->
 
-
-
 <!-- <div th:if="${error != null}" th:replace="general/fragments :: error-popup(${errror})"></div> -->
 
 <div th:fragment="error-popup(error)" id="error-popup"
@@ -62,12 +60,6 @@
             <a th:href="${'/' + orgDbName + '/projects'}" class="navbar-text">Projekter</a>
 
             <a href="/" class="navbar-text float-right">Log ud</a>
-
-            <!--
-            <div class="thumbnail-profile-picture float-right">
-                <img alt="Profilebillede" th:src="'data:image/jpeg;base64,' + ${loggedInUser.previewUser.getBase64()}">
-            </div>
-            -->
         </div>
 
     </div>
