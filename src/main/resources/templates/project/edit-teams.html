@@ -33,20 +33,19 @@
 
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div class="col-sm-10">
-            <div class="preview-user-container">
-
-                <div class="name-button-container">
-                    <p></p>
-                    <p class="project-title">Tilføj teams til projekt</p>
-                    <br>
+            <div class="team-container">
+                <p></p>
+                <div>
+                    <p class="add-teams-label">Tilføj teams til projekt:&nbsp;</p>
                     <p class="project-title" th:text="${project.getTitle()}"></p>
-
-                    <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}">
-                        <button class="btn project-btn" type="submit">Se projekt</button>
-                    </a>
-
                 </div>
+                <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}">
+                    <button class="btn view-project-btn" type="submit">Se projekt</button>
+                </a>
+            </div>
 
+
+            <div class="preview-teams-container">
                 <div th:each="team: ${joinedTeamList}">
                     <div class="preview-user-box">
 
@@ -70,6 +69,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
     </div>

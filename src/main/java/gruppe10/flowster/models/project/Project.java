@@ -124,7 +124,6 @@ public class Project implements Comparable<Project>
         this.teamList = teamList;
     }
     
-    
   
     public String findSubHeadline()
     {
@@ -144,8 +143,6 @@ public class Project implements Comparable<Project>
         {
             headline += " - Arbejdstimer på projekt pr. dag " + manhoursPrDay;
         }
-    
-        // System.out.println(calculateManhoursPrDay());
         
         return headline; // + " " + calculateManhoursPrDay();
     }
@@ -161,8 +158,6 @@ public class Project implements Comparable<Project>
         SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
         
         String formattedDate = dateFormatter.format(deadline);
-    
-        System.out.println(formattedDate);
         
         return formattedDate;
     }
@@ -191,7 +186,6 @@ public class Project implements Comparable<Project>
         
     }
     
-    
     public double calculateManhoursPrDay()
     {
         double manhoursPrDay = 0;
@@ -199,38 +193,23 @@ public class Project implements Comparable<Project>
         // udregn det kun hvis der BÅDE er en deadline OG angivede arbejdstimer
         if(deadline != null && manhours != 0)
         {
+            //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
             Date currentDate = new Date();
             
-            // hvis currentdate er FØR deadlinen
             if(currentDate.before(deadline))
             {
-                // find forskel på NU og deadline
                 long diff = deadline.getTime() - currentDate.getTime();
-                // få resultatet i dage
                 double daysBetween = (double) (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)) + 1;
     
-                
                 manhoursPrDay = manhours/daysBetween;
-    
-                // sørg for kun 2 decimaler
-                // fx: 33.3333 * 100 == 3333  -->  3333/ 100 == 33.33
+                
                 manhoursPrDay = Math.round(manhoursPrDay * 100.0) / 100.0;
+                
+                // fx: 33.3333 * 100 == 3333  -->  3333/ 100 == 33.33
             }
         }
-        
         return manhoursPrDay;
     }
-    
-
-    
-    
-    /*
-    *
-  
-    *
-    * */
-    
-    
     
     @Override
     public int compareTo(Project project)
@@ -246,12 +225,6 @@ public class Project implements Comparable<Project>
   
         return 0; // this.obj == param.obj (dette vil dog ALDRIG ske, fordi vores id_project er UNIQUE)
     }
-    
-
-    
-    
-    
-    
     
 }
 

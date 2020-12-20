@@ -175,12 +175,4 @@ public class TeamController
         return "team/view-team";
     }
     
-  
-  
-    
-    
-    
-    
-    
-    
 }

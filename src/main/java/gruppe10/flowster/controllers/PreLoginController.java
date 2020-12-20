@@ -26,6 +26,7 @@ public class PreLoginController
     {
         // reset af ting:
         userService.resetLoggedInUser();
+        
     
         orgDbName = userService.findOrgDbName();
         orgDbNameModel.addAttribute("orgDbName", orgDbName);
@@ -107,7 +108,6 @@ public class PreLoginController
             createUserViewModel = null;
             
             return String.format("redirect:/%s/frontPage", orgDbName);
-            // return "redirect:/" + orgDbName + "/frontPage";
         }
         
         error = userService.getError();

@@ -38,74 +38,75 @@
         <!-- MAIN-CONTENT-FRAGMENT -->
         <div class="col-sm-10">
             <div class="project-container">
-
-                <div class="name-button-container">
-                    <p></p>
-                    <p class="project-title" th:text="${project.getTitle()}"></p>
-                    <div th:if="${loggedInUser.isProjectManager()}">
-                        <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}">
-                            <button class="btn project-btn" type="submit">Se projekt</button>
-                        </a>
+                <div class="project-content-container">
+                    <div class="name-button-container">
+                        <p></p>
+                        <p class="project-title" th:text="${project.getTitle()}"></p>
+                        <div th:if="${loggedInUser.isProjectManager()}">
+                            <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}">
+                                <button class="btn project-btn" type="submit">Se projekt</button>
+                            </a>
+                        </div>
                     </div>
+
+                    <p class="project-subtitle" th:text="${project.findSubHeadline()}"></p>
+
+                    <div th:each="subproject : ${project.getSubprojectList()}">
+
+                        <div th:replace="fragments :: subproject-info(${subproject})"></div>
+
+                        <div th:each="task : ${subproject.getTaskList()}">
+
+                            <div th:replace="fragments :: task-info(${task})"></div>
+
+                            <div th:each="subtask : ${task.getSubtaskList()}">
+
+                                <div th:replace="fragments :: subtask-info(${subtask})"></div>
+
+                            </div> <!-- for-each: subtask -->
+
+                            <!--+ tilføj underopgave-KNAP-->
+                            <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/' +
+                                subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}" class="subtask-btn-style project-input-btn">
+                                + tilføj ny underopgave</a>
+
+                        </div> <!-- for-each: task -->
+
+                        <!-- + tilføj opgave-KNAP -->
+                        <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/'
+                        + subproject.getId() + '/createTask/' + nextTaskId}" class="task-btn-style project-input-btn">
+                            + tilføj ny opgave</a>
+
+                    </div> <!-- YDERSTE for-each: subproject-->
+
+                    <!--  tilføj delprojekt-FORM -->
+                    <form th:action="${'/' + orgDbName + '/editProject/' + projectId + '/createSubproject/' + nextSubprojectId}"
+                          method="post"
+                          class="subproject-input">
+                        <div></div>
+                        <input type="text"
+                               class="form-control"
+                               id="subproject-title"
+                               name="title"
+                               placeholder="Titel"
+                               oninvalid="this.setCustomValidity('Indtast venligst et delprojektstitel, på maks 100 karakterer')"
+                               oninput="setCustomValidity('')"
+                               maxlength="100"
+                               required>
+
+                        <input type="number"
+                               class="form-control subproject-manhours-input"
+                               id="subproject-manhours"
+                               name="manhours"
+                               placeholder="Arbejdstimer"
+                               oninvalid="this.setCustomValidity('Angiv venligst estimat i tal')"
+                               oninput="setCustomValidity('')">
+
+
+                        <button type="submit" class="btn save-team-btn">Opret</button>
+                        <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}"><i class="material-icons clear-style">clear</i></a>
+                    </form>
                 </div>
-
-                <p class="project-subtitle" th:text="${project.findSubHeadline()}"></p>
-
-                <div th:each="subproject : ${project.getSubprojectList()}">
-
-                    <div th:replace="fragments :: subproject-info(${subproject})"></div>
-
-                    <div th:each="task : ${subproject.getTaskList()}">
-
-                        <div th:replace="fragments :: task-info(${task})"></div>
-
-                        <div th:each="subtask : ${task.getSubtaskList()}">
-
-                            <div th:replace="fragments :: subtask-info(${subtask})"></div>
-
-                        </div> <!-- for-each: subtask -->
-
-                        <!--+ tilføj underopgave-KNAP-->
-                        <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/' +
-                            subproject.getId() + '/task/' + task.getId() + '/createSubtask/' + nextSubtaskId}" class="subtask-btn-style project-input-btn">
-                            + tilføj ny underopgave</a>
-
-                    </div> <!-- for-each: task -->
-
-                    <!-- + tilføj opgave-KNAP -->
-                    <a th:href="${'/' + orgDbName + '/editProject/' + project.getId() + '/subproject/'
-                    + subproject.getId() + '/createTask/' + nextTaskId}" class="task-btn-style project-input-btn">
-                        + tilføj ny opgave</a>
-
-                </div> <!-- YDERSTE for-each: subproject-->
-
-                <!--  tilføj delprojekt-FORM -->
-                <form th:action="${'/' + orgDbName + '/editProject/' + projectId + '/createSubproject/' + nextSubprojectId}"
-                      method="post"
-                      class="subproject-input">
-                    <div></div>
-                    <input type="text"
-                           class="form-control"
-                           id="subproject-title"
-                           name="title"
-                           placeholder="Titel"
-                           oninvalid="this.setCustomValidity('Indtast venligst et delprojektstitel, på maks 100 karakterer')"
-                           oninput="setCustomValidity('')"
-                           maxlength="100"
-                           required>
-
-                    <input type="number"
-                           class="form-control subproject-manhours-input"
-                           id="subproject-manhours"
-                           name="manhours"
-                           placeholder="Arbejdstimer"
-                           oninvalid="this.setCustomValidity('Angiv venligst estimat i tal')"
-                           oninput="setCustomValidity('')">
-
-
-                    <button type="submit" class="btn save-team-btn">Opret</button>
-                    <a th:href="${'/' + orgDbName + '/editProject/' + project.getId()}"><i class="material-icons clear-style">clear</i></a>
-                </form>
             </div>
         </div>
     </div>

@@ -61,8 +61,6 @@ public class TeamMember extends User
                 createUserViewModel.getManhours());
     }
     
-    
-    
     @Override
     public String findClassNameUrlPath()
     {
@@ -72,5 +70,4 @@ public class TeamMember extends User
         
         return urlPath;
     }
-    
 }

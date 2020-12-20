@@ -73,17 +73,6 @@
 </nav>
 
 
-<!------------------------------------------------- FRONT-PAGE -------------------------------------------->
-
-<!--------------- SIDEBAR ---------------><!-- TODO -->
-
-<nav th:fragment="front-page-sidebar(loggedInUser, orgDbName)" class="sidebar fontsize">
-    <div>
-        <!-- DET ER HER TEAMLISTEN VISES -->
-    </div>
-</nav>
-
-
 <!------------------------------------------------- TEAMS -------------------------------------------->
 
 <!--------------- SIDEBAR --------------->
@@ -99,7 +88,7 @@
         <div th:each="team: ${joinedTeamList}">
             <div class="sidebar-link">
                 <!--  + -->
-                <a th:href="${'/' + orgDbName + '/viewTeam/' + team.getId()}" th:text="${team.getName()}"></a>
+                <a th:href="${'/' + orgDbName + '/viewTeam/' + team.getId()}"><p th:text="${team.getName()}"></p></a>
             </div>
         </div>
     </div>
@@ -120,7 +109,7 @@
         <div th:each="project: ${joinedProjectList}">
             <div class="sidebar-link">
                 <!--  + -->
-                <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}" th:text="${project.getTitle()}"></a>
+                <a th:href="${'/' + orgDbName + '/viewProject/' + project.getId()}"><p th:text="${project.getTitle()}"></p></a>
             </div>
         </div>
     </div>
@@ -159,7 +148,7 @@
         <a th:href="${'/' + orgDbName + '/contact'}" class="white">Kontakt</a>
     </div>
     <div class="col-sm-2">
-        <a th:href="${'/' + orgDbName + '/about'}" class="white">Om os</a>
+        <a th:href="${'/' + orgDbName + '/about'}" class="white">Om Flowster</a>
     </div>
     <div class="col-sm-6">
     </div>

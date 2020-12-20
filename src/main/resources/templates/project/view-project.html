@@ -60,21 +60,25 @@
 
                 </div>
 
-                <div th:each="subproject : ${project.getSubprojectList()}">
+                <div class="project-content-container">
 
-                    <div th:replace="fragments :: subproject-info(${subproject})"></div>
+                    <div th:each="subproject : ${project.getSubprojectList()}">
 
-                    <div th:each="task : ${subproject.getTaskList()}">
+                        <div th:replace="fragments :: subproject-info(${subproject})"></div>
 
-                        <div th:replace="fragments :: task-info(${task})"></div>
+                        <div th:each="task : ${subproject.getTaskList()}">
 
-                        <div th:each="subtask : ${task.getSubtaskList()}">
+                            <div th:replace="fragments :: task-info(${task})"></div>
 
-                            <div th:replace="fragments :: subtask-info(${subtask})"></div>
+                            <div th:each="subtask : ${task.getSubtaskList()}">
 
-                        </div> <!-- for-each: subtask -->
-                    </div> <!-- for-each: task -->
-                </div> <!-- YDERSTE for-each: subproject-->
+                                <div th:replace="fragments :: subtask-info(${subtask})"></div>
+
+                            </div> <!-- for-each: subtask -->
+                        </div> <!-- for-each: task -->
+                    </div> <!-- YDERSTE for-each: subproject-->
+
+                </div>
 
             </div>
         </div>

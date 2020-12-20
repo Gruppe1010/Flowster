@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 @Controller
-/*  TODO: slettet fordi vi har slettet projectManager-mappen i templates
-// generalisering af GetMappings for hele klassen:
-@RequestMapping("/projectManager")
-
- */
 public class MenubarController
 {
 
@@ -30,8 +25,6 @@ public class MenubarController
     @GetMapping("/logOut")
     public String logOut()
     {
-        // TODO metode som sætter loggedInUser til null
-        
         return "redirect:/";
     }
     

@@ -45,24 +45,16 @@ public class OrganisationRepository
         // sæt id på loggedInUser
         UserService.loggedInUser.setId(retrieveUserIdFromEmail(dbName, email));
         
-        System.out.println("TESTBRUGER: \n" + UserService.loggedInUser);
-        
     }
     
     public int retrieveUserIdFromEmail(String dbName, String email)
     {
         int userId = 0;
         
-        System.out.println("dbname flowsterrepository: " + dbName);
-        
         organisationConnection = generalRepository.establishConnection(dbName);
         
         try
         {
-            // SELECT id_user FROM flowster.emails RIGHT JOIN flowster_kea.users ON id_email = f_id_email WHERE email = "vibej@hotmail.com";
-            // String sqlCommand= "SELECT id_user FROM emails RIGHT JOIN ?.users ON id_email = f_id_email WHERE email
-            // = ?";
-            
             String sqlCommand = "SELECT id_user FROM users LEFT JOIN flowster.emails ON f_id_email = id_email WHERE " +
                                         "email = ?";
             
@@ -85,8 +77,6 @@ public class OrganisationRepository
         
         return userId;
     }
-    
-    
     
     public String findDbNameFromOrganisationId(int organisationId)
     {
@@ -198,10 +188,6 @@ public class OrganisationRepository
             }
         }
         
-        
-        //
-    
-    
         return user;
     }
     
@@ -212,53 +198,6 @@ public class OrganisationRepository
      * @param resultSet ResultSet som User-obj oprettes ud fra
      * @return User Nyoprettede User-obj
      * */
-    /* TODO GAMMEL
-    public User createUserFromResultSet(ResultSet resultSet)
-    {
-        User user = null;
-        
-        try
-        {
-            if(resultSet.next())
-            {
-                
-               
-                
-                // find organisationAndJobType
-                int jobType = resultSet.getInt("f_id_job_type");
-    
-    
-    
-    
-    
-                // TODO: lav først user obj. her
-                // TODO: derefter: if(jopType == 1 osv. )
-    
-    
-    
-                
-                // hvis det er en ProjectManager
-                if(jobType == 1)
-                {
-                    user = createProjectManagerFromResultSet(resultSet);
-                }
-                // hvis det er en TeamMember
-                else if(jobType == 2)
-                {
-                    user = createTeamMemberFromResultSet(resultSet);
-                }
-            }
-        }
-        catch(SQLException e)
-        {
-            System.err.println("ERROR in createUserFromResultSet: " + e.getMessage());
-        }
-        
-        return user;
-    }
-    
-     */
-    
     public User createUserFromResultSet(ResultSet resultSet)
     {
         User user = null;
@@ -338,107 +277,6 @@ public class OrganisationRepository
                 user.getFirstname(), user.getSurname(), user.getEmail(), user.getPassword(),
                 user.getManhours(), user.getProfilePictureBytes(), user.getJoinedTeamList());
     }
-    
-    //
- 
-    /*
-    /**
-     * Opretter joinedTeamsList ud fra resultSet der indeholder teamId'er
-     *
-     * @param resultSet indeholder teamId'er
-     * @return joinedTeamsList
-     * */
-    /* TODO - fjern - vi laver ny metode
-    public ArrayList<Team> createJoinedTeamsListFromResultSet(ResultSet resultSet)
-    {
-        ArrayList<Team> joinedTeamsList = null;
-    
-        try
-        {
-            // liste med teamsId'er lavet ud fra resultSet
-            ArrayList<Integer> teamIdsList = new ArrayList<>();
-            
-            // så længe der er flere teamId'er i resultSet'et
-            while(resultSet.next())
-            {
-                int teamId = resultSet.getInt("f_id_team");
-                
-                // tilføjes teamId'et til teamIdsList
-                teamIdsList.add(teamId);
-            }
-            
-            // if der er noget på teamIdList (== resultSettet ikke var tomt)
-            if(teamIdsList.size() > 0)
-            {
-                joinedTeamsList = new ArrayList<>();
-                
-                // find Team ud fra id og tilføj til joinedTeamsList
-                for(Integer teamId : teamIdsList)
-                {
-                    joinedTeamsList.add(retrieveTeamFromId(teamId));
-                }
-            }
-            
-        }
-        catch(SQLException e)
-        {
-            System.err.println("ERROR in createJoinedTeamsListFromResultSet: " + e.getMessage());
-        }
-        
-        return joinedTeamsList;
-    }
-    */
-    /*
-    public Team retrieveTeamFromId(int teamId)
-    {
-        Team team = null;
-    
-        try
-        {
-            String sqlCommand = "SELECT * FROM teams WHERE id_team = ?";
-            
-            PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
-            
-            preparedStatement.setInt(1, teamId);
-            
-            ResultSet resultSet = preparedStatement.executeQuery();
-            
-            team = createTeamFromResultSet(resultSet);
-        
-        }
-        catch(SQLException e)
-        {
-            System.err.println("ERROR in createTeamFromId: " + e.getMessage());
-        }
-        
-        return team;
-    }
-    
-     */
-    /*
-    public Team createTeamFromResultSet(ResultSet resultSet)
-    {
-        Team team = null;
-        try
-        {
-            if(resultSet.next())
-            {
-                // TODO: VI SKAL OGSÅ give teamet de to lister!!!!! - men det gad jeg ikke lige
-                team = new Team(resultSet.getInt("id_team"), resultSet.getString("team_name"));
-            }
-        }
-        catch(SQLException e)
-        {
-            System.err.println("ERROR in createTeamFromResultSet: " + e.getMessage());
-        }
-        
-        return team;
-    }
-    
-     */
-    
-    
-  
     
     // ----------------- ANDRE
     
