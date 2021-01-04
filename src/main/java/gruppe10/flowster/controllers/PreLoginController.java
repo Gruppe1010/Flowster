@@ -53,6 +53,7 @@ public class PreLoginController
         {
             // reset modellen, så den ikke længere vises i formen, da logIn var successfuldt
             logInViewModel = null;
+            orgDbName = userService.findOrgDbName(); //TODO ÆNDRING tilføjet d. 4-01-2021
             
             return String.format("redirect:/%s/frontPage", orgDbName);
         }
