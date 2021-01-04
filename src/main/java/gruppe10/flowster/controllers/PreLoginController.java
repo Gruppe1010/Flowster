@@ -12,26 +12,27 @@ import org.springframework.web.context.request.WebRequest;
 @Controller
 public class PreLoginController
 {
-    private UserService userService = new UserService();
+    // disse attributter bliver packageprivate fordi vi ikke har givet dem nogle andre accessmodifiers
+    UserService userService = new UserService();
     
-    private CreateUserViewModel createUserViewModel;
-    private LogInViewModel logInViewModel;
+    CreateUserViewModel createUserViewModel;
+    LogInViewModel logInViewModel;
+    String orgDbName;
     
-    private String orgDbName;
-    private String error = null;
-    
+    String error = null;
     
     @GetMapping("/")
     public String index(Model logInViewModel, Model loggedInUser, Model orgDbNameModel, Model errorModel)
     {
-        // fordi man ryger herhen når man logger ud, skal loggedInUser resettes
-        // TODO hvis vi ændrer static loggedInUser, skal denne slettes??
+        // reset af ting:
         userService.resetLoggedInUser();
         
-        orgDbNameModel.addAttribute("orgDbName", null);
+    
+        orgDbName = userService.findOrgDbName();
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
         
         logInViewModel.addAttribute("logInViewModel", this.logInViewModel);
-        loggedInUser.addAttribute("loggedInUser", null);
+        loggedInUser.addAttribute("loggedInUser", UserService.loggedInUser);
         errorModel.addAttribute("error", error);
         
         return "pre-login/index"; // html
@@ -47,7 +48,9 @@ public class PreLoginController
         // i denne metode sættes loggedInUser
         boolean logInInfoIsValid = userService.checkIfLogInInfoIsValid(logInViewModel);
         
-        orgDbNameModel.addAttribute("orgDbName", userService.findOrgDbName());
+        orgDbName = userService.findOrgDbName();
+        orgDbNameModel.addAttribute("orgDbName", orgDbName);
+        
         
         if(logInInfoIsValid)
         {
@@ -55,11 +58,12 @@ public class PreLoginController
             logInViewModel = null;
             
             return String.format("redirect:/%s/frontPage", orgDbName);
+            // return "redirect:/" + orgDbName +"/frontPage";
         }
-    
-        // man er her, hvis ugyldig logInInfo
+  
         error = userService.getError();
         
+        // hvis invalid logInInfo
         return "redirect:/#error-popup";
     }
  
@@ -67,11 +71,13 @@ public class PreLoginController
     public String createUser(Model createUserViewModel, Model loggedInUserModel, Model errorModel)
     {
         createUserViewModel.addAttribute( "createUserViewModel", this.createUserViewModel);
-        loggedInUserModel.addAttribute( "loggedInUser", null);
+        loggedInUserModel.addAttribute( "loggedInUser", UserService.loggedInUser);
         errorModel.addAttribute("error", error);
+       
 
         return "pre-login/create-user"; // html
     }
+    
     
     /**
      * Sender bruger videre til korrekt url, når hun/han trykker "opret" på index-html
@@ -104,7 +110,6 @@ public class PreLoginController
             return String.format("redirect:/%s/frontPage", orgDbName);
         }
         
-        // man er her, hvis ugyldig dataFromForm
         error = userService.getError();
         
         return "redirect:/createUser/#error-popup";
