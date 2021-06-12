@@ -11,7 +11,6 @@ import java.sql.SQLException;
 @Repository
 public class FlowsterRepository
 {
-    
     GeneralRepository generalRepository = new GeneralRepository();
     
     Connection flowsterConnection;
@@ -416,6 +415,8 @@ public class FlowsterRepository
         try
         {
             String sqlCommand = "SELECT * FROM emails WHERE email = ?";
+            // INGEN normal string-concatenation - fordi vi vil undgå SQL injection
+            // - at folk kan hacke og forstå det som sql
             
             // det er vores SQL sætning som vi beder om at få prepared til at blive sendt til databasen:
             PreparedStatement preparedStatement = flowsterConnection.prepareStatement(sqlCommand);

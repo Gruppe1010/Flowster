@@ -19,7 +19,7 @@ public class PreLoginController
     
     private String orgDbName;
     private String error = null;
-    
+
     
     @GetMapping("/")
     public String index(Model logInViewModel, Model loggedInUser, Model orgDbNameModel, Model errorModel)

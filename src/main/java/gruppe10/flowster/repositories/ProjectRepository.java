@@ -87,7 +87,7 @@ public class ProjectRepository
         organisationConnection = generalRepository.establishConnection(dbName);
 
         try
-        {
+        { // hej
             String sqlCommand =
                     "SELECT DISTINCT " +
                         "id_project, project_title, project_description, project_deadline, project_manhours " +
@@ -416,7 +416,6 @@ public class ProjectRepository
     
         try
         {
-            // TOD
             String sqlCommand = "SELECT id_project FROM projects WHERE project_title = ?";
         
             PreparedStatement preparedStatement = organisationConnection.prepareStatement(sqlCommand);
@@ -917,7 +916,7 @@ public class ProjectRepository
         
         try
         {
-            // TOD
+            //
             String sqlCommand = "SELECT task_manhours FROM subprojects_tasks " +
                                 "RIGHT JOIN tasks ON f_id_task = id_task " +
                                 "WHERE f_id_subproject = ?";

@@ -127,7 +127,6 @@
     <span class="task-style material-icons">fiber_manual_record</span>
     <p th:text="${task.getTitle()}" class="task-style"></p>
     <p th:if="${task.getManhours() > 0}" th:text="${' - ' + task.getManhours() + ' timer'}" class="task-style"></p>
-
 </div>
 
 <!--------------- subtask-overskrift --------------->
@@ -137,10 +136,11 @@
     <p th:if="${subtask.getManhours() > 0}" th:text="${' - ' + subtask.getManhours() + ' timer'}" class="task-style"></p>
 </div>
 
-
 <!------------------------------------------ FOOTER ------------------------------------------------>
 
 <!-- <div th:insert="general/fragments :: footer"></div> -->
+
+
 <div th:fragment="footer(loggedInUser, orgDbName)" class="text-center footer">
     <div class="col-sm-2">
         <a th:href="${loggedInUser != null ? ('/' + orgDbName + '/contact') : '/contact'}" class="white">Kontakt</a>

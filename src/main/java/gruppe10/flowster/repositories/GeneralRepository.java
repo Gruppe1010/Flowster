@@ -11,7 +11,7 @@ public class GeneralRepository
 {
     
     /**
-     * Laver en connection til tilfældig-databasen
+     * Laver en connection til dbName-databasen
      *
      * @param dbName Navnet på db som vi connecter til
      *

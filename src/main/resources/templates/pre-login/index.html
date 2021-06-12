@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="/flowster.css" type="text/css">
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Padauk&family=Raleway:wght@200&display=swap" rel="stylesheet">
-
 </head>
 <body>
 
@@ -27,49 +26,39 @@
 
                 <h2 class="text-center">Log ind</h2>
                 <!-- Action bestemmer hvilken PostMapping vi går til -->
-                <form action="/logIn" method="post">
+<form action="/logIn" method="post">
 
-                    <div class="form-group">
+    <div class="form-group">
 
-                        <!--max-length="320" == Fordi i db har sat en limit på VARCHAR(320)-->
+        <label for="email">Email:</label>
+        <input type="text"
+               id="email"
+               class="form-control "
+               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+               placeholder="Indtast email"
+               th:value = "${logInViewModel != null ? logInViewModel.getEmail() : ''}"
+               oninvalid="this.setCustomValidity('Ugyldigt email format')"
+               oninput="setCustomValidity('')"
+               name="email"
+               required
+               maxlength="320">
 
-                        <label for="email">Email:</label>
-                        <input type="text"
-                               id="email"
-                               class="form-control "
-                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-                               placeholder="Indtast email"
-                               th:value = "${logInViewModel != null ? logInViewModel.getEmail() : ''}"
-                               oninvalid="this.setCustomValidity('Ugyldigt email format')"
-                               oninput="setCustomValidity('')"
-                               name="email"
-                               required="required"
-                               maxlength="320">
-
-
-                        <label class="label-padding" for="password">Adgangskode:</label>
-                        <input type="password"
-                               class="form-control asterisk_input"
-                               id="password"
-                               placeholder="Indtast adgangskode"
-                               name="password"
-                               required
-                               maxlength="320">
-
-                    </div>
-
-                    <div class="text-center">
-
-                        <button type="submit" class="btn flowster-btn" href="#error-popup">Log ind</button>
-
-                        <hr>
-
-                        <p class="font-italic">Få adgang</p>
-
-                        <a href="/createUser" class="btn flowster-btn ">Opret bruger</a>
-
-                    </div>
-                </form>
+        <label class="label-padding" for="password">Adgangskode:</label>
+        <input type="password"
+               class="form-control asterisk_input"
+               id="password"
+               placeholder="Indtast adgangskode"
+               name="password"
+               required
+               maxlength="320">
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn flowster-btn" href="#error-popup">Log ind</button>
+        <hr>
+        <p class="font-italic">Få adgang</p>
+        <a href="/createUser" class="btn flowster-btn ">Opret bruger</a>
+    </div>
+</form>
 
 
 

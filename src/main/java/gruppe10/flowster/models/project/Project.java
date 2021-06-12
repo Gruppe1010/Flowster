@@ -19,7 +19,7 @@ public class Project implements Comparable<Project>
     private ArrayList<Team> teamList;
     
     // constructors
-    
+//
     public Project(int id, String title, String description, Date deadline, double manhours, User creator,
                    ArrayList<Subproject> subprojectList, ArrayList<Team> teamList)
     {
