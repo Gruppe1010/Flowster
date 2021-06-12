@@ -87,7 +87,7 @@ public class ProjectRepository
         organisationConnection = generalRepository.establishConnection(dbName);
 
         try
-        { // hej
+        { // hej igen
             String sqlCommand =
                     "SELECT DISTINCT " +
                         "id_project, project_title, project_description, project_deadline, project_manhours " +
